@@ -1,0 +1,24 @@
+---
+title: "量化投资"
+author: "汪小圈"
+format:
+  html:
+    theme: cayman
+    highlight: github
+---
+
+## 通知
+
+- 课程内容会陆续在网站上更新
+- 课程方案请见学校一网通办
+
+---
+
+## 课件
+
+0 [课程介绍](slides/week01_intro.pdf)
+
+1 传统因子投资模块
+
+2 机器学习与另类数据模块
+

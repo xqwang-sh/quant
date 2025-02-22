@@ -1,18 +1,4 @@
----
-title: 《量化投资》课程导论
-date: 2025-02-24
-format:
-  beamer:
-    theme: Copenhagen
-    colortheme: default
-    fonttheme: serif
-    navigation: horizontal
-    aspectratio: 169
-    header-includes: |
-      \usepackage{ctex}
-      \usepackage{graphicx}
-lang: zh  
----
+# 《量化投资》课程导论
 
 ## 关于任课老师
 

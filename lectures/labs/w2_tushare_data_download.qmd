@@ -1,0 +1,170 @@
+# 使用 Tushare 下载金融数据
+
+Tushare 是一个流行的 Python 财经数据接口包，提供了丰富的金融数据，包括股票、基金、期货、债券、外汇、行业大数据等。本文将详细介绍如何使用 Tushare 下载常用的金融数据，包括股票行情数据和财务报表数据。
+
+## 1. 安装 Tushare
+
+首先，您需要安装 Tushare 库。在命令行或终端中使用 pip 安装：
+
+```{python}
+#| eval: false
+pip install tushare
+```
+
+或者使用国内镜像源加速安装 (可选)：
+
+```{python}
+#| eval: false
+pip install tushare -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+## 2. 获取 Tushare API Token
+
+使用 Tushare 接口需要注册账号并获取 API Token。
+
+- 访问 Tushare 官网 [https://tushare.pro/](https://tushare.pro/) 注册账号。
+- 登录后，在 **个人主页** -> **API令牌** 中获取您的 API Token。
+
+## 3. 设置 API Token
+
+在 Python 代码中，您需要设置您的 API Token，才能正常使用 Tushare 接口。通常在代码的开头进行设置：
+
+```{python}
+#| eval: false
+import tushare as ts
+
+# 设置 API Token (请替换成您自己的 API Token)
+ts.set_token('YOUR_API_TOKEN')
+
+# 初始化 pro 接口
+pro = ts.pro_api()
+```
+
+请将 `'YOUR_API_TOKEN'` 替换为您在 Tushare 官网获取的真实 API Token。
+
+## 4. 下载股票行情数据
+
+### 4.1 下载股票日线行情数据
+
+使用 `ts.pro_bar()` 函数可以下载股票的日线行情数据，包括开盘价、最高价、最低价、收盘价、成交量等。
+
+```{python}
+#| eval: false
+import pandas as pd
+
+# 下载 贵州茅台 (600519.SH) 从 2023-01-01 到 2024-01-01 的日线数据
+df_daily = pro.pro_bar(ts_code='600519.SH', start_date='20230101', end_date='20240101',
+                      asset='E', freq='D') # asset='E' 代表股票，freq='D' 代表日线
+
+# 打印数据
+print(df_daily.head())
+```
+
+**参数说明:**
+
+- `ts_code`: 股票代码，例如 '600519.SH' (SH 代表上海证券交易所，SZ 代表深圳证券交易所)
+- `start_date`: 开始日期，格式 'YYYYMMDD'
+- `end_date`: 结束日期，格式 'YYYYMMDD'
+- `asset`: 资产类别，'E' 代表股票
+- `freq`: 数据频率，'D' 代表日线，'W' 代表周线，'M' 代表月线
+
+### 4.2 下载股票分钟线行情数据
+
+使用 `ts.pro_bar()` 函数，并设置 `freq` 参数为分钟频率 (例如 '1min', '5min', '15min', '30min', '60min')，可以下载股票的分钟线行情数据。
+
+```{python}
+#| eval: false
+# 下载 贵州茅台 (600519.SH) 在 2024-01-02 的 5分钟线数据
+df_min = pro.pro_bar(ts_code='600519.SH', start_date='20240102', end_date='20240102',
+                    asset='E', freq='5min') # freq='5min' 代表 5分钟线
+
+# 打印数据
+print(df_min.head())
+```
+
+::: {.callout-warning}
+分钟线数据的数据量较大，请根据需要下载。
+:::
+
+## 5. 下载财务报表数据 (三大报表)
+
+Tushare 提供了下载上市公司财务报表数据的接口，包括资产负债表、利润表和现金流量表。
+
+### 5.1 下载资产负债表 (Balance Sheet)
+
+使用 `pro.balancesheet()` 函数下载资产负债表数据。
+
+```{python}
+#| eval: false
+# 下载 贵州茅台 (600519.SH) 2020年度的资产负债表
+df_balance = pro.balancesheet(ts_code='600519.SH', start_date='20200101', end_date='20201231',
+                           period='20201231') # period 参数指定报告期
+
+# 打印数据
+print(df_balance.head())
+```
+
+**参数说明:**
+
+- `ts_code`: 股票代码
+- `start_date`: 开始日期 (可选)
+- `end_date`: 结束日期 (可选)
+- `period`: 报告期，例如 '20201231' (年报), '20200630' (半年报), '20200331' (一季报), '20200930' (三季报)
+
+### 5.2 下载利润表 (Income Statement)
+
+使用 `pro.income()` 函数下载利润表数据。
+
+```{python}
+#| eval: false
+# 下载 贵州茅台 (600519.SH) 2020年度的利润表
+df_income = pro.income(ts_code='600519.SH', start_date='20200101', end_date='20201231',
+                      period='20201231')
+
+# 打印数据
+print(df_income.head())
+```
+
+### 5.3 下载现金流量表 (Cash Flow Statement)
+
+使用 `pro.cashflow()` 函数下载现金流量表数据。
+
+```{python}
+#| eval: false
+# 下载 贵州茅台 (600519.SH) 2020年度的现金流量表
+df_cashflow = pro.cashflow(ts_code='600519.SH', start_date='20200101', end_date='20201231',
+                          period='20201231')
+
+# 打印数据
+print(df_cashflow.head())
+```
+
+::: {.callout-note}
+财务报表数据通常是定期发布的，`period` 参数需要设置为报告期末的日期。
+:::
+
+## 6. 其他常用数据
+
+除了股票行情和财务报表数据，Tushare 还提供了丰富的其他金融数据，例如：
+
+- **指数数据**: `pro.index_daily()` 下载指数日线行情，`pro.index_dailybasic()` 下载指数日线基本指标
+- **基金数据**: `pro.fund_basic()` 下载基金基本信息, `pro.fund_nav()` 下载基金净值数据
+- **债券数据**: `pro.bond_basic()` 下载债券基本信息, `pro.bond_daily()` 下载债券日线行情
+- **期货数据**: `pro.fut_basic()` 下载期货合约信息, `pro.fut_daily()` 下载期货日线行情
+- **宏观经济数据**: `pro.macro_china()` 下载中国宏观经济数据
+- **行业数据**: `pro.industry_classify()` 下载行业分类数据
+
+您可以参考 Tushare 官方文档 [https://tushare.pro/document/2](https://tushare.pro/document/2) 了解更多数据接口和使用方法。
+
+## 7. 总结
+
+Tushare 是一个非常方便易用的 Python 财经数据接口包，可以帮助您快速获取各种金融市场数据，为量化投资研究和策略开发提供数据支持。通过本文的示例，您应该已经掌握了使用 Tushare 下载股票行情数据和财务报表数据的基本方法。希望 Tushare 能帮助您在量化投资的学习和实践中取得更大的进步！
+
+::: {.callout-important}
+## 注意事项
+
+- Tushare Pro 接口需要注册账号并获取 API Token 才能使用。
+- 部分高级数据接口可能需要付费会员才能访问。
+- 请仔细阅读 Tushare 官方文档，了解各个接口的参数和使用限制。
+- 数据使用请遵守 Tushare 的用户协议和相关法律法规。
+::: 
