@@ -1,0 +1,21 @@
+.red {
+  color : #ff0000;
+}
+
+.remark-slide-content {font-size: 28px;}
+.remark-ref {font-size: 20px;}
+.remark-small {font-size: 15px;}
+
+.remark-slide-content:after {
+    content: "Copyright @ Xiaoquan Wang";
+    font-size: 20px;
+    color: gray;
+    position: absolute;
+    bottom: 20px;
+    right: 550px;
+    height: 20px;
+    width: 300px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("logo.png");
+}
