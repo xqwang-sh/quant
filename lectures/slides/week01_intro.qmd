@@ -1,4 +1,19 @@
-# 《量化投资》课程导论
+---
+title: "《量化投资》课程导论"
+author: "汪小圈"
+date: 2025-02-24
+format:
+  beamer:
+    theme: Copenhagen
+    colortheme: default
+    fonttheme: serif
+    navigation: horizontal
+    aspectratio: 169
+    header-includes: |
+      \usepackage{ctex}
+      \usepackage{graphicx}
+lang: zh
+---
 
 ## 关于任课老师
 
@@ -142,8 +157,8 @@
 ## 有效市场假说 (Efficient Market Hypothesis, EMH)
 
 - **核心思想**：
-    - 市场价格已经充分反映了所有可获得的信息。
-    - 投资者无法通过分析信息来获取超额收益。
+    - 在有效市场中，资产价格充分反映了所有可获得的信息。
+    - 任何新信息都会迅速、准确地反映到资产价格中，投资者无法利用公开信息或内幕信息获得超额收益。
 
 - **三种形式**：
     - **弱式有效市场**：价格反映了所有历史市场信息 (价格、成交量)。技术分析无效。

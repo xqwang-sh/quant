@@ -1,0 +1,308 @@
+---
+title: "资本资产定价模型 (CAPM) 实证检验"
+author: "汪小圈"
+date: "2025-03-03"
+---
+
+## 实验目的
+
+1.  **掌握 CAPM 模型的实证检验方法**:  学习时间序列回归、横截面回归和 Fama-MacBeth 回归等方法。
+2.  **使用 Python 进行 CAPM 实证检验**:  熟悉使用 Python 进行数据获取、回归分析和结果分析。
+3.  **检验 CAPM 模型在中国股票市场的适用性**:  使用中国股票市场数据，实证检验 CAPM 模型是否在中国市场成立。
+4.  **理解 CAPM 模型的局限性**:  通过实证结果，加深对 CAPM 模型局限性的理解。
+
+## 实验原理
+
+### CAPM 模型回顾
+
+资本资产定价模型 (CAPM) 描述了风险资产的预期收益率与系统性风险之间的关系。其核心公式为证券市场线 (SML)：
+
+$E(R_i) = R_f + \beta_i[E(R_m) - R_f]$
+
+其中：
+
+-   $E(R_i)$：资产 $i$ 的期望收益率
+-   $R_f$：无风险利率
+-   $\beta_i$：资产 $i$ 的 Beta 系数，衡量系统性风险
+-   $E(R_m)$：市场组合的期望收益率
+-   $[E(R_m) - R_f]$：市场风险溢价
+
+### CAPM 模型的实证检验方法
+
+本实验将采用以下三种方法对 CAPM 模型进行实证检验：
+
+1.  **时间序列回归 (Time-Series Regression)**
+
+    检验股票超额收益率是否可以被市场组合的超额收益率解释，模型如下：
+
+    $R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}$
+
+    -   如果 CAPM 模型成立，则 $\alpha_i$ 应不显著异于零。
+    -   $\beta_i$ 为股票 $i$ 的系统性风险系数。
+
+2.  **横截面回归 (Cross-Sectional Regression)**
+
+    检验股票的平均收益率是否与其 Beta 系数线性相关，模型如下：
+
+    $R_{i} = \gamma_{0} + \gamma_{1} \beta_i + \eta_{i}$
+
+    -   $\gamma_{0}$ 代表零 Beta 组合的预期收益率，如果 CAPM 成立，$\gamma_{0}$ 应等于无风险利率 $R_f$。
+    -   $\gamma_{1}$ 代表风险溢价，如果 CAPM 成立，$\gamma_{1}$ 应等于市场风险溢价 $E(R_m) - R_f$，且显著为正。
+
+    **步骤：**
+
+    1.  **第一步：时间序列回归估计 Beta**:  使用时间序列回归模型，对每只股票 $i$ 估计其 Beta 值 $\beta_i$。
+    2.  **第二步：横截面回归**:  使用第一步估计的 Beta 值 $\beta_i$ 作为解释变量，股票的平均收益率 $R_i$ 作为被解释变量，进行横截面回归。
+
+3.  **Fama-MacBeth 回归**
+
+    Fama-MacBeth 回归是一种改进的横截面回归方法，可以更有效地处理 Beta 估计的误差，并提供更稳健的检验结果。
+
+    **步骤：**
+
+    1.  **第一步：滚动窗口估计 Beta**:  使用滚动窗口时间序列回归，对每只股票 $i$ 在每个时间点 $t$ 估计其 Beta 值 $\beta_{i,t-1}$ (使用 $t-1$ 期及之前的数据估计)。
+    2.  **第二步：横截面回归**:  在每个时间点 $t$，使用第一步估计的 Beta 值 $\beta_{i,t-1}$ 作为解释变量，股票在 $t$ 期的收益率 $R_{i,t}$ 作为被解释变量，进行横截面回归，得到每个时间点的 $\gamma_{0,t}$ 和 $\gamma_{1,t}$。
+    3.  **第三步：计算平均风险溢价**:  计算风险溢价 $\gamma_{1,t}$ 的时间序列均值 $\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}$。
+    4.  **第四步：检验显著性**:  检验平均风险溢价 $\bar{\gamma}_1$ 是否显著异于零。
+
+## 实验数据
+
+本实验使用中国 A 股市场数据进行检验。
+
+-   **股票数据**:  选取沪深 300 指数成分股作为研究对象。
+-   **市场指数**:  使用沪深 300 指数 (000300.SS) 作为市场组合的代理。
+-   **无风险利率**:  使用中国国债利率作为无风险利率的代理。可以使用一年期国债到期收益率。
+-   **数据区间**:  选择合适的历史数据区间，例如 2019-01-01 至 2023-01-01 (可以根据数据可获得性调整)。
+-   **数据频率**:  使用日度或周度数据。
+
+**数据来源**:  可以使用 `yfinance` 或 `tushare` 等 Python 库获取股票和指数数据。国债利率数据可能需要从其他金融数据平台获取。
+
+## 实验步骤
+
+### 1. 数据准备
+
+#### 1.1 导入必要的 Python 库
+
+```python
+import pandas as pd
+import numpy as np
+import yfinance as yf
+import statsmodels.api as sm
+```
+
+#### 1.2 下载股票和市场指数数据
+
+```python
+# 股票代码列表 (这里仅为示例，实际应使用沪深300成分股列表)
+stock_codes = ['600519.SS', '000001.SZ', '600036.SS']
+market_ticker = '000300.SS'  # 沪深300指数
+start_date = '2019-01-01'
+end_date = '2023-01-01'
+
+# 下载股票数据
+stock_data = {}
+for code in stock_codes:
+    try:
+        stock_data[code] = yf.download(code, start=start_date, end=end_date)['Adj Close']
+    except Exception as e:
+        print(f"下载股票 {code} 数据失败: {e}")
+
+# 下载市场指数数据
+market_data = yf.download(market_ticker, start=start_date, end=end_date)['Adj Close']
+
+# 转换为 DataFrame 并计算收益率
+stock_returns_df = pd.DataFrame()
+for code, data in stock_data.items():
+    if not data.empty:
+        stock_returns = data.pct_change().dropna()
+        stock_returns_df[code] = stock_returns
+
+market_returns = market_data.pct_change().dropna()
+market_returns.name = 'market_return'
+
+print(stock_returns_df.head())
+print(market_returns.head())
+```
+
+**请注意**:  你需要获取沪深 300 指数成分股列表，并替换 `stock_codes` 示例列表。
+
+#### 1.3 获取无风险利率数据
+
+无风险利率数据可能需要手动查找或从其他数据源获取。这里假设我们已经获得了无风险利率数据，并将其存储在一个 Pandas Series 中，命名为 `risk_free_rate`。
+
+```python
+# 示例无风险利率数据 (需要替换为真实数据)
+dates = stock_returns_df.index
+risk_free_rate_values = np.array([0.02] * len(dates)) # 假设年化无风险利率为 2%
+risk_free_rate = pd.Series(risk_free_rate_values, index=dates)
+risk_free_rate = risk_free_rate / 252 # 转换为日度利率 (假设一年 252 个交易日)
+risk_free_rate.name = 'risk_free_rate'
+
+print(risk_free_rate.head())
+```
+
+**重要**:  请务必替换示例的无风险利率数据为真实的中国国债利率数据，并根据数据频率进行调整。
+
+#### 1.4 合并数据
+
+将股票收益率、市场收益率和无风险利率数据合并到一个 DataFrame 中。
+
+```python
+# 合并数据
+merged_data = pd.concat([stock_returns_df, market_returns, risk_free_rate], axis=1).dropna()
+print(merged_data.head())
+```
+
+### 2. 时间序列回归检验
+
+对每只股票进行时间序列回归，估计 $\alpha_i$ 和 $\beta_i$。
+
+```python
+time_series_results = {}
+for code in stock_codes:
+    if code in merged_data.columns: # 确保股票数据存在
+        # 计算超额收益率
+        merged_data[f'{code}_excess_return'] = merged_data[code] - merged_data['risk_free_rate']
+        merged_data['market_excess_return'] = merged_data['market_return'] - merged_data['risk_free_rate']
+
+        # 时间序列回归
+        X = merged_data['market_excess_return']
+        X = sm.add_constant(X) # 添加常数项
+        y = merged_data[f'{code}_excess_return']
+
+        model = sm.OLS(y, X).fit()
+        time_series_results[code] = model
+
+# 输出部分结果
+for code, model in time_series_results.items():
+    print(f"\n股票代码: {code}")
+    print(model.summary())
+```
+
+**分析结果**:  查看每个股票回归结果的 `summary()`，关注以下指标：
+
+-   **$\alpha_i$ (const 系数)**:  是否显著异于零？如果显著异于零，则表明 CAPM 模型定价存在偏差。
+-   **$\beta_i$ (market_excess_return 系数)**:  是否显著？系数大小和方向是否合理？
+-   **$R^2$**:  模型的解释力如何？
+
+### 3. 横截面回归检验
+
+#### 3.1 计算股票的平均超额收益率和 Beta 值
+
+```python
+average_excess_returns = {}
+betas = {}
+
+for code, model in time_series_results.items():
+    if code in merged_data.columns:
+        average_excess_returns[code] = merged_data[f'{code}_excess_return'].mean()
+        betas[code] = model.params['market_excess_return']
+
+average_excess_returns_series = pd.Series(average_excess_returns)
+betas_series = pd.Series(betas)
+
+print("\n平均超额收益率:")
+print(average_excess_returns_series)
+print("\nBeta 值:")
+print(betas_series)
+```
+
+#### 3.2 进行横截面回归
+
+```python
+# 横截面回归
+X_cs = betas_series
+X_cs = sm.add_constant(X_cs) # 添加常数项
+y_cs = average_excess_returns_series
+
+cross_sectional_model = sm.OLS(y_cs, X_cs).fit()
+print("\n横截面回归结果:")
+print(cross_sectional_model.summary())
+```
+
+**分析结果**:  查看横截面回归结果的 `summary()`，关注以下指标：
+
+-   **$\gamma_{0}$ (const 系数)**:  是否接近无风险利率的平均值？是否显著异于零？
+-   **$\gamma_{1}$ (x1 系数，即 Beta 系数的系数)**:  是否显著为正？系数大小是否合理 (代表市场风险溢价)？
+-   **$R^2$**:  模型的解释力如何？
+
+### 4. Fama-MacBeth 回归检验 (选做)
+
+Fama-MacBeth 回归的 Python 代码实现较为复杂，可以作为选做内容。以下提供一个 Fama-MacBeth 回归的基本框架，你需要根据理解补充完整代码。
+
+```python
+def fama_macbeth_regression(stock_returns_df, market_returns, risk_free_rate, window=252):
+    """
+    Fama-MacBeth 回归
+
+    参数:
+    stock_returns_df: 股票收益率 DataFrame (columns: 股票代码, index: 时间)
+    market_returns: 市场收益率 Series (index: 时间)
+    risk_free_rate: 无风险利率 Series (index: 时间)
+    window: 滚动窗口大小 (用于估计 Beta)
+
+    返回:
+    gamma_1_mean: 平均风险溢价
+    gamma_1_std_error: 风险溢价的标准误差
+    """
+    gamma_1_values = []
+    dates = stock_returns_df.index[window:] # 从滚动窗口结束后开始
+
+    for t in range(window, len(stock_returns_df)):
+        current_date = stock_returns_df.index[t]
+        window_start_date = stock_returns_df.index[t-window]
+
+        betas_t = {}
+        # 第一步: 滚动窗口时间序列回归估计 Beta
+        for code in stock_returns_df.columns:
+            # ... (在此处补充滚动窗口时间序列回归代码，估计每只股票在 t 期的 Beta 值 betas_t[code]) ...
+            pass # 占位符，请替换为实际代码
+
+        # 第二步: 横截面回归
+        X_fm = pd.Series(betas_t)
+        X_fm = sm.add_constant(X_fm)
+        y_fm = stock_returns_df.loc[current_date] # t 期的股票收益率
+
+        cross_sectional_model_fm = sm.OLS(y_fm, X_fm).fit()
+        gamma_1_t = cross_sectional_model_fm.params['x1'] # 假设 Beta 系数的变量名为 'x1'
+        gamma_1_values.append(gamma_1_t)
+
+    # 第三步: 计算平均风险溢价
+    gamma_1_mean = np.mean(gamma_1_values)
+    # 第四步: 计算平均风险溢价的标准误差 (可以使用时间序列的标准差除以根号 T)
+    gamma_1_std_error = np.std(gamma_1_values) / np.sqrt(len(gamma_1_values))
+
+    return gamma_1_mean, gamma_1_std_error
+
+# 执行 Fama-MacBeth 回归 (示例，需要补充完整 fama_macbeth_regression 函数)
+# gamma_1_mean, gamma_1_std_error = fama_macbeth_regression(stock_returns_df, market_returns, risk_free_rate)
+# print("\nFama-MacBeth 回归结果:")
+# print(f"平均风险溢价 (gamma_1_mean): {gamma_1_mean:.4f}")
+# print(f"风险溢价标准误差 (gamma_1_std_error): {gamma_1_std_error:.4f}")
+```
+
+**完成 Fama-MacBeth 回归**:  你需要完成 `fama_macbeth_regression` 函数中 **第一步: 滚动窗口时间序列回归估计 Beta** 的代码。  提示：可以使用类似 **2. 时间序列回归检验** 中的代码，但在循环中针对每个滚动窗口进行回归。
+
+**分析结果**:  分析 Fama-MacBeth 回归的结果，关注平均风险溢价 `gamma_1_mean` 是否显著异于零，以及其经济含义。
+
+### 5. 结果分析与讨论
+
+综合分析时间序列回归、横截面回归 (和 Fama-MacBeth 回归) 的结果，思考以下问题：
+
+-   **CAPM 模型在中国市场是否成立？**:  从实证结果来看，CAPM 模型能否很好地解释中国股票市场的资产定价现象？
+-   **市场风险是否被定价？**:  Beta 系数是否与股票的预期收益率显著相关？
+-   **是否存在定价误差？**:  时间序列回归中的 $\alpha_i$ 和横截面回归中的 $\gamma_{0}$ 是否显著异于理论值？
+-   **CAPM 模型的局限性**:  实证结果是否支持 CAPM 模型在中国市场存在局限性？可能的原因是什么？
+-   **改进方向**:  如果 CAPM 模型在中国市场表现不佳，可以考虑哪些改进方向？例如，引入其他风险因子 (如规模、价值因子)，或者考虑行为金融学因素。
+
+## 实验总结
+
+总结本次实验的主要内容和结论，回顾 CAPM 模型的实证检验方法，并思考 CAPM 模型在实际应用中的价值和局限性。
+
+**作业**:
+
+1.  完成实验报告，包括实验目的、原理、步骤、结果分析和讨论。
+2.  尝试使用不同的数据区间、数据频率或市场指数进行 CAPM 检验，比较结果的差异。
+3.  (选做) 完成 Fama-MacBeth 回归的代码实现和结果分析。
+4.  (拓展) 查阅文献，了解 CAPM 模型在中国市场的实证研究现状，比较你的实验结果与现有研究的结论。
+

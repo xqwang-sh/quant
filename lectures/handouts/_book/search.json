@@ -1,0 +1,162 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "量化投资课程讲义",
+    "section": "",
+    "text": "本讲义将系统地介绍量化投资的基本概念、理论框架、常用策略以及实践应用。\n引言:\n量化投资是指利用数学、统计学和计算机科学等定量方法，对金融市场进行分析和预测，以实现投资目标的一种投资方式。量化投资是学术界和业界广泛关注的一个研究领域。在学术界，量化投资理论研究主要集中在资产定价理论、投资组合理论、风险管理理论等方面。在业界，量化投资主要集中在量化选股、量化择时、量化对冲、算法交易等领域。由于课程时间有限，本讲义将主要介绍基于实证资产定价理论的量化投资方法，对实际案例的讲解偏向量化选股。\n课程内容:\n\n有效市场假说 (EMH)\n资本资产定价模型 (CAPM)\n多因子模型 (待添加)\n…\n\n使用说明:\n\n本讲义使用 Quarto 创建，可以方便地生成 HTML, PDF, ePub 等多种格式。\n点击左侧导航栏可以浏览不同章节的内容。\n\n希望本讲义能帮助您更好地学习和理解量化投资！",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资课程讲义</span>"
+    ]
+  },
+  {
+    "objectID": "01_emh.html",
+    "href": "01_emh.html",
+    "title": "2  有效市场假说 (EMH)",
+    "section": "",
+    "text": "2.1 本节课主要内容",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>有效市场假说 (EMH)</span>"
+    ]
+  },
+  {
+    "objectID": "01_emh.html#本节课主要内容",
+    "href": "01_emh.html#本节课主要内容",
+    "title": "2  有效市场假说 (EMH)",
+    "section": "",
+    "text": "什么是有效市场假说 (EMH)?\nEMH 的三个层次\nEMH 与量化投资的关联",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>有效市场假说 (EMH)</span>"
+    ]
+  },
+  {
+    "objectID": "01_emh.html#什么是有效市场假说-emh",
+    "href": "01_emh.html#什么是有效市场假说-emh",
+    "title": "2  有效市场假说 (EMH)",
+    "section": "2.2 什么是有效市场假说 (EMH)?",
+    "text": "2.2 什么是有效市场假说 (EMH)?\n有效市场假说 (Efficient Market Hypothesis, EMH) 是金融学中一个核心理论，它认为资产价格完全反映了所有可获得的信息。这意味着在有效市场中：\n\n价格反应迅速: 一旦新的信息出现，价格会立即调整到新的均衡水平。\n无法持续跑赢市场: 由于价格已经反映了所有信息，投资者无法通过分析信息来持续获得超额收益 (alpha)。\n随机游走: 价格变动是随机的，遵循随机游走 (random walk) 模式，过去的價格信息无法预测未来的价格。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>有效市场假说 (EMH)</span>"
+    ]
+  },
+  {
+    "objectID": "01_emh.html#emh-的三个层次",
+    "href": "01_emh.html#emh-的三个层次",
+    "title": "2  有效市场假说 (EMH)",
+    "section": "2.3 EMH 的三个层次",
+    "text": "2.3 EMH 的三个层次\nEMH 通常被分为三个层次，根据市场有效性的程度递增：\n\n弱式有效市场 (Weak-form Efficiency):\n\n价格已完全反映了历史价格信息。\n技术分析 (Technical Analysis) 无效，因为历史价格模式无法预测未来价格。\n基本面分析 (Fundamental Analysis) 可能有效。\n\n半强式有效市场 (Semi-strong-form Efficiency):\n\n价格已完全反映了所有公开信息，包括财务报表、新闻、经济数据等。\n技术分析和基于公开信息的基本面分析都无效。\n只有内幕信息 (Insider Information) 可能获得超额收益 (但违法)。\n\n强式有效市场 (Strong-form Efficiency):\n\n价格已完全反映了所有信息，包括公开信息和内幕信息。\n任何信息都无法用来获得超额收益，包括内幕信息。\n强式有效市场在现实中极少存在。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>有效市场假说 (EMH)</span>"
+    ]
+  },
+  {
+    "objectID": "01_emh.html#emh-与量化投资的关联",
+    "href": "01_emh.html#emh-与量化投资的关联",
+    "title": "2  有效市场假说 (EMH)",
+    "section": "2.4 EMH 与量化投资的关联",
+    "text": "2.4 EMH 与量化投资的关联\nEMH 对量化投资 (Quantitative Investing) 有着深刻的影响，但也并非完全否定量化投资的价值。\n\n2.4.1 EMH 对量化投资的挑战\n\nAlpha 的获取难度: EMH 认为市场难以被持续战胜，量化投资的核心目标是寻找 alpha (超额收益)，这在有效市场中变得非常困难。\n模型失效风险: 如果市场是有效的，那么基于历史数据构建的模型可能会迅速失效，因为市场会吸收并反映这些模型所利用的信息。\n交易成本: 量化投资通常涉及高频交易和大量交易，在有效市场中，频繁交易可能被交易成本抵消收益。\n\n\n\n2.4.2 量化投资在有效市场中的机会\n\n市场并非完全有效: 尽管 EMH 是一个重要的理论，但现实市场并非完全有效，存在各种市场摩擦和行为偏差，为量化投资提供了机会。\n挖掘微弱的 Alpha: 量化投资可以通过精细的模型和算法，挖掘市场中微弱的、短暂的 alpha 机会。\n风险管理: 量化投资在风险管理方面具有优势，可以通过模型化方法更有效地控制投资组合的风险。\n交易效率: 量化交易系统可以实现自动化交易，提高交易效率，降低人为错误。\n另类数据: 量化投资可以利用另类数据 (Alternative Data)，例如社交媒体数据、卫星图像数据等，来寻找新的信息来源和投资机会。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>有效市场假说 (EMH)</span>"
+    ]
+  },
+  {
+    "objectID": "01_emh.html#总结",
+    "href": "01_emh.html#总结",
+    "title": "2  有效市场假说 (EMH)",
+    "section": "2.5 总结",
+    "text": "2.5 总结\n\n有效市场假说 (EMH) 是金融学的重要理论，强调市场价格的信息效率。\nEMH 分为弱式、半强式和强式三个层次。\nEMH 对量化投资提出了挑战，但也为量化投资提供了在市场非完全有效性、风险管理、交易效率和另类数据利用等方面的机会。\n量化投资需要在 EMH 的框架下，不断探索新的模型和策略，以适应不断变化的市场环境。",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>有效市场假说 (EMH)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html",
+    "href": "02_capm.html",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "",
+    "text": "3.1 本节课主要内容",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#本节课主要内容",
+    "href": "02_capm.html#本节课主要内容",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "",
+    "text": "CAPM 模型的理论基础: 理解 CAPM 模型的核心假设和理论逻辑。\nCAPM 模型的推导过程: 掌握从投资组合理论到 CAPM 模型的推导过程。\nCAPM 模型的经济学解释: 理解 Beta 系数的经济含义，以及风险溢价的概念。\nCAPM 模型的实证检验: 学习 CAPM 模型的常用实证检验方法，并了解在中国市场的检验结果。\n实践：使用 Python 计算个股 Beta 值: 掌握使用 Python 计算 Beta 值的方法。\nCAPM 模型的局限性: 认识 CAPM 模型在实际应用中的局限性。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#capm-模型的理论基础",
+    "href": "02_capm.html#capm-模型的理论基础",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.2 CAPM 模型的理论基础",
+    "text": "3.2 CAPM 模型的理论基础\n\n3.2.1 为什么要学习 CAPM 模型？\n\n现代金融理论的基石: CAPM 模型是现代金融理论的起点，理解 CAPM 是学习更高级模型的必要基础。\n风险与收益的定价模型: CAPM 模型提供了一个简洁的框架，用于理解风险和预期收益之间的关系，是资产定价的核心模型之一。\n投资决策的重要工具: CAPM 模型可以帮助投资者评估资产的合理收益率，进行投资组合管理和绩效评估。\n学术研究和实践应用的广泛性: CAPM 模型在学术研究和投资实践中都得到了广泛的应用，是金融领域从业人员必备的知识。\n\n\n\n3.2.2 CAPM 模型的核心假设\nCAPM 模型建立在一系列理想化的假设之上，理解这些假设是理解模型适用范围和局限性的关键。\n\n投资者是风险厌恶的，追求效用最大化:\n\n投资者在给定的收益水平下，偏好风险较低的投资；在给定的风险水平下，偏好收益较高的投资。\n投资者进行投资决策的目标是最大化其期望效用，而非仅仅是期望收益。\n\n市场是完美的:\n\n无交易成本: 买卖资产不存在任何交易费用，如佣金、税费等。\n信息对称: 所有投资者都可以免费、及时地获得所有相关信息。\n完全可分: 资产可以被无限分割，投资者可以买卖任意数量的资产。\n无卖空限制: 投资者可以无限制地卖空任何资产。\n\n存在无风险利率，投资者可以无限制地借贷:\n\n存在一个无风险利率 \\(R_f\\)，投资者可以以该利率无限制地借入或贷出资金。\n这意味着投资者可以自由地调整投资组合的风险水平。\n\n所有投资者持有相同的投资期限:\n\n所有投资者的投资期限都是相同的，例如都为一个月、一年等。\n这简化了模型分析，使得我们可以关注单期投资决策。\n\n资产收益率服从正态分布:\n\n所有资产的收益率都服从正态分布。\n正态分布的假设使得我们可以用均值和方差来完整描述收益率的分布特征，简化了风险的度量。\n\n\n\n\n3.2.3 核心假设的解读\n\n理想化假设 vs. 现实: CAPM 模型的假设在现实市场中很难完全成立，例如交易成本是存在的，信息也不是完全对称的。\n模型简化与权衡: 这些假设是对现实的简化，目的是为了构建一个简洁、易于分析的模型。模型的价值在于提供了一个理解资产定价的基本框架，而不是完美地预测现实。\n后续模型的拓展: 后续的资产定价模型，如 Fama-French 三因子模型、行为金融学模型等，都是在放松 CAPM 模型某些假设的基础上发展起来的。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#capm-模型的推导过程",
+    "href": "02_capm.html#capm-模型的推导过程",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.3 CAPM 模型的推导过程",
+    "text": "3.3 CAPM 模型的推导过程\n\n3.3.1 投资组合理论回顾：均值-方差分析框架\nCAPM 模型的推导基础是马科维茨的投资组合理论，我们首先回顾一下均值-方差分析框架。\n\n期望收益率:\n\n投资组合的期望收益率是组合中各资产期望收益率的加权平均： \\(E(R_p) = \\sum_{i=1}^n w_i E(R_i)\\) 其中，\\(w_i\\) 是资产 \\(i\\) 在组合中的权重，\\(E(R_i)\\) 是资产 \\(i\\) 的期望收益率。\n\n组合方差:\n\n组合的方差（衡量风险）不仅取决于各资产的方差，还取决于资产之间的协方差： \\(\\sigma_p^2 = \\sum_{i=1}^n \\sum_{j=1}^n w_i w_j \\sigma_{ij}\\) 其中，\\(\\sigma_{ij}\\) 是资产 \\(i\\) 和资产 \\(j\\) 收益率之间的协方差。\n\n有效前沿:\n\n在均值-方差框架下，理性投资者会追求有效前沿上的投资组合。\n有效前沿是指在给定风险水平下，能够获得最高期望收益率的投资组合的集合；或者在给定期望收益率水平下，能够实现最低风险的投资组合的集合。\n\n\n\n\n3.3.2 引入无风险资产：资本市场线 (CML)\nCAPM 模型在投资组合理论的基础上，进一步引入了无风险资产，并假设所有投资者都持有相同的有效前沿。\n\n无风险资产的特性:\n\n期望收益率：\\(E(R_f) = R_f\\) （无风险利率）\n标准差：\\(\\sigma_f = 0\\) （无风险）\n与任何风险资产的协方差：\\(\\sigma_{if} = 0\\)\n\n资本市场线 (CML) 的推导:\n\n当引入无风险资产后，投资者可以将资金投资于无风险资产和市场组合 \\(M\\) 的线性组合。\n市场组合 \\(M\\) 是所有风险资产的组合，其权重与各资产的总市值成比例。（在 CAPM 模型中，市场组合本身位于有效前沿上）\n资本市场线 (CML) 描述了有效前沿从原来的曲线变为一条直线： \\(E(R_p) = R_f + \\frac{E(R_m) - R_f}{\\sigma_m} \\sigma_p\\) 其中，\\(E(R_m)\\) 和 \\(\\sigma_m\\) 分别是市场组合 \\(M\\) 的期望收益率和标准差。\n\nCML 的经济含义:\n\nCML 表示在有效市场中，投资者可以通过配置无风险资产和市场组合来获得任何风险水平下的最优风险收益组合。\nCML 的斜率 \\(\\frac{E(R_m) - R_f}{\\sigma_m}\\) 被称为市场风险溢价的风险价格，表示每单位风险 (标准差) 可以获得的超额收益。\n\n\n\n\n3.3.3 证券市场线 (SML) 的推导：CAPM 模型的核心\nCML 描述的是有效组合的定价关系，而 证券市场线 (SML) 则进一步给出了单个资产的期望收益率与风险之间的关系，这就是 CAPM 模型的核心。\n\n系统性风险与非系统性风险:\n\n总风险 (Total Risk)：可以用标准差 \\(\\sigma_i\\) 来衡量。\n系统性风险 (Systematic Risk)：也称为市场风险、不可分散风险，是指影响所有资产的共同风险因素，如宏观经济因素、政策变化等。\n非系统性风险 (Unsystematic Risk)：也称为特异风险、可分散风险，是指只影响个别资产的风险因素，如公司管理、行业竞争等。\n\nBeta 系数：系统性风险的度量:\n\n在 CAPM 模型中，Beta 系数 (\\(\\beta_i\\)) 被用来衡量资产 \\(i\\) 的系统性风险。\n\\(\\beta_i\\) 定义为资产 \\(i\\) 收益率与市场组合收益率的协方差，除以市场组合收益率的方差： \\(\\beta_i = \\frac{Cov(R_i, R_m)}{Var(R_m)}\\)\n\\(\\beta_i\\) 衡量了资产 \\(i\\) 的收益率对市场组合收益率变化的敏感程度。\n\n\\(\\beta_i &gt; 1\\): 资产 \\(i\\) 的波动性比市场组合更大，系统性风险较高。\n\\(\\beta_i = 1\\): 资产 \\(i\\) 的波动性与市场组合同步。\n\\(\\beta_i &lt; 1\\): 资产 \\(i\\) 的波动性比市场组合更小，系统性风险较低。\n\\(\\beta_i &lt; 0\\): 资产 \\(i\\) 与市场组合的变动方向相反，可以对冲市场风险。\n\n\n证券市场线 (SML) 的公式:\n\nCAPM 模型的核心公式，描述了单个资产的期望收益率与 Beta 系数之间的线性关系： \\(E(R_i) = R_f + \\beta_i[E(R_m) - R_f]\\)\n其中：\n\n\\(E(R_i)\\)：资产 \\(i\\) 的期望收益率\n\\(R_f\\)：无风险利率\n\\(\\beta_i\\)：资产 \\(i\\) 的 Beta 系数\n\\(E(R_m)\\)：市场组合的期望收益率\n\\([E(R_m) - R_f]\\)：市场风险溢价 (Market Risk Premium)，是投资者投资于市场组合相对于无风险资产所要求的超额收益。\n\n\nSML 的经济含义:\n\nSML 表明，在 CAPM 模型下，只有系统性风险才会被定价，非系统性风险可以通过分散化投资消除，因此投资者不需要为非系统性风险支付风险溢价。\n资产的期望收益率只与其系统性风险 (\\(\\beta_i\\)) 有关，\\(\\beta_i\\) 越高，期望收益率越高。\nSML 为资产定价提供了一个基准，可以用来评估资产的价值是否被高估或低估。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#beta-系数的计算与经济学解释",
+    "href": "02_capm.html#beta-系数的计算与经济学解释",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.4 Beta 系数的计算与经济学解释",
+    "text": "3.4 Beta 系数的计算与经济学解释\n\n3.4.1 Beta 系数的计算方法\n\n定义法:\n\n根据 Beta 系数的定义公式直接计算： \\(\\beta_i = \\frac{Cov(R_i, R_m)}{Var(R_m)}\\)\n需要计算资产 \\(i\\) 和市场组合 \\(m\\) 的收益率序列，然后计算协方差和方差。\n\n回归方法:\n\n更常用的方法是通过回归模型估计 Beta 系数。\n市场模型 (Market Model)： \\(R_{i,t} = \\alpha_i + \\beta_i R_{m,t} + \\epsilon_{i,t}\\) 其中，\\(R_{i,t}\\) 和 \\(R_{m,t}\\) 分别是资产 \\(i\\) 和市场组合在 \\(t\\) 期的收益率，\\(\\epsilon_{i,t}\\) 是残差项。 通过对市场模型进行回归，可以得到 \\(\\beta_i\\) 的估计值。\n超额收益率形式: 为了更符合 CAPM 模型的形式，也可以使用超额收益率进行回归： \\(R_{i,t} - R_{f,t} = \\alpha_i + \\beta_i(R_{m,t} - R_{f,t}) + \\epsilon_{i,t}\\) 其中，\\(R_{f,t}\\) 是 \\(t\\) 期的无风险利率，\\(R_{i,t} - R_{f,t}\\) 和 \\(R_{m,t} - R_{f,t}\\) 分别是资产 \\(i\\) 和市场组合的超额收益率。 在这种形式下，回归得到的 \\(\\alpha_i\\) 可以被解释为 Jensen’s alpha，衡量资产的超额收益，如果 CAPM 模型完全成立，\\(\\alpha_i\\) 应该为零。\n\n\n\n\n3.4.2 3.2 Beta 系数的经济学解释\n\nBeta 值的含义:\n\n\\(\\beta_i\\) 反映了资产 \\(i\\) 对市场整体风险的敏感程度，是衡量系统性风险的重要指标。\n不同 Beta 值的股票具有不同的风险特征：\n\n高 Beta 股票 (\\(\\beta_i &gt; 1\\))：\n\n收益率波动幅度大于市场平均水平，市场上涨时涨幅更大，市场下跌时跌幅也更大。\n风险较高，但也可能带来更高的潜在收益。\n例如：科技股、成长股等。\n\n市场同步股票 (\\(\\beta_i = 1\\))：\n\n收益率波动与市场平均水平一致。\n风险收益特征与市场组合相似。\n例如：指数基金。\n\n低 Beta 股票 (\\(\\beta_i &lt; 1\\))：\n\n收益率波动幅度小于市场平均水平，市场上涨时涨幅较小，市场下跌时跌幅也较小。\n风险较低，收益也相对稳定。\n例如：公用事业股、消费必需品股等。\n\n负 Beta 股票 (\\(\\beta_i &lt; 0\\))：\n\n收益率与市场变动方向相反，市场上涨时可能下跌，市场下跌时可能上涨。\n可以作为投资组合的对冲工具，降低整体风险。\n例如：黄金等避险资产（在某些特定时期）。\n\n\n\nBeta 与风险溢价:\n\nCAPM 模型表明，投资者因承担系统性风险而获得风险溢价，Beta 系数越高，要求的风险溢价越高。\n风险溢价 \\([E(R_m) - R_f]\\) 是对所有资产共同的，而 \\(\\beta_i\\) 则是个别资产的风险承担量。\n投资者可以通过选择不同 Beta 值的资产来调整投资组合的风险和收益水平。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#capm-模型的实证检验",
+    "href": "02_capm.html#capm-模型的实证检验",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.5 CAPM 模型的实证检验",
+    "text": "3.5 CAPM 模型的实证检验\n\n3.5.1 实证检验方法回顾\nCAPM 模型的常用实证检验方法如下：\n\n时间序列回归 (Time-Series Regression)\n\n检验股票收益率是否可以被市场组合的超额收益率解释，\\(\\alpha_i\\) 是否显著为零。\n公式: \\(R_{i,t} - R_{f,t} = \\alpha_i + \\beta_i (R_{m,t} - R_{f,t}) + \\epsilon_{i,t}\\)\n\n横截面回归 (Cross-Sectional Regression)\n\n检验股票的平均收益率是否与其 Beta 系数线性相关，\\(\\gamma_{0,t}\\) 是否为零，\\(\\gamma_{1,t}\\) 是否等于市场风险溢价且显著为正。\n步骤：\n\n估计 Beta：时间序列回归估计 \\(\\beta_i\\)。\n横截面回归：\\(R_{i,t} = \\gamma_{0,t} + \\gamma_{1,t} \\beta_i + \\eta_{i,t}\\)\n\n\nFama-MacBeth 回归\n\n改进的横截面回归方法，处理 Beta 估计误差，更稳健。\n步骤：\n\n滚动窗口估计 Beta：估计 \\(\\beta_{i,t}\\)。\n横截面回归：\\(R_{i,t} = \\gamma_{0,t} + \\gamma_{1,t} \\beta_{i,t-1} + \\eta_{i,t}\\)\n计算平均风险溢价：\\(\\bar{\\gamma}_1 = \\frac{1}{T} \\sum_{t=1}^T \\gamma_{1,t}\\)\n检验显著性：检验 \\(\\bar{\\gamma}_1\\) 是否显著异于零。\n\n\n\n\n\n3.5.2 中国市场上的 CAPM 检验\n结合参考书籍《因子投资：方法与实践》的内容，我们可以推断 CAPM 模型在中国市场上的检验结果和特点：\n\n市场因子仍然重要: 即使在中国 A 股市场，市场因子仍然是解释资产收益率的重要因素，CAPM 模型在一定程度上适用。\n定价误差可能较大: 由于中国市场新兴市场特征，有效性相对较低，市场摩擦较多，CAPM 模型可能存在较大的定价误差 (\\(\\alpha_i\\) 显著异于零)。\n需要考虑其他因子: 单因子 CAPM 模型可能不足以充分解释中国市场的资产定价现象，需要考虑加入其他风险因子，如规模、价值、盈利等，构建多因子模型。\n检验方法选择: Fama-MacBeth 回归等更稳健的方法可能更适合中国市场，以处理 Beta 估计的误差和市场噪音。\n\n\n\n3.5.3 中国市场 CAPM 实证研究的发现\n\nCAPM 在中国市场有一定解释力，但不如成熟市场: 市场风险是影响中国 A 股收益率的重要因素，但 CAPM 模型的解释力相对有限。\n市场异象在中国市场更为显著: 规模效应、价值效应、动量效应等市场异象在中国市场可能更为显著，CAPM 模型难以解释这些现象。\n多因子模型在中国市场更适用: 为了更准确地描述中国市场的资产定价，需要构建多因子模型，引入更多风险因子。\n市场有效性有待提高: 中国 A 股市场有效性相对较低，市场摩擦和投资者行为偏差可能导致 CAPM 模型定价偏差。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#实践部分python-计算-beta",
+    "href": "02_capm.html#实践部分python-计算-beta",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.6 实践部分：Python 计算 Beta",
+    "text": "3.6 实践部分：Python 计算 Beta\nimport pandas as pd\nimport numpy as np\nimport yfinance as yf\n\ndef calculate_beta(stock_ticker, market_ticker='^SSCI', start_date='2019-01-01', end_date='2023-01-01'):\n    \"\"\"\n    计算股票的 Beta 值\n\n    参数:\n    stock_ticker (str): 股票代码\n    market_ticker (str): 市场指数代码，默认为上证指数 '^SSCI'\n    start_date (str): 起始日期，默认为 '2019-01-01'\n    end_date (str): 结束日期，默认为 '2023-01-01'\n\n    返回:\n    float: 股票的 Beta 值\n    \"\"\"\n    try:\n        # 下载股票和市场指数的历史数据\n        stock_data = yf.download(stock_ticker, start=start_date, end=end_date)['Adj Close']\n        market_data = yf.download(market_ticker, start=start_date, end=end_date)['Adj Close']\n\n        if stock_data.empty or market_data.empty:\n            print(f\"无法获取 {stock_ticker} 或 {market_ticker} 的数据，请检查股票代码或日期范围。\")\n            return None\n\n        # 计算收益率\n        stock_returns = stock_data.pct_change().dropna()\n        market_returns = market_data.pct_change().dropna()\n\n        if stock_returns.empty or market_returns.empty:\n            print(f\"{stock_ticker} 或 {market_ticker} 的收益率数据为空，请检查数据。\")\n            return None\n\n        # 计算 Beta 值\n        covariance = np.cov(stock_returns, market_returns)\n        beta = covariance[0, 1] / covariance[1, 1]\n\n        return beta\n\n    except Exception as e:\n        print(f\"计算 {stock_ticker} 的 Beta 值时出错: {e}\")\n        return None\n\n# 示例\nstock_code = '600519.SS'  # 贵州茅台\nbeta_value = calculate_beta(stock_code)\n\nif beta_value is not None:\n    print(f\"{stock_code} 的 Beta 值为: {beta_value:.2f}\")\n代码解释:\n\n导入库: 导入 pandas (数据处理), numpy (数值计算), yfinance (下载金融数据) 库。\ncalculate_beta 函数:\n\n参数: 接受股票代码 stock_ticker，市场指数代码 market_ticker (默认为上证指数 ^SSCI)，起始日期 start_date，结束日期 end_date。\n下载数据: 使用 yf.download 从 Yahoo Finance 下载股票和市场指数的调整后收盘价数据。\n计算收益率: 使用 pct_change() 计算日收益率，并用 dropna() 删除缺失值。\n计算 Beta: 使用 np.cov() 计算股票收益率和市场收益率的协方差矩阵，然后根据 Beta 公式计算 Beta 值。\n异常处理: 使用 try-except 块处理可能出现的异常，如数据下载失败、股票代码错误等。\n返回: 返回计算得到的 Beta 值。\n\n示例: 使用贵州茅台 (600519.SS) 的股票代码调用 calculate_beta 函数，并打印结果。\n\n作业:\n\n修改代码，计算其他股票的 Beta 值，例如平安银行 (000001.SZ)、招商银行 (600036.SS) 等。\n尝试修改市场指数，例如使用沪深 300 指数 (000300.SS) 或创业板指 (399006.SZ) 计算 Beta 值，比较不同市场指数下 Beta 值的差异。\n思考：Beta 值在投资决策中的应用，如何利用 Beta 值进行风险管理和投资组合构建？",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#capm-模型的局限性",
+    "href": "02_capm.html#capm-模型的局限性",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.6 CAPM 模型的局限性",
+    "text": "3.6 CAPM 模型的局限性\nCAPM 模型虽然是资产定价理论的基石，但在实际应用中存在诸多局限性，理解这些局限性有助于我们更合理地使用模型，并认识到后续模型发展的必要性。\n\n单因子模型的局限:\n\n只考虑市场风险: CAPM 模型只考虑了市场组合这一个系统性风险因子，而现实市场中可能存在多种风险因子影响资产收益率，例如：\n\n规模风险: 小市值公司可能面临更大的经营风险和流动性风险。\n价值风险: 价值型公司（高账面市值比）可能面临盈利能力下降的风险。\n盈利能力风险: 盈利能力较弱的公司可能面临经营困境。\n\n无法解释所有收益率差异: 实证研究表明，CAPM 模型无法完全解释不同资产之间的收益率差异，存在 定价误差 (\\(\\alpha_i \\neq 0\\))。\n\n对市场有效性的过度假设:\n\n市场并非完美: 现实市场存在交易成本、信息不对称、卖空限制等，这些市场摩擦会影响 CAPM 模型的有效性。\n投资者行为偏差: CAPM 模型假设投资者是完全理性的，但行为金融学研究表明，投资者存在各种非理性行为偏差，如过度自信、羊群效应等，这些偏差也会导致市场定价偏离 CAPM 模型的预测。\n\n实证检验的挑战:\n\n市场组合难以定义: CAPM 理论中的市场组合是包含所有资产的组合，但在实际中难以准确定义和获取，通常只能用股票指数（如沪深300、标普500）作为替代，这可能导致检验结果的偏差。\n模型假设难以验证: CAPM 模型的许多假设（如投资者同质性、收益率正态分布）难以直接验证，模型的有效性检验只能是间接的。\n数据和方法的影响: 实证检验结果可能受到数据频率、时间窗口、检验方法等因素的影响，不同的研究可能得出不同的结论。\n\n无法解释市场异象:\n\n市场异象 (Anomalies)：指 CAPM 模型无法解释的、持续存在的超额收益现象。\n常见的市场异象包括：\n\n规模效应 (Size Effect)：小市值股票的平均收益率显著高于 CAPM 模型预测的水平。\n价值效应 (Value Effect)：价值型股票（高账面市值比）的平均收益率显著高于 CAPM 模型预测的水平。\n动量效应 (Momentum Effect)：过去一段时间收益率较高的股票，未来一段时间的收益率也倾向于较高。\n\n市场异象的存在表明 CAPM 模型对现实市场的描述是不完善的，需要引入更多的风险因子或考虑行为金融学因素来解释这些现象。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  },
+  {
+    "objectID": "02_capm.html#总结",
+    "href": "02_capm.html#总结",
+    "title": "3  资本资产定价模型 (CAPM)",
+    "section": "3.7 总结",
+    "text": "3.7 总结\n\nCAPM 模型是资产定价理论的重要基石，为资产定价提供了一个基准框架。\nCAPM 模型假设投资者是理性的，市场是有效的，资产价格充分反映了所有可获得的信息。\nCAPM 模型在实际应用中存在诸多局限性，理解这些局限性有助于我们更合理地使用模型，并认识到后续模型发展的必要性。",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
+    ]
+  }
+]
