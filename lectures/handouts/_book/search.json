@@ -130,16 +130,6 @@
     ]
   },
   {
-    "objectID": "02_capm.html#实践部分python-计算-beta",
-    "href": "02_capm.html#实践部分python-计算-beta",
-    "title": "3  资本资产定价模型 (CAPM)",
-    "section": "3.6 实践部分：Python 计算 Beta",
-    "text": "3.6 实践部分：Python 计算 Beta\nimport pandas as pd\nimport numpy as np\nimport yfinance as yf\n\ndef calculate_beta(stock_ticker, market_ticker='^SSCI', start_date='2019-01-01', end_date='2023-01-01'):\n    \"\"\"\n    计算股票的 Beta 值\n\n    参数:\n    stock_ticker (str): 股票代码\n    market_ticker (str): 市场指数代码，默认为上证指数 '^SSCI'\n    start_date (str): 起始日期，默认为 '2019-01-01'\n    end_date (str): 结束日期，默认为 '2023-01-01'\n\n    返回:\n    float: 股票的 Beta 值\n    \"\"\"\n    try:\n        # 下载股票和市场指数的历史数据\n        stock_data = yf.download(stock_ticker, start=start_date, end=end_date)['Adj Close']\n        market_data = yf.download(market_ticker, start=start_date, end=end_date)['Adj Close']\n\n        if stock_data.empty or market_data.empty:\n            print(f\"无法获取 {stock_ticker} 或 {market_ticker} 的数据，请检查股票代码或日期范围。\")\n            return None\n\n        # 计算收益率\n        stock_returns = stock_data.pct_change().dropna()\n        market_returns = market_data.pct_change().dropna()\n\n        if stock_returns.empty or market_returns.empty:\n            print(f\"{stock_ticker} 或 {market_ticker} 的收益率数据为空，请检查数据。\")\n            return None\n\n        # 计算 Beta 值\n        covariance = np.cov(stock_returns, market_returns)\n        beta = covariance[0, 1] / covariance[1, 1]\n\n        return beta\n\n    except Exception as e:\n        print(f\"计算 {stock_ticker} 的 Beta 值时出错: {e}\")\n        return None\n\n# 示例\nstock_code = '600519.SS'  # 贵州茅台\nbeta_value = calculate_beta(stock_code)\n\nif beta_value is not None:\n    print(f\"{stock_code} 的 Beta 值为: {beta_value:.2f}\")\n代码解释:\n\n导入库: 导入 pandas (数据处理), numpy (数值计算), yfinance (下载金融数据) 库。\ncalculate_beta 函数:\n\n参数: 接受股票代码 stock_ticker，市场指数代码 market_ticker (默认为上证指数 ^SSCI)，起始日期 start_date，结束日期 end_date。\n下载数据: 使用 yf.download 从 Yahoo Finance 下载股票和市场指数的调整后收盘价数据。\n计算收益率: 使用 pct_change() 计算日收益率，并用 dropna() 删除缺失值。\n计算 Beta: 使用 np.cov() 计算股票收益率和市场收益率的协方差矩阵，然后根据 Beta 公式计算 Beta 值。\n异常处理: 使用 try-except 块处理可能出现的异常，如数据下载失败、股票代码错误等。\n返回: 返回计算得到的 Beta 值。\n\n示例: 使用贵州茅台 (600519.SS) 的股票代码调用 calculate_beta 函数，并打印结果。\n\n作业:\n\n修改代码，计算其他股票的 Beta 值，例如平安银行 (000001.SZ)、招商银行 (600036.SS) 等。\n尝试修改市场指数，例如使用沪深 300 指数 (000300.SS) 或创业板指 (399006.SZ) 计算 Beta 值，比较不同市场指数下 Beta 值的差异。\n思考：Beta 值在投资决策中的应用，如何利用 Beta 值进行风险管理和投资组合构建？",
-    "crumbs": [
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>资本资产定价模型 (CAPM)</span>"
-    ]
-  },
-  {
     "objectID": "02_capm.html#capm-模型的局限性",
     "href": "02_capm.html#capm-模型的局限性",
     "title": "3  资本资产定价模型 (CAPM)",
