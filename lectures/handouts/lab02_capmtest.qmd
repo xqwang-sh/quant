@@ -57,7 +57,7 @@ $R_{i} = \gamma_{0} + \gamma_{1} \beta_i + \eta_{i}$
 
 ## 实验步骤
 
-### 1. 导入必要的 Python 库
+### 导入必要的 Python 库
 
 ```python
 import pandas as pd
@@ -68,7 +68,7 @@ from glob import glob
 import matplotlib.pyplot as plt
 ```
 
-### 2. 读取市场指数数据
+### 读取市场指数数据
 
 ```python
 ###################################
@@ -92,7 +92,7 @@ market_data = market_data[market_data['year'] >= '2015']
 market_data = market_data[market_data['year'] <= '2024']
 ```
 
-### 3. 读取无风险利率数据
+### 读取无风险利率数据
 
 ```python
 ###################################
@@ -128,7 +128,7 @@ rf_data = rf_data[rf_data['year'] >= '2015']
 rf_data = rf_data[rf_data['year'] <= '2024']
 ```
 
-### 4. 读取所有股票回报率数据
+### 读取所有股票回报率数据
 
 ```python
 ###################################
@@ -168,7 +168,7 @@ stock_data = stock_data[stock_data['year'] <= '2024']
 print(f"Stkcd的唯一值的数量: {stock_data['Stkcd'].nunique()}")
 ```
 
-### 5. 合并数据框
+### 合并数据框
 
 ```python
 ###################################
@@ -191,7 +191,7 @@ market_risk_premium = merged_data['market_excess_return'].mean()
 print(f"市场风险溢价: {market_risk_premium}")
 ```
 
-### 6. 时间序列回归估计Beta
+### 时间序列回归估计Beta
 
 ```python
 ###################################
@@ -239,7 +239,7 @@ beta_values = [result.params[1] for result in time_series_results.values()]
 beta_values = pd.DataFrame({'Stkcd': list(time_series_results.keys()), 'beta': beta_values})
 ```
 
-### 7. 横截面回归检验CAPM模型
+### 横截面回归检验CAPM模型
 
 ```python
 ###################################
@@ -272,28 +272,28 @@ p_value_gamma_0 = model.pvalues['const']  # 零Beta组合收益率的显著性
 p_value_gamma_1 = model.pvalues['beta']   # 市场风险溢价的显著性
 
 print(f"\nCAPM横截面回归结果解释:")
-print(f"γ₀ (零Beta组合收益率) = {gamma_0:.6f}, p值 = {p_value_gamma_0:.6f}")
-print(f"γ₁ (市场风险溢价) = {gamma_1:.6f}, p值 = {p_value_gamma_1:.6f}")
+print(f"γ0 (零Beta组合收益率) = {gamma_0:.6f}, p值 = {p_value_gamma_0:.6f}")
+print(f"γ1 (市场风险溢价) = {gamma_1:.6f}, p值 = {p_value_gamma_1:.6f}")
 print(f"实际市场风险溢价 = {market_risk_premium:.6f}")
 
 # CAPM检验结论
 print("\nCAPM检验结论:")
 if p_value_gamma_0 < 0.05:
-    print(f"- γ₀ ({gamma_0:.6f}) 显著，表明零Beta组合收益率存在")
+    print(f"- γ0 ({gamma_0:.6f}) 显著，表明零Beta组合收益率存在")
 else:
-    print(f"- γ₀ ({gamma_0:.6f}) 不显著，无法确定零Beta组合收益率")
+    print(f"- γ0 ({gamma_0:.6f}) 不显著，无法确定零Beta组合收益率")
 
 if p_value_gamma_1 < 0.05:
     if gamma_1 > 0:
-        print(f"- γ₁ ({gamma_1:.6f}) 显著为正，表明Beta风险被市场定价")
+        print(f"- γ1 ({gamma_1:.6f}) 显著为正，表明Beta风险被市场定价")
         if abs(gamma_1 - market_risk_premium) < 0.01:
             print(f"  且接近实际市场风险溢价 ({market_risk_premium:.6f})，支持CAPM模型")
         else:
             print(f"  但与实际市场风险溢价 ({market_risk_premium:.6f}) 存在差异，CAPM模型部分成立")
     else:
-        print(f"- γ₁ ({gamma_1:.6f}) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价")
+        print(f"- γ1 ({gamma_1:.6f}) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价")
 else:
-    print(f"- γ₁ ({gamma_1:.6f}) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立")
+    print(f"- γ1 ({gamma_1:.6f}) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立")
 
 # 画图并保存
 plt.figure(figsize=(10, 6))
@@ -303,9 +303,9 @@ plt.title('Beta与平均收益率的关系')
 plt.xlabel('Beta系数')
 plt.ylabel('平均周收益率')
 plt.grid(True, alpha=0.3)
-plt.annotate(f'R² = {model.rsquared:.4f}', xy=(0.05, 0.95), xycoords='axes fraction')
-plt.annotate(f'γ₀ = {gamma_0:.6f}', xy=(0.05, 0.90), xycoords='axes fraction')
-plt.annotate(f'γ₁ = {gamma_1:.6f}', xy=(0.05, 0.85), xycoords='axes fraction')
+plt.annotate(f'R2 = {model.rsquared:.4f}', xy=(0.05, 0.95), xycoords='axes fraction')
+plt.annotate(f'γ0 = {gamma_0:.6f}', xy=(0.05, 0.90), xycoords='axes fraction')
+plt.annotate(f'γ1 = {gamma_1:.6f}', xy=(0.05, 0.85), xycoords='axes fraction')
 plt.savefig('capm_scatter.png')
 print("已保存Beta与平均收益率的散点图")
 ```

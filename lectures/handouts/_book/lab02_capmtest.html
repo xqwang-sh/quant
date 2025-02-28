@@ -211,13 +211,13 @@ window.Quarto = {
   <li><a href="#实验数据" id="toc-实验数据" class="nav-link" data-scroll-target="#实验数据"><span class="header-section-number">4.3</span> 实验数据</a></li>
   <li><a href="#实验步骤" id="toc-实验步骤" class="nav-link" data-scroll-target="#实验步骤"><span class="header-section-number">4.4</span> 实验步骤</a>
   <ul class="collapse">
-  <li><a href="#导入必要的-python-库" id="toc-导入必要的-python-库" class="nav-link" data-scroll-target="#导入必要的-python-库"><span class="header-section-number">4.4.1</span> 1. 导入必要的 Python 库</a></li>
-  <li><a href="#读取市场指数数据" id="toc-读取市场指数数据" class="nav-link" data-scroll-target="#读取市场指数数据"><span class="header-section-number">4.4.2</span> 2. 读取市场指数数据</a></li>
-  <li><a href="#读取无风险利率数据" id="toc-读取无风险利率数据" class="nav-link" data-scroll-target="#读取无风险利率数据"><span class="header-section-number">4.4.3</span> 3. 读取无风险利率数据</a></li>
-  <li><a href="#读取所有股票回报率数据" id="toc-读取所有股票回报率数据" class="nav-link" data-scroll-target="#读取所有股票回报率数据"><span class="header-section-number">4.4.4</span> 4. 读取所有股票回报率数据</a></li>
-  <li><a href="#合并数据框" id="toc-合并数据框" class="nav-link" data-scroll-target="#合并数据框"><span class="header-section-number">4.4.5</span> 5. 合并数据框</a></li>
-  <li><a href="#时间序列回归估计beta" id="toc-时间序列回归估计beta" class="nav-link" data-scroll-target="#时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 6. 时间序列回归估计Beta</a></li>
-  <li><a href="#横截面回归检验capm模型" id="toc-横截面回归检验capm模型" class="nav-link" data-scroll-target="#横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 7. 横截面回归检验CAPM模型</a></li>
+  <li><a href="#导入必要的-python-库" id="toc-导入必要的-python-库" class="nav-link" data-scroll-target="#导入必要的-python-库"><span class="header-section-number">4.4.1</span> 导入必要的 Python 库</a></li>
+  <li><a href="#读取市场指数数据" id="toc-读取市场指数数据" class="nav-link" data-scroll-target="#读取市场指数数据"><span class="header-section-number">4.4.2</span> 读取市场指数数据</a></li>
+  <li><a href="#读取无风险利率数据" id="toc-读取无风险利率数据" class="nav-link" data-scroll-target="#读取无风险利率数据"><span class="header-section-number">4.4.3</span> 读取无风险利率数据</a></li>
+  <li><a href="#读取所有股票回报率数据" id="toc-读取所有股票回报率数据" class="nav-link" data-scroll-target="#读取所有股票回报率数据"><span class="header-section-number">4.4.4</span> 读取所有股票回报率数据</a></li>
+  <li><a href="#合并数据框" id="toc-合并数据框" class="nav-link" data-scroll-target="#合并数据框"><span class="header-section-number">4.4.5</span> 合并数据框</a></li>
+  <li><a href="#时间序列回归估计beta" id="toc-时间序列回归估计beta" class="nav-link" data-scroll-target="#时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 时间序列回归估计Beta</a></li>
+  <li><a href="#横截面回归检验capm模型" id="toc-横截面回归检验capm模型" class="nav-link" data-scroll-target="#横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 横截面回归检验CAPM模型</a></li>
   </ul></li>
   <li><a href="#实验结果" id="toc-实验结果" class="nav-link" data-scroll-target="#实验结果"><span class="header-section-number">4.5</span> 实验结果</a></li>
   <li><a href="#结论与讨论" id="toc-结论与讨论" class="nav-link" data-scroll-target="#结论与讨论"><span class="header-section-number">4.6</span> 结论与讨论</a></li>
@@ -303,7 +303,7 @@ window.Quarto = {
 <section id="实验步骤" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="实验步骤"><span class="header-section-number">4.4</span> 实验步骤</h2>
 <section id="导入必要的-python-库" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="导入必要的-python-库"><span class="header-section-number">4.4.1</span> 1. 导入必要的 Python 库</h3>
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="导入必要的-python-库"><span class="header-section-number">4.4.1</span> 导入必要的 Python 库</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -312,7 +312,7 @@ window.Quarto = {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="读取市场指数数据" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="读取市场指数数据"><span class="header-section-number">4.4.2</span> 2. 读取市场指数数据</h3>
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="读取市场指数数据"><span class="header-section-number">4.4.2</span> 读取市场指数数据</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第一步：读取市场指数数据</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 市场指数代表整体市场的表现，是CAPM模型中的市场组合</span></span>
@@ -334,7 +334,7 @@ window.Quarto = {
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>market_data <span class="op">=</span> market_data[market_data[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="st">'2024'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="读取无风险利率数据" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="读取无风险利率数据"><span class="header-section-number">4.4.3</span> 3. 读取无风险利率数据</h3>
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="读取无风险利率数据"><span class="header-section-number">4.4.3</span> 读取无风险利率数据</h3>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第二步：读取无风险利率数据</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 无风险利率是CAPM模型的重要组成部分，代表投资者在不承担风险时的最低收益要求</span></span>
@@ -368,7 +368,7 @@ window.Quarto = {
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>rf_data <span class="op">=</span> rf_data[rf_data[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="st">'2024'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="读取所有股票回报率数据" class="level3" data-number="4.4.4">
-<h3 data-number="4.4.4" class="anchored" data-anchor-id="读取所有股票回报率数据"><span class="header-section-number">4.4.4</span> 4. 读取所有股票回报率数据</h3>
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="读取所有股票回报率数据"><span class="header-section-number">4.4.4</span> 读取所有股票回报率数据</h3>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第三步：读取所有股票回报率数据(2015-2024)</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 个股回报率是CAPM检验的核心数据，用于估计Beta和验证模型预测</span></span>
@@ -406,7 +406,7 @@ window.Quarto = {
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stkcd的唯一值的数量: </span><span class="sc">{</span>stock_data[<span class="st">'Stkcd'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="合并数据框" class="level3" data-number="4.4.5">
-<h3 data-number="4.4.5" class="anchored" data-anchor-id="合并数据框"><span class="header-section-number">4.4.5</span> 5. 合并数据框</h3>
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="合并数据框"><span class="header-section-number">4.4.5</span> 合并数据框</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第四步：合并数据框</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 将股票、市场和无风险利率数据合并，为后续分析做准备</span></span>
@@ -427,7 +427,7 @@ window.Quarto = {
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"市场风险溢价: </span><span class="sc">{</span>market_risk_premium<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="时间序列回归估计beta" class="level3" data-number="4.4.6">
-<h3 data-number="4.4.6" class="anchored" data-anchor-id="时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 6. 时间序列回归估计Beta</h3>
+<h3 data-number="4.4.6" class="anchored" data-anchor-id="时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 时间序列回归估计Beta</h3>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第五步：时间序列回归估计Beta</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta是CAPM模型的核心参数，衡量个股对市场风险的敏感度</span></span>
@@ -473,7 +473,7 @@ window.Quarto = {
 <span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>beta_values <span class="op">=</span> pd.DataFrame({<span class="st">'Stkcd'</span>: <span class="bu">list</span>(time_series_results.keys()), <span class="st">'beta'</span>: beta_values})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="横截面回归检验capm模型" class="level3" data-number="4.4.7">
-<h3 data-number="4.4.7" class="anchored" data-anchor-id="横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 7. 横截面回归检验CAPM模型</h3>
+<h3 data-number="4.4.7" class="anchored" data-anchor-id="横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 横截面回归检验CAPM模型</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第六步：横截面回归检验CAPM模型</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归检验Beta与平均收益率的关系，是CAPM模型有效性的关键检验</span></span>
@@ -504,28 +504,28 @@ window.Quarto = {
 <span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>p_value_gamma_1 <span class="op">=</span> model.pvalues[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价的显著性</span></span>
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">CAPM横截面回归结果解释:"</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ₀ (零Beta组合收益率) = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_0<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ₁ (市场风险溢价) = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_1<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ0 (零Beta组合收益率) = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_0<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ1 (市场风险溢价) = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_1<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"实际市场风险溢价 = </span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># CAPM检验结论</span></span>
 <span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">CAPM检验结论:"</span>)</span>
 <span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_0 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ₀ (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 显著，表明零Beta组合收益率存在"</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ0 (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 显著，表明零Beta组合收益率存在"</span>)</span>
 <span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ₀ (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 不显著，无法确定零Beta组合收益率"</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ0 (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 不显著，无法确定零Beta组合收益率"</span>)</span>
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_1 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
 <span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gamma_1 <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ₁ (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著为正，表明Beta风险被市场定价"</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著为正，表明Beta风险被市场定价"</span>)</span>
 <span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(gamma_1 <span class="op">-</span> market_risk_premium) <span class="op">&lt;</span> <span class="fl">0.01</span>:</span>
 <span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  且接近实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">)，支持CAPM模型"</span>)</span>
 <span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
 <span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  但与实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">) 存在差异，CAPM模型部分成立"</span>)</span>
 <span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ₁ (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价"</span>)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价"</span>)</span>
 <span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ₁ (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立"</span>)</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立"</span>)</span>
 <span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># 画图并保存</span></span>
 <span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
@@ -535,9 +535,9 @@ window.Quarto = {
 <span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Beta系数'</span>)</span>
 <span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'平均周收益率'</span>)</span>
 <span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'R² = </span><span class="sc">{</span>model<span class="sc">.</span>rsquared<span class="sc">:.4f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ₀ = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.90</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ₁ = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.85</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'R2 = </span><span class="sc">{</span>model<span class="sc">.</span>rsquared<span class="sc">:.4f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ0 = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.90</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ1 = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.85</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'capm_scatter.png'</span>)</span>
 <span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"已保存Beta与平均收益率的散点图"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
