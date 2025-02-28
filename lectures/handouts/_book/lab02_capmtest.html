@@ -211,13 +211,17 @@ window.Quarto = {
   <li><a href="#实验数据" id="toc-实验数据" class="nav-link" data-scroll-target="#实验数据"><span class="header-section-number">4.3</span> 实验数据</a></li>
   <li><a href="#实验步骤" id="toc-实验步骤" class="nav-link" data-scroll-target="#实验步骤"><span class="header-section-number">4.4</span> 实验步骤</a>
   <ul class="collapse">
-  <li><a href="#数据准备" id="toc-数据准备" class="nav-link" data-scroll-target="#数据准备"><span class="header-section-number">4.4.1</span> 1. 数据准备</a></li>
-  <li><a href="#时间序列回归检验" id="toc-时间序列回归检验" class="nav-link" data-scroll-target="#时间序列回归检验"><span class="header-section-number">4.4.2</span> 2. 时间序列回归检验</a></li>
-  <li><a href="#横截面回归检验" id="toc-横截面回归检验" class="nav-link" data-scroll-target="#横截面回归检验"><span class="header-section-number">4.4.3</span> 3. 横截面回归检验</a></li>
-  <li><a href="#fama-macbeth-回归检验-选做" id="toc-fama-macbeth-回归检验-选做" class="nav-link" data-scroll-target="#fama-macbeth-回归检验-选做"><span class="header-section-number">4.4.4</span> 4. Fama-MacBeth 回归检验 (选做)</a></li>
-  <li><a href="#结果分析与讨论" id="toc-结果分析与讨论" class="nav-link" data-scroll-target="#结果分析与讨论"><span class="header-section-number">4.4.5</span> 5. 结果分析与讨论</a></li>
+  <li><a href="#导入必要的-python-库" id="toc-导入必要的-python-库" class="nav-link" data-scroll-target="#导入必要的-python-库"><span class="header-section-number">4.4.1</span> 1. 导入必要的 Python 库</a></li>
+  <li><a href="#读取市场指数数据" id="toc-读取市场指数数据" class="nav-link" data-scroll-target="#读取市场指数数据"><span class="header-section-number">4.4.2</span> 2. 读取市场指数数据</a></li>
+  <li><a href="#读取无风险利率数据" id="toc-读取无风险利率数据" class="nav-link" data-scroll-target="#读取无风险利率数据"><span class="header-section-number">4.4.3</span> 3. 读取无风险利率数据</a></li>
+  <li><a href="#读取所有股票回报率数据" id="toc-读取所有股票回报率数据" class="nav-link" data-scroll-target="#读取所有股票回报率数据"><span class="header-section-number">4.4.4</span> 4. 读取所有股票回报率数据</a></li>
+  <li><a href="#合并数据框" id="toc-合并数据框" class="nav-link" data-scroll-target="#合并数据框"><span class="header-section-number">4.4.5</span> 5. 合并数据框</a></li>
+  <li><a href="#时间序列回归估计beta" id="toc-时间序列回归估计beta" class="nav-link" data-scroll-target="#时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 6. 时间序列回归估计Beta</a></li>
+  <li><a href="#横截面回归检验capm模型" id="toc-横截面回归检验capm模型" class="nav-link" data-scroll-target="#横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 7. 横截面回归检验CAPM模型</a></li>
   </ul></li>
-  <li><a href="#实验总结" id="toc-实验总结" class="nav-link" data-scroll-target="#实验总结"><span class="header-section-number">4.5</span> 实验总结</a></li>
+  <li><a href="#实验结果" id="toc-实验结果" class="nav-link" data-scroll-target="#实验结果"><span class="header-section-number">4.5</span> 实验结果</a></li>
+  <li><a href="#结论与讨论" id="toc-结论与讨论" class="nav-link" data-scroll-target="#结论与讨论"><span class="header-section-number">4.6</span> 结论与讨论</a></li>
+  <li><a href="#实验总结" id="toc-实验总结" class="nav-link" data-scroll-target="#实验总结"><span class="header-section-number">4.7</span> 实验总结</a></li>
   </ul>
 </nav>
     </div>
@@ -246,7 +250,7 @@ window.Quarto = {
 <section id="实验目的" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="实验目的"><span class="header-section-number">4.1</span> 实验目的</h2>
 <ol type="1">
-<li><strong>掌握 CAPM 模型的实证检验方法</strong>: 学习时间序列回归、横截面回归和 Fama-MacBeth 回归等方法。</li>
+<li><strong>掌握 CAPM 模型的横截面回归检验方法</strong>: 学习横截面回归方法进行CAPM检验。</li>
 <li><strong>使用 Python 进行 CAPM 实证检验</strong>: 熟悉使用 Python 进行数据获取、回归分析和结果分析。</li>
 <li><strong>检验 CAPM 模型在中国股票市场的适用性</strong>: 使用中国股票市场数据，实证检验 CAPM 模型是否在中国市场成立。</li>
 <li><strong>理解 CAPM 模型的局限性</strong>: 通过实证结果，加深对 CAPM 模型局限性的理解。</li>
@@ -269,16 +273,8 @@ window.Quarto = {
 </section>
 <section id="capm-模型的实证检验方法" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="capm-模型的实证检验方法"><span class="header-section-number">4.2.2</span> CAPM 模型的实证检验方法</h3>
-<p>本实验将采用以下三种方法对 CAPM 模型进行实证检验：</p>
-<ol type="1">
-<li><p><strong>时间序列回归 (Time-Series Regression)</strong></p>
-<p>检验股票超额收益率是否可以被市场组合的超额收益率解释，模型如下：</p>
-<p><span class="math inline">\(R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}\)</span></p>
-<ul>
-<li>如果 CAPM 模型成立，则 <span class="math inline">\(\alpha_i\)</span> 应不显著异于零。</li>
-<li><span class="math inline">\(\beta_i\)</span> 为股票 <span class="math inline">\(i\)</span> 的系统性风险系数。</li>
-</ul></li>
-<li><p><strong>横截面回归 (Cross-Sectional Regression)</strong></p>
+<p>本实验将采用横截面回归方法对 CAPM 模型进行实证检验：</p>
+<p><strong>横截面回归 (Cross-Sectional Regression)</strong></p>
 <p>检验股票的平均收益率是否与其 Beta 系数线性相关，模型如下：</p>
 <p><span class="math inline">\(R_{i} = \gamma_{0} + \gamma_{1} \beta_i + \eta_{i}\)</span></p>
 <ul>
@@ -289,16 +285,6 @@ window.Quarto = {
 <ol type="1">
 <li><strong>第一步：时间序列回归估计 Beta</strong>: 使用时间序列回归模型，对每只股票 <span class="math inline">\(i\)</span> 估计其 Beta 值 <span class="math inline">\(\beta_i\)</span>。</li>
 <li><strong>第二步：横截面回归</strong>: 使用第一步估计的 Beta 值 <span class="math inline">\(\beta_i\)</span> 作为解释变量，股票的平均收益率 <span class="math inline">\(R_i\)</span> 作为被解释变量，进行横截面回归。</li>
-</ol></li>
-<li><p><strong>Fama-MacBeth 回归</strong></p>
-<p>Fama-MacBeth 回归是一种改进的横截面回归方法，可以更有效地处理 Beta 估计的误差，并提供更稳健的检验结果。</p>
-<p><strong>步骤：</strong></p>
-<ol type="1">
-<li><strong>第一步：滚动窗口估计 Beta</strong>: 使用滚动窗口时间序列回归，对每只股票 <span class="math inline">\(i\)</span> 在每个时间点 <span class="math inline">\(t\)</span> 估计其 Beta 值 <span class="math inline">\(\beta_{i,t-1}\)</span> (使用 <span class="math inline">\(t-1\)</span> 期及之前的数据估计)。</li>
-<li><strong>第二步：横截面回归</strong>: 在每个时间点 <span class="math inline">\(t\)</span>，使用第一步估计的 Beta 值 <span class="math inline">\(\beta_{i,t-1}\)</span> 作为解释变量，股票在 <span class="math inline">\(t\)</span> 期的收益率 <span class="math inline">\(R_{i,t}\)</span> 作为被解释变量，进行横截面回归，得到每个时间点的 <span class="math inline">\(\gamma_{0,t}\)</span> 和 <span class="math inline">\(\gamma_{1,t}\)</span>。</li>
-<li><strong>第三步：计算平均风险溢价</strong>: 计算风险溢价 <span class="math inline">\(\gamma_{1,t}\)</span> 的时间序列均值 <span class="math inline">\(\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}\)</span>。</li>
-<li><strong>第四步：检验显著性</strong>: 检验平均风险溢价 <span class="math inline">\(\bar{\gamma}_1\)</span> 是否显著异于零。</li>
-</ol></li>
 </ol>
 </section>
 </section>
@@ -306,222 +292,306 @@ window.Quarto = {
 <h2 data-number="4.3" class="anchored" data-anchor-id="实验数据"><span class="header-section-number">4.3</span> 实验数据</h2>
 <p>本实验使用中国 A 股市场数据进行检验。</p>
 <ul>
-<li><strong>股票数据</strong>: 选取沪深 300 指数成分股作为研究对象。</li>
-<li><strong>市场指数</strong>: 使用沪深 300 指数 (000300.SS) 作为市场组合的代理。</li>
-<li><strong>无风险利率</strong>: 使用中国国债利率作为无风险利率的代理。可以使用一年期国债到期收益率。</li>
-<li><strong>数据区间</strong>: 选择合适的历史数据区间，例如 2019-01-01 至 2023-01-01 (可以根据数据可获得性调整)。</li>
-<li><strong>数据频率</strong>: 使用日度或周度数据。</li>
+<li><strong>股票数据</strong>: 选取上证A股作为研究对象。</li>
+<li><strong>市场指数</strong>: 使用上证指数作为市场组合的代理。</li>
+<li><strong>无风险利率</strong>: 使用中国国债利率作为无风险利率的代理。</li>
+<li><strong>数据区间</strong>: 选择2015年至2024年的历史数据。</li>
+<li><strong>数据频率</strong>: 使用周度数据。</li>
 </ul>
-<p><strong>数据来源</strong>: 可以使用 <code>yfinance</code> 或 <code>tushare</code> 等 Python 库获取股票和指数数据。国债利率数据可能需要从其他金融数据平台获取。</p>
+<p><strong>数据来源</strong>: CSMAR（学校IP登陆）</p>
 </section>
 <section id="实验步骤" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="实验步骤"><span class="header-section-number">4.4</span> 实验步骤</h2>
-<section id="数据准备" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="数据准备"><span class="header-section-number">4.4.1</span> 1. 数据准备</h3>
-<section id="导入必要的-python-库" class="level4" data-number="4.4.1.1">
-<h4 data-number="4.4.1.1" class="anchored" data-anchor-id="导入必要的-python-库"><span class="header-section-number">4.4.1.1</span> 1.1 导入必要的 Python 库</h4>
+<section id="导入必要的-python-库" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="导入必要的-python-库"><span class="header-section-number">4.4.1</span> 1. 导入必要的 Python 库</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yfinance <span class="im">as</span> yf</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> glob <span class="im">import</span> glob</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="下载股票和市场指数数据" class="level4" data-number="4.4.1.2">
-<h4 data-number="4.4.1.2" class="anchored" data-anchor-id="下载股票和市场指数数据"><span class="header-section-number">4.4.1.2</span> 1.2 下载股票和市场指数数据</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 股票代码列表 (这里仅为示例，实际应使用沪深300成分股列表)</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stock_codes <span class="op">=</span> [<span class="st">'600519.SS'</span>, <span class="st">'000001.SZ'</span>, <span class="st">'600036.SS'</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>market_ticker <span class="op">=</span> <span class="st">'000300.SS'</span>  <span class="co"># 沪深300指数</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> <span class="st">'2019-01-01'</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>end_date <span class="op">=</span> <span class="st">'2023-01-01'</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 下载股票数据</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>stock_data <span class="op">=</span> {}</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> code <span class="kw">in</span> stock_codes:</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        stock_data[code] <span class="op">=</span> yf.download(code, start<span class="op">=</span>start_date, end<span class="op">=</span>end_date)[<span class="st">'Adj Close'</span>]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"下载股票 </span><span class="sc">{</span>code<span class="sc">}</span><span class="ss"> 数据失败: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 下载市场指数数据</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>market_data <span class="op">=</span> yf.download(market_ticker, start<span class="op">=</span>start_date, end<span class="op">=</span>end_date)[<span class="st">'Adj Close'</span>]</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 转换为 DataFrame 并计算收益率</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>stock_returns_df <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> code, data <span class="kw">in</span> stock_data.items():</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> data.empty:</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        stock_returns <span class="op">=</span> data.pct_change().dropna()</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        stock_returns_df[code] <span class="op">=</span> stock_returns</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>market_returns <span class="op">=</span> market_data.pct_change().dropna()</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>market_returns.name <span class="op">=</span> <span class="st">'market_return'</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stock_returns_df.head())</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(market_returns.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>请注意</strong>: 你需要获取沪深 300 指数成分股列表，并替换 <code>stock_codes</code> 示例列表。</p>
+<section id="读取市场指数数据" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="读取市场指数数据"><span class="header-section-number">4.4.2</span> 2. 读取市场指数数据</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第一步：读取市场指数数据</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 市场指数代表整体市场的表现，是CAPM模型中的市场组合</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>index_files <span class="op">=</span> <span class="st">"./data/mktret_weekly/TRD_Weekm.xlsx"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>market_data <span class="op">=</span> pd.read_excel(index_files, header<span class="op">=</span><span class="dv">0</span>, skiprows<span class="op">=</span><span class="dv">3</span>, names<span class="op">=</span>[<span class="st">'Markettype'</span>, <span class="st">'Trdwnt'</span>, <span class="st">'Wretwdos'</span>, <span class="st">'Dnstkcal'</span>])</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择上证A股市场(Markettype=1)的流通市值加权平均回报率(Wretwdos)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 流通市值加权平均回报率更能代表真实的市场表现，因为它考虑了不同股票的市场规模</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>market_data <span class="op">=</span> market_data[market_data[<span class="st">'Markettype'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 把Trdwnt（YYYY-WW）转换为两个变量：year和week</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>market_data[<span class="st">'year'</span>] <span class="op">=</span> market_data[<span class="st">'Trdwnt'</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>market_data[<span class="st">'week'</span>] <span class="op">=</span> market_data[<span class="st">'Trdwnt'</span>].<span class="bu">str</span>[<span class="dv">5</span>:]</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选year为2015至2024的数据</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择近10年数据，既保证样本量充足，又能反映当前市场特征</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>market_data <span class="op">=</span> market_data[market_data[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="st">'2015'</span>]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>market_data <span class="op">=</span> market_data[market_data[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="st">'2024'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="获取无风险利率数据" class="level4" data-number="4.4.1.3">
-<h4 data-number="4.4.1.3" class="anchored" data-anchor-id="获取无风险利率数据"><span class="header-section-number">4.4.1.3</span> 1.3 获取无风险利率数据</h4>
-<p>无风险利率数据可能需要手动查找或从其他数据源获取。这里假设我们已经获得了无风险利率数据，并将其存储在一个 Pandas Series 中，命名为 <code>risk_free_rate</code>。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 示例无风险利率数据 (需要替换为真实数据)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> stock_returns_df.index</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>risk_free_rate_values <span class="op">=</span> np.array([<span class="fl">0.02</span>] <span class="op">*</span> <span class="bu">len</span>(dates)) <span class="co"># 假设年化无风险利率为 2%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>risk_free_rate <span class="op">=</span> pd.Series(risk_free_rate_values, index<span class="op">=</span>dates)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>risk_free_rate <span class="op">=</span> risk_free_rate <span class="op">/</span> <span class="dv">252</span> <span class="co"># 转换为日度利率 (假设一年 252 个交易日)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>risk_free_rate.name <span class="op">=</span> <span class="st">'risk_free_rate'</span></span>
+<section id="读取无风险利率数据" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="读取无风险利率数据"><span class="header-section-number">4.4.3</span> 3. 读取无风险利率数据</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第二步：读取无风险利率数据</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 无风险利率是CAPM模型的重要组成部分，代表投资者在不承担风险时的最低收益要求</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>rf_files <span class="op">=</span> <span class="st">"./data/rf_weekly/TRD_Nrrate.xlsx"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>rf_data <span class="op">=</span> pd.read_excel(rf_files, header<span class="op">=</span><span class="dv">0</span>, skiprows<span class="op">=</span><span class="dv">2</span>, names<span class="op">=</span>[<span class="st">'Nrr1'</span>, <span class="st">'Clsdt'</span>, <span class="st">'Nrrdaydt'</span>])</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(risk_free_rate.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>重要</strong>: 请务必替换示例的无风险利率数据为真实的中国国债利率数据，并根据数据频率进行调整。</p>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 把rf从百分数单位转换为小数</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 统一单位便于后续计算超额收益率</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>rf_data[<span class="st">'Nrrdaydt'</span>] <span class="op">=</span> rf_data[<span class="st">'Nrrdaydt'</span>] <span class="op">/</span> <span class="dv">100</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 把Clsdt转换为日期格式</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>rf_data[<span class="st">'Clsdt'</span>] <span class="op">=</span> pd.to_datetime(rf_data[<span class="st">'Clsdt'</span>])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 把Clsdt转换为交易周份（周数从1开始）</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 这一步是为了将日度数据转换为周度数据，与股票和市场数据保持一致</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>rf_data[<span class="st">'Trdwnt'</span>] <span class="op">=</span> rf_data[<span class="st">'Clsdt'</span>].dt.strftime(<span class="st">'%Y-%U'</span>).<span class="bu">apply</span>(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">.</span>split(<span class="st">'-'</span>)[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span><span class="bu">int</span>(x.split(<span class="st">'-'</span>)[<span class="dv">1</span>]) <span class="op">+</span> <span class="dv">1</span><span class="sc">:02d}</span><span class="ss">"</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 把Trdwnt转换为两个变量：year和week</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>rf_data[<span class="st">'year'</span>] <span class="op">=</span> rf_data[<span class="st">'Trdwnt'</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>rf_data[<span class="st">'week'</span>] <span class="op">=</span> rf_data[<span class="st">'Trdwnt'</span>].<span class="bu">str</span>[<span class="dv">5</span>:]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 对rf在year和week上算平均值</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 由于一周内可能有多个无风险利率数据，取平均值作为该周的代表值</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>rf_data <span class="op">=</span> rf_data.groupby([<span class="st">'year'</span>, <span class="st">'week'</span>]).agg({<span class="st">'Nrrdaydt'</span>: <span class="st">'mean'</span>}).reset_index()</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选year为2015至2024的数据</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>rf_data <span class="op">=</span> rf_data[rf_data[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="st">'2015'</span>]</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>rf_data <span class="op">=</span> rf_data[rf_data[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="st">'2024'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="合并数据" class="level4" data-number="4.4.1.4">
-<h4 data-number="4.4.1.4" class="anchored" data-anchor-id="合并数据"><span class="header-section-number">4.4.1.4</span> 1.4 合并数据</h4>
-<p>将股票收益率、市场收益率和无风险利率数据合并到一个 DataFrame 中。</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并数据</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>merged_data <span class="op">=</span> pd.concat([stock_returns_df, market_returns, risk_free_rate], axis<span class="op">=</span><span class="dv">1</span>).dropna()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(merged_data.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="读取所有股票回报率数据" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="读取所有股票回报率数据"><span class="header-section-number">4.4.4</span> 4. 读取所有股票回报率数据</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第三步：读取所有股票回报率数据(2015-2024)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 个股回报率是CAPM检验的核心数据，用于估计Beta和验证模型预测</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取stockret_weekly中所有excel表格</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>stockret_folders <span class="op">=</span> <span class="st">"./data/stockret_weekly"</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>stock_files <span class="op">=</span> glob(os.path.join(stockret_folders, <span class="st">"*.xlsx"</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"找到股票数据文件: </span><span class="sc">{</span>stock_files<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建一个空的DataFrame来存储所有股票数据</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>stock_data_list <span class="op">=</span> []</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 循环读取文件</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> stock_files:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    temp_data <span class="op">=</span> pd.read_excel(<span class="bu">file</span>, header<span class="op">=</span><span class="dv">0</span>, skiprows<span class="op">=</span><span class="dv">3</span>, names<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'Trdwnt'</span>, <span class="st">'Wretwd'</span>, <span class="st">'Markettype'</span>])</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    stock_data_list.append(temp_data)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并所有股票数据</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>stock_data <span class="op">=</span> pd.concat(stock_data_list, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 只选择上证A股市场(Markettype=1)</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 保持与市场指数一致，确保样本的一致性</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>stock_data <span class="op">=</span> stock_data[stock_data[<span class="st">'Markettype'</span>] <span class="op">==</span> <span class="dv">1</span>]</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 把Trdwnt转换为两个变量：year和week</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>stock_data[<span class="st">'year'</span>] <span class="op">=</span> stock_data[<span class="st">'Trdwnt'</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>stock_data[<span class="st">'week'</span>] <span class="op">=</span> stock_data[<span class="st">'Trdwnt'</span>].<span class="bu">str</span>[<span class="dv">5</span>:]</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选year为2015至2024的数据</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>stock_data <span class="op">=</span> stock_data[stock_data[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="st">'2015'</span>]</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>stock_data <span class="op">=</span> stock_data[stock_data[<span class="st">'year'</span>] <span class="op">&lt;=</span> <span class="st">'2024'</span>]</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 检查Stkcd的唯一值的数量</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 了解样本中包含多少只股票，样本规模越大，结果越具有代表性</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Stkcd的唯一值的数量: </span><span class="sc">{</span>stock_data[<span class="st">'Stkcd'</span>]<span class="sc">.</span>nunique()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-</section>
-<section id="时间序列回归检验" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="时间序列回归检验"><span class="header-section-number">4.4.2</span> 2. 时间序列回归检验</h3>
-<p>对每只股票进行时间序列回归，估计 <span class="math inline">\(\alpha_i\)</span> 和 <span class="math inline">\(\beta_i\)</span>。</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>time_series_results <span class="op">=</span> {}</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> code <span class="kw">in</span> stock_codes:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> code <span class="kw">in</span> merged_data.columns: <span class="co"># 确保股票数据存在</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 计算超额收益率</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        merged_data[<span class="ss">f'</span><span class="sc">{</span>code<span class="sc">}</span><span class="ss">_excess_return'</span>] <span class="op">=</span> merged_data[code] <span class="op">-</span> merged_data[<span class="st">'risk_free_rate'</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        merged_data[<span class="st">'market_excess_return'</span>] <span class="op">=</span> merged_data[<span class="st">'market_return'</span>] <span class="op">-</span> merged_data[<span class="st">'risk_free_rate'</span>]</span>
+<section id="合并数据框" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="合并数据框"><span class="header-section-number">4.4.5</span> 5. 合并数据框</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第四步：合并数据框</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 将股票、市场和无风险利率数据合并，为后续分析做准备</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 将 stock_data 与 market_data 按 ['year', 'week'] 合并</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>merged_data <span class="op">=</span> pd.merge(stock_data, market_data, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'week'</span>], how<span class="op">=</span><span class="st">'left'</span>)</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 时间序列回归</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> merged_data[<span class="st">'market_excess_return'</span>]</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> sm.add_constant(X) <span class="co"># 添加常数项</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> merged_data[<span class="ss">f'</span><span class="sc">{</span>code<span class="sc">}</span><span class="ss">_excess_return'</span>]</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> sm.OLS(y, X).fit()</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        time_series_results[code] <span class="op">=</span> model</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 输出部分结果</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> code, model <span class="kw">in</span> time_series_results.items():</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">股票代码: </span><span class="sc">{</span>code<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>分析结果</strong>: 查看每个股票回归结果的 <code>summary()</code>，关注以下指标：</p>
-<ul>
-<li><strong><span class="math inline">\(\alpha_i\)</span> (const 系数)</strong>: 是否显著异于零？如果显著异于零，则表明 CAPM 模型定价存在偏差。</li>
-<li><strong><span class="math inline">\(\beta_i\)</span> (market_excess_return 系数)</strong>: 是否显著？系数大小和方向是否合理？</li>
-<li><strong><span class="math inline">\(R^2\)</span></strong>: 模型的解释力如何？</li>
-</ul>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 将 merged_data 与 rf_data 按 ['year', 'week'] 合并</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>merged_data <span class="op">=</span> pd.merge(merged_data, rf_data, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'week'</span>], how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 新建market_excess_return列，计算市场超额回报率</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 市场超额回报率 = 市场回报率 - 无风险利率，代表承担市场风险获得的额外收益</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>merged_data[<span class="st">'market_excess_return'</span>] <span class="op">=</span> merged_data[<span class="st">'Wretwdos'</span>] <span class="op">-</span> merged_data[<span class="st">'Nrrdaydt'</span>]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算市场风险溢价</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 市场风险溢价是CAPM模型中的重要参数，代表投资者承担系统性风险的补偿</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>market_risk_premium <span class="op">=</span> merged_data[<span class="st">'market_excess_return'</span>].mean()</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"市场风险溢价: </span><span class="sc">{</span>market_risk_premium<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="横截面回归检验" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="横截面回归检验"><span class="header-section-number">4.4.3</span> 3. 横截面回归检验</h3>
-<section id="计算股票的平均超额收益率和-beta-值" class="level4" data-number="4.4.3.1">
-<h4 data-number="4.4.3.1" class="anchored" data-anchor-id="计算股票的平均超额收益率和-beta-值"><span class="header-section-number">4.4.3.1</span> 3.1 计算股票的平均超额收益率和 Beta 值</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>average_excess_returns <span class="op">=</span> {}</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>betas <span class="op">=</span> {}</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> code, model <span class="kw">in</span> time_series_results.items():</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> code <span class="kw">in</span> merged_data.columns:</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        average_excess_returns[code] <span class="op">=</span> merged_data[<span class="ss">f'</span><span class="sc">{</span>code<span class="sc">}</span><span class="ss">_excess_return'</span>].mean()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        betas[code] <span class="op">=</span> model.params[<span class="st">'market_excess_return'</span>]</span>
+<section id="时间序列回归估计beta" class="level3" data-number="4.4.6">
+<h3 data-number="4.4.6" class="anchored" data-anchor-id="时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 6. 时间序列回归估计Beta</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第五步：时间序列回归估计Beta</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta是CAPM模型的核心参数，衡量个股对市场风险的敏感度</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 先对一个股票做回归测试结果</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选Stkcd == 600169的数据</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>merged_data0 <span class="op">=</span> merged_data[merged_data[<span class="st">'Stkcd'</span>] <span class="op">==</span> <span class="dv">600169</span>]</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>average_excess_returns_series <span class="op">=</span> pd.Series(average_excess_returns)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>betas_series <span class="op">=</span> pd.Series(betas)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">平均超额收益率:"</span>)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(average_excess_returns_series)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Beta 值:"</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(betas_series)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 做回归（添加缺失值处理）</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 先删除包含缺失值的行</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>merged_data0 <span class="op">=</span> merged_data0.dropna(subset<span class="op">=</span>[<span class="st">'market_excess_return'</span>, <span class="st">'Wretwd'</span>])</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 进行时间序列回归：R_i = α_i + β_i(R_m - R_f) + ε_i</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 这里我们直接用总回报率而非超额回报率作为因变量，这是一种变形的CAPM检验方法</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(merged_data0[<span class="st">'Wretwd'</span>], sm.add_constant(merged_data0[<span class="st">'market_excess_return'</span>])).fit()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示回归结果</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 常数项代表Alpha，斜率代表Beta</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 将 merged_data 按 stkcd 分组，做回归，y 是 Wretwd, x 是 market_excess_return</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 将回归结果存储在time_series_results字典中</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>time_series_results <span class="op">=</span> {}</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> stock_code <span class="kw">in</span> merged_data[<span class="st">'Stkcd'</span>].unique():</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    individual_data <span class="op">=</span> merged_data[merged_data[<span class="st">'Stkcd'</span>] <span class="op">==</span> stock_code]</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 先删除包含缺失值的行</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    individual_data <span class="op">=</span> individual_data.dropna(subset<span class="op">=</span>[<span class="st">'market_excess_return'</span>, <span class="st">'Wretwd'</span>])</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 筛选行数超过30的，否则跳过</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 样本量过小会导致回归结果不可靠</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(individual_data) <span class="op">&gt;</span> <span class="dv">30</span>:</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> sm.OLS(individual_data[<span class="st">'Wretwd'</span>], sm.add_constant(individual_data[<span class="st">'market_excess_return'</span>])).fit()</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        time_series_results[stock_code] <span class="op">=</span> model</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"股票</span><span class="sc">{</span>stock_code<span class="sc">}</span><span class="ss">的行数不足30，跳过"</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取回归结果中的beta值</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Beta值代表个股对市场风险的敏感度，Beta&gt;1表示该股票比市场更具波动性</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>beta_values <span class="op">=</span> [result.params[<span class="dv">1</span>] <span class="cf">for</span> result <span class="kw">in</span> time_series_results.values()]</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># beta_values需要与对应股票代码合并</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>beta_values <span class="op">=</span> pd.DataFrame({<span class="st">'Stkcd'</span>: <span class="bu">list</span>(time_series_results.keys()), <span class="st">'beta'</span>: beta_values})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="进行横截面回归" class="level4" data-number="4.4.3.2">
-<h4 data-number="4.4.3.2" class="anchored" data-anchor-id="进行横截面回归"><span class="header-section-number">4.4.3.2</span> 3.2 进行横截面回归</h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>X_cs <span class="op">=</span> betas_series</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X_cs <span class="op">=</span> sm.add_constant(X_cs) <span class="co"># 添加常数项</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>y_cs <span class="op">=</span> average_excess_returns_series</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>cross_sectional_model <span class="op">=</span> sm.OLS(y_cs, X_cs).fit()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">横截面回归结果:"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cross_sectional_model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>分析结果</strong>: 查看横截面回归结果的 <code>summary()</code>，关注以下指标：</p>
-<ul>
-<li><strong><span class="math inline">\(\gamma_{0}\)</span> (const 系数)</strong>: 是否接近无风险利率的平均值？是否显著异于零？</li>
-<li><strong><span class="math inline">\(\gamma_{1}\)</span> (x1 系数，即 Beta 系数的系数)</strong>: 是否显著为正？系数大小是否合理 (代表市场风险溢价)？</li>
-<li><strong><span class="math inline">\(R^2\)</span></strong>: 模型的解释力如何？</li>
-</ul>
+<section id="横截面回归检验capm模型" class="level3" data-number="4.4.7">
+<h3 data-number="4.4.7" class="anchored" data-anchor-id="横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 7. 横截面回归检验CAPM模型</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第六步：横截面回归检验CAPM模型</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归检验Beta与平均收益率的关系，是CAPM模型有效性的关键检验</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 对beta_values进行分组，从小到大等分为10组，生成一列group</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 分组可以减少个股特异性风险的影响，更好地检验系统性风险与收益的关系</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>beta_values[<span class="st">'group'</span>] <span class="op">=</span> pd.qcut(beta_values[<span class="st">'beta'</span>], q<span class="op">=</span><span class="dv">10</span>, labels<span class="op">=</span><span class="va">False</span>, duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据股票代码合并股票数据</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>capm_data <span class="op">=</span> pd.merge(stock_data, beta_values, on<span class="op">=</span><span class="st">'Stkcd'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 把capm_data按group分组，计算每组的股票平均回报率、beta平均值，放在一个DataFrame中</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 组合可以分散非系统性风险，更好地反映Beta与收益率的关系</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>group_data <span class="op">=</span> capm_data.groupby(<span class="st">'group'</span>).agg({<span class="st">'Wretwd'</span>: <span class="st">'mean'</span>, <span class="st">'beta'</span>: <span class="st">'mean'</span>})</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用Wretwd对beta进行回归，计算截距和斜率</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归模型：R_i = γ_0 + γ_1 * β_i + η_i</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># γ_0应接近无风险利率，γ_1应接近市场风险溢价</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(group_data[<span class="st">'Wretwd'</span>], sm.add_constant(group_data[<span class="st">'beta'</span>])).fit()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示回归结果</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取并解释结果</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>gamma_0 <span class="op">=</span> model.params[<span class="st">'const'</span>]  <span class="co"># 零Beta组合收益率</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>gamma_1 <span class="op">=</span> model.params[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价估计值</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>p_value_gamma_0 <span class="op">=</span> model.pvalues[<span class="st">'const'</span>]  <span class="co"># 零Beta组合收益率的显著性</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>p_value_gamma_1 <span class="op">=</span> model.pvalues[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价的显著性</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">CAPM横截面回归结果解释:"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ₀ (零Beta组合收益率) = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_0<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ₁ (市场风险溢价) = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_1<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"实际市场风险溢价 = </span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># CAPM检验结论</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">CAPM检验结论:"</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_0 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ₀ (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 显著，表明零Beta组合收益率存在"</span>)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ₀ (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 不显著，无法确定零Beta组合收益率"</span>)</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_1 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gamma_1 <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ₁ (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著为正，表明Beta风险被市场定价"</span>)</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(gamma_1 <span class="op">-</span> market_risk_premium) <span class="op">&lt;</span> <span class="fl">0.01</span>:</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  且接近实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">)，支持CAPM模型"</span>)</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  但与实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">) 存在差异，CAPM模型部分成立"</span>)</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ₁ (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价"</span>)</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ₁ (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立"</span>)</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># 画图并保存</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>plt.scatter(group_data[<span class="st">'beta'</span>], group_data[<span class="st">'Wretwd'</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>plt.plot(group_data[<span class="st">'beta'</span>], gamma_0 <span class="op">+</span> gamma_1 <span class="op">*</span> group_data[<span class="st">'beta'</span>], <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Beta与平均收益率的关系'</span>)</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Beta系数'</span>)</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'平均周收益率'</span>)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'R² = </span><span class="sc">{</span>model<span class="sc">.</span>rsquared<span class="sc">:.4f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ₀ = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.90</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ₁ = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.85</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'capm_scatter.png'</span>)</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"已保存Beta与平均收益率的散点图"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="fama-macbeth-回归检验-选做" class="level3" data-number="4.4.4">
-<h3 data-number="4.4.4" class="anchored" data-anchor-id="fama-macbeth-回归检验-选做"><span class="header-section-number">4.4.4</span> 4. Fama-MacBeth 回归检验 (选做)</h3>
-<p>Fama-MacBeth 回归的 Python 代码实现较为复杂，可以作为选做内容。以下提供一个 Fama-MacBeth 回归的基本框架，你需要根据理解补充完整代码。</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fama_macbeth_regression(stock_returns_df, market_returns, risk_free_rate, window<span class="op">=</span><span class="dv">252</span>):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Fama-MacBeth 回归</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    参数:</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    stock_returns_df: 股票收益率 DataFrame (columns: 股票代码, index: 时间)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    market_returns: 市场收益率 Series (index: 时间)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    risk_free_rate: 无风险利率 Series (index: 时间)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">    window: 滚动窗口大小 (用于估计 Beta)</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    返回:</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    gamma_1_mean: 平均风险溢价</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">    gamma_1_std_error: 风险溢价的标准误差</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    gamma_1_values <span class="op">=</span> []</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    dates <span class="op">=</span> stock_returns_df.index[window:] <span class="co"># 从滚动窗口结束后开始</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(window, <span class="bu">len</span>(stock_returns_df)):</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        current_date <span class="op">=</span> stock_returns_df.index[t]</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        window_start_date <span class="op">=</span> stock_returns_df.index[t<span class="op">-</span>window]</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        betas_t <span class="op">=</span> {}</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 第一步: 滚动窗口时间序列回归估计 Beta</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> code <span class="kw">in</span> stock_returns_df.columns:</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># ... (在此处补充滚动窗口时间序列回归代码，估计每只股票在 t 期的 Beta 值 betas_t[code]) ...</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">pass</span> <span class="co"># 占位符，请替换为实际代码</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 第二步: 横截面回归</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        X_fm <span class="op">=</span> pd.Series(betas_t)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>        X_fm <span class="op">=</span> sm.add_constant(X_fm)</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        y_fm <span class="op">=</span> stock_returns_df.loc[current_date] <span class="co"># t 期的股票收益率</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        cross_sectional_model_fm <span class="op">=</span> sm.OLS(y_fm, X_fm).fit()</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        gamma_1_t <span class="op">=</span> cross_sectional_model_fm.params[<span class="st">'x1'</span>] <span class="co"># 假设 Beta 系数的变量名为 'x1'</span></span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        gamma_1_values.append(gamma_1_t)</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 第三步: 计算平均风险溢价</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    gamma_1_mean <span class="op">=</span> np.mean(gamma_1_values)</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 第四步: 计算平均风险溢价的标准误差 (可以使用时间序列的标准差除以根号 T)</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    gamma_1_std_error <span class="op">=</span> np.std(gamma_1_values) <span class="op">/</span> np.sqrt(<span class="bu">len</span>(gamma_1_values))</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> gamma_1_mean, gamma_1_std_error</span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 执行 Fama-MacBeth 回归 (示例，需要补充完整 fama_macbeth_regression 函数)</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co"># gamma_1_mean, gamma_1_std_error = fama_macbeth_regression(stock_returns_df, market_returns, risk_free_rate)</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="co"># print("\nFama-MacBeth 回归结果:")</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"平均风险溢价 (gamma_1_mean): {gamma_1_mean:.4f}")</span></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"风险溢价标准误差 (gamma_1_std_error): {gamma_1_std_error:.4f}")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>完成 Fama-MacBeth 回归</strong>: 你需要完成 <code>fama_macbeth_regression</code> 函数中 <strong>第一步: 滚动窗口时间序列回归估计 Beta</strong> 的代码。 提示：可以使用类似 <strong>2. 时间序列回归检验</strong> 中的代码，但在循环中针对每个滚动窗口进行回归。</p>
-<p><strong>分析结果</strong>: 分析 Fama-MacBeth 回归的结果，关注平均风险溢价 <code>gamma_1_mean</code> 是否显著异于零，以及其经济含义。</p>
-</section>
-<section id="结果分析与讨论" class="level3" data-number="4.4.5">
-<h3 data-number="4.4.5" class="anchored" data-anchor-id="结果分析与讨论"><span class="header-section-number">4.4.5</span> 5. 结果分析与讨论</h3>
-<p>综合分析时间序列回归、横截面回归 (和 Fama-MacBeth 回归) 的结果，思考以下问题：</p>
-<ul>
-<li><strong>CAPM 模型在中国市场是否成立？</strong>: 从实证结果来看，CAPM 模型能否很好地解释中国股票市场的资产定价现象？</li>
-<li><strong>市场风险是否被定价？</strong>: Beta 系数是否与股票的预期收益率显著相关？</li>
-<li><strong>是否存在定价误差？</strong>: 时间序列回归中的 <span class="math inline">\(\alpha_i\)</span> 和横截面回归中的 <span class="math inline">\(\gamma_{0}\)</span> 是否显著异于理论值？</li>
-<li><strong>CAPM 模型的局限性</strong>: 实证结果是否支持 CAPM 模型在中国市场存在局限性？可能的原因是什么？</li>
-<li><strong>改进方向</strong>: 如果 CAPM 模型在中国市场表现不佳，可以考虑哪些改进方向？例如，引入其他风险因子 (如规模、价值因子)，或者考虑行为金融学因素。</li>
-</ul>
-</section>
-</section>
-<section id="实验总结" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="实验总结"><span class="header-section-number">4.5</span> 实验总结</h2>
-<p>总结本次实验的主要内容和结论，回顾 CAPM 模型的实证检验方法，并思考 CAPM 模型在实际应用中的价值和局限性。</p>
-<p><strong>作业</strong>:</p>
+<section id="实验结果" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="实验结果"><span class="header-section-number">4.5</span> 实验结果</h2>
+<p>横截面回归结果显示了Beta系数与股票收益率之间的关系。如果CAPM模型成立，我们期望：</p>
 <ol type="1">
-<li>完成实验报告，包括实验目的、原理、步骤、结果分析和讨论。</li>
-<li>尝试使用不同的数据区间、数据频率或市场指数进行 CAPM 检验，比较结果的差异。</li>
-<li>(选做) 完成 Fama-MacBeth 回归的代码实现和结果分析。</li>
-<li>(拓展) 查阅文献，了解 CAPM 模型在中国市场的实证研究现状，比较你的实验结果与现有研究的结论。</li>
+<li>截距项（<span class="math inline">\(\gamma_0\)</span>）应接近无风险利率，代表零Beta组合的收益率</li>
+<li>Beta系数（<span class="math inline">\(\gamma_1\)</span>）应显著为正，且接近市场风险溢价，代表承担系统性风险的补偿</li>
 </ol>
+<p>下图展示了Beta与平均收益率的散点图及回归线：</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/capm_scatter.png" class="img-fluid figure-img"></p>
+<figcaption>Beta与平均收益率的关系</figcaption>
+</figure>
+</div>
+</section>
+<section id="结论与讨论" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="结论与讨论"><span class="header-section-number">4.6</span> 结论与讨论</h2>
+<p>根据实验结果，我们可以分析CAPM模型在中国A股市场的适用性：</p>
+<ol type="1">
+<li><strong>Beta系数的解释能力</strong>：
+<ul>
+<li>观察Beta系数是否显著，以及其解释能力（R²）的大小</li>
+<li>R²值越高，表明Beta能够解释的收益率变异越多</li>
+<li>中国市场的R²通常低于成熟市场，表明非系统性因素影响较大</li>
+</ul></li>
+<li><strong>零Beta组合收益率</strong>：
+<ul>
+<li>比较 <span class="math inline">\(\gamma_0\)</span> 与无风险利率的差异</li>
+<li>如果 <span class="math inline">\(\gamma_0\)</span> 显著高于无风险利率，可能存在其他风险因子未被模型捕捉</li>
+<li>如果 <span class="math inline">\(\gamma_0\)</span> 不显著，则无法确定零Beta组合的收益特征</li>
+</ul></li>
+<li><strong>风险溢价</strong>：
+<ul>
+<li>检验 <span class="math inline">\(\gamma_1\)</span> 是否显著为正，并与实际市场风险溢价比较</li>
+<li>如果 <span class="math inline">\(\gamma_1\)</span> 显著为正且接近市场风险溢价，支持CAPM模型</li>
+<li>如果 <span class="math inline">\(\gamma_1\)</span> 不显著或为负，表明Beta风险未被市场正确定价</li>
+</ul></li>
+<li><strong>CAPM模型的局限性</strong>：
+<ul>
+<li>中国股票市场的特殊性：政策驱动、散户主导、信息不对称</li>
+<li>可能需要考虑其他风险因子：规模效应、价值效应、动量效应等</li>
+<li>行为金融学视角：投资者非理性行为可能导致定价偏差</li>
+</ul></li>
+</ol>
+<p>通过这些分析，我们可以评估CAPM模型在中国市场的适用性，并讨论可能的局限性。</p>
+</section>
+<section id="实验总结" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="实验总结"><span class="header-section-number">4.7</span> 实验总结</h2>
+<p>本实验通过横截面回归方法检验了CAPM模型在中国A股市场的适用性。我们首先估计了个股的Beta系数，然后检验了Beta与平均收益率之间的关系。实验结果有助于我们理解系统性风险在中国市场的定价机制，以及CAPM模型的适用性和局限性。</p>
+<p>这种实证检验方法不仅帮助我们验证金融理论，也为投资决策和资产定价提供了实证依据。通过对比理论预期与实证结果，我们可以更深入地理解中国股票市场的风险-收益特征，为投资组合构建和风险管理提供指导。</p>
 
 
 </section>

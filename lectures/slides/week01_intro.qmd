@@ -253,12 +253,12 @@ lang: zh
 ## AI辅助编程
 
 - VSCode + GitHub Copilot / 通义灵码 插件
-    - GitHub Copilot 支持Claude-3.5-Sonnet / ChatGPT-4o，每天限50次免费问答，有免费学生账号可用
+    - GitHub Copilot 支持Claude-3.7-Sonnet，每月限50次免费问答，申请免费学生账号可以无限使用
     - 通义灵码 支持Qwen2.5 / DeepSeek大模型，全免费
 - Cursor
-    - 支持Claude-3.5-Sonnet / ChatGPT-4o / DeepSeek等大模型，试用期免费，后续订阅$20/月
+    - 支持Claude-3.7-Sonnet / Gemini 2.0 / DeepSeek等大模型，试用期（两周或前500条）免费，后续订阅$20/月
 - Trae
-    - 支持Claude-3.5-Sonnet / ChatGPT-4o，全免费
+    - 支持Claude-3.7-Sonnet，限时全免费
 - 推荐注册GitHub账号（校园IP可访问）
 
 ---
@@ -278,9 +278,3 @@ lang: zh
     - 学校购买，账号访问
     - 不可API访问
 
----
-
-## 课后作业
-
-- 下载贵州茅台 (600519.SH) 2020-01-01 至 2024-12-31 的日线数据
-- 下载贵州茅台 2020-2023年度财报数据（包括资产负债表、利润表、现金流量表）
