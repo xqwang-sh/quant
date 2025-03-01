@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "量化投资课程讲义",
     "section": "",
-    "text": "本讲义将系统地介绍量化投资的基本概念、理论框架、常用策略以及实践应用。\n引言:\n量化投资是指利用数学、统计学和计算机科学等定量方法，对金融市场进行分析和预测，以实现投资目标的一种投资方式。量化投资是学术界和业界广泛关注的一个研究领域。在学术界，量化投资理论研究主要集中在资产定价理论、投资组合理论、风险管理理论等方面。在业界，量化投资主要集中在量化选股、量化择时、量化对冲、算法交易等领域。由于课程时间有限，本讲义将主要介绍基于实证资产定价理论的量化投资方法，对实际案例的讲解偏向量化选股。\n课程内容:\n\n有效市场假说 (EMH)\n资本资产定价模型 (CAPM)\nCAPM实证检验\n多因子模型 (待添加)\n…\n\n使用说明:\n\n本讲义使用 Quarto 创建，可以方便地生成 HTML, PDF, ePub 等多种格式。\n点击左侧导航栏可以浏览不同章节的内容。\n\n希望本讲义能帮助您更好地学习和理解量化投资！",
+    "text": "本讲义将系统地介绍量化投资的基本概念、理论框架、常用策略以及实践应用。\n引言:\n量化投资是指利用数学、统计学和计算机科学等定量方法，对金融市场进行分析和预测，以实现投资目标的一种投资方式。量化投资是学术界和业界广泛关注的一个研究领域。在学术界，量化投资理论研究主要集中在资产定价理论、投资组合理论、风险管理理论等方面。在业界，量化投资主要集中在量化选股、量化择时、量化对冲、算法交易等领域。由于课程时间有限，本讲义将主要介绍基于实证资产定价理论的量化投资方法，对实际案例的讲解偏向量化选股。\n课程内容:\n\n有效市场假说 (EMH)\n资本资产定价模型 (CAPM)\nCAPM实证检验\n多因子模型\n\n课程项目:\n\n传统多因子投资\n机器学习与另类数据\n\n使用说明:\n\n本讲义使用 Quarto 创建，可以方便地生成 HTML, PDF, ePub 等多种格式。\n点击左侧导航栏可以浏览不同章节的内容。\n\n希望本讲义能帮助您更好地学习和理解量化投资！",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>前言</span>"
     ]
@@ -227,6 +227,96 @@
     "text": "4.7 实验总结\n本实验通过横截面回归方法检验了CAPM模型在中国A股市场的适用性。我们首先估计了个股的Beta系数，然后检验了Beta与平均收益率之间的关系。实验结果有助于我们理解系统性风险在中国市场的定价机制，以及CAPM模型的适用性和局限性。\n这种实证检验方法不仅帮助我们验证金融理论，也为投资决策和资产定价提供了实证依据。通过对比理论预期与实证结果，我们可以更深入地理解中国股票市场的风险-收益特征，为投资组合构建和风险管理提供指导。",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>资本资产定价模型 (CAPM) 实证检验</span>"
+    ]
+  },
+  {
+    "objectID": "project1_factor.html",
+    "href": "project1_factor.html",
+    "title": "5  项目1：因子投资策略构建",
+    "section": "",
+    "text": "6 项目背景\n因子投资是现代量化投资的核心方法之一，其理论基础可以追溯到Fama-French三因子模型。该模型扩展了传统的资本资产定价模型（CAPM），引入了规模因子（SMB）和价值因子（HML），以更好地解释股票收益的横截面差异。随着研究的深入，学者们又发现了动量因子、质量因子、低波动因子等多种可以产生超额收益的特征因子。\n传统的因子投资策略通常基于财务指标、市场数据或其他可观测的公司特征，构建投资组合以捕获特定因子带来的风险溢价。成功的因子投资需要深入理解因子的经济学原理、统计特性以及实际应用中的约束条件。\n在本项目中，你将有机会应用量化金融的理论知识，设计并实现自己的因子投资策略，并通过严格的统计检验和回测来评估其有效性。",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+    ]
+  },
+  {
+    "objectID": "project1_factor.html#评分标准",
+    "href": "project1_factor.html#评分标准",
+    "title": "5  项目1：因子投资策略构建",
+    "section": "10.1 评分标准",
+    "text": "10.1 评分标准\n项目评分将基于以下几个方面：\n\n创新性（20%）：因子设计的原创性与创新度\n方法论（25%）：方法应用的正确性与严谨性\n实证结果（25%）：策略表现及其统计显著性\n分析深度（20%）：对结果的解释与分析深度\n展示质量（10%）：报告与展示的清晰度和专业性",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+    ]
+  },
+  {
+    "objectID": "project1_factor.html#推荐文献",
+    "href": "project1_factor.html#推荐文献",
+    "title": "5  项目1：因子投资策略构建",
+    "section": "11.1 推荐文献",
+    "text": "11.1 推荐文献\n[1] Hou, Xue, and Zhang, Replicating anomalies, 2020, Review of Financial Studies 33, 2019-2133. [2] Liu, Stambaugh, and Yuan, Size and Value in China, 2019,Journal of Financial Economics 134, 48-69.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+    ]
+  },
+  {
+    "objectID": "project1_factor.html#在线资源",
+    "href": "project1_factor.html#在线资源",
+    "title": "5  项目1：因子投资策略构建",
+    "section": "11.2 在线资源",
+    "text": "11.2 在线资源\n[1] Kenneth French’s Data Library [2] AQR Capital Management Research",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+    ]
+  },
+  {
+    "objectID": "project2_ml_alt_data.html",
+    "href": "project2_ml_alt_data.html",
+    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "",
+    "text": "7 项目背景\n随着计算能力的提升和数据可获取性的增强，机器学习技术与替代数据已成为现代量化投资的重要前沿领域。传统因子投资策略虽然有坚实的理论基础，但往往依赖于线性关系假设和人工特征工程，难以捕捉市场中存在的复杂非线性关系和动态变化。\n机器学习方法通过其强大的模式识别和预测能力，可以自动从大量数据中提取有价值的信息，发现传统方法难以察觉的市场规律。同时，卫星图像、社交媒体情绪、网络搜索量、信用卡消费等替代数据源为投资决策提供了全新的信息维度，可能包含尚未被市场充分定价的信号。\n在本项目中，你将有机会将机器学习算法应用于投资策略开发，或利用替代数据构建创新的量化模型，从而探索超越传统因子投资的可能性。",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+    ]
+  },
+  {
+    "objectID": "project2_ml_alt_data.html#机器学习路线",
+    "href": "project2_ml_alt_data.html#机器学习路线",
+    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "10.1 机器学习路线",
+    "text": "10.1 机器学习路线\n\n模型选择与设计（1周）\n\n研究不同机器学习模型在金融预测中的优缺点（如随机森林、梯度提升树、神经网络等）\n了解金融数据的特殊性对模型选择的影响\n制定模型设计方案，确定模型架构\n\n数据准备与特征工程（2周）\n\n整合传统市场数据和基本面数据\n设计并实现特征工程管道\n处理样本不平衡、缺失值和异常值\n特征选择与降维\n\n模型训练与验证（2周）\n\n实现时间序列交叉验证框架\n避免前视偏差和数据泄露\n参数调优与模型集成\n评估模型预测能力\n\n投资组合构建与回测（2周）\n\n基于模型预测设计组合权重分配规则\n实现考虑交易成本的回测系统\n分析不同市场环境下的模型表现\n风险管理与绩效归因",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+    ]
+  },
+  {
+    "objectID": "project2_ml_alt_data.html#另类数据路线",
+    "href": "project2_ml_alt_data.html#另类数据路线",
+    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "10.2 另类数据路线",
+    "text": "10.2 另类数据路线\n\n数据源选择与获取（1周）\n\n评估不同替代数据源的可获取性与潜在价值\n设计数据收集方案\n建立数据获取管道\n确保数据使用合规性\n\n数据处理与信号提取（2周）\n\n文本数据：NLP预处理、情感分析、主题建模\n图像数据：计算机视觉技术、特征提取\n结构化替代数据：时间序列处理、异常检测\n信号构建与初步测试\n\n信号评估与整合（2周）\n\n评估信号的预测能力\n信号去噪与转换\n与传统因子的相关性分析\n信号组合方法设计\n\n投资组合构建与回测（2周）\n\n基于替代数据信号设计投资规则\n实现考虑交易成本和信号时效性的回测系统\n与传统因子策略的比较分析\n风险管理与绩效归因",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+    ]
+  },
+  {
+    "objectID": "project2_ml_alt_data.html#评分标准",
+    "href": "project2_ml_alt_data.html#评分标准",
+    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "11.1 评分标准",
+    "text": "11.1 评分标准\n项目评分将基于以下几个方面：\n\n创新性（20%）：方法设计和数据使用的创新程度\n技术实现（25%）：机器学习模型或替代数据处理的技术水平\n实证结果（25%）：策略表现及其相对于传统方法的优势\n风险控制（15%）：对策略风险的理解和控制\n可解释性（10%）：对模型决策过程的解释能力\n展示质量（5%）：报告与展示的清晰度和专业性",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+    ]
+  },
+  {
+    "objectID": "project2_ml_alt_data.html#机器学习部分",
+    "href": "project2_ml_alt_data.html#机器学习部分",
+    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "12.1 机器学习部分",
+    "text": "12.1 机器学习部分\n[1] Adämmer, P., & Schüssler, R. A. (2020). Forecasting the equity premium: mind the news!. Review of Finance, 24(6), 1313-1355.\n[2] Cao, S., Jiang, W., Wang, J. L., & Yang, B. (2021). From man vs. machine to man+ machine: The art and AI of stock analyses (No. w28800). National Bureau of Economic Research.\n[3] Chen, X., Cho, Y. H., Dou, Y., & Lev, B. (2022). Predicting future earnings changes using machine learning and detailed financial data. Journal of Accounting Research, 60(2), 467-515.\n[4] Chen, L., Pelger, M., & Zhu, J. (2023). Deep learning in asset pricing. Management Science, 70(2), 3329-3348.\n[5] Dong, X., Li, Y., Rapach, D. E., & Zhou, G. (2022). Anomalies and the expected market return. The Journal of Finance, 77(1), 639-681.\n[6] Easley, D., López de Prado, M., O’Hara, M., & Zhang, Z. (2021). Microstructure in the machine age. The Review of Financial Studies, 34(7), 3316-3363.\n[7] Freyberger, J., Neuhierl, A., & Weber, M. (2020). Dissecting characteristics nonparametrically. The Review of Financial Studies, 33(5), 2326-2377.\n[8] Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial Studies, 33(5), 2223-2273.\n[9] Jiang, J., Kelly, B. T., & Xiu, D. (2023). (Re-)Imag(in)ing price trends. Journal of Finance, 78(6), 3193-3249.\n[10] Ke, Z. T., Kelly, B. T., & Xiu, D. (2019). Predicting returns with text data (No. w26186). National Bureau of Economic Research.\n[11] Kozak, S., Nagel, S., & Santosh, S. (2020). Shrinking the cross-section. Journal of Financial Economics, 135(2), 271-292.\n[12] Leippold, M., Wang, Q., & Zhou, W. (2022). Machine learning in the Chinese stock market. Journal of Financial Economics, 145(2), 64-82.\n\n12.1.1 另类数据部分\n[13] Bartov, E., Faurel, L., & Mohanram, P. S. (2018). Can Twitter help predict firm-level earnings and stock returns?. The Accounting Review, 93(3), 25-57.\n[14] Bernard, D., Blackburne, T., & Thornock, J. (2020). Information flows among rivals and corporate investment. Journal of Financial Economics, 136(3), 760-779.\n[15] Brown, N. C., Crowley, R. M., & Elliott, W. B. (2020). What are you saying? Using topic to detect financial misreporting. Journal of Accounting Research, 58(1), 237-291.\n[16] Buehlmaier, M. M., & Whited, T. M. (2018). Are financial constraints priced? Evidence from textual analysis. The Review of Financial Studies, 31(7), 2693-2728.\n[17] Cao, S., Jiang, W., Yang, B., & Zhang, A. L. (2023). How to talk when a machine is listening: Corporate disclosure in the age of AI. The Review of Financial Studies, 36(9), 3603-3642.\n[18] Cong, L., T., Liang, X., Zhang, & Zhu, W. (2022). Textual Factors: A Scalable, interpretable, and data-driven Approach to Analyzing Unstructured Information. (w33168) Management Science 68(11), 7893-8359.\n[19] Cookson, J. A., & Niessner, M. (2020). Why don’t we agree? Evidence from a social network of investors. The Journal of Finance, 75(1), 173-228.\n[20] Da, Z., Huang, X., & Jin, L. J. (2021). Extrapolative beliefmusics in the cross-section: What can we learn from the crowds?. Journal of Financial Economics, 140(1), 175-196.\n[21] Edmans, A., Fernandez-Perez, A., Garel, A., & Indriawan, I. (2022). Music sentiment and stock returns around the world. Journal of Financial Economics, 145(2), 234-254.\n[22] Eisdorfer, A., Froot, K., Ozik, G., & Sadka, R. (2022). Competition links and stock returns. The Review of Financial Studies, 35(9), 4300-4340.\n[23] Florackis, C., Louca, C., Michaely, R., & Weber, M. (2023). Cybersecurity risk. The Review of Financial Studies, 36(1), 351-407.\n[24] Garcia, D., Hu, X., & Rohrer, M. (2023). The colour of finance words. Journal of Financial Economics, 147(3), 525-549.\n[25] Gómez-Cram, R., & Grotteria, M. (2022). Real-time price discovery via verbal communication: Method and application to Fedspeak. Journal of Financial Economics, 143(3), 993-1025.\n[26] Green, T. C., Huang, R., Wen, Q., & Zhou, D. (2019). Crowdsourced employer reviews and stock returns. Journal of Financial Economics, 134(1), 236-251.\n[27] Hanley, K. W., & Hoberg, G. (2019). Dynamic interpretation of emerging risks in the financial sector. The Review of Financial Studies, 32(12), 4543-4603.\n[28] Hassan, T. A., Hollander, S., Van Lent, L., & Tahoun, A. (2019). Firm-level political risk: Measurement and effects. The Quarterly Journal of Economics, 134(4), 2135-2202.\n[29] Hoberg, G., & Phillips, G. (2016). Text-based network industries and endogenous product differentiation. Journal of Political Economy, 124(5), 1423-1465.\n[30] Hsieh, T. S., Kim, J. B., Wang, R. R., & Wang, Z. (2020). Seeing is believing? Executives’ facial trustworthiness, auditor tenure, and audit fees. Journal极 of Accounting and Economics, 69(1), 101260.\n[31] Huang, X., Ivković, Z., Jiang, J. X., & Wang, I. Y. (202极3). Angel investment and first impressions. Journal of Financial Economics, 149(2), 161-178.\n[32] Huang, A. H., Zang, A. Y., & Zheng, R. (2014). Evidence on the information content of text in analyst reports. The Accounting Review, 89(6), 2151-2180.\n[33] Kalmenovitz, J. (2023). Regulatory intensity and firm-specific exposure. The Review of Financial Studies, 36(8), 3311-3347.\n[34] Li, K., Mai, F., Shen, R., & Yan, X. (2021). Measuring corporate culture using machine learning. The Review of Financial Studies, 34(7), 3265-3315.\n[35] Lowry, M., Michaely, R., & Volkova, E. (2020). Information revealed through the regulatory process: Interactions between the SEC and companies ahead of their IPO. The Review of Financial Studies, 33(12), 5510-5554.\n[36] Manela, A., & Moreira, A. (2017). News implied volatility and disaster concerns. Journal of Financial Economics, 123(1), 137-162.\n[37] Mukherjee, A., Panayotov极, G., & Shon, J. (2021). Eye in the sky: Private satellites and government macro data. Journal of Financial Economics, 141(1), 234-254.\n[38] Obaid, K., & Pukthuanthong, K. (2022). A picture is worth a thousand words: Measuring investor sentiment by combining machine learning and photos from news. Journal of Financial Economics, 144(1), 273-297.\n[39] Sautner, Z., Van Lent, L., Vilkov, G., & Zhang, R. (2023). Firm‐level climate change exposure. The Journal of Finance, 78(3), 1449-1498.\n[40] Tang, V. W. (2018). Wisdom of crowds: Cross‐sectional variation in the informativeness of third‐party‐generated product information on Twitter. Journal of Accounting Research, 56(3), 989-1034.\n[41] Zhu, C. (2019). Big data as a governance mechanism. The Review of Financial Studies, 32(5), 2021-2061.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
     ]
   }
 ]

@@ -179,23 +179,33 @@ CML 描述的是有效组合的定价关系，而 **证券市场线 (SML)** 则�
 
 CAPM 模型的常用实证检验方法如下：
 
-1.  **时间序列回归 (Time-Series Regression)**
-    -   检验股票收益率是否可以被市场组合的超额收益率解释，$\alpha_i$ 是否显著为零。
-    -   公式: $R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}$
-
-2.  **横截面回归 (Cross-Sectional Regression)**
-    -   检验股票的平均收益率是否与其 Beta 系数线性相关，$\gamma_{0,t}$ 是否为零，$\gamma_{1,t}$ 是否等于市场风险溢价且显著为正。
+1.  **横截面回归 (Cross-Sectional Regression或Two-Pass Regression)**
+    -   检验股票的平均收益率是否与其 Beta 系数线性相关，$\gamma_{0,t}$ 是否接近无风险利率，$\gamma_{1,t}$ 是否等于市场风险溢价且显著为正。
     -   步骤：
-        1.  估计 Beta：时间序列回归估计 $\beta_i$。
-        2.  横截面回归：$R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \beta_i + \eta_{i,t}$
+        1.  **第一步 - 时间序列回归估计Beta**：使用一段固定时间窗口(如过去60个月)对每个资产进行时间序列回归，估计单一Beta值 $\hat{\beta}_i$。
+           公式: $R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}$
+        2.  **第二步 - 横截面回归**：在每个时间点t，使用所有资产的收益率与第一步估计的Beta值进行横截面回归。
+           公式: $R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \hat{\beta}_i + \eta_{i,t}$
 
-3.  **Fama-MacBeth 回归**
-    -   改进的横截面回归方法，处理 Beta 估计误差，更稳健。
+2.  **Fama-MacBeth 回归 (Fama-MacBeth Regression)**
+    -   改进的横截面回归方法，处理 Beta 估计误差，提供更稳健的风险溢价估计。
     -   步骤：
-        1.  滚动窗口估计 Beta：估计 $\beta_{i,t}$。
-        2.  横截面回归：$R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \beta_{i,t-1} + \eta_{i,t}$
-        3.  计算平均风险溢价：$\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}$
-        4.  检验显著性：检验 $\bar{\gamma}_1$ 是否显著异于零。
+        1.  **第一步 - 滚动窗口估计Beta时间序列**：对每个资产使用滚动时间窗口估计Beta值 $\hat{\beta}_{i,t-1}$，得到Beta的时间序列。
+        2.  **第二步 - 每期横截面回归**：在每个时间点t，使用当期收益率与上期估计的Beta值进行横截面回归。
+           公式: $R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \hat{\beta}_{i,t-1} + \eta_{i,t}$
+        3.  **第三步 - 计算平均风险溢价**：计算所有时期横截面回归系数的时间序列平均值。
+           公式: $\bar{\gamma}_0 = \frac{1}{T} \sum_{t=1}^T \gamma_{0,t}$ 和 $\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}$
+        4.  **第四步 - 检验显著性**：使用时间序列平均值的t统计量检验 $\bar{\gamma}_0$ 和 $\bar{\gamma}_1$ 的显著性。
+
+3.  **投资组合分组法 (Portfolio Grouping)**
+    -   为解决个股Beta估计误差大的问题，研究者经常采用投资组合分组法进行实证检验。
+    -   步骤：
+        1.  **第一步 - 估计个股Beta值**：对每个股票估计Beta值。
+        2.  **第二步 - 按Beta大小分组**：根据Beta大小将股票分成多个投资组合(通常是10个或20个)。
+        3.  **第三步 - 计算组合特征**：计算每个投资组合的平均Beta和平均收益率。
+        4.  **第四步 - 组合级别回归**：使用投资组合的平均Beta和平均收益率进行横截面回归。
+           公式: $\overline{R}_{p} = \gamma_0 + \gamma_1\overline{\beta}_p + \eta_p$
+    -   这种方法最早由Black, Jensen, and Scholes (1972)提出，能够显著减少Beta估计误差对检验结果的影响。
 
 ### 中国市场上的 CAPM 检验
 

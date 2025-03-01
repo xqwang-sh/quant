@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; 有效市场假说 (EMH) – 量化投资课程讲义</title>
+<title>5&nbsp; 项目1：因子投资策略构建 – 量化投资课程讲义</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02_capm.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./project2_ml_alt_data.html" rel="next">
+<link href="./lab02_capmtest.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_emh.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project1_factor.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_emh.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></span></a>
   </div>
 </li>
@@ -132,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
   </div>
 </li>
@@ -152,15 +152,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#本节课主要内容" id="toc-本节课主要内容" class="nav-link active" data-scroll-target="#本节课主要内容"><span class="header-section-number">2.1</span> 本节课主要内容</a></li>
-  <li><a href="#什么是有效市场假说-emh" id="toc-什么是有效市场假说-emh" class="nav-link" data-scroll-target="#什么是有效市场假说-emh"><span class="header-section-number">2.2</span> 什么是有效市场假说 (EMH)?</a></li>
-  <li><a href="#emh-的三个层次" id="toc-emh-的三个层次" class="nav-link" data-scroll-target="#emh-的三个层次"><span class="header-section-number">2.3</span> EMH 的三个层次</a></li>
-  <li><a href="#emh-与量化投资的关联" id="toc-emh-与量化投资的关联" class="nav-link" data-scroll-target="#emh-与量化投资的关联"><span class="header-section-number">2.4</span> EMH 与量化投资的关联</a>
+  <li><a href="#项目背景" id="toc-项目背景" class="nav-link active" data-scroll-target="#项目背景"><span class="header-section-number">6</span> 项目背景</a></li>
+  <li><a href="#项目目标" id="toc-项目目标" class="nav-link" data-scroll-target="#项目目标"><span class="header-section-number">7</span> 项目目标</a></li>
+  <li><a href="#数据要求" id="toc-数据要求" class="nav-link" data-scroll-target="#数据要求"><span class="header-section-number">8</span> 数据要求</a></li>
+  <li><a href="#项目步骤建议仅供参考" id="toc-项目步骤建议仅供参考" class="nav-link" data-scroll-target="#项目步骤建议仅供参考"><span class="header-section-number">9</span> 项目步骤建议（仅供参考）</a></li>
+  <li><a href="#提交要求" id="toc-提交要求" class="nav-link" data-scroll-target="#提交要求"><span class="header-section-number">10</span> 提交要求</a>
   <ul class="collapse">
-  <li><a href="#emh-对量化投资的挑战" id="toc-emh-对量化投资的挑战" class="nav-link" data-scroll-target="#emh-对量化投资的挑战"><span class="header-section-number">2.4.1</span> EMH 对量化投资的挑战</a></li>
-  <li><a href="#量化投资在有效市场中的机会" id="toc-量化投资在有效市场中的机会" class="nav-link" data-scroll-target="#量化投资在有效市场中的机会"><span class="header-section-number">2.4.2</span> 量化投资在有效市场中的机会</a></li>
+  <li><a href="#评分标准" id="toc-评分标准" class="nav-link" data-scroll-target="#评分标准"><span class="header-section-number">10.1</span> 评分标准</a></li>
   </ul></li>
-  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结"><span class="header-section-number">2.5</span> 总结</a></li>
+  <li><a href="#参考资料" id="toc-参考资料" class="nav-link" data-scroll-target="#参考资料"><span class="header-section-number">11</span> 参考资料</a>
+  <ul class="collapse">
+  <li><a href="#推荐文献" id="toc-推荐文献" class="nav-link" data-scroll-target="#推荐文献"><span class="header-section-number">11.1</span> 推荐文献</a></li>
+  <li><a href="#在线资源" id="toc-在线资源" class="nav-link" data-scroll-target="#在线资源"><span class="header-section-number">11.2</span> 在线资源</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -169,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></h1>
 </div>
 
 
@@ -186,79 +190,116 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="本节课主要内容" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="本节课主要内容"><span class="header-section-number">2.1</span> 本节课主要内容</h2>
+<section id="项目背景" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> 项目背景</h1>
+<p>因子投资是现代量化投资的核心方法之一，其理论基础可以追溯到Fama-French三因子模型。该模型扩展了传统的资本资产定价模型（CAPM），引入了规模因子（SMB）和价值因子（HML），以更好地解释股票收益的横截面差异。随着研究的深入，学者们又发现了动量因子、质量因子、低波动因子等多种可以产生超额收益的特征因子。</p>
+<p>传统的因子投资策略通常基于财务指标、市场数据或其他可观测的公司特征，构建投资组合以捕获特定因子带来的风险溢价。成功的因子投资需要深入理解因子的经济学原理、统计特性以及实际应用中的约束条件。</p>
+<p>在本项目中，你将有机会应用量化金融的理论知识，设计并实现自己的因子投资策略，并通过严格的统计检验和回测来评估其有效性。</p>
+</section>
+<section id="项目目标" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> 项目目标</h1>
+<p>本项目的主要目标是让你设计并实现一个基于特定因子的投资策略，该策略能够产生显著超过Fama-French三因子模型预期的超额收益率。具体目标包括：</p>
 <ol type="1">
-<li><strong>什么是有效市场假说 (EMH)?</strong></li>
-<li><strong>EMH 的三个层次</strong></li>
-<li><strong>EMH 与量化投资的关联</strong></li>
+<li><strong>因子设计</strong>：基于财务数据、市场数据或替代数据，设计一个具有经济学解释力的因子</li>
+<li><strong>因子测试</strong>：通过截面回归或分组测试等方法，验证因子的有效性</li>
+<li><strong>投资组合构建</strong>：基于因子值构建多空投资组合或多头增强型投资组合</li>
+<li><strong>绩效评估</strong>：评估投资组合的风险调整收益，特别是对Fama-French三因子模型的alpha贡献</li>
+<li><strong>稳健性检验</strong>：进行样本外测试、子样本测试或其他稳健性检验，验证因子效应的持续性</li>
 </ol>
 </section>
-<section id="什么是有效市场假说-emh" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="什么是有效市场假说-emh"><span class="header-section-number">2.2</span> 什么是有效市场假说 (EMH)?</h2>
-<p>有效市场假说 (Efficient Market Hypothesis, EMH) 是金融学中一个核心理论，它认为<strong>资产价格完全反映了所有可获得的信息</strong>。这意味着在有效市场中：</p>
-<ul>
-<li><strong>价格反应迅速</strong>: 一旦新的信息出现，价格会立即调整到新的均衡水平。</li>
-<li><strong>无法持续跑赢市场</strong>: 由于价格已经反映了所有信息，投资者无法通过分析信息来持续获得超额收益 (alpha)。</li>
-<li><strong>随机游走</strong>: 价格变动是随机的，遵循随机游走 (random walk) 模式，过去的价格信息无法预测未来的价格。</li>
-</ul>
-</section>
-<section id="emh-的三个层次" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="emh-的三个层次"><span class="header-section-number">2.3</span> EMH 的三个层次</h2>
-<p>EMH 通常被分为三个层次，根据市场有效性的程度递增：</p>
+<section id="数据要求" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> 数据要求</h1>
+<p>你可以从CSMAR或者WIND数据库获取以下数据进行分析：</p>
 <ol type="1">
-<li><strong>弱式有效市场 (Weak-form Efficiency)</strong>:
+<li><strong>股票价格数据</strong>：使用中国A股历史价格数据</li>
+<li><strong>财务数据</strong>：季度或年度财务报表数据</li>
+<li><strong>宏观经济数据</strong>：如有必要，可引入相关宏观经济指标</li>
+</ol>
+</section>
+<section id="项目步骤建议仅供参考" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> 项目步骤建议（仅供参考）</h1>
+<p>为了顺利完成本项目，建议你按照以下步骤进行：</p>
+<ol type="1">
+<li><strong>文献综述</strong>（1周）
 <ul>
-<li>价格已完全反映了<strong>历史价格信息</strong>。</li>
-<li>技术分析 (Technical Analysis) 无效，因为历史价格模式无法预测未来价格。</li>
-<li>基本面分析 (Fundamental Analysis) 可能有效。</li>
+<li>阅读经典因子投资相关文献</li>
+<li>了解常见因子的经济学原理及实证效果</li>
+<li>寻找研究灵感和潜在的创新点</li>
 </ul></li>
-<li><strong>半强式有效市场 (Semi-strong-form Efficiency)</strong>:
+<li><strong>因子设计与初步测试</strong>（2周）
 <ul>
-<li>价格已完全反映了<strong>所有公开信息</strong>，包括财务报表、新闻、经济数据等。</li>
-<li>技术分析和基于公开信息的基本面分析都无效。</li>
-<li>只有内幕信息 (Insider Information) 可能获得超额收益 (但违法)。</li>
+<li>明确因子构建逻辑</li>
+<li>实现数据获取与预处理</li>
+<li>因子计算与初步有效性检验</li>
 </ul></li>
-<li><strong>强式有效市场 (Strong-form Efficiency)</strong>:
+<li><strong>投资组合构建与回测</strong>（2周）
 <ul>
-<li>价格已完全反映了<strong>所有信息</strong>，包括公开信息和内幕信息。</li>
-<li>任何信息都无法用来获得超额收益，包括内幕信息。</li>
-<li>强式有效市场在现实中极少存在。</li>
+<li>设计投资组合构建规则</li>
+<li>实现回测框架</li>
+<li>计算绩效指标和风险特征</li>
+</ul></li>
+<li><strong>结果分析与报告撰写</strong>（1周）
+<ul>
+<li>分析实证结果</li>
+<li>进行必要的稳健性检验</li>
+<li>撰写最终报告</li>
 </ul></li>
 </ol>
 </section>
-<section id="emh-与量化投资的关联" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="emh-与量化投资的关联"><span class="header-section-number">2.4</span> EMH 与量化投资的关联</h2>
-<p>EMH 对量化投资 (Quantitative Investing) 有着深刻的影响，但也并非完全否定量化投资的价值。</p>
-<section id="emh-对量化投资的挑战" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="emh-对量化投资的挑战"><span class="header-section-number">2.4.1</span> EMH 对量化投资的挑战</h3>
+<section id="提交要求" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> 提交要求</h1>
+<ol type="1">
+<li><strong>项目报告</strong>（10页以内）
 <ul>
-<li><strong>Alpha 的获取难度</strong>: EMH 认为市场难以被持续战胜，量化投资的核心目标是寻找 alpha (超额收益)，这在有效市场中变得非常困难。</li>
-<li><strong>模型失效风险</strong>: 如果市场是有效的，那么基于历史数据构建的模型可能会迅速失效，因为市场会吸收并反映这些模型所利用的信息。</li>
-<li><strong>交易成本</strong>: 量化投资通常涉及高频交易和大量交易，在有效市场中，频繁交易可能被交易成本抵消收益。</li>
+<li>项目摘要（不超过300字）</li>
+<li>因子设计与理论基础</li>
+<li>数据与方法论</li>
+<li>实证结果与分析</li>
+<li>结论与未来研究方向</li>
+<li>参考文献</li>
+</ul></li>
+<li><strong>代码与数据</strong>
+<ul>
+<li>完整、可运行的代码（Python或R）</li>
+<li>必要的数据处理脚本</li>
+<li>详细的README文件，说明代码结构与运行方法</li>
+</ul></li>
+<li><strong>展示幻灯片</strong>
+<ul>
+<li>用于项目最终展示的PPT（不超过15页）</li>
+<li>清晰展示项目核心内容和主要发现</li>
+</ul></li>
+<li><strong>提交方式与截止日期</strong>：
+<ul>
+<li>通过学习通平台提交所有文件</li>
+<li>项目报告和项目代码打包为一个ZIP文件</li>
+<li>截止日期：2025年4月20日23:59</li>
+</ul></li>
+</ol>
+<section id="评分标准" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="评分标准"><span class="header-section-number">10.1</span> 评分标准</h2>
+<p>项目评分将基于以下几个方面：</p>
+<ul>
+<li><strong>创新性</strong>（20%）：因子设计的原创性与创新度</li>
+<li><strong>方法论</strong>（25%）：方法应用的正确性与严谨性</li>
+<li><strong>实证结果</strong>（25%）：策略表现及其统计显著性</li>
+<li><strong>分析深度</strong>（20%）：对结果的解释与分析深度</li>
+<li><strong>展示质量</strong>（10%）：报告与展示的清晰度和专业性</li>
 </ul>
 </section>
-<section id="量化投资在有效市场中的机会" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="量化投资在有效市场中的机会"><span class="header-section-number">2.4.2</span> 量化投资在有效市场中的机会</h3>
-<ul>
-<li><strong>市场并非完全有效</strong>: 尽管 EMH 是一个重要的理论，但现实市场并非完全有效，存在各种市场摩擦和行为偏差，为量化投资提供了机会。</li>
-<li><strong>挖掘微弱的 Alpha</strong>: 量化投资可以通过精细的模型和算法，挖掘市场中微弱的、短暂的 alpha 机会。</li>
-<li><strong>风险管理</strong>: 量化投资在风险管理方面具有优势，可以通过模型化方法更有效地控制投资组合的风险。</li>
-<li><strong>交易效率</strong>: 量化交易系统可以实现自动化交易，提高交易效率，降低人为错误。</li>
-<li><strong>另类数据</strong>: 量化投资可以利用另类数据 (Alternative Data)，例如社交媒体数据、卫星图像数据等，来寻找新的信息来源和投资机会。</li>
-</ul>
 </section>
+<section id="参考资料" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> 参考资料</h1>
+<section id="推荐文献" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="推荐文献"><span class="header-section-number">11.1</span> 推荐文献</h2>
+<p>[1] Hou, Xue, and Zhang, Replicating anomalies, 2020, <em>Review of Financial Studies</em> 33, 2019-2133. [2] Liu, Stambaugh, and Yuan, Size and Value in China, 2019,<em>Journal of Financial Economics</em> 134, 48-69.</p>
 </section>
-<section id="总结" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="总结"><span class="header-section-number">2.5</span> 总结</h2>
-<ul>
-<li>有效市场假说 (EMH) 是金融学的重要理论，强调市场价格的信息效率。</li>
-<li>EMH 分为弱式、半强式和强式三个层次。</li>
-<li>EMH 对量化投资提出了挑战，但也为量化投资提供了在市场非完全有效性、风险管理、交易效率和另类数据利用等方面的机会。</li>
-<li>量化投资需要在 EMH 的框架下，不断探索新的模型和策略，以适应不断变化的市场环境。</li>
-</ul>
+<section id="在线资源" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="在线资源"><span class="header-section-number">11.2</span> 在线资源</h2>
+<p>[1] <a href="http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html">Kenneth French’s Data Library</a> [2] <a href="https://www.aqr.com/research-archive">AQR Capital Management Research</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -684,13 +725,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="前言">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span>
+      <a href="./lab02_capmtest.html" class="pagination-link" aria-label="资本资产定价模型 (CAPM) 实证检验">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM) 实证检验</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02_capm.html" class="pagination-link" aria-label="资本资产定价模型 (CAPM)">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./project2_ml_alt_data.html" class="pagination-link" aria-label="项目2：机器学习与替代数据在量化投资中的应用">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; 有效市场假说 (EMH) – 量化投资课程讲义</title>
+<title>6&nbsp; 项目2：机器学习与替代数据在量化投资中的应用 – 量化投资课程讲义</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02_capm.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./project1_factor.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_emh.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project2_ml_alt_data.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -114,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_emh.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></span></a>
   </div>
 </li>
@@ -138,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project2_ml_alt_data.html" class="sidebar-item-text sidebar-link">
+  <a href="./project2_ml_alt_data.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></span></a>
   </div>
 </li>
@@ -152,15 +151,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#本节课主要内容" id="toc-本节课主要内容" class="nav-link active" data-scroll-target="#本节课主要内容"><span class="header-section-number">2.1</span> 本节课主要内容</a></li>
-  <li><a href="#什么是有效市场假说-emh" id="toc-什么是有效市场假说-emh" class="nav-link" data-scroll-target="#什么是有效市场假说-emh"><span class="header-section-number">2.2</span> 什么是有效市场假说 (EMH)?</a></li>
-  <li><a href="#emh-的三个层次" id="toc-emh-的三个层次" class="nav-link" data-scroll-target="#emh-的三个层次"><span class="header-section-number">2.3</span> EMH 的三个层次</a></li>
-  <li><a href="#emh-与量化投资的关联" id="toc-emh-与量化投资的关联" class="nav-link" data-scroll-target="#emh-与量化投资的关联"><span class="header-section-number">2.4</span> EMH 与量化投资的关联</a>
+  <li><a href="#项目背景" id="toc-项目背景" class="nav-link active" data-scroll-target="#项目背景"><span class="header-section-number">7</span> 项目背景</a></li>
+  <li><a href="#项目目标" id="toc-项目目标" class="nav-link" data-scroll-target="#项目目标"><span class="header-section-number">8</span> 项目目标</a></li>
+  <li><a href="#数据要求" id="toc-数据要求" class="nav-link" data-scroll-target="#数据要求"><span class="header-section-number">9</span> 数据要求</a></li>
+  <li><a href="#项目步骤建议仅供参考" id="toc-项目步骤建议仅供参考" class="nav-link" data-scroll-target="#项目步骤建议仅供参考"><span class="header-section-number">10</span> 项目步骤建议（仅供参考）</a>
   <ul class="collapse">
-  <li><a href="#emh-对量化投资的挑战" id="toc-emh-对量化投资的挑战" class="nav-link" data-scroll-target="#emh-对量化投资的挑战"><span class="header-section-number">2.4.1</span> EMH 对量化投资的挑战</a></li>
-  <li><a href="#量化投资在有效市场中的机会" id="toc-量化投资在有效市场中的机会" class="nav-link" data-scroll-target="#量化投资在有效市场中的机会"><span class="header-section-number">2.4.2</span> 量化投资在有效市场中的机会</a></li>
+  <li><a href="#机器学习路线" id="toc-机器学习路线" class="nav-link" data-scroll-target="#机器学习路线"><span class="header-section-number">10.1</span> 机器学习路线</a></li>
+  <li><a href="#另类数据路线" id="toc-另类数据路线" class="nav-link" data-scroll-target="#另类数据路线"><span class="header-section-number">10.2</span> 另类数据路线</a></li>
   </ul></li>
-  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结"><span class="header-section-number">2.5</span> 总结</a></li>
+  <li><a href="#提交要求" id="toc-提交要求" class="nav-link" data-scroll-target="#提交要求"><span class="header-section-number">11</span> 提交要求</a>
+  <ul class="collapse">
+  <li><a href="#评分标准" id="toc-评分标准" class="nav-link" data-scroll-target="#评分标准"><span class="header-section-number">11.1</span> 评分标准</a></li>
+  </ul></li>
+  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">12</span> 参考文献</a>
+  <ul class="collapse">
+  <li><a href="#机器学习部分" id="toc-机器学习部分" class="nav-link" data-scroll-target="#机器学习部分"><span class="header-section-number">12.1</span> 机器学习部分</a>
+  <ul class="collapse">
+  <li><a href="#另类数据部分" id="toc-另类数据部分" class="nav-link" data-scroll-target="#另类数据部分"><span class="header-section-number">12.1.1</span> 另类数据部分</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -169,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></h1>
 </div>
 
 
@@ -186,79 +195,203 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="本节课主要内容" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="本节课主要内容"><span class="header-section-number">2.1</span> 本节课主要内容</h2>
+<section id="项目背景" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> 项目背景</h1>
+<p>随着计算能力的提升和数据可获取性的增强，机器学习技术与替代数据已成为现代量化投资的重要前沿领域。传统因子投资策略虽然有坚实的理论基础，但往往依赖于线性关系假设和人工特征工程，难以捕捉市场中存在的复杂非线性关系和动态变化。</p>
+<p>机器学习方法通过其强大的模式识别和预测能力，可以自动从大量数据中提取有价值的信息，发现传统方法难以察觉的市场规律。同时，卫星图像、社交媒体情绪、网络搜索量、信用卡消费等替代数据源为投资决策提供了全新的信息维度，可能包含尚未被市场充分定价的信号。</p>
+<p>在本项目中，你将有机会将机器学习算法应用于投资策略开发，或利用替代数据构建创新的量化模型，从而探索超越传统因子投资的可能性。</p>
+</section>
+<section id="项目目标" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> 项目目标</h1>
+<p>本项目的主要目标是让你设计并实现一个基于机器学习方法和/或替代数据的量化投资策略，该策略能够显著优于传统因子模型的表现。具体目标包括：</p>
 <ol type="1">
-<li><strong>什么是有效市场假说 (EMH)?</strong></li>
-<li><strong>EMH 的三个层次</strong></li>
-<li><strong>EMH 与量化投资的关联</strong></li>
+<li><strong>模型设计</strong>：选择并实现适合金融预测任务的机器学习模型，或设计基于替代数据的创新预测方法</li>
+<li><strong>特征工程</strong>：从传统金融数据和/或替代数据中提取有预测价值的特征</li>
+<li><strong>模型训练与评估</strong>：使用适当的交叉验证方法训练和评估模型性能</li>
+<li><strong>投资组合构建</strong>：基于模型预测结果设计投资组合构建规则</li>
+<li><strong>绩效分析</strong>：全面评估策略表现，并与传统因子模型和基准指数进行比较</li>
+<li><strong>可解释性分析</strong>：探索模型决策的可解释性，理解预测背后的驱动因素</li>
 </ol>
 </section>
-<section id="什么是有效市场假说-emh" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="什么是有效市场假说-emh"><span class="header-section-number">2.2</span> 什么是有效市场假说 (EMH)?</h2>
-<p>有效市场假说 (Efficient Market Hypothesis, EMH) 是金融学中一个核心理论，它认为<strong>资产价格完全反映了所有可获得的信息</strong>。这意味着在有效市场中：</p>
-<ul>
-<li><strong>价格反应迅速</strong>: 一旦新的信息出现，价格会立即调整到新的均衡水平。</li>
-<li><strong>无法持续跑赢市场</strong>: 由于价格已经反映了所有信息，投资者无法通过分析信息来持续获得超额收益 (alpha)。</li>
-<li><strong>随机游走</strong>: 价格变动是随机的，遵循随机游走 (random walk) 模式，过去的价格信息无法预测未来的价格。</li>
-</ul>
-</section>
-<section id="emh-的三个层次" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="emh-的三个层次"><span class="header-section-number">2.3</span> EMH 的三个层次</h2>
-<p>EMH 通常被分为三个层次，根据市场有效性的程度递增：</p>
+<section id="数据要求" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> 数据要求</h1>
+<p>你可以使用以下数据资源：</p>
 <ol type="1">
-<li><strong>弱式有效市场 (Weak-form Efficiency)</strong>:
+<li><strong>传统市场数据</strong>：股票价格、交易量、财务指标等（可从CSMAR或WIND数据库获取）</li>
+<li><strong>替代数据</strong>（至少选择其中一种）：
 <ul>
-<li>价格已完全反映了<strong>历史价格信息</strong>。</li>
-<li>技术分析 (Technical Analysis) 无效，因为历史价格模式无法预测未来价格。</li>
-<li>基本面分析 (Fundamental Analysis) 可能有效。</li>
-</ul></li>
-<li><strong>半强式有效市场 (Semi-strong-form Efficiency)</strong>:
-<ul>
-<li>价格已完全反映了<strong>所有公开信息</strong>，包括财务报表、新闻、经济数据等。</li>
-<li>技术分析和基于公开信息的基本面分析都无效。</li>
-<li>只有内幕信息 (Insider Information) 可能获得超额收益 (但违法)。</li>
-</ul></li>
-<li><strong>强式有效市场 (Strong-form Efficiency)</strong>:
-<ul>
-<li>价格已完全反映了<strong>所有信息</strong>，包括公开信息和内幕信息。</li>
-<li>任何信息都无法用来获得超额收益，包括内幕信息。</li>
-<li>强式有效市场在现实中极少存在。</li>
+<li>财务报表文本、图片数据</li>
+<li>业绩说明会文本、音频数据</li>
+<li>企业公告文本数据</li>
+<li>供应链数据</li>
+<li>专利数据</li>
+<li>新闻情绪数据</li>
+<li>社交媒体内容</li>
+<li>网络搜索趋势</li>
+<li>卫星图像分析</li>
+<li>其他创新性替代数据源（需提前获得老师批准）</li>
 </ul></li>
 </ol>
 </section>
-<section id="emh-与量化投资的关联" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="emh-与量化投资的关联"><span class="header-section-number">2.4</span> EMH 与量化投资的关联</h2>
-<p>EMH 对量化投资 (Quantitative Investing) 有着深刻的影响，但也并非完全否定量化投资的价值。</p>
-<section id="emh-对量化投资的挑战" class="level3" data-number="2.4.1">
-<h3 data-number="2.4.1" class="anchored" data-anchor-id="emh-对量化投资的挑战"><span class="header-section-number">2.4.1</span> EMH 对量化投资的挑战</h3>
+<section id="项目步骤建议仅供参考" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> 项目步骤建议（仅供参考）</h1>
+<p>为了顺利完成本项目，以下提供两条技术路线的建议步骤：</p>
+<section id="机器学习路线" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="机器学习路线"><span class="header-section-number">10.1</span> 机器学习路线</h2>
+<ol type="1">
+<li><strong>模型选择与设计</strong>（1周）
 <ul>
-<li><strong>Alpha 的获取难度</strong>: EMH 认为市场难以被持续战胜，量化投资的核心目标是寻找 alpha (超额收益)，这在有效市场中变得非常困难。</li>
-<li><strong>模型失效风险</strong>: 如果市场是有效的，那么基于历史数据构建的模型可能会迅速失效，因为市场会吸收并反映这些模型所利用的信息。</li>
-<li><strong>交易成本</strong>: 量化投资通常涉及高频交易和大量交易，在有效市场中，频繁交易可能被交易成本抵消收益。</li>
+<li>研究不同机器学习模型在金融预测中的优缺点（如随机森林、梯度提升树、神经网络等）</li>
+<li>了解金融数据的特殊性对模型选择的影响</li>
+<li>制定模型设计方案，确定模型架构</li>
+</ul></li>
+<li><strong>数据准备与特征工程</strong>（2周）
+<ul>
+<li>整合传统市场数据和基本面数据</li>
+<li>设计并实现特征工程管道</li>
+<li>处理样本不平衡、缺失值和异常值</li>
+<li>特征选择与降维</li>
+</ul></li>
+<li><strong>模型训练与验证</strong>（2周）
+<ul>
+<li>实现时间序列交叉验证框架</li>
+<li>避免前视偏差和数据泄露</li>
+<li>参数调优与模型集成</li>
+<li>评估模型预测能力</li>
+</ul></li>
+<li><strong>投资组合构建与回测</strong>（2周）
+<ul>
+<li>基于模型预测设计组合权重分配规则</li>
+<li>实现考虑交易成本的回测系统</li>
+<li>分析不同市场环境下的模型表现</li>
+<li>风险管理与绩效归因</li>
+</ul></li>
+</ol>
+</section>
+<section id="另类数据路线" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="另类数据路线"><span class="header-section-number">10.2</span> 另类数据路线</h2>
+<ol type="1">
+<li><strong>数据源选择与获取</strong>（1周）
+<ul>
+<li>评估不同替代数据源的可获取性与潜在价值</li>
+<li>设计数据收集方案</li>
+<li>建立数据获取管道</li>
+<li>确保数据使用合规性</li>
+</ul></li>
+<li><strong>数据处理与信号提取</strong>（2周）
+<ul>
+<li>文本数据：NLP预处理、情感分析、主题建模</li>
+<li>图像数据：计算机视觉技术、特征提取</li>
+<li>结构化替代数据：时间序列处理、异常检测</li>
+<li>信号构建与初步测试</li>
+</ul></li>
+<li><strong>信号评估与整合</strong>（2周）
+<ul>
+<li>评估信号的预测能力</li>
+<li>信号去噪与转换</li>
+<li>与传统因子的相关性分析</li>
+<li>信号组合方法设计</li>
+</ul></li>
+<li><strong>投资组合构建与回测</strong>（2周）
+<ul>
+<li>基于替代数据信号设计投资规则</li>
+<li>实现考虑交易成本和信号时效性的回测系统</li>
+<li>与传统因子策略的比较分析</li>
+<li>风险管理与绩效归因</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="提交要求" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> 提交要求</h1>
+<ol type="1">
+<li><strong>课堂展示</strong>（10分钟）
+<ul>
+<li>清晰展示项目核心内容和主要发现</li>
+<li>演示代码运行和回测结果</li>
+<li>展示策略在不同市场环境下的表现</li>
+<li>解释模型决策或信号生成的原理</li>
+<li>回答老师提问</li>
+</ul></li>
+<li><strong>代码与数据</strong>
+<ul>
+<li>完整、可运行的代码（Python或R）</li>
+<li>数据处理管道和模型实现</li>
+<li>必要的配置文件和依赖说明</li>
+<li>详细的README文件，说明代码结构与运行方法</li>
+<li>替代数据的样本或获取方法说明</li>
+</ul></li>
+<li><strong>提交方式与截止日期</strong>：
+<ul>
+<li>通过学习通平台提交代码与数据（ZIP格式）</li>
+<li>同时提交展示幻灯片（PPT或PDF格式）</li>
+<li>截止日期：2025年6月8日23:59</li>
+</ul></li>
+</ol>
+<section id="评分标准" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="评分标准"><span class="header-section-number">11.1</span> 评分标准</h2>
+<p>项目评分将基于以下几个方面：</p>
+<ul>
+<li><strong>创新性</strong>（20%）：方法设计和数据使用的创新程度</li>
+<li><strong>技术实现</strong>（25%）：机器学习模型或替代数据处理的技术水平</li>
+<li><strong>实证结果</strong>（25%）：策略表现及其相对于传统方法的优势</li>
+<li><strong>风险控制</strong>（15%）：对策略风险的理解和控制</li>
+<li><strong>可解释性</strong>（10%）：对模型决策过程的解释能力</li>
+<li><strong>展示质量</strong>（5%）：报告与展示的清晰度和专业性</li>
 </ul>
 </section>
-<section id="量化投资在有效市场中的机会" class="level3" data-number="2.4.2">
-<h3 data-number="2.4.2" class="anchored" data-anchor-id="量化投资在有效市场中的机会"><span class="header-section-number">2.4.2</span> 量化投资在有效市场中的机会</h3>
-<ul>
-<li><strong>市场并非完全有效</strong>: 尽管 EMH 是一个重要的理论，但现实市场并非完全有效，存在各种市场摩擦和行为偏差，为量化投资提供了机会。</li>
-<li><strong>挖掘微弱的 Alpha</strong>: 量化投资可以通过精细的模型和算法，挖掘市场中微弱的、短暂的 alpha 机会。</li>
-<li><strong>风险管理</strong>: 量化投资在风险管理方面具有优势，可以通过模型化方法更有效地控制投资组合的风险。</li>
-<li><strong>交易效率</strong>: 量化交易系统可以实现自动化交易，提高交易效率，降低人为错误。</li>
-<li><strong>另类数据</strong>: 量化投资可以利用另类数据 (Alternative Data)，例如社交媒体数据、卫星图像数据等，来寻找新的信息来源和投资机会。</li>
-</ul>
 </section>
-</section>
-<section id="总结" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="总结"><span class="header-section-number">2.5</span> 总结</h2>
-<ul>
-<li>有效市场假说 (EMH) 是金融学的重要理论，强调市场价格的信息效率。</li>
-<li>EMH 分为弱式、半强式和强式三个层次。</li>
-<li>EMH 对量化投资提出了挑战，但也为量化投资提供了在市场非完全有效性、风险管理、交易效率和另类数据利用等方面的机会。</li>
-<li>量化投资需要在 EMH 的框架下，不断探索新的模型和策略，以适应不断变化的市场环境。</li>
-</ul>
+<section id="参考文献" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> 参考文献</h1>
+<section id="机器学习部分" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="机器学习部分"><span class="header-section-number">12.1</span> 机器学习部分</h2>
+<p>[1] Adämmer, P., &amp; Schüssler, R. A. (2020). Forecasting the equity premium: mind the news!. Review of Finance, 24(6), 1313-1355.</p>
+<p>[2] Cao, S., Jiang, W., Wang, J. L., &amp; Yang, B. (2021). From man vs.&nbsp;machine to man+ machine: The art and AI of stock analyses (No.&nbsp;w28800). National Bureau of Economic Research.</p>
+<p>[3] Chen, X., Cho, Y. H., Dou, Y., &amp; Lev, B. (2022). Predicting future earnings changes using machine learning and detailed financial data. Journal of Accounting Research, 60(2), 467-515.</p>
+<p>[4] Chen, L., Pelger, M., &amp; Zhu, J. (2023). Deep learning in asset pricing. Management Science, 70(2), 3329-3348.</p>
+<p>[5] Dong, X., Li, Y., Rapach, D. E., &amp; Zhou, G. (2022). Anomalies and the expected market return. The Journal of Finance, 77(1), 639-681.</p>
+<p>[6] Easley, D., López de Prado, M., O’Hara, M., &amp; Zhang, Z. (2021). Microstructure in the machine age. The Review of Financial Studies, 34(7), 3316-3363.</p>
+<p>[7] Freyberger, J., Neuhierl, A., &amp; Weber, M. (2020). Dissecting characteristics nonparametrically. The Review of Financial Studies, 33(5), 2326-2377.</p>
+<p>[8] Gu, S., Kelly, B., &amp; Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial Studies, 33(5), 2223-2273.</p>
+<p>[9] Jiang, J., Kelly, B. T., &amp; Xiu, D. (2023). (Re-)Imag(in)ing price trends. Journal of Finance, 78(6), 3193-3249.</p>
+<p>[10] Ke, Z. T., Kelly, B. T., &amp; Xiu, D. (2019). Predicting returns with text data (No.&nbsp;w26186). National Bureau of Economic Research.</p>
+<p>[11] Kozak, S., Nagel, S., &amp; Santosh, S. (2020). Shrinking the cross-section. Journal of Financial Economics, 135(2), 271-292.</p>
+<p>[12] Leippold, M., Wang, Q., &amp; Zhou, W. (2022). Machine learning in the Chinese stock market. Journal of Financial Economics, 145(2), 64-82.</p>
+<section id="另类数据部分" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="另类数据部分"><span class="header-section-number">12.1.1</span> 另类数据部分</h3>
+<p>[13] Bartov, E., Faurel, L., &amp; Mohanram, P. S. (2018). Can Twitter help predict firm-level earnings and stock returns?. The Accounting Review, 93(3), 25-57.</p>
+<p>[14] Bernard, D., Blackburne, T., &amp; Thornock, J. (2020). Information flows among rivals and corporate investment. Journal of Financial Economics, 136(3), 760-779.</p>
+<p>[15] Brown, N. C., Crowley, R. M., &amp; Elliott, W. B. (2020). What are you saying? Using topic to detect financial misreporting. Journal of Accounting Research, 58(1), 237-291.</p>
+<p>[16] Buehlmaier, M. M., &amp; Whited, T. M. (2018). Are financial constraints priced? Evidence from textual analysis. The Review of Financial Studies, 31(7), 2693-2728.</p>
+<p>[17] Cao, S., Jiang, W., Yang, B., &amp; Zhang, A. L. (2023). How to talk when a machine is listening: Corporate disclosure in the age of AI. The Review of Financial Studies, 36(9), 3603-3642.</p>
+<p>[18] Cong, L., T., Liang, X., Zhang, &amp; Zhu, W. (2022). Textual Factors: A Scalable, interpretable, and data-driven Approach to Analyzing Unstructured Information. (w33168) Management Science 68(11), 7893-8359.</p>
+<p>[19] Cookson, J. A., &amp; Niessner, M. (2020). Why don’t we agree? Evidence from a social network of investors. The Journal of Finance, 75(1), 173-228.</p>
+<p>[20] Da, Z., Huang, X., &amp; Jin, L. J. (2021). Extrapolative beliefmusics in the cross-section: What can we learn from the crowds?. Journal of Financial Economics, 140(1), 175-196.</p>
+<p>[21] Edmans, A., Fernandez-Perez, A., Garel, A., &amp; Indriawan, I. (2022). Music sentiment and stock returns around the world. Journal of Financial Economics, 145(2), 234-254.</p>
+<p>[22] Eisdorfer, A., Froot, K., Ozik, G., &amp; Sadka, R. (2022). Competition links and stock returns. The Review of Financial Studies, 35(9), 4300-4340.</p>
+<p>[23] Florackis, C., Louca, C., Michaely, R., &amp; Weber, M. (2023). Cybersecurity risk. The Review of Financial Studies, 36(1), 351-407.</p>
+<p>[24] Garcia, D., Hu, X., &amp; Rohrer, M. (2023). The colour of finance words. Journal of Financial Economics, 147(3), 525-549.</p>
+<p>[25] Gómez-Cram, R., &amp; Grotteria, M. (2022). Real-time price discovery via verbal communication: Method and application to Fedspeak. Journal of Financial Economics, 143(3), 993-1025.</p>
+<p>[26] Green, T. C., Huang, R., Wen, Q., &amp; Zhou, D. (2019). Crowdsourced employer reviews and stock returns. Journal of Financial Economics, 134(1), 236-251.</p>
+<p>[27] Hanley, K. W., &amp; Hoberg, G. (2019). Dynamic interpretation of emerging risks in the financial sector. The Review of Financial Studies, 32(12), 4543-4603.</p>
+<p>[28] Hassan, T. A., Hollander, S., Van Lent, L., &amp; Tahoun, A. (2019). Firm-level political risk: Measurement and effects. The Quarterly Journal of Economics, 134(4), 2135-2202.</p>
+<p>[29] Hoberg, G., &amp; Phillips, G. (2016). Text-based network industries and endogenous product differentiation. Journal of Political Economy, 124(5), 1423-1465.</p>
+<p>[30] Hsieh, T. S., Kim, J. B., Wang, R. R., &amp; Wang, Z. (2020). Seeing is believing? Executives’ facial trustworthiness, auditor tenure, and audit fees. Journal极 of Accounting and Economics, 69(1), 101260.</p>
+<p>[31] Huang, X., Ivković, Z., Jiang, J. X., &amp; Wang, I. Y. (202极3). Angel investment and first impressions. Journal of Financial Economics, 149(2), 161-178.</p>
+<p>[32] Huang, A. H., Zang, A. Y., &amp; Zheng, R. (2014). Evidence on the information content of text in analyst reports. The Accounting Review, 89(6), 2151-2180.</p>
+<p>[33] Kalmenovitz, J. (2023). Regulatory intensity and firm-specific exposure. The Review of Financial Studies, 36(8), 3311-3347.</p>
+<p>[34] Li, K., Mai, F., Shen, R., &amp; Yan, X. (2021). Measuring corporate culture using machine learning. The Review of Financial Studies, 34(7), 3265-3315.</p>
+<p>[35] Lowry, M., Michaely, R., &amp; Volkova, E. (2020). Information revealed through the regulatory process: Interactions between the SEC and companies ahead of their IPO. The Review of Financial Studies, 33(12), 5510-5554.</p>
+<p>[36] Manela, A., &amp; Moreira, A. (2017). News implied volatility and disaster concerns. Journal of Financial Economics, 123(1), 137-162.</p>
+<p>[37] Mukherjee, A., Panayotov极, G., &amp; Shon, J. (2021). Eye in the sky: Private satellites and government macro data. Journal of Financial Economics, 141(1), 234-254.</p>
+<p>[38] Obaid, K., &amp; Pukthuanthong, K. (2022). A picture is worth a thousand words: Measuring investor sentiment by combining machine learning and photos from news. Journal of Financial Economics, 144(1), 273-297.</p>
+<p>[39] Sautner, Z., Van Lent, L., Vilkov, G., &amp; Zhang, R. (2023). Firm‐level climate change exposure. The Journal of Finance, 78(3), 1449-1498.</p>
+<p>[40] Tang, V. W. (2018). Wisdom of crowds: Cross‐sectional variation in the informativeness of third‐party‐generated product information on Twitter. Journal of Accounting Research, 56(3), 989-1034.</p>
+<p>[41] Zhu, C. (2019). Big data as a governance mechanism. The Review of Financial Studies, 32(5), 2021-2061.</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -684,14 +817,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="前言">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span>
+      <a href="./project1_factor.html" class="pagination-link" aria-label="项目1：因子投资策略构建">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02_capm.html" class="pagination-link" aria-label="资本资产定价模型 (CAPM)">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM)</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
