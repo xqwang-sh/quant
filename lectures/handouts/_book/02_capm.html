@@ -450,30 +450,37 @@ window.Quarto = {
 <h3 data-number="3.5.1" class="anchored" data-anchor-id="实证检验方法回顾"><span class="header-section-number">3.5.1</span> 实证检验方法回顾</h3>
 <p>CAPM 模型的常用实证检验方法如下：</p>
 <ol type="1">
-<li><strong>时间序列回归 (Time-Series Regression)</strong>
+<li><strong>横截面回归 (Cross-Sectional Regression或Two-Pass Regression)</strong>
 <ul>
-<li>检验股票收益率是否可以被市场组合的超额收益率解释，<span class="math inline">\(\alpha_i\)</span> 是否显著为零。</li>
-<li>公式: <span class="math inline">\(R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}\)</span></li>
-</ul></li>
-<li><strong>横截面回归 (Cross-Sectional Regression)</strong>
-<ul>
-<li>检验股票的平均收益率是否与其 Beta 系数线性相关，<span class="math inline">\(\gamma_{0,t}\)</span> 是否为零，<span class="math inline">\(\gamma_{1,t}\)</span> 是否等于市场风险溢价且显著为正。</li>
+<li>检验股票的平均收益率是否与其 Beta 系数线性相关，<span class="math inline">\(\gamma_{0,t}\)</span> 是否接近无风险利率，<span class="math inline">\(\gamma_{1,t}\)</span> 是否等于市场风险溢价且显著为正。</li>
 <li>步骤：
 <ol type="1">
-<li>估计 Beta：时间序列回归估计 <span class="math inline">\(\beta_i\)</span>。</li>
-<li>横截面回归：<span class="math inline">\(R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \beta_i + \eta_{i,t}\)</span></li>
+<li><strong>第一步 - 时间序列回归估计Beta</strong>：使用一段固定时间窗口(如过去60个月)对每个资产进行时间序列回归，估计单一Beta值 <span class="math inline">\(\hat{\beta}_i\)</span>。 公式: <span class="math inline">\(R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}\)</span></li>
+<li><strong>第二步 - 横截面回归</strong>：在每个时间点t，使用所有资产的收益率与第一步估计的Beta值进行横截面回归。 公式: <span class="math inline">\(R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \hat{\beta}_i + \eta_{i,t}\)</span></li>
 </ol></li>
 </ul></li>
-<li><strong>Fama-MacBeth 回归</strong>
+<li><strong>Fama-MacBeth 回归 (Fama-MacBeth Regression)</strong>
 <ul>
-<li>改进的横截面回归方法，处理 Beta 估计误差，更稳健。</li>
+<li>改进的横截面回归方法，处理 Beta 估计误差，提供更稳健的风险溢价估计。</li>
 <li>步骤：
 <ol type="1">
-<li>滚动窗口估计 Beta：估计 <span class="math inline">\(\beta_{i,t}\)</span>。</li>
-<li>横截面回归：<span class="math inline">\(R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \beta_{i,t-1} + \eta_{i,t}\)</span></li>
-<li>计算平均风险溢价：<span class="math inline">\(\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}\)</span></li>
-<li>检验显著性：检验 <span class="math inline">\(\bar{\gamma}_1\)</span> 是否显著异于零。</li>
+<li><strong>第一步 - 滚动窗口估计Beta时间序列</strong>：对每个资产使用滚动时间窗口估计Beta值 <span class="math inline">\(\hat{\beta}_{i,t-1}\)</span>，得到Beta的时间序列。</li>
+<li><strong>第二步 - 每期横截面回归</strong>：在每个时间点t，使用当期收益率与上期估计的Beta值进行横截面回归。 公式: <span class="math inline">\(R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \hat{\beta}_{i,t-1} + \eta_{i,t}\)</span></li>
+<li><strong>第三步 - 计算平均风险溢价</strong>：计算所有时期横截面回归系数的时间序列平均值。 公式: <span class="math inline">\(\bar{\gamma}_0 = \frac{1}{T} \sum_{t=1}^T \gamma_{0,t}\)</span> 和 <span class="math inline">\(\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}\)</span></li>
+<li><strong>第四步 - 检验显著性</strong>：使用时间序列平均值的t统计量检验 <span class="math inline">\(\bar{\gamma}_0\)</span> 和 <span class="math inline">\(\bar{\gamma}_1\)</span> 的显著性。</li>
 </ol></li>
+</ul></li>
+<li><strong>投资组合分组法 (Portfolio Grouping)</strong>
+<ul>
+<li>为解决个股Beta估计误差大的问题，研究者经常采用投资组合分组法进行实证检验。</li>
+<li>步骤：
+<ol type="1">
+<li><strong>第一步 - 估计个股Beta值</strong>：对每个股票估计Beta值。</li>
+<li><strong>第二步 - 按Beta大小分组</strong>：根据Beta大小将股票分成多个投资组合(通常是10个或20个)。</li>
+<li><strong>第三步 - 计算组合特征</strong>：计算每个投资组合的平均Beta和平均收益率。</li>
+<li><strong>第四步 - 组合级别回归</strong>：使用投资组合的平均Beta和平均收益率进行横截面回归。 公式: <span class="math inline">\(\overline{R}_{p} = \gamma_0 + \gamma_1\overline{\beta}_p + \eta_p\)</span></li>
+</ol></li>
+<li>这种方法最早由Black, Jensen, and Scholes (1972)提出，能够显著减少Beta估计误差对检验结果的影响。</li>
 </ul></li>
 </ol>
 </section>

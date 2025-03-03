@@ -231,6 +231,7 @@ window.Quarto = {
   <li><a href="#合并数据框" id="toc-合并数据框" class="nav-link" data-scroll-target="#合并数据框"><span class="header-section-number">4.4.5</span> 合并数据框</a></li>
   <li><a href="#时间序列回归估计beta" id="toc-时间序列回归估计beta" class="nav-link" data-scroll-target="#时间序列回归估计beta"><span class="header-section-number">4.4.6</span> 时间序列回归估计Beta</a></li>
   <li><a href="#横截面回归检验capm模型" id="toc-横截面回归检验capm模型" class="nav-link" data-scroll-target="#横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 横截面回归检验CAPM模型</a></li>
+  <li><a href="#作图" id="toc-作图" class="nav-link" data-scroll-target="#作图"><span class="header-section-number">4.4.8</span> 作图</a></li>
   </ul></li>
   <li><a href="#实验结果" id="toc-实验结果" class="nav-link" data-scroll-target="#实验结果"><span class="header-section-number">4.5</span> 实验结果</a></li>
   <li><a href="#结论与讨论" id="toc-结论与讨论" class="nav-link" data-scroll-target="#结论与讨论"><span class="header-section-number">4.6</span> 结论与讨论</a></li>
@@ -286,19 +287,24 @@ window.Quarto = {
 </section>
 <section id="capm-模型的实证检验方法" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="capm-模型的实证检验方法"><span class="header-section-number">4.2.2</span> CAPM 模型的实证检验方法</h3>
-<p>本实验将采用横截面回归方法对 CAPM 模型进行实证检验：</p>
-<p><strong>横截面回归 (Cross-Sectional Regression)</strong></p>
-<p>检验股票的平均收益率是否与其 Beta 系数线性相关，模型如下：</p>
-<p><span class="math inline">\(R_{i} = \gamma_{0} + \gamma_{1} \beta_i + \eta_{i}\)</span></p>
+<p>本实验将采用投资组合分组法 (Portfolio Grouping) 对 CAPM 模型进行实证检验：</p>
+<p><strong>投资组合分组法 (Portfolio Grouping)</strong></p>
+<p>为解决个股Beta估计误差大的问题，我们采用投资组合分组法进行CAPM检验。这种方法最早由Black, Jensen, and Scholes (1972)提出，能够显著减少Beta估计误差对检验结果的影响。</p>
+<p>实证模型如下：</p>
+<p><span class="math inline">\(\overline{R}_{p} = \gamma_{0} + \gamma_{1} \overline{\beta}_p + \eta_{p}\)</span></p>
 <ul>
-<li><span class="math inline">\(\gamma_{0}\)</span> 代表零 Beta 组合的预期收益率，如果 CAPM 成立，<span class="math inline">\(\gamma_{0}\)</span> 应等于无风险利率 <span class="math inline">\(R_f\)</span>。</li>
+<li><span class="math inline">\(\gamma_{0}\)</span> 代表零 Beta 组合的预期收益率，如果 CAPM 成立，<span class="math inline">\(\gamma_{0}\)</span> 应接近无风险利率 <span class="math inline">\(R_f\)</span>。</li>
 <li><span class="math inline">\(\gamma_{1}\)</span> 代表风险溢价，如果 CAPM 成立，<span class="math inline">\(\gamma_{1}\)</span> 应等于市场风险溢价 <span class="math inline">\(E(R_m) - R_f\)</span>，且显著为正。</li>
+<li><span class="math inline">\(\overline{R}_{p}\)</span> 和 <span class="math inline">\(\overline{\beta}_p\)</span> 分别是投资组合的平均收益率和平均Beta值。</li>
 </ul>
 <p><strong>步骤：</strong></p>
 <ol type="1">
-<li><strong>第一步：时间序列回归估计 Beta</strong>: 使用时间序列回归模型，对每只股票 <span class="math inline">\(i\)</span> 估计其 Beta 值 <span class="math inline">\(\beta_i\)</span>。</li>
-<li><strong>第二步：横截面回归</strong>: 使用第一步估计的 Beta 值 <span class="math inline">\(\beta_i\)</span> 作为解释变量，股票的平均收益率 <span class="math inline">\(R_i\)</span> 作为被解释变量，进行横截面回归。</li>
+<li><strong>第一步：时间序列回归估计个股Beta值</strong>：使用时间序列回归模型，对每只股票 <span class="math inline">\(i\)</span> 估计其 Beta 值 <span class="math inline">\(\beta_i\)</span>。</li>
+<li><strong>第二步：按Beta大小分组</strong>：根据Beta大小将股票分成多个投资组合(本实验分为10组)。</li>
+<li><strong>第三步：计算组合特征</strong>：计算每个投资组合的平均Beta和平均收益率。</li>
+<li><strong>第四步：组合级别回归</strong>：使用投资组合的平均Beta和平均收益率进行横截面回归。</li>
 </ol>
+<p>与直接使用个股数据进行横截面回归相比，投资组合分组法有以下优势： - 降低Beta估计误差的影响，提高检验结果的稳健性 - 分散非系统性风险，更好地捕捉Beta与平均收益率之间的关系 - 减少极端值对回归结果的影响 - 更符合投资者实际持有多样化投资组合的实践</p>
 </section>
 </section>
 <section id="实验数据" class="level2" data-number="4.3">
@@ -488,81 +494,104 @@ window.Quarto = {
 <section id="横截面回归检验capm模型" class="level3" data-number="4.4.7">
 <h3 data-number="4.4.7" class="anchored" data-anchor-id="横截面回归检验capm模型"><span class="header-section-number">4.4.7</span> 横截面回归检验CAPM模型</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第六步：横截面回归检验CAPM模型</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归检验Beta与平均收益率的关系，是CAPM模型有效性的关键检验</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 对beta_values进行分组，从小到大等分为10组，生成一列group</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 分组可以减少个股特异性风险的影响，更好地检验系统性风险与收益的关系</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>beta_values[<span class="st">'group'</span>] <span class="op">=</span> pd.qcut(beta_values[<span class="st">'beta'</span>], q<span class="op">=</span><span class="dv">10</span>, labels<span class="op">=</span><span class="va">False</span>, duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据股票代码合并股票数据</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>capm_data <span class="op">=</span> pd.merge(stock_data, beta_values, on<span class="op">=</span><span class="st">'Stkcd'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 把capm_data按group分组，计算每组的股票平均回报率、beta平均值，放在一个DataFrame中</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 组合可以分散非系统性风险，更好地反映Beta与收益率的关系</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>group_data <span class="op">=</span> capm_data.groupby(<span class="st">'group'</span>).agg({<span class="st">'Wretwd'</span>: <span class="st">'mean'</span>, <span class="st">'beta'</span>: <span class="st">'mean'</span>})</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用Wretwd对beta进行回归，计算截距和斜率</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归模型：R_i = γ_0 + γ_1 * β_i + η_i</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># γ_0应接近无风险利率，γ_1应接近市场风险溢价</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(group_data[<span class="st">'Wretwd'</span>], sm.add_constant(group_data[<span class="st">'beta'</span>])).fit()</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示回归结果</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取并解释结果</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>gamma_0 <span class="op">=</span> model.params[<span class="st">'const'</span>]  <span class="co"># 零Beta组合收益率</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>gamma_1 <span class="op">=</span> model.params[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价估计值</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>p_value_gamma_0 <span class="op">=</span> model.pvalues[<span class="st">'const'</span>]  <span class="co"># 零Beta组合收益率的显著性</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>p_value_gamma_1 <span class="op">=</span> model.pvalues[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价的显著性</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">CAPM横截面回归结果解释:"</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ0 (零Beta组合收益率) = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_0<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ1 (市场风险溢价) = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_1<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"实际市场风险溢价 = </span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co"># CAPM检验结论</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">CAPM检验结论:"</span>)</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_0 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ0 (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 显著，表明零Beta组合收益率存在"</span>)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ0 (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 不显著，无法确定零Beta组合收益率"</span>)</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_1 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gamma_1 <span class="op">&gt;</span> <span class="dv">0</span>:</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著为正，表明Beta风险被市场定价"</span>)</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(gamma_1 <span class="op">-</span> market_risk_premium) <span class="op">&lt;</span> <span class="fl">0.01</span>:</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  且接近实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">)，支持CAPM模型"</span>)</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  但与实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">) 存在差异，CAPM模型部分成立"</span>)</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价"</span>)</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立"</span>)</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># 画图并保存</span></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>plt.scatter(group_data[<span class="st">'beta'</span>], group_data[<span class="st">'Wretwd'</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>plt.plot(group_data[<span class="st">'beta'</span>], gamma_0 <span class="op">+</span> gamma_1 <span class="op">*</span> group_data[<span class="st">'beta'</span>], <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Beta与平均收益率的关系'</span>)</span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Beta系数'</span>)</span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'平均周收益率'</span>)</span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'R2 = </span><span class="sc">{</span>model<span class="sc">.</span>rsquared<span class="sc">:.4f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ0 = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.90</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ1 = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.85</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'capm_scatter.png'</span>)</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"已保存Beta与平均收益率的散点图"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第六步：使用投资组合分组法检验CAPM模型</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 投资组合分组法通过将股票按Beta分组，计算组合平均Beta和收益率，</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 再进行回归，能够显著减少Beta估计误差的影响，提高检验结果的稳健性</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 对beta_values进行分组，从小到大等分为10组，生成一列group</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 分组可以减少个股特异性风险的影响，更好地检验系统性风险与收益的关系</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>beta_values[<span class="st">'group'</span>] <span class="op">=</span> pd.qcut(beta_values[<span class="st">'beta'</span>], q<span class="op">=</span><span class="dv">10</span>, labels<span class="op">=</span><span class="va">False</span>, duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据股票代码合并股票数据</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>capm_data <span class="op">=</span> pd.merge(stock_data, beta_values, on<span class="op">=</span><span class="st">'Stkcd'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 把capm_data按group分组，计算每组的股票平均回报率、beta平均值，放在一个DataFrame中</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 组合可以分散非系统性风险，更好地反映Beta与收益率的关系</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>group_data <span class="op">=</span> capm_data.groupby(<span class="st">'group'</span>).agg({<span class="st">'Wretwd'</span>: <span class="st">'mean'</span>, <span class="st">'beta'</span>: <span class="st">'mean'</span>})</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用Wretwd对beta进行回归，计算截距和斜率</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 横截面回归模型：R_i = γ_0 + γ_1 * β_i + η_i</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># γ_0应接近无风险利率，γ_1应接近市场风险溢价</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS(group_data[<span class="st">'Wretwd'</span>], sm.add_constant(group_data[<span class="st">'beta'</span>])).fit()</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 展示回归结果</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 提取并解释结果</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>gamma_0 <span class="op">=</span> model.params[<span class="st">'const'</span>]  <span class="co"># 零Beta组合收益率</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>gamma_1 <span class="op">=</span> model.params[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价估计值</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>p_value_gamma_0 <span class="op">=</span> model.pvalues[<span class="st">'const'</span>]  <span class="co"># 零Beta组合收益率的显著性</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>p_value_gamma_1 <span class="op">=</span> model.pvalues[<span class="st">'beta'</span>]   <span class="co"># 市场风险溢价的显著性</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">CAPM横截面回归结果解释:"</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ0 (零Beta组合收益率) = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_0<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"γ1 (市场风险溢价) = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">, p值 = </span><span class="sc">{</span>p_value_gamma_1<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"实际市场风险溢价 = </span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">"</span>)</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co"># CAPM检验结论</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">CAPM检验结论:"</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_0 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ0 (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 显著，表明零Beta组合收益率存在"</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ0 (</span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">) 不显著，无法确定零Beta组合收益率"</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> p_value_gamma_1 <span class="op">&lt;</span> <span class="fl">0.05</span>:</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gamma_1 <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著为正，表明Beta风险被市场定价"</span>)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">abs</span>(gamma_1 <span class="op">-</span> market_risk_premium) <span class="op">&lt;</span> <span class="fl">0.01</span>:</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  且接近实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">)，支持CAPM模型"</span>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  但与实际市场风险溢价 (</span><span class="sc">{</span>market_risk_premium<span class="sc">:.6f}</span><span class="ss">) 存在差异，CAPM模型部分成立"</span>)</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价"</span>)</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"- γ1 (</span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="作图" class="level3" data-number="4.4.8">
+<h3 data-number="4.4.8" class="anchored" data-anchor-id="作图"><span class="header-section-number">4.4.8</span> 作图</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 第七步：画图</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 在图上画出投资组合平均Beta和收益率，与回归线</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">###################################</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置绘图风格</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据操作系统设置不同的字体</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> platform</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取操作系统类型</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> platform.system()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置 matplotlib 字体</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> system <span class="op">==</span> <span class="st">'Windows'</span>:</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'SimHei'</span>]  <span class="co"># Windows 使用黑体</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> system <span class="op">==</span> <span class="st">'Darwin'</span>:</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'Songti SC'</span>]  <span class="co"># Mac 使用宋体</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'WenQuanYi Zen Hei'</span>]  <span class="co"># Linux 使用文泉驿正黑</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 解决负号显示问题</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.unicode_minus'</span>] <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 画图并保存</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plt.scatter(group_data[<span class="st">'beta'</span>], group_data[<span class="st">'Wretwd'</span>], alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.plot(group_data[<span class="st">'beta'</span>], gamma_0 <span class="op">+</span> gamma_1 <span class="op">*</span> group_data[<span class="st">'beta'</span>], <span class="st">'r-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Beta与平均收益率的关系'</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Beta系数'</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'平均周收益率'</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'R2 = </span><span class="sc">{</span>model<span class="sc">.</span>rsquared<span class="sc">:.4f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ0 = </span><span class="sc">{</span>gamma_0<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.90</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>plt.annotate(<span class="ss">f'γ1 = </span><span class="sc">{</span>gamma_1<span class="sc">:.6f}</span><span class="ss">'</span>, xy<span class="op">=</span>(<span class="fl">0.05</span>, <span class="fl">0.85</span>), xycoords<span class="op">=</span><span class="st">'axes fraction'</span>)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'capm_scatter.png'</span>)</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"已保存Beta与平均收益率的散点图"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="实验结果" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="实验结果"><span class="header-section-number">4.5</span> 实验结果</h2>
-<p>横截面回归结果显示了Beta系数与股票收益率之间的关系。如果CAPM模型成立，我们期望：</p>
+<p>本实验采用投资组合分组法检验了CAPM模型。如果CAPM模型成立，我们期望：</p>
 <ol type="1">
 <li>截距项（<span class="math inline">\(\gamma_0\)</span>）应接近无风险利率，代表零Beta组合的收益率</li>
 <li>Beta系数（<span class="math inline">\(\gamma_1\)</span>）应显著为正，且接近市场风险溢价，代表承担系统性风险的补偿</li>
 </ol>
-<p>下图展示了Beta与平均收益率的散点图及回归线：</p>
+<p>下图展示了投资组合平均Beta与平均收益率的散点图及回归线：</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./images/capm_scatter.png" class="img-fluid figure-img"></p>
@@ -572,38 +601,39 @@ window.Quarto = {
 </section>
 <section id="结论与讨论" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="结论与讨论"><span class="header-section-number">4.6</span> 结论与讨论</h2>
-<p>根据实验结果，我们可以分析CAPM模型在中国A股市场的适用性：</p>
+<p>根据投资组合分组法的实验结果，我们可以分析CAPM模型在中国A股市场的适用性：</p>
 <ol type="1">
-<li><strong>Beta系数的解释能力</strong>：
+<li><strong>系统性风险的定价</strong>：
 <ul>
-<li>观察Beta系数是否显著，以及其解释能力（R²）的大小</li>
-<li>R²值越高，表明Beta能够解释的收益率变异越多</li>
-<li>中国市场的R²通常低于成熟市场，表明非系统性因素影响较大</li>
+<li>观察投资组合回归中Beta系数是否显著，以及其解释能力（R方）的大小</li>
+<li>R方值代表投资组合平均收益率中能被Beta解释的部分</li>
+<li>与个股回归相比，投资组合回归的R方通常较高，因为分组降低了特异性风险的影响</li>
 </ul></li>
 <li><strong>零Beta组合收益率</strong>：
 <ul>
 <li>比较 <span class="math inline">\(\gamma_0\)</span> 与无风险利率的差异</li>
 <li>如果 <span class="math inline">\(\gamma_0\)</span> 显著高于无风险利率，可能存在其他风险因子未被模型捕捉</li>
-<li>如果 <span class="math inline">\(\gamma_0\)</span> 不显著，则无法确定零Beta组合的收益特征</li>
+<li>Black, Jensen, and Scholes (1972)的研究表明，零Beta组合收益率通常高于无风险利率</li>
 </ul></li>
 <li><strong>风险溢价</strong>：
 <ul>
 <li>检验 <span class="math inline">\(\gamma_1\)</span> 是否显著为正，并与实际市场风险溢价比较</li>
 <li>如果 <span class="math inline">\(\gamma_1\)</span> 显著为正且接近市场风险溢价，支持CAPM模型</li>
-<li>如果 <span class="math inline">\(\gamma_1\)</span> 不显著或为负，表明Beta风险未被市场正确定价</li>
+<li>如果 <span class="math inline">\(\gamma_1\)</span> 不显著或为负，表明系统性风险未被市场正确定价</li>
 </ul></li>
 <li><strong>CAPM模型的局限性</strong>：
 <ul>
 <li>中国股票市场的特殊性：政策驱动、散户主导、信息不对称</li>
 <li>可能需要考虑其他风险因子：规模效应、价值效应、动量效应等</li>
-<li>行为金融学视角：投资者非理性行为可能导致定价偏差</li>
+<li>即使使用投资组合分组法降低了估计误差，CAPM仍可能无法充分解释中国市场的收益率差异</li>
 </ul></li>
 </ol>
 <p>通过这些分析，我们可以评估CAPM模型在中国市场的适用性，并讨论可能的局限性。</p>
 </section>
 <section id="实验总结" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="实验总结"><span class="header-section-number">4.7</span> 实验总结</h2>
-<p>本实验通过横截面回归方法检验了CAPM模型在中国A股市场的适用性。我们首先估计了个股的Beta系数，然后检验了Beta与平均收益率之间的关系。实验结果有助于我们理解系统性风险在中国市场的定价机制，以及CAPM模型的适用性和局限性。</p>
+<p>本实验通过投资组合分组法检验了CAPM模型在中国A股市场的适用性。我们首先估计了个股的Beta系数，然后按Beta大小将股票分组，计算投资组合的平均Beta和平均收益率，最后检验了Beta与平均收益率之间的关系。</p>
+<p>与直接使用个股数据相比，投资组合分组法有以下优势： 1. 降低了Beta估计误差的影响 2. 分散了非系统性风险 3. 减少了极端值对回归结果的影响 4. 更符合投资者实际持有多样化投资组合的实践</p>
 <p>这种实证检验方法不仅帮助我们验证金融理论，也为投资决策和资产定价提供了实证依据。通过对比理论预期与实证结果，我们可以更深入地理解中国股票市场的风险-收益特征，为投资组合构建和风险管理提供指导。</p>
 
 
