@@ -306,6 +306,30 @@ if p_value_gamma_1 < 0.05:
         print(f"- γ1 ({gamma_1:.6f}) 显著但为负值，与CAPM预期不符，表明Beta风险未被正确定价")
 else:
     print(f"- γ1 ({gamma_1:.6f}) 不显著，表明Beta风险未被市场定价，CAPM模型在此样本中不成立")
+```
+
+### 作图
+
+```python
+###################################
+# 第七步：画图
+# 在图上画出投资组合平均Beta和收益率，与回归线
+###################################
+# 设置绘图风格
+plt.style.use('ggplot')
+# 根据操作系统设置不同的字体
+import platform
+# 获取操作系统类型
+system = platform.system()
+# 设置 matplotlib 字体
+if system == 'Windows':
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # Windows 使用黑体
+elif system == 'Darwin':
+    plt.rcParams['font.sans-serif'] = ['Songti SC']  # Mac 使用宋体
+else:
+    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei']  # Linux 使用文泉驿正黑
+# 解决负号显示问题
+plt.rcParams['axes.unicode_minus'] = False
 
 # 画图并保存
 plt.figure(figsize=(10, 6))

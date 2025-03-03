@@ -89,8 +89,8 @@ title: "项目1：因子投资策略构建"
 # 参考资料
 
 ## 推荐文献
-[1] Hou, Xue, and Zhang, Replicating anomalies, 2020, *Review of Financial Studies* 33, 2019-2133.
-[2] Liu, Stambaugh, and Yuan, Size and Value in China, 2019,*Journal of Financial Economics* 134, 48-69.
+[1] Hou, Xue, and Zhang, (2020). Replicating anomalies. Review of Financial Studies, 33, 2019-2133.
+[2] Liu, Stambaugh, and Yuan, (2019). Size and Value in China. Journal of Financial Economics, 134, 48-69.
 
 ## 在线资源
 [1] [Kenneth French's Data Library](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html)
