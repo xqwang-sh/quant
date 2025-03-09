@@ -24,7 +24,7 @@ title: "实践：构建和回测中国特色三因子模型(CH-3)"
 
 ## 实践：构建和回测中国特色三因子模型
 
-### 规模因子(SMC)的构建步骤
+### 规模因子(SMB)的构建步骤
 
 1. **数据准备**:
    - 获取股票交易数据(收益率数据)
@@ -138,18 +138,18 @@ def preprocess_data(stock_returns, market_cap, earnings_to_price, date):
     return data
 ```
 
-#### 3. 构建中国特色规模因子(SMC)
+#### 3. 构建中国特色规模因子(SMB)
 
 ```python
-def construct_smc_factor(data):
+def construct_smb_factor(data):
     """
-    构建中国特色规模因子(SMC)
+    构建中国特色规模因子(SMB)
     
     参数:
     data: 预处理后的数据
     
     返回:
-    SMC因子值和相关投资组合
+    SMB因子值和相关投资组合
     """
     # 按市值大小排序
     data = data.sort_values('market_cap')
@@ -261,7 +261,7 @@ def backtest_ch3_model(stock_returns, market_cap, earnings_to_price, market_retu
     # 初始化结果存储
     results = {
         'MKT': [],  # 市场因子
-        'SMC': [],  # 规模因子
+        'SMB': [],  # 规模因子
         'VMG': [],  # 价值因子
         'Medium': [],
         'Big': [],
@@ -276,7 +276,7 @@ def backtest_ch3_model(stock_returns, market_cap, earnings_to_price, market_retu
         data = preprocess_data(stock_returns, market_cap, earnings_to_price, date)
         
         # 构建规模因子
-        smc_results = construct_smc_factor(data)
+        smb_results = construct_smb_factor(data)
         
         # 构建价值因子
         vmg_results = construct_vmg_factor(data)
@@ -286,10 +286,10 @@ def backtest_ch3_model(stock_returns, market_cap, earnings_to_price, market_retu
         
         # 记录结果
         results['MKT'].append(mkt)
-        results['SMC'].append(smc_results['SMC'])
+        results['SMB'].append(smb_results['SMB'])
         results['VMG'].append(vmg_results['VMG'])
-        results['Medium'].append(smc_results['Medium'])
-        results['Big'].append(smc_results['Big'])
+        results['Medium'].append(smb_results['Medium'])
+        results['Big'].append(smb_results['Big'])
         results['Value'].append(vmg_results['Value'])
         results['Growth'].append(vmg_results['Growth'])
         results['Date'].append(date)
@@ -364,7 +364,7 @@ def plot_results(results_df):
     # 绘制三因子累积收益曲线
     plt.figure(figsize=(12, 6))
     plt.plot(cumulative_returns.index, cumulative_returns['MKT'], label='市场因子')
-    plt.plot(cumulative_returns.index, cumulative_returns['SMC'], label='规模因子(SMC)')
+    plt.plot(cumulative_returns.index, cumulative_returns['SMB'], label='规模因子(SMB)')
     plt.plot(cumulative_returns.index, cumulative_returns['VMG'], label='价值因子(VMG)')
     
     plt.title('中国特色三因子(CH-3)累积收益曲线')
@@ -379,7 +379,7 @@ def plot_results(results_df):
     plt.plot(cumulative_returns.index, cumulative_returns['Medium'], label='中市值组合')
     plt.plot(cumulative_returns.index, cumulative_returns['Big'], label='大市值组合')
     
-    plt.title('中国规模因子(SMC)组合累积收益曲线')
+    plt.title('中国规模因子(SMB)组合累积收益曲线')
     plt.xlabel('日期')
     plt.ylabel('累积收益')
     plt.legend()
@@ -400,7 +400,7 @@ def plot_results(results_df):
     
     # 绘制月度收益率箱线图
     plt.figure(figsize=(10, 6))
-    results_df[['MKT', 'SMC', 'VMG']].boxplot()
+    results_df[['MKT', 'SMB', 'VMG']].boxplot()
     plt.title('CH-3三因子月度收益率分布')
     plt.ylabel('月度收益率')
     plt.grid(True)
@@ -433,7 +433,7 @@ def main():
     
     # 计算绩效指标
     mkt_performance = calculate_performance(results['MKT'])
-    smc_performance = calculate_performance(results['SMC'])
+    smb_performance = calculate_performance(results['SMB'])
     vmg_performance = calculate_performance(results['VMG'])
     
     # 打印绩效指标
@@ -441,8 +441,8 @@ def main():
     for key, value in mkt_performance.items():
         print(f"{key}: {value:.4f}")
     
-    print("\n规模因子(SMC)绩效指标:")
-    for key, value in smc_performance.items():
+    print("\n规模因子(SMB)绩效指标:")
+    for key, value in smb_performance.items():
         print(f"{key}: {value:.4f}")
     
     print("\n价值因子(VMG)绩效指标:")
