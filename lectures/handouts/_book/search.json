@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "量化投资课程讲义",
     "section": "",
-    "text": "本讲义将系统地介绍量化投资的基本概念、理论框架、常用策略以及实践应用。\n引言:\n量化投资是指利用数学、统计学和计算机科学等定量方法，对金融市场进行分析和预测，以实现投资目标的一种投资方式。量化投资是学术界和业界广泛关注的一个研究领域。在学术界，量化投资理论研究主要集中在资产定价理论、投资组合理论、风险管理理论等方面。在业界，量化投资主要集中在量化选股、量化择时、量化对冲、算法交易等领域。由于课程时间有限，本讲义将主要介绍基于实证资产定价理论的量化投资方法，对实际案例的讲解偏向量化选股。\n课程内容:\n\n有效市场假说 (EMH)\n资本资产定价模型 (CAPM)\nCAPM实证检验\n多因子模型\n\n课程项目:\n\n传统多因子投资\n机器学习与另类数据\n\n使用说明:\n\n本讲义使用 Quarto 创建，可以方便地生成 HTML, PDF, ePub 等多种格式。\n点击左侧导航栏可以浏览不同章节的内容。\n\n希望本讲义能帮助您更好地学习和理解量化投资！",
+    "text": "本讲义将系统地介绍量化投资的基本概念、理论框架、常用策略以及实践应用。\n引言:\n量化投资是指利用数学、统计学和计算机科学等定量方法，对金融市场进行分析和预测，以实现投资目标的一种投资方式。量化投资是学术界和业界广泛关注的一个研究领域。在学术界，量化投资理论研究主要集中在资产定价理论、投资组合理论、风险管理理论等方面。在业界，量化投资主要集中在量化选股、量化择时、量化对冲、算法交易等领域。由于课程时间有限，本讲义将主要介绍基于实证资产定价理论的量化投资方法，对实际案例的讲解偏向量化选股。\n课程内容（理论）:\n\n有效市场假说 (EMH)\n资本资产定价模型 (CAPM)\n三因子模型\n\n课程内容（实践）:\n\nCAPM实证检验\n三因子模型实证检验\n\n课程项目:\n\n传统多因子投资\n机器学习与另类数据\n\n使用说明:\n\n本讲义使用 Quarto 创建，可以方便地生成 HTML, PDF, ePub 等多种格式。\n点击左侧导航栏可以浏览不同章节的内容。\n\n希望本讲义能帮助您更好地学习和理解量化投资！",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>前言</span>"
     ]
@@ -230,93 +230,243 @@
     ]
   },
   {
+    "objectID": "03_ff3.html",
+    "href": "03_ff3.html",
+    "title": "5  Fama-French三因子模型",
+    "section": "",
+    "text": "5.1 本节课主要内容",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#本节课主要内容",
+    "href": "03_ff3.html#本节课主要内容",
+    "title": "5  Fama-French三因子模型",
+    "section": "",
+    "text": "多因子模型的理论基础: 理解从CAPM单因子模型到多因子模型的演进逻辑\nFama-French三因子模型的构建: 掌握市值因子(SMB)和价值因子(HML)的构建方法\n三因子模型的经济学解释: 理解三因子模型中各因子的经济含义\n三因子模型的实证检验: 学习三因子模型在美国市场的实证检验结果\n中国市场的三因子模型变体: 了解三因子模型在中国市场的适用性与变体形式",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#多因子模型的理论基础",
+    "href": "03_ff3.html#多因子模型的理论基础",
+    "title": "5  Fama-French三因子模型",
+    "section": "5.2 多因子模型的理论基础",
+    "text": "5.2 多因子模型的理论基础\n\n5.2.1 从CAPM到多因子模型\nCAPM模型作为单因子模型虽然结构简洁，但在实证检验中面临诸多挑战。多因子模型的出现是对CAPM模型的自然扩展，目的是解决单因子模型无法解释的市场异象和风险溢价来源。\n\nCAPM模型的局限性回顾:\n\n只考虑市场风险一种系统性风险\n无法解释诸如规模效应、价值效应等市场异象\n实证检验中经常出现Alpha显著不为零的情况\n\n多因子模型的基本思想:\n\n风险来源多元化: 认为资产收益率受多种系统性风险因子影响，而非仅受市场风险影响\n扩展风险溢价来源: 投资者要求的风险溢价来自于对多种系统性风险的补偿\n更好的解释力: 通过引入更多风险因子，提高模型对资产收益率横截面差异的解释能力\n\n\n\n\n5.2.2 多因子模型的一般形式\n多因子模型通常采用如下的线性形式：\n\\[R_i - R_f = \\alpha_i + \\beta_{i,1}F_1 + \\beta_{i,2}F_2 + ... + \\beta_{i,K}F_K + \\epsilon_i\\]\n其中： - \\(R_i - R_f\\): 资产\\(i\\)的超额收益率 - \\(\\alpha_i\\): 截距项，如果模型准确，理论上应该为零 - \\(\\beta_{i,k}\\): 资产\\(i\\)对风险因子\\(k\\)的敏感度 - \\(F_k\\): 第\\(k\\)个风险因子的风险溢价 - \\(\\epsilon_i\\): 资产特有的非系统性风险，即残差项\n\n\n5.2.3 多因子模型的类型\n\n经济理论驱动的多因子模型:\n\n基于经济理论推导出的风险因子\n例如：Ross (1976)的套利定价理论(APT)、Merton (1973)的跨期资本资产定价模型(ICAPM)\n优势：有坚实的理论基础；劣势：难以确定具体的风险因子\n\n统计技术驱动的多因子模型:\n\n使用统计方法如主成分分析(PCA)从数据中提取共同因子\n例如：Chen, Roll and Ross (1986)的宏观经济因子模型\n优势：数据拟合度高；劣势：因子缺乏明确的经济含义\n\n异象驱动的多因子模型:\n\n基于市场中观察到的异象构建因子\n例如：Fama-French三因子模型、Carhart四因子模型\n优势：直接解决已知的市场异象；劣势：可能存在过度拟合风险",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#fama-french三因子模型的构建",
+    "href": "03_ff3.html#fama-french三因子模型的构建",
+    "title": "5  Fama-French三因子模型",
+    "section": "5.3 Fama-French三因子模型的构建",
+    "text": "5.3 Fama-French三因子模型的构建\n\n5.3.1 三因子模型的提出背景\n\n市场异象的挑战:\n\n20世纪80-90年代，学者发现许多CAPM无法解释的市场异象\n其中最显著的是规模效应(小市值股票表现优于大市值股票)和价值效应(高账面市值比股票表现优于低账面市值比股票)\n\nFama和French的贡献:\n\n1992年，Eugene Fama和Kenneth French发表了著名论文《The Cross-Section of Expected Stock Returns》\n1993年，他们进一步发表《Common risk factors in the returns on stocks and bonds》，正式提出三因子模型\n他们将规模和价值引入资产定价模型，构建了影响深远的三因子模型\n\n\n\n\n5.3.2 三因子模型的数学表达式\nFama-French三因子模型的数学表达式如下：\n\\[R_i - R_f = \\alpha_i + \\beta_i(R_m - R_f) + s_i \\cdot SMB + h_i \\cdot HML + \\epsilon_i\\]\n其中： - \\(R_i - R_f\\): 资产\\(i\\)的超额收益率 - \\(R_m - R_f\\): 市场组合的超额收益率(市场因子) - \\(SMB\\): 规模因子(Small Minus Big)，小市值股票与大市值股票的收益率差 - \\(HML\\): 价值因子(High Minus Low)，高账面市值比股票与低账面市值比股票的收益率差 - \\(\\beta_i\\), \\(s_i\\), \\(h_i\\): 分别是资产\\(i\\)对三个因子的敏感度 - \\(\\alpha_i\\): 截距项，表示模型无法解释的超额收益率 - \\(\\epsilon_i\\): 残差项\n\n\n5.3.3 SMB因子构建方法\nSMB(Small Minus Big)是衡量规模效应的因子，代表小市值股票相对于大市值股票的超额收益。\n\n分组步骤:\n\n规模划分: 根据股票市值大小将所有股票分为两组：\n\n小市值组(S): 市值低于中位数的股票\n大市值组(B): 市值高于中位数的股票\n\n账面市值比划分: 将股票按照账面市值比(B/M)分为三组：\n\n低B/M组(L): B/M比值处于最低30%的股票\n中B/M组(M): B/M比值处于中间40%的股票\n高B/M组(H): B/M比值处于最高30%的股票\n\n形成六个投资组合: 将上述两种分类交叉，形成六个投资组合：\n\n小市值/低B/M(S/L)\n小市值/中B/M(S/M)\n小市值/高B/M(S/H)\n大市值/低B/M(B/L)\n大市值/中B/M(B/M)\n大市值/高B/M(B/H)\n\n\nSMB计算公式: \\[SMB = \\frac{1}{3}[(S/L - B/L) + (S/M - B/M) + (S/H - B/H)]\\]\n即小市值组合的平均收益率减去大市值组合的平均收益率\n\n\n\n5.3.4 HML因子构建方法\nHML(High Minus Low)是衡量价值效应的因子，代表高账面市值比股票相对于低账面市值比股票的超额收益。\n\n使用相同的六个投资组合:\nHML计算公式: \\[HML = \\frac{1}{2}[(S/H - S/L) + (B/H - B/L)]\\]\n即高B/M组合的平均收益率减去低B/M组合的平均收益率\n\n\n\n5.3.5 因子构建的实际考量\n\n重构频率: 通常每年或每半年重新构建一次投资组合\n财务数据时滞: 使用上一财年末的账面价值数据，确保数据可获得性\n异常值处理: 剔除账面价值为负的股票，处理极端值\n市值计算: 通常使用流通市值而非总市值，以反映实际可交易部分",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#三因子模型的经济学解释",
+    "href": "03_ff3.html#三因子模型的经济学解释",
+    "title": "5  Fama-French三因子模型",
+    "section": "5.4 三因子模型的经济学解释",
+    "text": "5.4 三因子模型的经济学解释\n\n5.4.1 市场因子(\\(R_m - R_f\\))的经济学解释\n\n继承自CAPM: 市场因子代表了整体市场风险，与CAPM模型中的市场风险相同\n系统性风险补偿: 衡量了投资者承担整体市场风险所要求的风险溢价\n不可分散性: 代表了通过分散化投资无法消除的系统性风险\n\n\n\n5.4.2 规模因子(SMB)的经济学解释\nFama和French认为SMB因子代表了小市值公司所承担的额外系统性风险：\n\n经济脆弱性假说: 小市值公司更容易受到经济衰退的冲击，在经济困难时期表现更差\n信息不对称假说: 小市值公司信息透明度较低，投资者承担更高的信息风险\n流动性风险假说: 小市值股票流动性较差，投资者要求额外的流动性溢价\n财务困境假说: 小市值公司更容易面临财务困境和破产风险\n\n\n\n5.4.3 价值因子(HML)的经济学解释\nHML因子代表了高B/M公司所承担的额外系统性风险：\n\n财务困境风险假说: 高B/M公司通常财务状况较差，面临更高的违约风险\n成长机会假说: 高B/M公司通常缺乏成长机会，在经济衰退时更容易受损\n盈利持续性假说: 高B/M公司的盈利能力通常较弱或波动较大，持续性较差\n投资者情绪假说: 投资者倾向于过度看好成长型公司，导致价值型公司被低估\n\n\n\n5.4.4 行为金融学视角的解释\n行为金融学提供了不同于理性风险定价的解释：\n\n过度反应假说: 投资者对公司短期业绩过度反应，导致价值股被低估，成长股被高估\n投资者情绪: 投资者偏好成长型股票，愿意为成长预期支付额外溢价\n彩票偏好: 投资者偏好具有彩票特性的小市值成长股\n注意力效应: 大市值公司受到更多关注，定价可能更为有效",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#三因子模型的实证检验",
+    "href": "03_ff3.html#三因子模型的实证检验",
+    "title": "5  Fama-French三因子模型",
+    "section": "5.5 三因子模型的实证检验",
+    "text": "5.5 三因子模型的实证检验\n\n5.5.1 美国市场的经典检验结果\nFama和French在原始论文中的主要发现：\n\n显著改善解释力: 相比CAPM模型，三因子模型解释了更多股票收益率的横截面差异\n规模效应的捕捉: 模型成功解释了小市值股票的超额收益\n价值效应的捕捉: 模型成功解释了高B/M股票的超额收益\n强大的统计显著性: 三个因子的风险溢价在统计上显著不为零\n时间稳定性: 因子风险溢价在不同时期表现出相对稳定性\n\n\n\n5.5.2 主要实证方法\n\n时间序列回归:\n\n对单个资产或投资组合进行时间序列回归\n检验因子敏感度(\\(\\beta\\), \\(s\\), \\(h\\))是否显著，以及截距项\\(\\alpha\\)是否趋近于零\n\n横截面回归:\n\n使用Fama-MacBeth回归检验因子风险溢价是否显著\n检验三因子模型是否能解释资产收益率的横截面差异\n\n投资组合分析:\n\n构建不同特征的投资组合，检验三因子模型的解释能力\n通常使用独立排序形成的规模-价值分组(如25个投资组合)\n\n\n\n\n5.5.3 后续研究的发现\n\n稳健性: 三因子模型在不同市场和时期都表现出较好的稳健性\n适用范围: 模型不仅适用于股票市场，也可以扩展到债券和其他资产类别\n进一步的市场异象: 研究发现了三因子模型仍无法解释的异象，如动量效应、盈利能力效应等\n模型拓展: 促使了四因子、五因子等更复杂模型的发展",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#中国市场的三因子模型变体",
+    "href": "03_ff3.html#中国市场的三因子模型变体",
+    "title": "5  Fama-French三因子模型",
+    "section": "5.6 中国市场的三因子模型变体",
+    "text": "5.6 中国市场的三因子模型变体\n\n5.6.1 中国市场特征与三因子模型适用性\n中国股票市场具有独特特征，影响了三因子模型的适用性：\n\n新兴市场特性: 中国作为新兴市场，市场效率相对较低，投机性较强\n政府干预: 政府政策对市场影响较大，造成独特的风险来源\n投资者结构: 以散户为主的投资者结构导致行为偏差更为显著\n特殊制度安排: 如股权分置改革、涨跌幅限制等特殊制度\nA股与H股市场分割: 同一公司在A股和H股市场的定价差异明显，反映了市场分割效应\n交易限制因素: 包括做空限制、涨跌停板制度等对因子表现产生影响\n\n\n\n5.6.2 中国市场规模与价值因子的实证研究\n根据Liu, Stambaugh和Yuan (2019)的”Size and Value in China”研究，中国市场的规模和价值因子表现出一些独特特点，需要特殊处理：\n\n小市值股票的壳价值扭曲:\n\n中国市场最小30%的股票存在明显的壳价值（shell value）问题，价格反映了被用作反向收购（reverse merger）壳公司的潜在价值\n反向收购为民企提供了绕过繁琐IPO审批的后门上市途径\n小市值股票回报率显著受到壳价值变化的影响，而非传统风险因素\n\n中国特色三因子模型（CH-3）:\n\n针对中国市场特点，构建了排除最小30%市值股票的规模因子（SMC）\n使用市盈率（E/P）替代账面市值比（B/M）构建价值因子（VMG），因其在中国市场表现更好\nCH-3模型（由市场因子、SMC和VMG组成）显著优于传统FF-3模型\n\n超强解释力:\n\nCH-3模型能解释中国市场中10种常见异象中的8种\n相比之下，传统FF-3模型仅能解释3种异象\n贝叶斯检验显示CH-3模型在解释因子表现上显著优于FF-3模型\n\n\n\n\n5.6.3 中国市场实证检验结果的最新发现\n基于Liu, Stambaugh和Yuan (2019)的研究与其他中国学者的实证结果，CH-3模型相比传统模型的优势表现在：\n\n规模因子修正后的表现:\n\n剔除最小30%市值股票后，规模效应变得更加稳健可预测\n经修正的规模因子(SMC)风险溢价显著且稳定\n最小市值组股票表现出与其他规模组显著不同的收益率模式，符合壳价值假说\n大中型股票的规模效应更能反映真实的风险溢价\n\n价值因子的选择优化:\n\nE/P（市盈率倒数）作为价值度量在中国市场表现显著优于B/M\n价值因子(VMG)能更好地捕捉盈利能力与成长机会的信息\n调整后的价值因子与宏观经济的联系更加紧密\n价值因子在避开极小市值股票的样本中表现更为稳健\n\n因子间相互关系:\n\n修正后的规模因子与价值因子相关性降低，提供更好的分散化效果\nCH-3模型三个因子对应的因子组合呈现更低的相关性\n与美国市场不同，中国市场的小市值与高价值不总是正相关\n经济周期和政策环境对因子相关性有重要影响\n\n异象解释能力:\n\nCH-3模型能解释大多数中国市场的异象现象，包括：\n\n盈利能力异象\n波动率异象\n反转效应\n…\n\n模型解释力在排除最小30%市值股票的样本中进一步提升\n贝叶斯分析显示CH-3在各种情景下都优于FF-3模型\n\n\n\n\n5.6.4 三因子模型在中国市场实践应用的特殊考量\n基于Liu等人(2019)的研究成果和国内实证发现，在中国市场应用三因子模型时需考虑以下特殊因素：\n\n规模因子构建调整:\n\n应剔除市值最小的30%股票，以避免壳价值效应的干扰\n使用SMC（Excluding Small）替代传统SMB，提高规模因子的风险解释力\n规模分组可考虑使用非对称划分（如30%-70%），更适合中国市场的规模分布特征\n\n价值因子指标选择:\n\nE/P（市盈率倒数）在中国市场表现优于传统B/M\n构建VMG（Value Minus Growth）价值因子，替代传统HML\n剔除负收益公司，或使用复合价值指标以提高稳定性\n\n反向收购与制度因素考量:\n\n关注壳资源价值随政策变化的动态影响\n监控小市值股票的异常收益率波动，尤其在监管政策调整期\n考虑将壳价值变化作为额外风险因子纳入模型\n\n数据质量与频率选择:\n\n中国市场数据质量问题，尤其是早期数据和财务报告可靠性\n考虑使用季度而非月度频率来构建更稳健的因子\n多样本期检验，关注市场制度变革前后的模型表现差异",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "03_ff3.html#总结",
+    "href": "03_ff3.html#总结",
+    "title": "5  Fama-French三因子模型",
+    "section": "5.7 总结",
+    "text": "5.7 总结\n\nFama-French三因子模型通过引入规模因子(SMB)和价值因子(HML)，极大提高了对股票收益横截面差异的解释能力。\n三因子模型的每个因子都有其经济学解释，可以被视为对特定系统性风险的补偿。\n在中国市场，传统三因子模型需要根据中国市场特点进行调整，Liu等人(2019)提出的CH-3模型（剔除小市值股票的规模因子SMC和基于市盈率的价值因子VMG）显著优于传统FF-3模型。\n中国市场的壳价值效应是小市值股票定价的关键因素，应在构建因子和应用模型时予以特别考虑。\n多因子模型的框架为后续资产定价模型的发展奠定了基础，每个市场可能需要根据其特有的制度环境和市场特征调整模型设定。",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Fama-French三因子模型</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html",
+    "href": "lab03_ff3test.html",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "",
+    "text": "6.1 本次实验内容",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html#本次实验内容",
+    "href": "lab03_ff3test.html#本次实验内容",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "",
+    "text": "数据准备和预处理: 学习如何获取和处理中国股票数据\n构建中国特色规模因子: 掌握中国特色规模因子(SMC)的构建方法\n构建中国特色价值因子: 掌握基于市盈率的价值因子(VMG)的构建方法\n回测因子收益: 学习如何对因子进行回测和性能评估\n因子有效性分析: 了解如何评估因子的有效性和统计显著性",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html#背景中国特色三因子模型ch-3",
+    "href": "lab03_ff3test.html#背景中国特色三因子模型ch-3",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "6.2 背景：中国特色三因子模型(CH-3)",
+    "text": "6.2 背景：中国特色三因子模型(CH-3)\n根据Liu, Stambaugh和Yuan (2019)的”Size and Value in China”研究，中国市场具有独特的特点，传统Fama-French三因子模型需要进行调整：\n\n壳价值效应：中国市场最小30%的股票存在明显的壳价值现象，其价格受到被用作反向收购壳公司潜在价值的影响，而非传统风险因素\n规模因子调整：需要剔除最小30%市值股票，构建SMB（Small Minus Big）因子，以避免壳价值的干扰\n价值因子调整：市盈率（E/P）在中国市场的表现优于账面市值比（B/M），因此使用E/P构建VMG（Value Minus Growth）价值因子\n超强解释力：调整后的CH-3模型在解释中国市场异象方面显著优于传统FF-3模型",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html#实践构建和回测中国特色三因子模型",
+    "href": "lab03_ff3test.html#实践构建和回测中国特色三因子模型",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "6.3 实践：构建和回测中国特色三因子模型",
+    "text": "6.3 实践：构建和回测中国特色三因子模型\n\n6.3.1 规模因子(SMB)的构建步骤\n\n数据准备:\n\n获取股票交易数据(收益率数据)\n获取股票市值数据\n获取股票市盈率数据(用于价值因子)\n\n数据预处理:\n\n剔除财务异常股票\n处理缺失值和极端值\n对数据进行标准化处理\n\n分组构建:\n\n首先剔除市值最小的30%股票(避免壳价值影响)\n在剩余70%股票中，按市值中位数分为小 b n市值和大市值两组\n\n因子计算:\n\n计算小市值组合收益率\n计算大市值组合收益率\nSMB = 小市值组合收益率 - 大市值组合收益率\n\n\n\n\n6.3.2 价值因子(VMG)的构建步骤\n\n分组方法:\n\n使用市盈率(E/P)替代传统的账面市值比(B/M)\n按E/P将剩余70%股票分为高E/P(价值型)和低E/P(成长型)两组\n\n因子计算:\n\n计算高E/P(价值型)组合收益率\n计算低E/P(成长型)组合收益率\nVMG = 高E/P组合收益率 - 低E/P组合收益率\n\n\n\n\n6.3.3 使用Python实现中国特色三因子模型\n下面我们将使用Python实现CH-3模型的构建与回测。\n\n6.3.3.1 1. 环境准备与数据获取\n# 导入必要的库\nimport pandas as pd\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport statsmodels.api as sm\nfrom scipy import stats\n\n# 设置绘图风格\nplt.style.use('ggplot')\n# 根据操作系统设置不同的字体\nimport platform\n# 获取操作系统类型\nsystem = platform.system()\n# 设置 matplotlib 字体\nif system == 'Windows':\n    plt.rcParams['font.sans-serif'] = ['SimHei']  # Windows 使用黑体\nelif system == 'Darwin':\n    plt.rcParams['font.sans-serif'] = ['Songti SC']  # Mac 使用宋体\nelse:\n    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei']  # Linux 使用文泉驿正黑\n# 解决负号显示问题\nplt.rcParams['axes.unicode_minus'] = False\n\n# 数据获取\n# 在实际环境中，你可能需要使用CSMAR、Wind等数据源获取数据\n# 这里我们假设已经有了以下数据框：\n# 1. stock_returns: 包含股票月度收益率\n# 2. market_cap: 包含股票市值数据\n# 3. earnings_to_price: 包含股票市盈率倒数(E/P)数据\n# 4. market_return: 市场收益率数据\n\n\n6.3.3.2 2. 数据预处理\ndef preprocess_data(stock_returns, market_cap, earnings_to_price, date):\n    \"\"\"\n    对数据进行预处理\n    \n    参数:\n    stock_returns: 包含股票收益率的DataFrame\n    market_cap: 包含股票市值的DataFrame\n    earnings_to_price: 包含股票市盈率倒数(E/P)的DataFrame\n    date: 当前处理的日期\n    \n    返回:\n    处理后的数据\n    \"\"\"\n    # 获取当期数据\n    returns = stock_returns.loc[date]\n    cap = market_cap.loc[date]\n    ep = earnings_to_price.loc[date]\n    \n    # 合并数据\n    data = pd.DataFrame({\n        'returns': returns,\n        'market_cap': cap,\n        'earnings_to_price': ep\n    })\n    \n    # 剔除缺失值\n    data = data.dropna()\n    \n    # 剔除负收益公司(E/P为负)\n    data = data[data['earnings_to_price'] &gt; 0]\n    \n    # 处理极端值（使用百分位数裁剪）\n    for col in ['market_cap', 'earnings_to_price']:\n        lower_bound = data[col].quantile(0.01)\n        upper_bound = data[col].quantile(0.99)\n        data[col] = data[col].clip(lower_bound, upper_bound)\n    \n    return data\n\n\n6.3.3.3 3. 构建中国特色规模因子(SMB)\ndef construct_smb_factor(data):\n    \"\"\"\n    构建中国特色规模因子(SMB)\n    \n    参数:\n    data: 预处理后的数据\n    \n    返回:\n    SMB因子值和相关投资组合\n    \"\"\"\n    # 按市值大小排序\n    data = data.sort_values('market_cap')\n    \n    # 获取股票数量\n    n_stocks = len(data)\n    \n    # 剔除市值最小的30%股票（避免壳价值影响）\n    cutoff_small = int(n_stocks * 0.3)\n    remaining_stocks = data.iloc[cutoff_small:]\n    \n    # 在剩余股票中按中位数划分为中市值和大市值组\n    n_remaining = len(remaining_stocks)\n    medium_stocks = remaining_stocks.iloc[:n_remaining//2]\n    big_stocks = remaining_stocks.iloc[n_remaining//2:]\n    \n    # 计算组合的等权平均收益率\n    medium_return = medium_stocks['returns'].mean()\n    big_return = big_stocks['returns'].mean()\n    \n    # 计算SMC因子\n    smc = medium_return - big_return\n    \n    return {\n        'SMC': smc,\n        'Medium': medium_return,\n        'Big': big_return,\n        'medium_stocks': medium_stocks,\n        'big_stocks': big_stocks,\n        'excluded_small': data.iloc[:cutoff_small]  # 被剔除的小市值股票\n    }\n\n\n6.3.3.4 4. 构建中国特色价值因子(VMG)\ndef construct_vmg_factor(data):\n    \"\"\"\n    构建中国特色价值因子(VMG)\n    \n    参数:\n    data: 预处理后的数据\n    \n    返回:\n    VMG因子值和相关投资组合\n    \"\"\"\n    # 按市值大小排序\n    data = data.sort_values('market_cap')\n    \n    # 获取股票数量\n    n_stocks = len(data)\n    \n    # 剔除市值最小的30%股票（避免壳价值影响）\n    cutoff_small = int(n_stocks * 0.3)\n    remaining_stocks = data.iloc[cutoff_small:]\n    \n    # 在剩余股票中按E/P排序\n    remaining_stocks = remaining_stocks.sort_values('earnings_to_price')\n    n_remaining = len(remaining_stocks)\n    \n    # 按E/P中位数划分为成长型和价值型\n    growth_stocks = remaining_stocks.iloc[:n_remaining//2]  # 低E/P（成长型）\n    value_stocks = remaining_stocks.iloc[n_remaining//2:]   # 高E/P（价值型）\n    \n    # 计算组合的等权平均收益率\n    growth_return = growth_stocks['returns'].mean()\n    value_return = value_stocks['returns'].mean()\n    \n    # 计算VMG因子\n    vmg = value_return - growth_return\n    \n    return {\n        'VMG': vmg,\n        'Value': value_return,\n        'Growth': growth_return,\n        'value_stocks': value_stocks,\n        'growth_stocks': growth_stocks\n    }\n\n\n6.3.3.5 5. 回测框架\ndef backtest_ch3_model(stock_returns, market_cap, earnings_to_price, market_return,\n                      start_date, end_date, rebalance_freq='M'):\n    \"\"\"\n    回测中国特色三因子模型(CH-3)\n    \n    参数:\n    stock_returns: 包含股票收益率的DataFrame\n    market_cap: 包含股票市值的DataFrame\n    earnings_to_price: 包含股票市盈率倒数(E/P)的DataFrame\n    market_return: 市场收益率Series\n    start_date: 回测开始日期\n    end_date: 回测结束日期\n    rebalance_freq: 再平衡频率，'M'表示月度，'Q'表示季度\n    \n    返回:\n    回测结果\n    \"\"\"\n    # 创建时间索引\n    if rebalance_freq == 'M':\n        dates = pd.date_range(start=start_date, end=end_date, freq='M')\n    elif rebalance_freq == 'Q':\n        dates = pd.date_range(start=start_date, end=end_date, freq='Q')\n    else:\n        raise ValueError(\"rebalance_freq must be 'M' or 'Q'\")\n    \n    # 初始化结果存储\n    results = {\n        'MKT': [],  # 市场因子\n        'SMB': [],  # 规模因子\n        'VMG': [],  # 价值因子\n        'Medium': [],\n        'Big': [],\n        'Value': [],\n        'Growth': [],\n        'Date': []\n    }\n    \n    # 循环每个交易日\n    for date in dates:\n        # 数据预处理\n        data = preprocess_data(stock_returns, market_cap, earnings_to_price, date)\n        \n        # 构建规模因子\n        smb_results = construct_smb_factor(data)\n        \n        # 构建价值因子\n        vmg_results = construct_vmg_factor(data)\n        \n        # 获取市场因子（假设为市场超额收益率）\n        mkt = market_return.loc[date] if date in market_return.index else np.nan\n        \n        # 记录结果\n        results['MKT'].append(mkt)\n        results['SMB'].append(smb_results['SMB'])\n        results['VMG'].append(vmg_results['VMG'])\n        results['Medium'].append(smb_results['Medium'])\n        results['Big'].append(smb_results['Big'])\n        results['Value'].append(vmg_results['Value'])\n        results['Growth'].append(vmg_results['Growth'])\n        results['Date'].append(date)\n    \n    # 转换为DataFrame\n    results_df = pd.DataFrame(results)\n    results_df.set_index('Date', inplace=True)\n    \n    return results_df\n\n\n6.3.3.6 6. 计算绩效指标\ndef calculate_performance(returns_series):\n    \"\"\"\n    计算投资组合绩效指标\n    \n    参数:\n    returns_series: 包含收益率的Series\n    \n    返回:\n    绩效指标字典\n    \"\"\"\n    # 计算累积收益\n    cumulative_return = (1 + returns_series).cumprod().iloc[-1] - 1\n    \n    # 计算年化收益率\n    n_periods = len(returns_series)\n    periods_per_year = 12  # 假设为月度数据\n    annualized_return = (1 + cumulative_return) ** (periods_per_year / n_periods) - 1\n    \n    # 计算年化波动率\n    annualized_vol = returns_series.std() * np.sqrt(periods_per_year)\n    \n    # 计算夏普比率 (假设无风险利率为0)\n    sharpe_ratio = annualized_return / annualized_vol if annualized_vol != 0 else 0\n    \n    # 计算最大回撤\n    cum_returns = (1 + returns_series).cumprod()\n    running_max = cum_returns.cummax()\n    drawdown = (cum_returns / running_max) - 1\n    max_drawdown = drawdown.min()\n    \n    # 计算t统计量\n    t_stat, p_value = stats.ttest_1samp(returns_series, 0)\n    \n    return {\n        'Cumulative Return': cumulative_return,\n        'Annualized Return': annualized_return,\n        'Annualized Volatility': annualized_vol,\n        'Sharpe Ratio': sharpe_ratio,\n        'Max Drawdown': max_drawdown,\n        't-statistic': t_stat,\n        'p-value': p_value\n    }\n\n\n6.3.3.7 7. 绘制结果图表\ndef plot_results(results_df):\n    \"\"\"\n    绘制回测结果图表\n    \n    参数:\n    results_df: 回测结果DataFrame\n    \"\"\"\n    # 计算累积收益\n    cumulative_returns = (1 + results_df).cumprod()\n    \n    # 绘制三因子累积收益曲线\n    plt.figure(figsize=(12, 6))\n    plt.plot(cumulative_returns.index, cumulative_returns['MKT'], label='市场因子')\n    plt.plot(cumulative_returns.index, cumulative_returns['SMB'], label='规模因子(SMB)')\n    plt.plot(cumulative_returns.index, cumulative_returns['VMG'], label='价值因子(VMG)')\n    \n    plt.title('中国特色三因子(CH-3)累积收益曲线')\n    plt.xlabel('日期')\n    plt.ylabel('累积收益')\n    plt.legend()\n    plt.grid(True)\n    plt.show()\n    \n    # 绘制规模组合累积收益曲线\n    plt.figure(figsize=(12, 6))\n    plt.plot(cumulative_returns.index, cumulative_returns['Medium'], label='中市值组合')\n    plt.plot(cumulative_returns.index, cumulative_returns['Big'], label='大市值组合')\n    \n    plt.title('中国规模因子(SMB)组合累积收益曲线')\n    plt.xlabel('日期')\n    plt.ylabel('累积收益')\n    plt.legend()\n    plt.grid(True)\n    plt.show()\n    \n    # 绘制价值组合累积收益曲线\n    plt.figure(figsize=(12, 6))\n    plt.plot(cumulative_returns.index, cumulative_returns['Value'], label='价值型组合')\n    plt.plot(cumulative_returns.index, cumulative_returns['Growth'], label='成长型组合')\n    \n    plt.title('中国价值因子(VMG)组合累积收益曲线')\n    plt.xlabel('日期')\n    plt.ylabel('累积收益')\n    plt.legend()\n    plt.grid(True)\n    plt.show()\n    \n    # 绘制月度收益率箱线图\n    plt.figure(figsize=(10, 6))\n    results_df[['MKT', 'SMB', 'VMG']].boxplot()\n    plt.title('CH-3三因子月度收益率分布')\n    plt.ylabel('月度收益率')\n    plt.grid(True)\n    plt.show()\n\n\n6.3.3.8 8. 实验流程整合\ndef main():\n    \"\"\"\n    主函数：执行完整的实验流程\n    \"\"\"\n    # 在此处获取数据\n    # stock_returns = ...\n    # market_cap = ...\n    # earnings_to_price = ...\n    # market_return = ...\n    \n    # 设置回测参数\n    start_date = '2010-01-01'\n    end_date = '2020-12-31'\n    rebalance_freq = 'M'  # 月度再平衡\n    \n    # 执行回测\n    results = backtest_ch3_model(\n        stock_returns, market_cap, earnings_to_price, market_return,\n        start_date, end_date, rebalance_freq\n    )\n    \n    # 计算绩效指标\n    mkt_performance = calculate_performance(results['MKT'])\n    smb_performance = calculate_performance(results['SMB'])\n    vmg_performance = calculate_performance(results['VMG'])\n    \n    # 打印绩效指标\n    print(\"市场因子(MKT)绩效指标:\")\n    for key, value in mkt_performance.items():\n        print(f\"{key}: {value:.4f}\")\n    \n    print(\"\\n规模因子(SMB)绩效指标:\")\n    for key, value in smb_performance.items():\n        print(f\"{key}: {value:.4f}\")\n    \n    print(\"\\n价值因子(VMG)绩效指标:\")\n    for key, value in vmg_performance.items():\n        print(f\"{key}: {value:.4f}\")\n    \n    # 绘制结果图表\n    plot_results(results)\n\n# 执行主函数\nif __name__ == \"__main__\":\n    main()",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html#拓展实验ch-3模型与传统ff-3模型对比",
+    "href": "lab03_ff3test.html#拓展实验ch-3模型与传统ff-3模型对比",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "6.4 拓展实验：CH-3模型与传统FF-3模型对比",
+    "text": "6.4 拓展实验：CH-3模型与传统FF-3模型对比\n在掌握了中国特色三因子模型的构建方法后，你可以尝试对比CH-3模型与传统FF-3模型的表现差异。本次实验的拓展内容包括：\n\n构建传统SMB与HML因子：按照传统方法构建SMB与HML因子\n构建CH-3中的SMC与VMG因子：按照中国特色方法构建SMC与VMG因子\n异象解释力对比：测试两种模型对中国市场常见异象的解释能力\n模型稳定性对比：评估两种模型在不同市场环境下的稳定性",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html#实验思考题",
+    "href": "lab03_ff3test.html#实验思考题",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "6.5 实验思考题",
+    "text": "6.5 实验思考题\n\n为什么在中国市场需要剔除市值最小的30%股票？这种剔除对规模因子表现有何影响？\n为什么在中国市场中E/P比B/M更有效？这与中国股票市场的哪些特点有关？\n在构建CH-3模型时，你认为中国市场的反向收购机制如何影响了小市值股票的定价？\n比较CH-3模型与传统FF-3模型在解释中国市场异象方面的差异，哪些异象能被CH-3模型更好地解释？\n如果政策环境变化导致反向收购监管趋严，你预计这会对CH-3模型的有效性产生什么影响？",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
+    "objectID": "lab03_ff3test.html#参考资料",
+    "href": "lab03_ff3test.html#参考资料",
+    "title": "6  实践：构建和回测中国特色三因子模型(CH-3)",
+    "section": "6.6 参考资料",
+    "text": "6.6 参考资料\n\nLiu, J., Stambaugh, R. F., & Yuan, Y. (2019). Size and Value in China. Journal of Financial Economics, 134(1), 48-69.\nFama, E. F., & French, K. R. (1993). Common risk factors in the returns on stocks and bonds. Journal of Financial Economics, 33(1), 3-56.\nHu, G. X., Chen, C., Shao, Y., & Wang, J. (2019). Fama–French in China: size and value factors in Chinese stock returns. International Review of Finance, 19(1), 3-44.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>实践：构建和回测中国特色三因子模型(CH-3)</span>"
+    ]
+  },
+  {
     "objectID": "project1_factor.html",
     "href": "project1_factor.html",
-    "title": "5  项目1：因子投资策略构建",
+    "title": "7  项目1：因子投资策略构建",
     "section": "",
-    "text": "6 项目背景\n因子投资是现代量化投资的核心方法之一，其理论基础可以追溯到Fama-French三因子模型。该模型扩展了传统的资本资产定价模型（CAPM），引入了规模因子（SMB）和价值因子（HML），以更好地解释股票收益的横截面差异。随着研究的深入，学者们又发现了动量因子、质量因子、低波动因子等多种可以产生超额收益的特征因子。\n传统的因子投资策略通常基于财务指标、市场数据或其他可观测的公司特征，构建投资组合以捕获特定因子带来的风险溢价。成功的因子投资需要深入理解因子的经济学原理、统计特性以及实际应用中的约束条件。\n在本项目中，你将有机会应用量化金融的理论知识，设计并实现自己的因子投资策略，并通过严格的统计检验和回测来评估其有效性。",
+    "text": "8 项目背景\n因子投资是现代量化投资的核心方法之一，其理论基础可以追溯到Fama-French三因子模型。该模型扩展了传统的资本资产定价模型（CAPM），引入了规模因子（SMB）和价值因子（HML），以更好地解释股票收益的横截面差异。随着研究的深入，学者们又发现了动量因子、质量因子、低波动因子等多种可以产生超额收益的特征因子。\n传统的因子投资策略通常基于财务指标、市场数据或其他可观测的公司特征，构建投资组合以捕获特定因子带来的风险溢价。成功的因子投资需要深入理解因子的经济学原理、统计特性以及实际应用中的约束条件。\n在本项目中，你将有机会应用量化金融的理论知识，设计并实现自己的因子投资策略，并通过严格的统计检验和回测来评估其有效性。",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
     ]
   },
   {
     "objectID": "project1_factor.html#评分标准",
     "href": "project1_factor.html#评分标准",
-    "title": "5  项目1：因子投资策略构建",
-    "section": "10.1 评分标准",
-    "text": "10.1 评分标准\n项目评分将基于以下几个方面：\n\n创新性（20%）：因子设计的原创性与创新度\n方法论（25%）：方法应用的正确性与严谨性\n实证结果（25%）：策略表现及其统计显著性\n分析深度（20%）：对结果的解释与分析深度\n展示质量（10%）：报告与展示的清晰度和专业性",
+    "title": "7  项目1：因子投资策略构建",
+    "section": "12.1 评分标准",
+    "text": "12.1 评分标准\n项目评分将基于以下几个方面：\n\n创新性（20%）：因子设计的原创性与创新度\n方法论（25%）：方法应用的正确性与严谨性\n实证结果（25%）：策略表现及其统计显著性\n分析深度（20%）：对结果的解释与分析深度\n展示质量（10%）：报告与展示的清晰度和专业性",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
     ]
   },
   {
     "objectID": "project1_factor.html#推荐文献",
     "href": "project1_factor.html#推荐文献",
-    "title": "5  项目1：因子投资策略构建",
-    "section": "11.1 推荐文献",
-    "text": "11.1 推荐文献\n[1] Hou, Xue, and Zhang, (2020). Replicating anomalies. Review of Financial Studies, 33, 2019-2133. [2] Liu, Stambaugh, and Yuan, (2019). Size and Value in China. Journal of Financial Economics, 134, 48-69.",
+    "title": "7  项目1：因子投资策略构建",
+    "section": "13.1 推荐文献",
+    "text": "13.1 推荐文献\n[1] Hou, Xue, and Zhang, (2020). Replicating anomalies. Review of Financial Studies, 33, 2019-2133. [2] Liu, Stambaugh, and Yuan, (2019). Size and Value in China. Journal of Financial Economics, 134, 48-69.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
     ]
   },
   {
     "objectID": "project1_factor.html#在线资源",
     "href": "project1_factor.html#在线资源",
-    "title": "5  项目1：因子投资策略构建",
-    "section": "11.2 在线资源",
-    "text": "11.2 在线资源\n[1] Kenneth French’s Data Library [2] AQR Capital Management Research",
+    "title": "7  项目1：因子投资策略构建",
+    "section": "13.2 在线资源",
+    "text": "13.2 在线资源\n[1] Kenneth French’s Data Library [2] AQR Capital Management Research",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>项目1：因子投资策略构建</span>"
     ]
   },
   {
     "objectID": "project2_ml_alt_data.html",
     "href": "project2_ml_alt_data.html",
-    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
+    "title": "8  项目2：机器学习与替代数据在量化投资中的应用",
     "section": "",
-    "text": "7 项目背景\n随着计算能力的提升和数据可获取性的增强，机器学习技术与替代数据已成为现代量化投资的重要前沿领域。传统因子投资策略虽然有坚实的理论基础，但往往依赖于线性关系假设和人工特征工程，难以捕捉市场中存在的复杂非线性关系和动态变化。\n机器学习方法通过其强大的模式识别和预测能力，可以自动从大量数据中提取有价值的信息，发现传统方法难以察觉的市场规律。同时，卫星图像、社交媒体情绪、网络搜索量、信用卡消费等替代数据源为投资决策提供了全新的信息维度，可能包含尚未被市场充分定价的信号。\n在本项目中，你将有机会将机器学习算法应用于投资策略开发，或利用替代数据构建创新的量化模型，从而探索超越传统因子投资的可能性。",
+    "text": "9 项目背景\n随着计算能力的提升和数据可获取性的增强，机器学习技术与替代数据已成为现代量化投资的重要前沿领域。传统因子投资策略虽然有坚实的理论基础，但往往依赖于线性关系假设和人工特征工程，难以捕捉市场中存在的复杂非线性关系和动态变化。\n机器学习方法通过其强大的模式识别和预测能力，可以自动从大量数据中提取有价值的信息，发现传统方法难以察觉的市场规律。同时，卫星图像、社交媒体情绪、网络搜索量、信用卡消费等替代数据源为投资决策提供了全新的信息维度，可能包含尚未被市场充分定价的信号。\n在本项目中，你将有机会将机器学习算法应用于投资策略开发，或利用替代数据构建创新的量化模型，从而探索超越传统因子投资的可能性。",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
     ]
   },
   {
     "objectID": "project2_ml_alt_data.html#机器学习路线",
     "href": "project2_ml_alt_data.html#机器学习路线",
-    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
-    "section": "10.1 机器学习路线",
-    "text": "10.1 机器学习路线\n\n模型选择与设计（1周）\n\n研究不同机器学习模型在金融预测中的优缺点（如随机森林、梯度提升树、神经网络等）\n了解金融数据的特殊性对模型选择的影响\n制定模型设计方案，确定模型架构\n\n数据准备与特征工程（2周）\n\n整合传统市场数据和基本面数据\n设计并实现特征工程管道\n处理样本不平衡、缺失值和异常值\n特征选择与降维\n\n模型训练与验证（2周）\n\n实现时间序列交叉验证框架\n避免前视偏差和数据泄露\n参数调优与模型集成\n评估模型预测能力\n\n投资组合构建与回测（2周）\n\n基于模型预测设计组合权重分配规则\n实现考虑交易成本的回测系统\n分析不同市场环境下的模型表现\n风险管理与绩效归因",
+    "title": "8  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "12.1 机器学习路线",
+    "text": "12.1 机器学习路线\n\n模型选择与设计（1周）\n\n研究不同机器学习模型在金融预测中的优缺点（如随机森林、梯度提升树、神经网络等）\n了解金融数据的特殊性对模型选择的影响\n制定模型设计方案，确定模型架构\n\n数据准备与特征工程（2周）\n\n整合传统市场数据和基本面数据\n设计并实现特征工程管道\n处理样本不平衡、缺失值和异常值\n特征选择与降维\n\n模型训练与验证（2周）\n\n实现时间序列交叉验证框架\n避免前视偏差和数据泄露\n参数调优与模型集成\n评估模型预测能力\n\n投资组合构建与回测（2周）\n\n基于模型预测设计组合权重分配规则\n实现考虑交易成本的回测系统\n分析不同市场环境下的模型表现\n风险管理与绩效归因",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
     ]
   },
   {
     "objectID": "project2_ml_alt_data.html#另类数据路线",
     "href": "project2_ml_alt_data.html#另类数据路线",
-    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
-    "section": "10.2 另类数据路线",
-    "text": "10.2 另类数据路线\n\n数据源选择与获取（1周）\n\n评估不同替代数据源的可获取性与潜在价值\n设计数据收集方案\n建立数据获取管道\n确保数据使用合规性\n\n数据处理与信号提取（2周）\n\n文本数据：NLP预处理、情感分析、主题建模\n图像数据：计算机视觉技术、特征提取\n结构化替代数据：时间序列处理、异常检测\n信号构建与初步测试\n\n信号评估与整合（2周）\n\n评估信号的预测能力\n信号去噪与转换\n与传统因子的相关性分析\n信号组合方法设计\n\n投资组合构建与回测（2周）\n\n基于替代数据信号设计投资规则\n实现考虑交易成本和信号时效性的回测系统\n与传统因子策略的比较分析\n风险管理与绩效归因",
+    "title": "8  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "12.2 另类数据路线",
+    "text": "12.2 另类数据路线\n\n数据源选择与获取（1周）\n\n评估不同替代数据源的可获取性与潜在价值\n设计数据收集方案\n建立数据获取管道\n确保数据使用合规性\n\n数据处理与信号提取（2周）\n\n文本数据：NLP预处理、情感分析、主题建模\n图像数据：计算机视觉技术、特征提取\n结构化替代数据：时间序列处理、异常检测\n信号构建与初步测试\n\n信号评估与整合（2周）\n\n评估信号的预测能力\n信号去噪与转换\n与传统因子的相关性分析\n信号组合方法设计\n\n投资组合构建与回测（2周）\n\n基于替代数据信号设计投资规则\n实现考虑交易成本和信号时效性的回测系统\n与传统因子策略的比较分析\n风险管理与绩效归因",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
     ]
   },
   {
     "objectID": "project2_ml_alt_data.html#评分标准",
     "href": "project2_ml_alt_data.html#评分标准",
-    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
-    "section": "11.1 评分标准",
-    "text": "11.1 评分标准\n项目评分将基于以下几个方面：\n\n创新性（20%）：方法设计和数据使用的创新程度\n技术实现（25%）：机器学习模型或替代数据处理的技术水平\n实证结果（25%）：策略表现及其相对于传统方法的优势\n风险控制（15%）：对策略风险的理解和控制\n可解释性（10%）：对模型决策过程的解释能力\n展示质量（5%）：报告与展示的清晰度和专业性",
+    "title": "8  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "13.1 评分标准",
+    "text": "13.1 评分标准\n项目评分将基于以下几个方面：\n\n创新性（20%）：方法设计和数据使用的创新程度\n技术实现（25%）：机器学习模型或替代数据处理的技术水平\n实证结果（25%）：策略表现及其相对于传统方法的优势\n风险控制（15%）：对策略风险的理解和控制\n可解释性（10%）：对模型决策过程的解释能力\n展示质量（5%）：报告与展示的清晰度和专业性",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
     ]
   },
   {
     "objectID": "project2_ml_alt_data.html#机器学习部分",
     "href": "project2_ml_alt_data.html#机器学习部分",
-    "title": "6  项目2：机器学习与替代数据在量化投资中的应用",
-    "section": "12.1 机器学习部分",
-    "text": "12.1 机器学习部分\n[1] Adämmer, P., & Schüssler, R. A. (2020). Forecasting the equity premium: mind the news!. Review of Finance, 24(6), 1313-1355.\n[2] Cao, S., Jiang, W., Wang, J. L., & Yang, B. (2021). From man vs. machine to man+ machine: The art and AI of stock analyses (No. w28800). National Bureau of Economic Research.\n[3] Chen, X., Cho, Y. H., Dou, Y., & Lev, B. (2022). Predicting future earnings changes using machine learning and detailed financial data. Journal of Accounting Research, 60(2), 467-515.\n[4] Chen, L., Pelger, M., & Zhu, J. (2023). Deep learning in asset pricing. Management Science, 70(2), 3329-3348.\n[5] Dong, X., Li, Y., Rapach, D. E., & Zhou, G. (2022). Anomalies and the expected market return. The Journal of Finance, 77(1), 639-681.\n[6] Easley, D., López de Prado, M., O’Hara, M., & Zhang, Z. (2021). Microstructure in the machine age. The Review of Financial Studies, 34(7), 3316-3363.\n[7] Freyberger, J., Neuhierl, A., & Weber, M. (2020). Dissecting characteristics nonparametrically. The Review of Financial Studies, 33(5), 2326-2377.\n[8] Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial Studies, 33(5), 2223-2273.\n[9] Jiang, J., Kelly, B. T., & Xiu, D. (2023). (Re-)Imag(in)ing price trends. Journal of Finance, 78(6), 3193-3249.\n[10] Ke, Z. T., Kelly, B. T., & Xiu, D. (2019). Predicting returns with text data (No. w26186). National Bureau of Economic Research.\n[11] Kozak, S., Nagel, S., & Santosh, S. (2020). Shrinking the cross-section. Journal of Financial Economics, 135(2), 271-292.\n[12] Leippold, M., Wang, Q., & Zhou, W. (2022). Machine learning in the Chinese stock market. Journal of Financial Economics, 145(2), 64-82.\n\n12.1.1 另类数据部分\n[13] Bartov, E., Faurel, L., & Mohanram, P. S. (2018). Can Twitter help predict firm-level earnings and stock returns?. The Accounting Review, 93(3), 25-57.\n[14] Bernard, D., Blackburne, T., & Thornock, J. (2020). Information flows among rivals and corporate investment. Journal of Financial Economics, 136(3), 760-779.\n[15] Brown, N. C., Crowley, R. M., & Elliott, W. B. (2020). What are you saying? Using topic to detect financial misreporting. Journal of Accounting Research, 58(1), 237-291.\n[16] Buehlmaier, M. M., & Whited, T. M. (2018). Are financial constraints priced? Evidence from textual analysis. The Review of Financial Studies, 31(7), 2693-2728.\n[17] Cao, S., Jiang, W., Yang, B., & Zhang, A. L. (2023). How to talk when a machine is listening: Corporate disclosure in the age of AI. The Review of Financial Studies, 36(9), 3603-3642.\n[18] Cong, L., T., Liang, X., Zhang, & Zhu, W. (2022). Textual Factors: A Scalable, interpretable, and data-driven Approach to Analyzing Unstructured Information. (w33168) Management Science 68(11), 7893-8359.\n[19] Cookson, J. A., & Niessner, M. (2020). Why don’t we agree? Evidence from a social network of investors. The Journal of Finance, 75(1), 173-228.\n[20] Da, Z., Huang, X., & Jin, L. J. (2021). Extrapolative beliefmusics in the cross-section: What can we learn from the crowds?. Journal of Financial Economics, 140(1), 175-196.\n[21] Edmans, A., Fernandez-Perez, A., Garel, A., & Indriawan, I. (2022). Music sentiment and stock returns around the world. Journal of Financial Economics, 145(2), 234-254.\n[22] Eisdorfer, A., Froot, K., Ozik, G., & Sadka, R. (2022). Competition links and stock returns. The Review of Financial Studies, 35(9), 4300-4340.\n[23] Florackis, C., Louca, C., Michaely, R., & Weber, M. (2023). Cybersecurity risk. The Review of Financial Studies, 36(1), 351-407.\n[24] Garcia, D., Hu, X., & Rohrer, M. (2023). The colour of finance words. Journal of Financial Economics, 147(3), 525-549.\n[25] Gómez-Cram, R., & Grotteria, M. (2022). Real-time price discovery via verbal communication: Method and application to Fedspeak. Journal of Financial Economics, 143(3), 993-1025.\n[26] Green, T. C., Huang, R., Wen, Q., & Zhou, D. (2019). Crowdsourced employer reviews and stock returns. Journal of Financial Economics, 134(1), 236-251.\n[27] Hanley, K. W., & Hoberg, G. (2019). Dynamic interpretation of emerging risks in the financial sector. The Review of Financial Studies, 32(12), 4543-4603.\n[28] Hassan, T. A., Hollander, S., Van Lent, L., & Tahoun, A. (2019). Firm-level political risk: Measurement and effects. The Quarterly Journal of Economics, 134(4), 2135-2202.\n[29] Hoberg, G., & Phillips, G. (2016). Text-based network industries and endogenous product differentiation. Journal of Political Economy, 124(5), 1423-1465.\n[30] Hsieh, T. S., Kim, J. B., Wang, R. R., & Wang, Z. (2020). Seeing is believing? Executives’ facial trustworthiness, auditor tenure, and audit fees. Journal极 of Accounting and Economics, 69(1), 101260.\n[31] Huang, X., Ivković, Z., Jiang, J. X., & Wang, I. Y. (202极3). Angel investment and first impressions. Journal of Financial Economics, 149(2), 161-178.\n[32] Huang, A. H., Zang, A. Y., & Zheng, R. (2014). Evidence on the information content of text in analyst reports. The Accounting Review, 89(6), 2151-2180.\n[33] Kalmenovitz, J. (2023). Regulatory intensity and firm-specific exposure. The Review of Financial Studies, 36(8), 3311-3347.\n[34] Li, K., Mai, F., Shen, R., & Yan, X. (2021). Measuring corporate culture using machine learning. The Review of Financial Studies, 34(7), 3265-3315.\n[35] Lowry, M., Michaely, R., & Volkova, E. (2020). Information revealed through the regulatory process: Interactions between the SEC and companies ahead of their IPO. The Review of Financial Studies, 33(12), 5510-5554.\n[36] Manela, A., & Moreira, A. (2017). News implied volatility and disaster concerns. Journal of Financial Economics, 123(1), 137-162.\n[37] Mukherjee, A., Panayotov极, G., & Shon, J. (2021). Eye in the sky: Private satellites and government macro data. Journal of Financial Economics, 141(1), 234-254.\n[38] Obaid, K., & Pukthuanthong, K. (2022). A picture is worth a thousand words: Measuring investor sentiment by combining machine learning and photos from news. Journal of Financial Economics, 144(1), 273-297.\n[39] Sautner, Z., Van Lent, L., Vilkov, G., & Zhang, R. (2023). Firm‐level climate change exposure. The Journal of Finance, 78(3), 1449-1498.\n[40] Tang, V. W. (2018). Wisdom of crowds: Cross‐sectional variation in the informativeness of third‐party‐generated product information on Twitter. Journal of Accounting Research, 56(3), 989-1034.\n[41] Zhu, C. (2019). Big data as a governance mechanism. The Review of Financial Studies, 32(5), 2021-2061.",
+    "title": "8  项目2：机器学习与替代数据在量化投资中的应用",
+    "section": "14.1 机器学习部分",
+    "text": "14.1 机器学习部分\n[1] Adämmer, P., & Schüssler, R. A. (2020). Forecasting the equity premium: mind the news!. Review of Finance, 24(6), 1313-1355.\n[2] Cao, S., Jiang, W., Wang, J. L., & Yang, B. (2021). From man vs. machine to man+ machine: The art and AI of stock analyses (No. w28800). National Bureau of Economic Research.\n[3] Chen, X., Cho, Y. H., Dou, Y., & Lev, B. (2022). Predicting future earnings changes using machine learning and detailed financial data. Journal of Accounting Research, 60(2), 467-515.\n[4] Chen, L., Pelger, M., & Zhu, J. (2023). Deep learning in asset pricing. Management Science, 70(2), 3329-3348.\n[5] Dong, X., Li, Y., Rapach, D. E., & Zhou, G. (2022). Anomalies and the expected market return. The Journal of Finance, 77(1), 639-681.\n[6] Easley, D., López de Prado, M., O’Hara, M., & Zhang, Z. (2021). Microstructure in the machine age. The Review of Financial Studies, 34(7), 3316-3363.\n[7] Freyberger, J., Neuhierl, A., & Weber, M. (2020). Dissecting characteristics nonparametrically. The Review of Financial Studies, 33(5), 2326-2377.\n[8] Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial Studies, 33(5), 2223-2273.\n[9] Jiang, J., Kelly, B. T., & Xiu, D. (2023). (Re-)Imag(in)ing price trends. Journal of Finance, 78(6), 3193-3249.\n[10] Ke, Z. T., Kelly, B. T., & Xiu, D. (2019). Predicting returns with text data (No. w26186). National Bureau of Economic Research.\n[11] Kozak, S., Nagel, S., & Santosh, S. (2020). Shrinking the cross-section. Journal of Financial Economics, 135(2), 271-292.\n[12] Leippold, M., Wang, Q., & Zhou, W. (2022). Machine learning in the Chinese stock market. Journal of Financial Economics, 145(2), 64-82.\n\n14.1.1 另类数据部分\n[13] Bartov, E., Faurel, L., & Mohanram, P. S. (2018). Can Twitter help predict firm-level earnings and stock returns?. The Accounting Review, 93(3), 25-57.\n[14] Bernard, D., Blackburne, T., & Thornock, J. (2020). Information flows among rivals and corporate investment. Journal of Financial Economics, 136(3), 760-779.\n[15] Brown, N. C., Crowley, R. M., & Elliott, W. B. (2020). What are you saying? Using topic to detect financial misreporting. Journal of Accounting Research, 58(1), 237-291.\n[16] Buehlmaier, M. M., & Whited, T. M. (2018). Are financial constraints priced? Evidence from textual analysis. The Review of Financial Studies, 31(7), 2693-2728.\n[17] Cao, S., Jiang, W., Yang, B., & Zhang, A. L. (2023). How to talk when a machine is listening: Corporate disclosure in the age of AI. The Review of Financial Studies, 36(9), 3603-3642.\n[18] Cong, L., T., Liang, X., Zhang, & Zhu, W. (2022). Textual Factors: A Scalable, interpretable, and data-driven Approach to Analyzing Unstructured Information. (w33168) Management Science 68(11), 7893-8359.\n[19] Cookson, J. A., & Niessner, M. (2020). Why don’t we agree? Evidence from a social network of investors. The Journal of Finance, 75(1), 173-228.\n[20] Da, Z., Huang, X., & Jin, L. J. (2021). Extrapolative beliefmusics in the cross-section: What can we learn from the crowds?. Journal of Financial Economics, 140(1), 175-196.\n[21] Edmans, A., Fernandez-Perez, A., Garel, A., & Indriawan, I. (2022). Music sentiment and stock returns around the world. Journal of Financial Economics, 145(2), 234-254.\n[22] Eisdorfer, A., Froot, K., Ozik, G., & Sadka, R. (2022). Competition links and stock returns. The Review of Financial Studies, 35(9), 4300-4340.\n[23] Florackis, C., Louca, C., Michaely, R., & Weber, M. (2023). Cybersecurity risk. The Review of Financial Studies, 36(1), 351-407.\n[24] Garcia, D., Hu, X., & Rohrer, M. (2023). The colour of finance words. Journal of Financial Economics, 147(3), 525-549.\n[25] Gómez-Cram, R., & Grotteria, M. (2022). Real-time price discovery via verbal communication: Method and application to Fedspeak. Journal of Financial Economics, 143(3), 993-1025.\n[26] Green, T. C., Huang, R., Wen, Q., & Zhou, D. (2019). Crowdsourced employer reviews and stock returns. Journal of Financial Economics, 134(1), 236-251.\n[27] Hanley, K. W., & Hoberg, G. (2019). Dynamic interpretation of emerging risks in the financial sector. The Review of Financial Studies, 32(12), 4543-4603.\n[28] Hassan, T. A., Hollander, S., Van Lent, L., & Tahoun, A. (2019). Firm-level political risk: Measurement and effects. The Quarterly Journal of Economics, 134(4), 2135-2202.\n[29] Hoberg, G., & Phillips, G. (2016). Text-based network industries and endogenous product differentiation. Journal of Political Economy, 124(5), 1423-1465.\n[30] Hsieh, T. S., Kim, J. B., Wang, R. R., & Wang, Z. (2020). Seeing is believing? Executives’ facial trustworthiness, auditor tenure, and audit fees. Journal极 of Accounting and Economics, 69(1), 101260.\n[31] Huang, X., Ivković, Z., Jiang, J. X., & Wang, I. Y. (202极3). Angel investment and first impressions. Journal of Financial Economics, 149(2), 161-178.\n[32] Huang, A. H., Zang, A. Y., & Zheng, R. (2014). Evidence on the information content of text in analyst reports. The Accounting Review, 89(6), 2151-2180.\n[33] Kalmenovitz, J. (2023). Regulatory intensity and firm-specific exposure. The Review of Financial Studies, 36(8), 3311-3347.\n[34] Li, K., Mai, F., Shen, R., & Yan, X. (2021). Measuring corporate culture using machine learning. The Review of Financial Studies, 34(7), 3265-3315.\n[35] Lowry, M., Michaely, R., & Volkova, E. (2020). Information revealed through the regulatory process: Interactions between the SEC and companies ahead of their IPO. The Review of Financial Studies, 33(12), 5510-5554.\n[36] Manela, A., & Moreira, A. (2017). News implied volatility and disaster concerns. Journal of Financial Economics, 123(1), 137-162.\n[37] Mukherjee, A., Panayotov极, G., & Shon, J. (2021). Eye in the sky: Private satellites and government macro data. Journal of Financial Economics, 141(1), 234-254.\n[38] Obaid, K., & Pukthuanthong, K. (2022). A picture is worth a thousand words: Measuring investor sentiment by combining machine learning and photos from news. Journal of Financial Economics, 144(1), 273-297.\n[39] Sautner, Z., Van Lent, L., Vilkov, G., & Zhang, R. (2023). Firm‐level climate change exposure. The Journal of Finance, 78(3), 1449-1498.\n[40] Tang, V. W. (2018). Wisdom of crowds: Cross‐sectional variation in the informativeness of third‐party‐generated product information on Twitter. Journal of Accounting Research, 56(3), 989-1034.\n[41] Zhu, C. (2019). Big data as a governance mechanism. The Review of Financial Studies, 32(5), 2021-2061.",
     "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>项目2：机器学习与替代数据在量化投资中的应用</span>"
     ]
   }
 ]

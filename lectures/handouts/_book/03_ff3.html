@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Fama-French三因子模型 – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./lab03_ff3test.html" rel="next">
+<link href="./lab02_capmtest.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_ff3.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French三因子模型</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM) 实证检验</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French三因子模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">实践：构建和回测中国特色三因子模型(CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_ml_alt_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#本节课主要内容" id="toc-本节课主要内容" class="nav-link active" data-scroll-target="#本节课主要内容"><span class="header-section-number">5.1</span> 本节课主要内容</a></li>
+  <li><a href="#多因子模型的理论基础" id="toc-多因子模型的理论基础" class="nav-link" data-scroll-target="#多因子模型的理论基础"><span class="header-section-number">5.2</span> 多因子模型的理论基础</a>
+  <ul class="collapse">
+  <li><a href="#从capm到多因子模型" id="toc-从capm到多因子模型" class="nav-link" data-scroll-target="#从capm到多因子模型"><span class="header-section-number">5.2.1</span> 从CAPM到多因子模型</a></li>
+  <li><a href="#多因子模型的一般形式" id="toc-多因子模型的一般形式" class="nav-link" data-scroll-target="#多因子模型的一般形式"><span class="header-section-number">5.2.2</span> 多因子模型的一般形式</a></li>
+  <li><a href="#多因子模型的类型" id="toc-多因子模型的类型" class="nav-link" data-scroll-target="#多因子模型的类型"><span class="header-section-number">5.2.3</span> 多因子模型的类型</a></li>
+  </ul></li>
+  <li><a href="#fama-french三因子模型的构建" id="toc-fama-french三因子模型的构建" class="nav-link" data-scroll-target="#fama-french三因子模型的构建"><span class="header-section-number">5.3</span> Fama-French三因子模型的构建</a>
+  <ul class="collapse">
+  <li><a href="#三因子模型的提出背景" id="toc-三因子模型的提出背景" class="nav-link" data-scroll-target="#三因子模型的提出背景"><span class="header-section-number">5.3.1</span> 三因子模型的提出背景</a></li>
+  <li><a href="#三因子模型的数学表达式" id="toc-三因子模型的数学表达式" class="nav-link" data-scroll-target="#三因子模型的数学表达式"><span class="header-section-number">5.3.2</span> 三因子模型的数学表达式</a></li>
+  <li><a href="#smb因子构建方法" id="toc-smb因子构建方法" class="nav-link" data-scroll-target="#smb因子构建方法"><span class="header-section-number">5.3.3</span> SMB因子构建方法</a></li>
+  <li><a href="#hml因子构建方法" id="toc-hml因子构建方法" class="nav-link" data-scroll-target="#hml因子构建方法"><span class="header-section-number">5.3.4</span> HML因子构建方法</a></li>
+  <li><a href="#因子构建的实际考量" id="toc-因子构建的实际考量" class="nav-link" data-scroll-target="#因子构建的实际考量"><span class="header-section-number">5.3.5</span> 因子构建的实际考量</a></li>
+  </ul></li>
+  <li><a href="#三因子模型的经济学解释" id="toc-三因子模型的经济学解释" class="nav-link" data-scroll-target="#三因子模型的经济学解释"><span class="header-section-number">5.4</span> 三因子模型的经济学解释</a>
+  <ul class="collapse">
+  <li><a href="#市场因子r_m---r_f的经济学解释" id="toc-市场因子r_m---r_f的经济学解释" class="nav-link" data-scroll-target="#市场因子r_m---r_f的经济学解释"><span class="header-section-number">5.4.1</span> 市场因子(<span class="math inline">\(R_m - R_f\)</span>)的经济学解释</a></li>
+  <li><a href="#规模因子smb的经济学解释" id="toc-规模因子smb的经济学解释" class="nav-link" data-scroll-target="#规模因子smb的经济学解释"><span class="header-section-number">5.4.2</span> 规模因子(SMB)的经济学解释</a></li>
+  <li><a href="#价值因子hml的经济学解释" id="toc-价值因子hml的经济学解释" class="nav-link" data-scroll-target="#价值因子hml的经济学解释"><span class="header-section-number">5.4.3</span> 价值因子(HML)的经济学解释</a></li>
+  <li><a href="#行为金融学视角的解释" id="toc-行为金融学视角的解释" class="nav-link" data-scroll-target="#行为金融学视角的解释"><span class="header-section-number">5.4.4</span> 行为金融学视角的解释</a></li>
+  </ul></li>
+  <li><a href="#三因子模型的实证检验" id="toc-三因子模型的实证检验" class="nav-link" data-scroll-target="#三因子模型的实证检验"><span class="header-section-number">5.5</span> 三因子模型的实证检验</a>
+  <ul class="collapse">
+  <li><a href="#美国市场的经典检验结果" id="toc-美国市场的经典检验结果" class="nav-link" data-scroll-target="#美国市场的经典检验结果"><span class="header-section-number">5.5.1</span> 美国市场的经典检验结果</a></li>
+  <li><a href="#主要实证方法" id="toc-主要实证方法" class="nav-link" data-scroll-target="#主要实证方法"><span class="header-section-number">5.5.2</span> 主要实证方法</a></li>
+  <li><a href="#后续研究的发现" id="toc-后续研究的发现" class="nav-link" data-scroll-target="#后续研究的发现"><span class="header-section-number">5.5.3</span> 后续研究的发现</a></li>
+  </ul></li>
+  <li><a href="#中国市场的三因子模型变体" id="toc-中国市场的三因子模型变体" class="nav-link" data-scroll-target="#中国市场的三因子模型变体"><span class="header-section-number">5.6</span> 中国市场的三因子模型变体</a>
+  <ul class="collapse">
+  <li><a href="#中国市场特征与三因子模型适用性" id="toc-中国市场特征与三因子模型适用性" class="nav-link" data-scroll-target="#中国市场特征与三因子模型适用性"><span class="header-section-number">5.6.1</span> 中国市场特征与三因子模型适用性</a></li>
+  <li><a href="#中国市场规模与价值因子的实证研究" id="toc-中国市场规模与价值因子的实证研究" class="nav-link" data-scroll-target="#中国市场规模与价值因子的实证研究"><span class="header-section-number">5.6.2</span> 中国市场规模与价值因子的实证研究</a></li>
+  <li><a href="#中国市场实证检验结果的最新发现" id="toc-中国市场实证检验结果的最新发现" class="nav-link" data-scroll-target="#中国市场实证检验结果的最新发现"><span class="header-section-number">5.6.3</span> 中国市场实证检验结果的最新发现</a></li>
+  <li><a href="#三因子模型在中国市场实践应用的特殊考量" id="toc-三因子模型在中国市场实践应用的特殊考量" class="nav-link" data-scroll-target="#三因子模型在中国市场实践应用的特殊考量"><span class="header-section-number">5.6.4</span> 三因子模型在中国市场实践应用的特殊考量</a></li>
+  </ul></li>
+  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结"><span class="header-section-number">5.7</span> 总结</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French三因子模型</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="本节课主要内容" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="本节课主要内容"><span class="header-section-number">5.1</span> 本节课主要内容</h2>
+<ol type="1">
+<li><strong>多因子模型的理论基础</strong>: 理解从CAPM单因子模型到多因子模型的演进逻辑</li>
+<li><strong>Fama-French三因子模型的构建</strong>: 掌握市值因子(SMB)和价值因子(HML)的构建方法</li>
+<li><strong>三因子模型的经济学解释</strong>: 理解三因子模型中各因子的经济含义</li>
+<li><strong>三因子模型的实证检验</strong>: 学习三因子模型在美国市场的实证检验结果</li>
+<li><strong>中国市场的三因子模型变体</strong>: 了解三因子模型在中国市场的适用性与变体形式</li>
+</ol>
+</section>
+<section id="多因子模型的理论基础" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="多因子模型的理论基础"><span class="header-section-number">5.2</span> 多因子模型的理论基础</h2>
+<section id="从capm到多因子模型" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="从capm到多因子模型"><span class="header-section-number">5.2.1</span> 从CAPM到多因子模型</h3>
+<p>CAPM模型作为单因子模型虽然结构简洁，但在实证检验中面临诸多挑战。多因子模型的出现是对CAPM模型的自然扩展，目的是解决单因子模型无法解释的市场异象和风险溢价来源。</p>
+<ul>
+<li><strong>CAPM模型的局限性回顾</strong>:
+<ul>
+<li>只考虑市场风险一种系统性风险</li>
+<li>无法解释诸如规模效应、价值效应等市场异象</li>
+<li>实证检验中经常出现Alpha显著不为零的情况</li>
+</ul></li>
+<li><strong>多因子模型的基本思想</strong>:
+<ul>
+<li><strong>风险来源多元化</strong>: 认为资产收益率受多种系统性风险因子影响，而非仅受市场风险影响</li>
+<li><strong>扩展风险溢价来源</strong>: 投资者要求的风险溢价来自于对多种系统性风险的补偿</li>
+<li><strong>更好的解释力</strong>: 通过引入更多风险因子，提高模型对资产收益率横截面差异的解释能力</li>
+</ul></li>
+</ul>
+</section>
+<section id="多因子模型的一般形式" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="多因子模型的一般形式"><span class="header-section-number">5.2.2</span> 多因子模型的一般形式</h3>
+<p>多因子模型通常采用如下的线性形式：</p>
+<p><span class="math display">\[R_i - R_f = \alpha_i + \beta_{i,1}F_1 + \beta_{i,2}F_2 + ... + \beta_{i,K}F_K + \epsilon_i\]</span></p>
+<p>其中： - <span class="math inline">\(R_i - R_f\)</span>: 资产<span class="math inline">\(i\)</span>的超额收益率 - <span class="math inline">\(\alpha_i\)</span>: 截距项，如果模型准确，理论上应该为零 - <span class="math inline">\(\beta_{i,k}\)</span>: 资产<span class="math inline">\(i\)</span>对风险因子<span class="math inline">\(k\)</span>的敏感度 - <span class="math inline">\(F_k\)</span>: 第<span class="math inline">\(k\)</span>个风险因子的风险溢价 - <span class="math inline">\(\epsilon_i\)</span>: 资产特有的非系统性风险，即残差项</p>
+</section>
+<section id="多因子模型的类型" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="多因子模型的类型"><span class="header-section-number">5.2.3</span> 多因子模型的类型</h3>
+<ul>
+<li><strong>经济理论驱动的多因子模型</strong>:
+<ul>
+<li>基于经济理论推导出的风险因子</li>
+<li>例如：Ross (1976)的套利定价理论(APT)、Merton (1973)的跨期资本资产定价模型(ICAPM)</li>
+<li>优势：有坚实的理论基础；劣势：难以确定具体的风险因子</li>
+</ul></li>
+<li><strong>统计技术驱动的多因子模型</strong>:
+<ul>
+<li>使用统计方法如主成分分析(PCA)从数据中提取共同因子</li>
+<li>例如：Chen, Roll and Ross (1986)的宏观经济因子模型</li>
+<li>优势：数据拟合度高；劣势：因子缺乏明确的经济含义</li>
+</ul></li>
+<li><strong>异象驱动的多因子模型</strong>:
+<ul>
+<li>基于市场中观察到的异象构建因子</li>
+<li>例如：Fama-French三因子模型、Carhart四因子模型</li>
+<li>优势：直接解决已知的市场异象；劣势：可能存在过度拟合风险</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="fama-french三因子模型的构建" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="fama-french三因子模型的构建"><span class="header-section-number">5.3</span> Fama-French三因子模型的构建</h2>
+<section id="三因子模型的提出背景" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="三因子模型的提出背景"><span class="header-section-number">5.3.1</span> 三因子模型的提出背景</h3>
+<ul>
+<li><strong>市场异象的挑战</strong>:
+<ul>
+<li>20世纪80-90年代，学者发现许多CAPM无法解释的市场异象</li>
+<li>其中最显著的是<strong>规模效应</strong>(小市值股票表现优于大市值股票)和<strong>价值效应</strong>(高账面市值比股票表现优于低账面市值比股票)</li>
+</ul></li>
+<li><strong>Fama和French的贡献</strong>:
+<ul>
+<li>1992年，Eugene Fama和Kenneth French发表了著名论文《The Cross-Section of Expected Stock Returns》</li>
+<li>1993年，他们进一步发表《Common risk factors in the returns on stocks and bonds》，正式提出三因子模型</li>
+<li>他们将规模和价值引入资产定价模型，构建了影响深远的三因子模型</li>
+</ul></li>
+</ul>
+</section>
+<section id="三因子模型的数学表达式" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="三因子模型的数学表达式"><span class="header-section-number">5.3.2</span> 三因子模型的数学表达式</h3>
+<p>Fama-French三因子模型的数学表达式如下：</p>
+<p><span class="math display">\[R_i - R_f = \alpha_i + \beta_i(R_m - R_f) + s_i \cdot SMB + h_i \cdot HML + \epsilon_i\]</span></p>
+<p>其中： - <span class="math inline">\(R_i - R_f\)</span>: 资产<span class="math inline">\(i\)</span>的超额收益率 - <span class="math inline">\(R_m - R_f\)</span>: 市场组合的超额收益率(市场因子) - <span class="math inline">\(SMB\)</span>: 规模因子(Small Minus Big)，小市值股票与大市值股票的收益率差 - <span class="math inline">\(HML\)</span>: 价值因子(High Minus Low)，高账面市值比股票与低账面市值比股票的收益率差 - <span class="math inline">\(\beta_i\)</span>, <span class="math inline">\(s_i\)</span>, <span class="math inline">\(h_i\)</span>: 分别是资产<span class="math inline">\(i\)</span>对三个因子的敏感度 - <span class="math inline">\(\alpha_i\)</span>: 截距项，表示模型无法解释的超额收益率 - <span class="math inline">\(\epsilon_i\)</span>: 残差项</p>
+</section>
+<section id="smb因子构建方法" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="smb因子构建方法"><span class="header-section-number">5.3.3</span> SMB因子构建方法</h3>
+<p>SMB(Small Minus Big)是衡量规模效应的因子，代表小市值股票相对于大市值股票的超额收益。</p>
+<ul>
+<li><p><strong>分组步骤</strong>:</p>
+<ol type="1">
+<li><strong>规模划分</strong>: 根据股票市值大小将所有股票分为两组：
+<ul>
+<li>小市值组(S): 市值低于中位数的股票</li>
+<li>大市值组(B): 市值高于中位数的股票</li>
+</ul></li>
+<li><strong>账面市值比划分</strong>: 将股票按照账面市值比(B/M)分为三组：
+<ul>
+<li>低B/M组(L): B/M比值处于最低30%的股票</li>
+<li>中B/M组(M): B/M比值处于中间40%的股票</li>
+<li>高B/M组(H): B/M比值处于最高30%的股票</li>
+</ul></li>
+<li><strong>形成六个投资组合</strong>: 将上述两种分类交叉，形成六个投资组合：
+<ul>
+<li>小市值/低B/M(S/L)</li>
+<li>小市值/中B/M(S/M)</li>
+<li>小市值/高B/M(S/H)</li>
+<li>大市值/低B/M(B/L)</li>
+<li>大市值/中B/M(B/M)</li>
+<li>大市值/高B/M(B/H)</li>
+</ul></li>
+</ol></li>
+<li><p><strong>SMB计算公式</strong>: <span class="math display">\[SMB = \frac{1}{3}[(S/L - B/L) + (S/M - B/M) + (S/H - B/H)]\]</span></p>
+<p>即小市值组合的平均收益率减去大市值组合的平均收益率</p></li>
+</ul>
+</section>
+<section id="hml因子构建方法" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="hml因子构建方法"><span class="header-section-number">5.3.4</span> HML因子构建方法</h3>
+<p>HML(High Minus Low)是衡量价值效应的因子，代表高账面市值比股票相对于低账面市值比股票的超额收益。</p>
+<ul>
+<li><p><strong>使用相同的六个投资组合</strong>:</p></li>
+<li><p><strong>HML计算公式</strong>: <span class="math display">\[HML = \frac{1}{2}[(S/H - S/L) + (B/H - B/L)]\]</span></p>
+<p>即高B/M组合的平均收益率减去低B/M组合的平均收益率</p></li>
+</ul>
+</section>
+<section id="因子构建的实际考量" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="因子构建的实际考量"><span class="header-section-number">5.3.5</span> 因子构建的实际考量</h3>
+<ul>
+<li><strong>重构频率</strong>: 通常每年或每半年重新构建一次投资组合</li>
+<li><strong>财务数据时滞</strong>: 使用上一财年末的账面价值数据，确保数据可获得性</li>
+<li><strong>异常值处理</strong>: 剔除账面价值为负的股票，处理极端值</li>
+<li><strong>市值计算</strong>: 通常使用流通市值而非总市值，以反映实际可交易部分</li>
+</ul>
+</section>
+</section>
+<section id="三因子模型的经济学解释" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="三因子模型的经济学解释"><span class="header-section-number">5.4</span> 三因子模型的经济学解释</h2>
+<section id="市场因子r_m---r_f的经济学解释" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="市场因子r_m---r_f的经济学解释"><span class="header-section-number">5.4.1</span> 市场因子(<span class="math inline">\(R_m - R_f\)</span>)的经济学解释</h3>
+<ul>
+<li><strong>继承自CAPM</strong>: 市场因子代表了整体市场风险，与CAPM模型中的市场风险相同</li>
+<li><strong>系统性风险补偿</strong>: 衡量了投资者承担整体市场风险所要求的风险溢价</li>
+<li><strong>不可分散性</strong>: 代表了通过分散化投资无法消除的系统性风险</li>
+</ul>
+</section>
+<section id="规模因子smb的经济学解释" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="规模因子smb的经济学解释"><span class="header-section-number">5.4.2</span> 规模因子(SMB)的经济学解释</h3>
+<p>Fama和French认为SMB因子代表了小市值公司所承担的额外系统性风险：</p>
+<ul>
+<li><strong>经济脆弱性假说</strong>: 小市值公司更容易受到经济衰退的冲击，在经济困难时期表现更差</li>
+<li><strong>信息不对称假说</strong>: 小市值公司信息透明度较低，投资者承担更高的信息风险</li>
+<li><strong>流动性风险假说</strong>: 小市值股票流动性较差，投资者要求额外的流动性溢价</li>
+<li><strong>财务困境假说</strong>: 小市值公司更容易面临财务困境和破产风险</li>
+</ul>
+</section>
+<section id="价值因子hml的经济学解释" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="价值因子hml的经济学解释"><span class="header-section-number">5.4.3</span> 价值因子(HML)的经济学解释</h3>
+<p>HML因子代表了高B/M公司所承担的额外系统性风险：</p>
+<ul>
+<li><strong>财务困境风险假说</strong>: 高B/M公司通常财务状况较差，面临更高的违约风险</li>
+<li><strong>成长机会假说</strong>: 高B/M公司通常缺乏成长机会，在经济衰退时更容易受损</li>
+<li><strong>盈利持续性假说</strong>: 高B/M公司的盈利能力通常较弱或波动较大，持续性较差</li>
+<li><strong>投资者情绪假说</strong>: 投资者倾向于过度看好成长型公司，导致价值型公司被低估</li>
+</ul>
+</section>
+<section id="行为金融学视角的解释" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="行为金融学视角的解释"><span class="header-section-number">5.4.4</span> 行为金融学视角的解释</h3>
+<p>行为金融学提供了不同于理性风险定价的解释：</p>
+<ul>
+<li><strong>过度反应假说</strong>: 投资者对公司短期业绩过度反应，导致价值股被低估，成长股被高估</li>
+<li><strong>投资者情绪</strong>: 投资者偏好成长型股票，愿意为成长预期支付额外溢价</li>
+<li><strong>彩票偏好</strong>: 投资者偏好具有彩票特性的小市值成长股</li>
+<li><strong>注意力效应</strong>: 大市值公司受到更多关注，定价可能更为有效</li>
+</ul>
+</section>
+</section>
+<section id="三因子模型的实证检验" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="三因子模型的实证检验"><span class="header-section-number">5.5</span> 三因子模型的实证检验</h2>
+<section id="美国市场的经典检验结果" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="美国市场的经典检验结果"><span class="header-section-number">5.5.1</span> 美国市场的经典检验结果</h3>
+<p>Fama和French在原始论文中的主要发现：</p>
+<ul>
+<li><strong>显著改善解释力</strong>: 相比CAPM模型，三因子模型解释了更多股票收益率的横截面差异</li>
+<li><strong>规模效应的捕捉</strong>: 模型成功解释了小市值股票的超额收益</li>
+<li><strong>价值效应的捕捉</strong>: 模型成功解释了高B/M股票的超额收益</li>
+<li><strong>强大的统计显著性</strong>: 三个因子的风险溢价在统计上显著不为零</li>
+<li><strong>时间稳定性</strong>: 因子风险溢价在不同时期表现出相对稳定性</li>
+</ul>
+</section>
+<section id="主要实证方法" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="主要实证方法"><span class="header-section-number">5.5.2</span> 主要实证方法</h3>
+<ul>
+<li><strong>时间序列回归</strong>:
+<ul>
+<li>对单个资产或投资组合进行时间序列回归</li>
+<li>检验因子敏感度(<span class="math inline">\(\beta\)</span>, <span class="math inline">\(s\)</span>, <span class="math inline">\(h\)</span>)是否显著，以及截距项<span class="math inline">\(\alpha\)</span>是否趋近于零</li>
+</ul></li>
+<li><strong>横截面回归</strong>:
+<ul>
+<li>使用Fama-MacBeth回归检验因子风险溢价是否显著</li>
+<li>检验三因子模型是否能解释资产收益率的横截面差异</li>
+</ul></li>
+<li><strong>投资组合分析</strong>:
+<ul>
+<li>构建不同特征的投资组合，检验三因子模型的解释能力</li>
+<li>通常使用独立排序形成的规模-价值分组(如25个投资组合)</li>
+</ul></li>
+</ul>
+</section>
+<section id="后续研究的发现" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="后续研究的发现"><span class="header-section-number">5.5.3</span> 后续研究的发现</h3>
+<ul>
+<li><strong>稳健性</strong>: 三因子模型在不同市场和时期都表现出较好的稳健性</li>
+<li><strong>适用范围</strong>: 模型不仅适用于股票市场，也可以扩展到债券和其他资产类别</li>
+<li><strong>进一步的市场异象</strong>: 研究发现了三因子模型仍无法解释的异象，如动量效应、盈利能力效应等</li>
+<li><strong>模型拓展</strong>: 促使了四因子、五因子等更复杂模型的发展</li>
+</ul>
+</section>
+</section>
+<section id="中国市场的三因子模型变体" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="中国市场的三因子模型变体"><span class="header-section-number">5.6</span> 中国市场的三因子模型变体</h2>
+<section id="中国市场特征与三因子模型适用性" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="中国市场特征与三因子模型适用性"><span class="header-section-number">5.6.1</span> 中国市场特征与三因子模型适用性</h3>
+<p>中国股票市场具有独特特征，影响了三因子模型的适用性：</p>
+<ul>
+<li><strong>新兴市场特性</strong>: 中国作为新兴市场，市场效率相对较低，投机性较强</li>
+<li><strong>政府干预</strong>: 政府政策对市场影响较大，造成独特的风险来源</li>
+<li><strong>投资者结构</strong>: 以散户为主的投资者结构导致行为偏差更为显著</li>
+<li><strong>特殊制度安排</strong>: 如股权分置改革、涨跌幅限制等特殊制度</li>
+<li><strong>A股与H股市场分割</strong>: 同一公司在A股和H股市场的定价差异明显，反映了市场分割效应</li>
+<li><strong>交易限制因素</strong>: 包括做空限制、涨跌停板制度等对因子表现产生影响</li>
+</ul>
+</section>
+<section id="中国市场规模与价值因子的实证研究" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="中国市场规模与价值因子的实证研究"><span class="header-section-number">5.6.2</span> 中国市场规模与价值因子的实证研究</h3>
+<p>根据Liu, Stambaugh和Yuan (2019)的”Size and Value in China”研究，中国市场的规模和价值因子表现出一些独特特点，需要特殊处理：</p>
+<ul>
+<li><strong>小市值股票的壳价值扭曲</strong>:
+<ul>
+<li>中国市场最小30%的股票存在明显的壳价值（shell value）问题，价格反映了被用作反向收购（reverse merger）壳公司的潜在价值</li>
+<li>反向收购为民企提供了绕过繁琐IPO审批的后门上市途径</li>
+<li>小市值股票回报率显著受到壳价值变化的影响，而非传统风险因素</li>
+</ul></li>
+<li><strong>中国特色三因子模型（CH-3）</strong>:
+<ul>
+<li>针对中国市场特点，构建了排除最小30%市值股票的规模因子（SMC）</li>
+<li>使用市盈率（E/P）替代账面市值比（B/M）构建价值因子（VMG），因其在中国市场表现更好</li>
+<li>CH-3模型（由市场因子、SMC和VMG组成）显著优于传统FF-3模型</li>
+</ul></li>
+<li><strong>超强解释力</strong>:
+<ul>
+<li>CH-3模型能解释中国市场中10种常见异象中的8种</li>
+<li>相比之下，传统FF-3模型仅能解释3种异象</li>
+<li>贝叶斯检验显示CH-3模型在解释因子表现上显著优于FF-3模型</li>
+</ul></li>
+</ul>
+</section>
+<section id="中国市场实证检验结果的最新发现" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="中国市场实证检验结果的最新发现"><span class="header-section-number">5.6.3</span> 中国市场实证检验结果的最新发现</h3>
+<p>基于Liu, Stambaugh和Yuan (2019)的研究与其他中国学者的实证结果，CH-3模型相比传统模型的优势表现在：</p>
+<ul>
+<li><strong>规模因子修正后的表现</strong>:
+<ul>
+<li>剔除最小30%市值股票后，规模效应变得更加稳健可预测</li>
+<li>经修正的规模因子(SMC)风险溢价显著且稳定</li>
+<li>最小市值组股票表现出与其他规模组显著不同的收益率模式，符合壳价值假说</li>
+<li>大中型股票的规模效应更能反映真实的风险溢价</li>
+</ul></li>
+<li><strong>价值因子的选择优化</strong>:
+<ul>
+<li>E/P（市盈率倒数）作为价值度量在中国市场表现显著优于B/M</li>
+<li>价值因子(VMG)能更好地捕捉盈利能力与成长机会的信息</li>
+<li>调整后的价值因子与宏观经济的联系更加紧密</li>
+<li>价值因子在避开极小市值股票的样本中表现更为稳健</li>
+</ul></li>
+<li><strong>因子间相互关系</strong>:
+<ul>
+<li>修正后的规模因子与价值因子相关性降低，提供更好的分散化效果</li>
+<li>CH-3模型三个因子对应的因子组合呈现更低的相关性</li>
+<li>与美国市场不同，中国市场的小市值与高价值不总是正相关</li>
+<li>经济周期和政策环境对因子相关性有重要影响</li>
+</ul></li>
+<li><strong>异象解释能力</strong>:
+<ul>
+<li>CH-3模型能解释大多数中国市场的异象现象，包括：
+<ul>
+<li>盈利能力异象</li>
+<li>波动率异象</li>
+<li>反转效应</li>
+<li>…</li>
+</ul></li>
+<li>模型解释力在排除最小30%市值股票的样本中进一步提升</li>
+<li>贝叶斯分析显示CH-3在各种情景下都优于FF-3模型</li>
+</ul></li>
+</ul>
+</section>
+<section id="三因子模型在中国市场实践应用的特殊考量" class="level3" data-number="5.6.4">
+<h3 data-number="5.6.4" class="anchored" data-anchor-id="三因子模型在中国市场实践应用的特殊考量"><span class="header-section-number">5.6.4</span> 三因子模型在中国市场实践应用的特殊考量</h3>
+<p>基于Liu等人(2019)的研究成果和国内实证发现，在中国市场应用三因子模型时需考虑以下特殊因素：</p>
+<ul>
+<li><strong>规模因子构建调整</strong>:
+<ul>
+<li>应剔除市值最小的30%股票，以避免壳价值效应的干扰</li>
+<li>使用SMC（Excluding Small）替代传统SMB，提高规模因子的风险解释力</li>
+<li>规模分组可考虑使用非对称划分（如30%-70%），更适合中国市场的规模分布特征</li>
+</ul></li>
+<li><strong>价值因子指标选择</strong>:
+<ul>
+<li>E/P（市盈率倒数）在中国市场表现优于传统B/M</li>
+<li>构建VMG（Value Minus Growth）价值因子，替代传统HML</li>
+<li>剔除负收益公司，或使用复合价值指标以提高稳定性</li>
+</ul></li>
+<li><strong>反向收购与制度因素考量</strong>:
+<ul>
+<li>关注壳资源价值随政策变化的动态影响</li>
+<li>监控小市值股票的异常收益率波动，尤其在监管政策调整期</li>
+<li>考虑将壳价值变化作为额外风险因子纳入模型</li>
+</ul></li>
+<li><strong>数据质量与频率选择</strong>:
+<ul>
+<li>中国市场数据质量问题，尤其是早期数据和财务报告可靠性</li>
+<li>考虑使用季度而非月度频率来构建更稳健的因子</li>
+<li>多样本期检验，关注市场制度变革前后的模型表现差异</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="总结" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="总结"><span class="header-section-number">5.7</span> 总结</h2>
+<ul>
+<li>Fama-French三因子模型通过引入规模因子(SMB)和价值因子(HML)，极大提高了对股票收益横截面差异的解释能力。</li>
+<li>三因子模型的每个因子都有其经济学解释，可以被视为对特定系统性风险的补偿。</li>
+<li>在中国市场，传统三因子模型需要根据中国市场特点进行调整，Liu等人(2019)提出的CH-3模型（剔除小市值股票的规模因子SMC和基于市盈率的价值因子VMG）显著优于传统FF-3模型。</li>
+<li>中国市场的壳价值效应是小市值股票定价的关键因素，应在构建因子和应用模型时予以特别考虑。</li>
+<li>多因子模型的框架为后续资产定价模型的发展奠定了基础，每个市场可能需要根据其特有的制度环境和市场特征调整模型设定。</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./lab02_capmtest.html" class="pagination-link" aria-label="资本资产定价模型 (CAPM) 实证检验">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM) 实证检验</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./lab03_ff3test.html" class="pagination-link" aria-label="实践：构建和回测中国特色三因子模型(CH-3)">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">实践：构建和回测中国特色三因子模型(CH-3)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
