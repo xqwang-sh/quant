@@ -5,7 +5,7 @@ title: "实践：构建和回测中国特色三因子模型(CH-3)"
 ## 本次实验内容
 
 1. **数据准备和预处理**: 学习如何获取和处理中国股票数据
-2. **构建中国特色规模因子**: 掌握中国特色规模因子(SMC)的构建方法
+2. **构建中国特色规模因子**: 掌握中国特色规模因子(SMB)的构建方法
 3. **构建中国特色价值因子**: 掌握基于市盈率的价值因子(VMG)的构建方法
 4. **回测因子收益**: 学习如何对因子进行回测和性能评估
 5. **因子有效性分析**: 了解如何评估因子的有效性和统计显著性
@@ -22,45 +22,13 @@ title: "实践：构建和回测中国特色三因子模型(CH-3)"
 
 4. **超强解释力**：调整后的CH-3模型在解释中国市场异象方面显著优于传统FF-3模型
 
+本实验将带领大家一步步构建中国特色三因子模型，并通过对ROE异象的解释力分析来验证该模型的有效性。我们将使用真实的中国股票市场数据，从数据预处理开始，经过因子构建、回测到最终的统计分析。
+
 ## 实践：构建和回测中国特色三因子模型
 
-### 规模因子(SMB)的构建步骤
+### 第一步：导入必要的库
 
-1. **数据准备**:
-   - 获取股票交易数据(收益率数据)
-   - 获取股票市值数据
-   - 获取股票市盈率数据(用于价值因子)
-
-2. **数据预处理**:
-   - 剔除财务异常股票
-   - 处理缺失值和极端值
-   - 对数据进行标准化处理
-
-3. **分组构建**:
-   - 首先剔除市值最小的30%股票(避免壳价值影响)
-   - 在剩余70%股票中，按市值中位数分为小 b n市值和大市值两组
-
-4. **因子计算**:
-   - 计算小市值组合收益率
-   - 计算大市值组合收益率
-   - SMB = 小市值组合收益率 - 大市值组合收益率
-
-### 价值因子(VMG)的构建步骤
-
-1. **分组方法**:
-   - 使用市盈率(E/P)替代传统的账面市值比(B/M)
-   - 按E/P将剩余70%股票分为高E/P(价值型)和低E/P(成长型)两组
-
-2. **因子计算**:
-   - 计算高E/P(价值型)组合收益率
-   - 计算低E/P(成长型)组合收益率
-   - VMG = 高E/P组合收益率 - 低E/P组合收益率
-
-### 使用Python实现中国特色三因子模型
-
-下面我们将使用Python实现CH-3模型的构建与回测。
-
-#### 1. 环境准备与数据获取
+首先，我们需要导入本实验所需的Python库。这些库包括数据处理的pandas和numpy，可视化的matplotlib和seaborn，以及统计分析的statsmodels和scipy等。
 
 ```python
 # 导入必要的库
@@ -69,6 +37,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from scipy import stats
+from pandas.tseries.offsets import MonthEnd
+import seaborn as sns
+from statsmodels.regression.rolling import RollingOLS
+from statsmodels.stats.sandwich_covariance import cov_hac
 
 # 设置绘图风格
 plt.style.use('ggplot')
@@ -85,223 +57,437 @@ else:
     plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei']  # Linux 使用文泉驿正黑
 # 解决负号显示问题
 plt.rcParams['axes.unicode_minus'] = False
-
-# 数据获取
-# 在实际环境中，你可能需要使用CSMAR、Wind等数据源获取数据
-# 这里我们假设已经有了以下数据框：
-# 1. stock_returns: 包含股票月度收益率
-# 2. market_cap: 包含股票市值数据
-# 3. earnings_to_price: 包含股票市盈率倒数(E/P)数据
-# 4. market_return: 市场收益率数据
 ```
 
-#### 2. 数据预处理
+### 第二步：读入数据
+
+接下来，我们需要读取中国股票市场的相关数据。这些数据包括：公司基本信息、财务指标、交易数据、无风险利率和市场因子数据。在实际应用中，这些数据通常来自于CSMAR、Wind等专业金融数据库。
 
 ```python
-def preprocess_data(stock_returns, market_cap, earnings_to_price, date):
-    """
-    对数据进行预处理
-    
-    参数:
-    stock_returns: 包含股票收益率的DataFrame
-    market_cap: 包含股票市值的DataFrame
-    earnings_to_price: 包含股票市盈率倒数(E/P)的DataFrame
-    date: 当前处理的日期
-    
-    返回:
-    处理后的数据
-    """
-    # 获取当期数据
-    returns = stock_returns.loc[date]
-    cap = market_cap.loc[date]
-    ep = earnings_to_price.loc[date]
-    
-    # 合并数据
-    data = pd.DataFrame({
-        'returns': returns,
-        'market_cap': cap,
-        'earnings_to_price': ep
-    })
-    
-    # 剔除缺失值
-    data = data.dropna()
-    
-    # 剔除负收益公司(E/P为负)
-    data = data[data['earnings_to_price'] > 0]
-    
-    # 处理极端值（使用百分位数裁剪）
-    for col in ['market_cap', 'earnings_to_price']:
-        lower_bound = data[col].quantile(0.01)
-        upper_bound = data[col].quantile(0.99)
-        data[col] = data[col].clip(lower_bound, upper_bound)
-    
-    return data
+# 基本信息
+cominfo = pd.read_excel("data/STK_LISTEDCOINFOANL.xlsx")
+
+# 财务指标
+comfin = pd.read_excel("data/FI_T2.xlsx", header=None, 
+                      names=["Stkcd", "Accper", "Indcd", "nr", "npexnr", "ROE", "ROE_exnr"],
+                      skiprows=3)
+
+# 个股交易数据
+trdmnth = pd.read_excel("data/TRD_Mnth.xlsx")
+
+# 无风险利率
+nrrate = pd.read_excel("data/TRD_Nrrate.xlsx")
+
+# 五因子
+facmnth = pd.read_excel("data/STK_MKT_FIVEFACMONTH.xlsx")
 ```
 
-#### 3. 构建中国特色规模因子(SMB)
+### 第三步：整理数据
+
+数据读入后，我们需要对数据进行整理和初步分析。这包括：行业分类、过滤非A股和金融公用事业公司、处理借壳上市情况等。特别地，我们为每个公司创建唯一标识符，以便更好地追踪其随时间变化的特性。
 
 ```python
-def construct_smb_factor(data):
-    """
-    构建中国特色规模因子(SMB)
-    
-    参数:
-    data: 预处理后的数据
-    
-    返回:
-    SMB因子值和相关投资组合
-    """
-    # 按市值大小排序
-    data = data.sort_values('market_cap')
-    
-    # 获取股票数量
-    n_stocks = len(data)
-    
-    # 剔除市值最小的30%股票（避免壳价值影响）
-    cutoff_small = int(n_stocks * 0.3)
-    remaining_stocks = data.iloc[cutoff_small:]
-    
-    # 在剩余股票中按中位数划分为中市值和大市值组
-    n_remaining = len(remaining_stocks)
-    medium_stocks = remaining_stocks.iloc[:n_remaining//2]
-    big_stocks = remaining_stocks.iloc[n_remaining//2:]
-    
-    # 计算组合的等权平均收益率
-    medium_return = medium_stocks['returns'].mean()
-    big_return = big_stocks['returns'].mean()
-    
-    # 计算SMC因子
-    smc = medium_return - big_return
-    
-    return {
-        'SMC': smc,
-        'Medium': medium_return,
-        'Big': big_return,
-        'medium_stocks': medium_stocks,
-        'big_stocks': big_stocks,
-        'excluded_small': data.iloc[:cutoff_small]  # 被剔除的小市值股票
-    }
-```
+# 行业信息
+indinfo = (cominfo.groupby(['IndustryName', 'IndustryCode'])
+           .size()
+           .reset_index()
+           .rename(columns={0: 'count'})
+           .sort_values('IndustryCode'))
 
-#### 4. 构建中国特色价值因子(VMG)
+# A股、非金融公用事业行业
+comA = cominfo.copy()
+comA['EndDate'] = pd.to_datetime(comA['EndDate'])
+comA['year'] = comA['EndDate'].dt.year
+comA['LISTINGDATE'] = pd.to_datetime(comA['LISTINGDATE'])
 
-```python
-def construct_vmg_factor(data):
-    """
-    构建中国特色价值因子(VMG)
-    
-    参数:
-    data: 预处理后的数据
-    
-    返回:
-    VMG因子值和相关投资组合
-    """
-    # 按市值大小排序
-    data = data.sort_values('market_cap')
-    
-    # 获取股票数量
-    n_stocks = len(data)
-    
-    # 剔除市值最小的30%股票（避免壳价值影响）
-    cutoff_small = int(n_stocks * 0.3)
-    remaining_stocks = data.iloc[cutoff_small:]
-    
-    # 在剩余股票中按E/P排序
-    remaining_stocks = remaining_stocks.sort_values('earnings_to_price')
-    n_remaining = len(remaining_stocks)
-    
-    # 按E/P中位数划分为成长型和价值型
-    growth_stocks = remaining_stocks.iloc[:n_remaining//2]  # 低E/P（成长型）
-    value_stocks = remaining_stocks.iloc[n_remaining//2:]   # 高E/P（价值型）
-    
-    # 计算组合的等权平均收益率
-    growth_return = growth_stocks['returns'].mean()
-    value_return = value_stocks['returns'].mean()
-    
-    # 计算VMG因子
-    vmg = value_return - growth_return
-    
-    return {
-        'VMG': vmg,
-        'Value': value_return,
-        'Growth': growth_return,
-        'value_stocks': value_stocks,
-        'growth_stocks': growth_stocks
-    }
-```
+# 过滤条件：上市后数据 + 非金融非公用事业 + A股
+comA = comA[
+    (comA['EndDate'] >= comA['LISTINGDATE']) & 
+    (~comA['IndustryCode'].str.startswith('J')) & 
+    (~comA['IndustryCode'].str.startswith('D')) &
+    (~comA['Symbol'].str.startswith('900')) &
+    (~comA['Symbol'].str.startswith('200'))
+]
 
-#### 5. 回测框架
+# 借壳上市
+IPO = pd.read_excel("Anomaly_data/ER_IPO.xlsx")
+IPO = IPO[IPO['ListSign'] == 'A']
+IPO['LatestBackdoorDate'] = pd.to_datetime(IPO['LatestBackdoorDate'])
+IPO['RMyear'] = IPO['LatestBackdoorDate'].dt.year
+IPO = IPO[['Symbol', 'RMyear']]
 
-```python
-def backtest_ch3_model(stock_returns, market_cap, earnings_to_price, market_return,
-                      start_date, end_date, rebalance_freq='M'):
-    """
-    回测中国特色三因子模型(CH-3)
-    
-    参数:
-    stock_returns: 包含股票收益率的DataFrame
-    market_cap: 包含股票市值的DataFrame
-    earnings_to_price: 包含股票市盈率倒数(E/P)的DataFrame
-    market_return: 市场收益率Series
-    start_date: 回测开始日期
-    end_date: 回测结束日期
-    rebalance_freq: 再平衡频率，'M'表示月度，'Q'表示季度
-    
-    返回:
-    回测结果
-    """
-    # 创建时间索引
-    if rebalance_freq == 'M':
-        dates = pd.date_range(start=start_date, end=end_date, freq='M')
-    elif rebalance_freq == 'Q':
-        dates = pd.date_range(start=start_date, end=end_date, freq='Q')
+# 重新定义证券ID
+comA_all = pd.merge(comA, IPO, on='Symbol', how='left')
+
+# 为每家公司创建唯一标识符
+def create_symbol1(row):
+    if pd.isna(row['RMyear']):
+        return row['Symbol'] + '0'  # 非借壳上市
+    elif row['year'] >= row['RMyear']:
+        return row['Symbol'] + '2'  # 借壳上市后
     else:
-        raise ValueError("rebalance_freq must be 'M' or 'Q'")
-    
-    # 初始化结果存储
-    results = {
-        'MKT': [],  # 市场因子
-        'SMB': [],  # 规模因子
-        'VMG': [],  # 价值因子
-        'Medium': [],
-        'Big': [],
-        'Value': [],
-        'Growth': [],
-        'Date': []
-    }
-    
-    # 循环每个交易日
-    for date in dates:
-        # 数据预处理
-        data = preprocess_data(stock_returns, market_cap, earnings_to_price, date)
-        
-        # 构建规模因子
-        smb_results = construct_smb_factor(data)
-        
-        # 构建价值因子
-        vmg_results = construct_vmg_factor(data)
-        
-        # 获取市场因子（假设为市场超额收益率）
-        mkt = market_return.loc[date] if date in market_return.index else np.nan
-        
-        # 记录结果
-        results['MKT'].append(mkt)
-        results['SMB'].append(smb_results['SMB'])
-        results['VMG'].append(vmg_results['VMG'])
-        results['Medium'].append(smb_results['Medium'])
-        results['Big'].append(smb_results['Big'])
-        results['Value'].append(vmg_results['Value'])
-        results['Growth'].append(vmg_results['Growth'])
-        results['Date'].append(date)
-    
-    # 转换为DataFrame
-    results_df = pd.DataFrame(results)
-    results_df.set_index('Date', inplace=True)
-    
-    return results_df
+        return row['Symbol'] + '1'  # 借壳上市前
+
+comA_all['Symbol1'] = comA_all.apply(create_symbol1, axis=1)
+comA_all = comA_all[['Symbol', 'Symbol1', 'year', 'RMyear']]
 ```
 
-#### 6. 计算绩效指标
+### 第四步：财务数据处理
+
+这一步我们处理财务数据，包括与公司信息的合并、处理借壳上市数据、填充缺失值等。同时对交易数据、无风险利率和市场因子进行相应处理，为后续构建因子做准备。
+
+```python
+# 财务数据处理
+comfin1 = comfin.copy()
+comfin1['Accper'] = pd.to_datetime(comfin1['Accper'])
+comfin1['year'] = comfin1['Accper'].dt.year
+comfin1['month'] = comfin1['Accper'].dt.month
+
+# 合并财务数据与公司基本信息
+comfin1 = pd.merge(comfin1, comA_all, left_on=['Stkcd', 'year'], 
+                   right_on=['Symbol', 'year'], how='inner')
+
+# 过滤借壳上市当年的数据
+comfin1 = comfin1[(comfin1['RMyear'].isna()) | (comfin1['year'] != comfin1['RMyear'])]
+
+# 向下填充财务数据（模拟R中的fill函数）
+comfin1 = comfin1.sort_values(['Symbol1', 'year', 'month'])
+comfin1['npexnr'] = comfin1.groupby('Symbol1')['npexnr'].fillna(method='ffill')
+comfin1['ROE'] = comfin1.groupby('Symbol1')['ROE'].fillna(method='ffill')
+
+# 交易数据处理
+trdmnth['Trdmnt'] = pd.to_datetime(trdmnth['Trdmnt'])
+trdmnth['ym'] = pd.to_datetime(trdmnth['Trdmnt']).dt.to_period('M')
+trdmnth['year'] = trdmnth['Trdmnt'].dt.year
+trdmnth['month'] = trdmnth['Trdmnt'].dt.month
+trdmnth['Mretwd'] = trdmnth['Mretwd'] * 100  # 转换为百分比
+
+# 无风险利率处理
+nrrate = nrrate[nrrate['Nrr1'] == 'NRI01']
+nrrate['Clsdt'] = pd.to_datetime(nrrate['Clsdt'])
+nrrate['year'] = nrrate['Clsdt'].dt.year
+nrrate['month'] = nrrate['Clsdt'].dt.month
+rf = nrrate.groupby(['year', 'month'])['Nrrmtdt'].mean().reset_index()
+rf = rf.rename(columns={'Nrrmtdt': 'rf'})
+
+# 因子数据处理
+facmnth = facmnth[(facmnth['MarkettypeID'] == 'P9714') & (facmnth['Portfolios'] == 1)]
+facmnth['TradingMonth'] = pd.to_datetime(facmnth['TradingMonth'])
+facmnth['ym'] = facmnth['TradingMonth'].dt.to_period('M')
+# 转换为百分比
+factor_cols = ['RiskPremium1', 'SMB2', 'HML2', 'RMW2', 'CMA2']
+facmnth[factor_cols] = facmnth[factor_cols] * 100
+```
+
+### 第五步：合并数据集与构造变量
+
+在这一步，我们将合并处理后的各数据集，并计算关键变量，如市值和市盈率(E/P)。特别地，为了实现中国特色三因子模型的核心思想，我们筛选出市值最大的70%的企业，以剔除可能受到壳价值影响的小市值股票。
+
+```python
+# 定义财务年度和月份映射函数
+def get_financial_year(year, month_series):
+    # 根据月份调整财务年度
+    # 12月以前的数据使用上一年的财务数据
+    return year - 1 if month_series.iloc[0] < 4 else year
+
+def get_financial_month(month):
+    # 财务月份映射
+    return 12 if month < 4 else 3
+
+# 应用规则到交易数据
+trddata = trdmnth.copy()
+trddata['year1'] = trddata['year'].apply(lambda y: get_financial_year(y, trddata['month']))
+trddata['month1'] = trddata['month'].apply(get_financial_month)
+
+# 合并财务数据
+trddata = pd.merge(trddata, comfin1, 
+                  left_on=['Stkcd', 'year1', 'month1'], 
+                  right_on=['Symbol', 'year', 'month'], 
+                  how='inner')
+
+# 计算总市值和市盈率
+trddata = trddata.sort_values(['Symbol1', 'ym'])
+trddata['size'] = trddata.groupby('Symbol1')['Mclsprc'].shift(1) * (trddata['Msmvttl'] / trddata['Mclsprc'])
+trddata['EP'] = trddata['npexnr'] / trddata['size']
+
+# 筛选市值最大的70%的企业 - 这是中国特色三因子模型的关键步骤
+def filter_by_size(group):
+    size_threshold = group['size'].quantile(0.3)
+    return group[group['size'] >= size_threshold]
+
+trddata = trddata.groupby('ym').apply(filter_by_size).reset_index(drop=True)
+
+# 合并无风险利率并计算超额收益率
+trddata = pd.merge(trddata, rf, on=['year', 'month'], how='left')
+trddata['exret'] = trddata['Mretwd'] - trddata['rf']
+
+# 筛选时间范围
+trddata['ym_dt'] = trddata['ym'].dt.to_timestamp()
+trddata = trddata[(trddata['ym_dt'] >= pd.Timestamp('2007-05-01')) & 
+                  (trddata['ym_dt'] <= pd.Timestamp('2019-02-28'))]
+```
+
+### 第六步：对size、value、ROE进行排序分组
+
+按照Fama-French的经典方法，我们需要对股票进行分组以构建因子。在这一步，我们将按照市值进行2组划分，按照E/P进行3组划分，并额外对ROE进行10组划分用于后续异象分析。
+
+```python
+# 按市值、EP、ROE进行分组
+trddata_grp = trddata.copy()
+
+def create_groups(group):
+    # 市值分组（2组）- 对应SMB因子
+    group['grp_size'] = pd.qcut(group['size'], 2, labels=[1, 2]).astype(int)
+    
+    # EP价值分组（3组）- 对应VMG因子
+    if group['EP'].notna().any():
+        low_val = group['EP'].quantile(0.3)
+        high_val = group['EP'].quantile(0.7)
+        group['grp_value'] = np.select(
+            [group['EP'] <= low_val, group['EP'] <= high_val],
+            [1, 2],
+            default=3
+        )
+    else:
+        group['grp_value'] = np.nan
+    
+    # ROE分组（10组）- 用于ROE异象分析
+    group['grp_ROE'] = pd.qcut(group['ROE'], 10, labels=range(1, 11)).astype(int)
+    
+    # 市值分组（10组，用于条件分组）
+    group['grp_size1'] = pd.qcut(group['size'], 10, labels=range(1, 11)).astype(int)
+    
+    return group
+
+# 应用分组函数
+trddata_grp = trddata_grp.groupby('ym').apply(create_groups).reset_index(drop=True)
+
+# 在每个市值组内对ROE进行条件分组（控制规模效应）
+def cond_sort_roe(group):
+    group['grp_ROE_con'] = pd.qcut(group['ROE'], 10, labels=range(1, 11)).astype(int)
+    return group
+
+trddata_grp = trddata_grp.groupby(['ym', 'grp_size1']).apply(cond_sort_roe).reset_index(drop=True)
+```
+
+### 第七步：计算加权平均股票回报率与定价因子
+
+这一步是构建因子的核心环节。我们首先计算市场超额收益率(MKT)，然后构建2×3分组的投资组合，计算基于规模的SMB因子和基于价值的VMG因子。
+
+```python
+# 计算市场超额收益率（市值加权）
+factor1 = trddata_grp.groupby('ym').apply(
+    lambda x: pd.Series({
+        'MKT': np.average(x['exret'], weights=x['size'])
+    })
+).reset_index()
+
+# 根据size和value排序计算投资组合回报（市值加权）
+def calc_portfolio_return(group):
+    return np.average(group['Mretwd'], weights=group['size'])
+
+factor2 = trddata_grp.groupby(['ym', 'grp_size', 'grp_value']).apply(
+    calc_portfolio_return
+).reset_index()
+factor2.columns = ['ym', 'grp_size', 'grp_value', 'vwret']
+
+# 只保留不含NaN的组合
+factor2 = factor2[factor2['grp_size'].notna() & factor2['grp_value'].notna()]
+
+# 创建组合标识并透视表
+factor2['grp'] = factor2['grp_size'] * 10 + factor2['grp_value']
+factor2_pivot = factor2.pivot(index='ym', columns='grp', values='vwret').reset_index()
+
+# 计算SMB和VMG因子
+# SMB: 小市值组合(11,12,13)减去大市值组合(21,22,23)的平均收益率
+factor2_pivot['SMB'] = (factor2_pivot[11] + factor2_pivot[12] + factor2_pivot[13]) / 3 - \
+                      (factor2_pivot[21] + factor2_pivot[22] + factor2_pivot[23]) / 3
+# VMG: 高E/P组合(13,23)减去低E/P组合(11,21)的平均收益率
+factor2_pivot['VMG'] = (factor2_pivot[13] + factor2_pivot[23]) / 2 - \
+                      (factor2_pivot[11] + factor2_pivot[21]) / 2
+
+# 合并所有因子
+factor = factor2_pivot.merge(factor1, on='ym')
+# 加入传统Fama-French因子以便后续比较
+factor = factor.merge(facmnth[['ym', 'RiskPremium1', 'SMB2', 'HML2']], on='ym', how='left')
+```
+
+### 第八步：描述性统计和因子相关性分析
+
+在构建完成三因子后，我们需要对因子进行统计分析，了解其基本特征和相互关系。
+
+```python
+# 描述性统计
+factor_stats = factor[['MKT', 'SMB', 'VMG']].describe().T
+factor_stats['P0'] = factor_stats['min']
+factor_stats['P25'] = factor[['MKT', 'SMB', 'VMG']].quantile(0.25)
+factor_stats['Median'] = factor[['MKT', 'SMB', 'VMG']].median()
+factor_stats['P75'] = factor[['MKT', 'SMB', 'VMG']].quantile(0.75)
+factor_stats['P100'] = factor_stats['max']
+print("因子描述性统计:")
+print(factor_stats[['count', 'mean', 'std', 'P0', 'P25', 'Median', 'P75', 'P100']])
+
+# 相关系数
+factor_corr = factor[['MKT', 'SMB', 'VMG']].corr()
+print("\n因子相关系数:")
+print(factor_corr)
+```
+
+### 第九步：ROE异象分析
+
+为了验证CH-3模型的有效性，我们分析其对ROE异象的解释能力。我们首先构建基于ROE的投资组合，包括无条件分组和市值中性分组两种方式。
+
+```python
+# 基于ROE的投资组合形成（无条件分组）
+def calc_roe_portfolio(trddata_grp):
+    # 无条件分组
+    roe_port = trddata_grp.groupby(['ym', 'grp_ROE']).apply(
+        lambda x: pd.Series({
+            'vwret': np.average(x['Mretwd'], weights=x['size'])
+        })
+    ).reset_index()
+    
+    # 只保留不含NaN的组合
+    roe_port = roe_port[roe_port['grp_ROE'].notna()]
+    
+    # 转为宽格式
+    roe_port_wide = roe_port.pivot(index='ym', columns='grp_ROE', values='vwret').reset_index()
+    
+    # 计算高减低ROE组合回报（第10组减第1组）
+    roe_port_wide['rmw'] = roe_port_wide[10] - roe_port_wide[1]
+    
+    return roe_port_wide[['ym', 'rmw']]
+
+# 基于市值中性的ROE投资组合形成（条件分组）
+def calc_size_neutral_roe(trddata_grp):
+    # 条件分组（市值中性）- 在每个市值组内分别进行ROE排序
+    sn_port = trddata_grp.groupby(['ym', 'grp_ROE_con']).apply(
+        lambda x: pd.Series({
+            'vwret': np.average(x['Mretwd'], weights=x['size'])
+        })
+    ).reset_index()
+    
+    # 只保留不含NaN的组合
+    sn_port = sn_port[sn_port['grp_ROE_con'].notna()]
+    
+    # 转为宽格式
+    sn_port_wide = sn_port.pivot(index='ym', columns='grp_ROE_con', values='vwret').reset_index()
+    
+    # 计算高减低ROE组合回报
+    sn_port_wide['rmw_sn'] = sn_port_wide[10] - sn_port_wide[1]
+    
+    return sn_port_wide[['ym', 'rmw_sn']]
+
+# 计算ROE投资组合
+factor3 = calc_roe_portfolio(trddata_grp)
+factor4 = calc_size_neutral_roe(trddata_grp)
+
+# 合并所有因子数据
+factor_all = factor.merge(factor3, on='ym').merge(factor4, on='ym')
+```
+
+### 第十步：使用Newey-West调整的标准误差估计因子模型
+
+接下来，我们使用Newey-West调整的标准误差进行回归分析，比较CH-3模型与传统CAPM、FF-3模型在解释ROE异象方面的能力。
+
+```python
+# 使用Newey-West调整的标准误差估计因子模型
+def nw_regression(y, X, lags=4):
+    """使用Newey-West调整的标准误差进行回归"""
+    # 准备数据
+    X = sm.add_constant(X)
+    
+    # 拟合模型
+    model = sm.OLS(y, X).fit()
+    
+    # 使用Newey-West调整标准误差
+    cov = cov_hac(model, nlags=lags)
+    model_nw = model.get_robustcov_results(cov_type='HAC', maxlags=lags)
+    
+    return model_nw
+
+# 进行因子模型回归
+print("\nROE异象的因子模型分析:")
+
+# 无条件分组 - CAPM
+model1 = nw_regression(factor_all['rmw'], factor_all[['MKT']])
+print("\n无条件分组 - CAPM模型:")
+print(model1.summary().tables[1])
+
+# 无条件分组 - 三因子(CH-3)
+model2 = nw_regression(factor_all['rmw'], factor_all[['MKT', 'SMB', 'VMG']])
+print("\n无条件分组 - 三因子模型(CH-3):")
+print(model2.summary().tables[1])
+
+# 无条件分组 - Fama-French三因子
+model3 = nw_regression(factor_all['rmw'], factor_all[['MKT', 'SMB2', 'HML2']])
+print("\n无条件分组 - Fama-French三因子模型:")
+print(model3.summary().tables[1])
+
+# 条件分组 - CAPM
+model4 = nw_regression(factor_all['rmw_sn'], factor_all[['MKT']])
+print("\n条件分组 - CAPM模型:")
+print(model4.summary().tables[1])
+
+# 条件分组 - 三因子(CH-3)
+model5 = nw_regression(factor_all['rmw_sn'], factor_all[['MKT', 'SMB', 'VMG']])
+print("\n条件分组 - 三因子模型(CH-3):")
+print(model5.summary().tables[1])
+
+# 条件分组 - Fama-French三因子
+model6 = nw_regression(factor_all['rmw_sn'], factor_all[['MKT', 'SMB2', 'HML2']])
+print("\n条件分组 - Fama-French三因子模型:")
+print(model6.summary().tables[1])
+```
+
+### 第十一步：绘图分析
+
+为了直观展示因子表现，我们绘制三因子和ROE异象收益的时间序列图。
+
+```python
+# 绘制因子收益时间序列图
+plt.figure(figsize=(12, 8))
+
+plt.subplot(3, 1, 1)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['MKT'], 'b-')
+plt.title('市场风险溢价 (MKT)')
+plt.grid(True)
+
+plt.subplot(3, 1, 2)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['SMB'], 'g-')
+plt.title('规模因子 (SMB)')
+plt.grid(True)
+
+plt.subplot(3, 1, 3)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['VMG'], 'r-')
+plt.title('价值因子 (VMG)')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('三因子收益.png')
+plt.close()
+
+# 绘制ROE异象收益
+plt.figure(figsize=(12, 6))
+
+plt.subplot(2, 1, 1)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['rmw'], 'b-')
+plt.title('无条件分组ROE异象 (High-Low)')
+plt.grid(True)
+
+plt.subplot(2, 1, 2)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['rmw_sn'], 'g-')
+plt.title('市值中性ROE异象 (High-Low)')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('ROE异象收益.png')
+plt.close()
+```
+
+### 计算绩效指标函数（用于评估）
+
+以下是计算投资组合绩效指标的函数，可用于评估因子表现：
 
 ```python
 def calculate_performance(returns_series):
@@ -348,123 +534,19 @@ def calculate_performance(returns_series):
     }
 ```
 
-#### 7. 绘制结果图表
+## 结果分析与讨论
 
-```python
-def plot_results(results_df):
-    """
-    绘制回测结果图表
-    
-    参数:
-    results_df: 回测结果DataFrame
-    """
-    # 计算累积收益
-    cumulative_returns = (1 + results_df).cumprod()
-    
-    # 绘制三因子累积收益曲线
-    plt.figure(figsize=(12, 6))
-    plt.plot(cumulative_returns.index, cumulative_returns['MKT'], label='市场因子')
-    plt.plot(cumulative_returns.index, cumulative_returns['SMB'], label='规模因子(SMB)')
-    plt.plot(cumulative_returns.index, cumulative_returns['VMG'], label='价值因子(VMG)')
-    
-    plt.title('中国特色三因子(CH-3)累积收益曲线')
-    plt.xlabel('日期')
-    plt.ylabel('累积收益')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-    
-    # 绘制规模组合累积收益曲线
-    plt.figure(figsize=(12, 6))
-    plt.plot(cumulative_returns.index, cumulative_returns['Medium'], label='中市值组合')
-    plt.plot(cumulative_returns.index, cumulative_returns['Big'], label='大市值组合')
-    
-    plt.title('中国规模因子(SMB)组合累积收益曲线')
-    plt.xlabel('日期')
-    plt.ylabel('累积收益')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-    
-    # 绘制价值组合累积收益曲线
-    plt.figure(figsize=(12, 6))
-    plt.plot(cumulative_returns.index, cumulative_returns['Value'], label='价值型组合')
-    plt.plot(cumulative_returns.index, cumulative_returns['Growth'], label='成长型组合')
-    
-    plt.title('中国价值因子(VMG)组合累积收益曲线')
-    plt.xlabel('日期')
-    plt.ylabel('累积收益')
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-    
-    # 绘制月度收益率箱线图
-    plt.figure(figsize=(10, 6))
-    results_df[['MKT', 'SMB', 'VMG']].boxplot()
-    plt.title('CH-3三因子月度收益率分布')
-    plt.ylabel('月度收益率')
-    plt.grid(True)
-    plt.show()
-```
+通过上述分析，我们可以评估中国特色三因子模型(CH-3)的有效性。从理论和实证结果看，CH-3模型相比传统FF-3模型在中国市场有以下优势：
 
-#### 8. 实验流程整合
+1. **规模因子改进**：通过剔除最小30%市值股票，避免了壳价值效应对规模因子的影响，使规模因子更能反映真实的风险溢价。
 
-```python
-def main():
-    """
-    主函数：执行完整的实验流程
-    """
-    # 在此处获取数据
-    # stock_returns = ...
-    # market_cap = ...
-    # earnings_to_price = ...
-    # market_return = ...
-    
-    # 设置回测参数
-    start_date = '2010-01-01'
-    end_date = '2020-12-31'
-    rebalance_freq = 'M'  # 月度再平衡
-    
-    # 执行回测
-    results = backtest_ch3_model(
-        stock_returns, market_cap, earnings_to_price, market_return,
-        start_date, end_date, rebalance_freq
-    )
-    
-    # 计算绩效指标
-    mkt_performance = calculate_performance(results['MKT'])
-    smb_performance = calculate_performance(results['SMB'])
-    vmg_performance = calculate_performance(results['VMG'])
-    
-    # 打印绩效指标
-    print("市场因子(MKT)绩效指标:")
-    for key, value in mkt_performance.items():
-        print(f"{key}: {value:.4f}")
-    
-    print("\n规模因子(SMB)绩效指标:")
-    for key, value in smb_performance.items():
-        print(f"{key}: {value:.4f}")
-    
-    print("\n价值因子(VMG)绩效指标:")
-    for key, value in vmg_performance.items():
-        print(f"{key}: {value:.4f}")
-    
-    # 绘制结果图表
-    plot_results(results)
+2. **价值因子改进**：使用市盈率(E/P)替代账面市值比(B/M)构建价值因子，更适合中国市场特点，提高了模型解释力。
 
-# 执行主函数
-if __name__ == "__main__":
-    main()
-```
+3. **对异象的解释能力**：从ROE异象的回归结果可以看出，CH-3模型对中国市场的盈利能力异象有较强的解释能力，特别是在控制规模效应后。
 
-## 拓展实验：CH-3模型与传统FF-3模型对比
+4. **稳健性**：从因子收益的时间序列分析可以看出，CH-3模型的因子在不同市场环境下表现相对稳定。
 
-在掌握了中国特色三因子模型的构建方法后，你可以尝试对比CH-3模型与传统FF-3模型的表现差异。本次实验的拓展内容包括：
-
-1. **构建传统SMB与HML因子**：按照传统方法构建SMB与HML因子
-2. **构建CH-3中的SMC与VMG因子**：按照中国特色方法构建SMC与VMG因子
-3. **异象解释力对比**：测试两种模型对中国市场常见异象的解释能力
-4. **模型稳定性对比**：评估两种模型在不同市场环境下的稳定性
+这一结果印证了Liu, Stambaugh和Yuan (2019)的研究发现，即中国股票市场存在独特的壳价值现象，需要针对这一特点调整因子模型。同时，选择更适合中国市场的价值指标也是提高模型性能的关键。
 
 ## 实验思考题
 
