@@ -198,26 +198,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#本次实验内容" id="toc-本次实验内容" class="nav-link active" data-scroll-target="#本次实验内容"><span class="header-section-number">6.1</span> 本次实验内容</a></li>
-  <li><a href="#背景中国特色三因子模型ch-3" id="toc-背景中国特色三因子模型ch-3" class="nav-link" data-scroll-target="#背景中国特色三因子模型ch-3"><span class="header-section-number">6.2</span> 背景：中国特色三因子模型(CH-3)</a></li>
-  <li><a href="#实践构建和回测中国特色三因子模型" id="toc-实践构建和回测中国特色三因子模型" class="nav-link" data-scroll-target="#实践构建和回测中国特色三因子模型"><span class="header-section-number">6.3</span> 实践：构建和回测中国特色三因子模型</a>
+  <li><a href="#数据说明" id="toc-数据说明" class="nav-link active" data-scroll-target="#数据说明"><span class="header-section-number">6.1</span> 数据说明</a>
   <ul class="collapse">
-  <li><a href="#第一步导入必要的库" id="toc-第一步导入必要的库" class="nav-link" data-scroll-target="#第一步导入必要的库"><span class="header-section-number">6.3.1</span> 第一步：导入必要的库</a></li>
-  <li><a href="#第二步读入数据" id="toc-第二步读入数据" class="nav-link" data-scroll-target="#第二步读入数据"><span class="header-section-number">6.3.2</span> 第二步：读入数据</a></li>
-  <li><a href="#第三步整理数据" id="toc-第三步整理数据" class="nav-link" data-scroll-target="#第三步整理数据"><span class="header-section-number">6.3.3</span> 第三步：整理数据</a></li>
-  <li><a href="#第四步财务数据处理" id="toc-第四步财务数据处理" class="nav-link" data-scroll-target="#第四步财务数据处理"><span class="header-section-number">6.3.4</span> 第四步：财务数据处理</a></li>
-  <li><a href="#第五步合并数据集与构造变量" id="toc-第五步合并数据集与构造变量" class="nav-link" data-scroll-target="#第五步合并数据集与构造变量"><span class="header-section-number">6.3.5</span> 第五步：合并数据集与构造变量</a></li>
-  <li><a href="#第六步对sizevalueroe进行排序分组" id="toc-第六步对sizevalueroe进行排序分组" class="nav-link" data-scroll-target="#第六步对sizevalueroe进行排序分组"><span class="header-section-number">6.3.6</span> 第六步：对size、value、ROE进行排序分组</a></li>
-  <li><a href="#第七步计算加权平均股票回报率与定价因子" id="toc-第七步计算加权平均股票回报率与定价因子" class="nav-link" data-scroll-target="#第七步计算加权平均股票回报率与定价因子"><span class="header-section-number">6.3.7</span> 第七步：计算加权平均股票回报率与定价因子</a></li>
-  <li><a href="#第八步描述性统计和因子相关性分析" id="toc-第八步描述性统计和因子相关性分析" class="nav-link" data-scroll-target="#第八步描述性统计和因子相关性分析"><span class="header-section-number">6.3.8</span> 第八步：描述性统计和因子相关性分析</a></li>
-  <li><a href="#第九步roe异象分析" id="toc-第九步roe异象分析" class="nav-link" data-scroll-target="#第九步roe异象分析"><span class="header-section-number">6.3.9</span> 第九步：ROE异象分析</a></li>
-  <li><a href="#第十步使用newey-west调整的标准误差估计因子模型" id="toc-第十步使用newey-west调整的标准误差估计因子模型" class="nav-link" data-scroll-target="#第十步使用newey-west调整的标准误差估计因子模型"><span class="header-section-number">6.3.10</span> 第十步：使用Newey-West调整的标准误差估计因子模型</a></li>
-  <li><a href="#第十一步绘图分析" id="toc-第十一步绘图分析" class="nav-link" data-scroll-target="#第十一步绘图分析"><span class="header-section-number">6.3.11</span> 第十一步：绘图分析</a></li>
-  <li><a href="#计算绩效指标函数用于评估" id="toc-计算绩效指标函数用于评估" class="nav-link" data-scroll-target="#计算绩效指标函数用于评估"><span class="header-section-number">6.3.12</span> 计算绩效指标函数（用于评估）</a></li>
+  <li><a href="#数据来源" id="toc-数据来源" class="nav-link" data-scroll-target="#数据来源"><span class="header-section-number">6.1.1</span> 数据来源</a></li>
+  <li><a href="#样本与变量选择" id="toc-样本与变量选择" class="nav-link" data-scroll-target="#样本与变量选择"><span class="header-section-number">6.1.2</span> 样本与变量选择</a></li>
+  <li><a href="#实验步骤概要" id="toc-实验步骤概要" class="nav-link" data-scroll-target="#实验步骤概要"><span class="header-section-number">6.1.3</span> 实验步骤概要</a></li>
   </ul></li>
-  <li><a href="#结果分析与讨论" id="toc-结果分析与讨论" class="nav-link" data-scroll-target="#结果分析与讨论"><span class="header-section-number">6.4</span> 结果分析与讨论</a></li>
-  <li><a href="#实验思考题" id="toc-实验思考题" class="nav-link" data-scroll-target="#实验思考题"><span class="header-section-number">6.5</span> 实验思考题</a></li>
-  <li><a href="#参考资料" id="toc-参考资料" class="nav-link" data-scroll-target="#参考资料"><span class="header-section-number">6.6</span> 参考资料</a></li>
+  <li><a href="#本次实验内容" id="toc-本次实验内容" class="nav-link" data-scroll-target="#本次实验内容"><span class="header-section-number">6.2</span> 本次实验内容</a></li>
+  <li><a href="#背景中国特色三因子模型ch-3" id="toc-背景中国特色三因子模型ch-3" class="nav-link" data-scroll-target="#背景中国特色三因子模型ch-3"><span class="header-section-number">6.3</span> 背景：中国特色三因子模型(CH-3)</a></li>
+  <li><a href="#实践构建和回测中国特色三因子模型" id="toc-实践构建和回测中国特色三因子模型" class="nav-link" data-scroll-target="#实践构建和回测中国特色三因子模型"><span class="header-section-number">6.4</span> 实践：构建和回测中国特色三因子模型</a>
+  <ul class="collapse">
+  <li><a href="#第一步导入必要的库" id="toc-第一步导入必要的库" class="nav-link" data-scroll-target="#第一步导入必要的库"><span class="header-section-number">6.4.1</span> 第一步：导入必要的库</a></li>
+  <li><a href="#第二步读入数据" id="toc-第二步读入数据" class="nav-link" data-scroll-target="#第二步读入数据"><span class="header-section-number">6.4.2</span> 第二步：读入数据</a></li>
+  <li><a href="#第三步整理数据" id="toc-第三步整理数据" class="nav-link" data-scroll-target="#第三步整理数据"><span class="header-section-number">6.4.3</span> 第三步：整理数据</a></li>
+  <li><a href="#第四步财务数据处理" id="toc-第四步财务数据处理" class="nav-link" data-scroll-target="#第四步财务数据处理"><span class="header-section-number">6.4.4</span> 第四步：财务数据处理</a></li>
+  <li><a href="#第五步合并数据集与构造变量" id="toc-第五步合并数据集与构造变量" class="nav-link" data-scroll-target="#第五步合并数据集与构造变量"><span class="header-section-number">6.4.5</span> 第五步：合并数据集与构造变量</a></li>
+  <li><a href="#第六步对sizevalueroe进行排序分组" id="toc-第六步对sizevalueroe进行排序分组" class="nav-link" data-scroll-target="#第六步对sizevalueroe进行排序分组"><span class="header-section-number">6.4.6</span> 第六步：对size、value、ROE进行排序分组</a></li>
+  <li><a href="#第七步计算加权平均股票回报率与定价因子" id="toc-第七步计算加权平均股票回报率与定价因子" class="nav-link" data-scroll-target="#第七步计算加权平均股票回报率与定价因子"><span class="header-section-number">6.4.7</span> 第七步：计算加权平均股票回报率与定价因子</a></li>
+  <li><a href="#第八步描述性统计和因子相关性分析" id="toc-第八步描述性统计和因子相关性分析" class="nav-link" data-scroll-target="#第八步描述性统计和因子相关性分析"><span class="header-section-number">6.4.8</span> 第八步：描述性统计和因子相关性分析</a></li>
+  <li><a href="#第九步roe异象分析" id="toc-第九步roe异象分析" class="nav-link" data-scroll-target="#第九步roe异象分析"><span class="header-section-number">6.4.9</span> 第九步：ROE异象分析</a></li>
+  <li><a href="#第十步使用newey-west调整的标准误差估计因子模型" id="toc-第十步使用newey-west调整的标准误差估计因子模型" class="nav-link" data-scroll-target="#第十步使用newey-west调整的标准误差估计因子模型"><span class="header-section-number">6.4.10</span> 第十步：使用Newey-West调整的标准误差估计因子模型</a></li>
+  <li><a href="#第十一步绘图分析" id="toc-第十一步绘图分析" class="nav-link" data-scroll-target="#第十一步绘图分析"><span class="header-section-number">6.4.11</span> 第十一步：绘图分析</a></li>
+  <li><a href="#计算绩效指标函数用于评估" id="toc-计算绩效指标函数用于评估" class="nav-link" data-scroll-target="#计算绩效指标函数用于评估"><span class="header-section-number">6.4.12</span> 计算绩效指标函数（用于评估）</a></li>
+  </ul></li>
+  <li><a href="#结果分析与讨论" id="toc-结果分析与讨论" class="nav-link" data-scroll-target="#结果分析与讨论"><span class="header-section-number">6.5</span> 结果分析与讨论</a></li>
+  <li><a href="#实验思考题" id="toc-实验思考题" class="nav-link" data-scroll-target="#实验思考题"><span class="header-section-number">6.6</span> 实验思考题</a></li>
+  <li><a href="#参考资料" id="toc-参考资料" class="nav-link" data-scroll-target="#参考资料"><span class="header-section-number">6.7</span> 参考资料</a></li>
   </ul>
 </nav>
     </div>
@@ -243,8 +249,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="本次实验内容" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="本次实验内容"><span class="header-section-number">6.1</span> 本次实验内容</h2>
+<section id="数据说明" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="数据说明"><span class="header-section-number">6.1</span> 数据说明</h2>
+<section id="数据来源" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="数据来源"><span class="header-section-number">6.1.1</span> 数据来源</h3>
+<p>本实验所使用的数据来自CSMAR(国泰安) http://cn.gtadata.com/，主要包括：</p>
+<ul>
+<li><strong>基本信息</strong>: 公司研究系列 -&gt; 上市公司基本信息 -&gt; 上市公司基本信息年度表</li>
+<li><strong>借壳上市</strong>: 专题研究系列 -&gt; 事件研究 -&gt; 公司事件 -&gt; IPO事件表</li>
+<li><strong>股票市场信息</strong>: 股票市场系列 -&gt; 股票市场交易 -&gt; 个股交易数据 -&gt; 月个股回报率文件</li>
+<li><strong>无风险利率</strong>: 股票市场系列 -&gt; 股票市场交易 -&gt; 汇率及利率 -&gt; 无风险利率文件</li>
+<li><strong>多因子</strong>: 因子研究系列 -&gt; Fama-French因子 -&gt; 五因子模型指标(月)</li>
+<li><strong>财务数据</strong>: 公司研究系列 -&gt; 财务指标分析 -&gt; 披露财务指标</li>
+</ul>
+</section>
+<section id="样本与变量选择" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="样本与变量选择"><span class="header-section-number">6.1.2</span> 样本与变量选择</h3>
+<ul>
+<li><strong>时间范围</strong>: 2007年5月至2019年2月</li>
+<li><strong>样本选择</strong>: 上海与深圳A股非金融、非公用事业上市企业</li>
+<li><strong>主要变量</strong>:
+<ul>
+<li><strong>基本信息</strong>: 股票代码、行业代码、上市日期</li>
+<li><strong>IPO信息</strong>: 借壳日期</li>
+<li><strong>股票市场信息</strong>: 考虑现金红利再投资的月个股回报率、月个股总市值</li>
+<li><strong>无风险利率</strong>: 月度化无风险利率</li>
+<li><strong>五因子</strong>: 市场风险溢价因子、市值因子、账面市值比因子(均为总市值加权)</li>
+<li><strong>财务信息</strong>: 归属于上市公司股东的扣除非经常性损益的净利润、加权平均净资产收益率</li>
+</ul></li>
+</ul>
+</section>
+<section id="实验步骤概要" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="实验步骤概要"><span class="header-section-number">6.1.3</span> 实验步骤概要</h3>
+<ol type="1">
+<li>导入整理数据，保证各数据库间的变量及单位等保持一致</li>
+<li>选取A股非金融、非公用事业上市公司</li>
+<li>合并上市公司股票信息与财务信息，并保留市值处于最大的70%的上市企业</li>
+<li>每月根据市值与价值对企业进行排序分组，计算每个投资组合的市值加权平均收益率</li>
+<li>构造中国三因子，并计算中国三因子在中国市场的解释力度</li>
+<li>构造ROE异象，比较CAPM、中国三因子与Fama-French三因子模型的解释能力</li>
+<li>分析结果并得出结论</li>
+</ol>
+</section>
+</section>
+<section id="本次实验内容" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="本次实验内容"><span class="header-section-number">6.2</span> 本次实验内容</h2>
 <ol type="1">
 <li><strong>数据准备和预处理</strong>: 学习如何获取和处理中国股票数据</li>
 <li><strong>构建中国特色规模因子</strong>: 掌握中国特色规模因子(SMB)的构建方法</li>
@@ -253,8 +302,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>因子有效性分析</strong>: 了解如何评估因子的有效性和统计显著性</li>
 </ol>
 </section>
-<section id="背景中国特色三因子模型ch-3" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="背景中国特色三因子模型ch-3"><span class="header-section-number">6.2</span> 背景：中国特色三因子模型(CH-3)</h2>
+<section id="背景中国特色三因子模型ch-3" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="背景中国特色三因子模型ch-3"><span class="header-section-number">6.3</span> 背景：中国特色三因子模型(CH-3)</h2>
 <p>根据Liu, Stambaugh和Yuan (2019)的”Size and Value in China”研究，中国市场具有独特的特点，传统Fama-French三因子模型需要进行调整：</p>
 <ol type="1">
 <li><p><strong>壳价值效应</strong>：中国市场最小30%的股票存在明显的壳价值现象，其价格受到被用作反向收购壳公司潜在价值的影响，而非传统风险因素</p></li>
@@ -264,10 +313,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>本实验将带领大家一步步构建中国特色三因子模型，并通过对ROE异象的解释力分析来验证该模型的有效性。我们将使用真实的中国股票市场数据，从数据预处理开始，经过因子构建、回测到最终的统计分析。</p>
 </section>
-<section id="实践构建和回测中国特色三因子模型" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="实践构建和回测中国特色三因子模型"><span class="header-section-number">6.3</span> 实践：构建和回测中国特色三因子模型</h2>
-<section id="第一步导入必要的库" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="第一步导入必要的库"><span class="header-section-number">6.3.1</span> 第一步：导入必要的库</h3>
+<section id="实践构建和回测中国特色三因子模型" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="实践构建和回测中国特色三因子模型"><span class="header-section-number">6.4</span> 实践：构建和回测中国特色三因子模型</h2>
+<section id="第一步导入必要的库" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="第一步导入必要的库"><span class="header-section-number">6.4.1</span> 第一步：导入必要的库</h3>
 <p>首先，我们需要导入本实验所需的Python库。这些库包括数据处理的pandas和numpy，可视化的matplotlib和seaborn，以及统计分析的statsmodels和scipy等。</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 导入必要的库</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -296,8 +345,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 解决负号显示问题</span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.unicode_minus'</span>] <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第二步读入数据" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="第二步读入数据"><span class="header-section-number">6.3.2</span> 第二步：读入数据</h3>
+<section id="第二步读入数据" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="第二步读入数据"><span class="header-section-number">6.4.2</span> 第二步：读入数据</h3>
 <p>接下来，我们需要读取中国股票市场的相关数据。这些数据包括：公司基本信息、财务指标、交易数据、无风险利率和市场因子数据。在实际应用中，这些数据通常来自于CSMAR、Wind等专业金融数据库。</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 基本信息</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cominfo <span class="op">=</span> pd.read_excel(<span class="st">"data/STK_LISTEDCOINFOANL.xlsx"</span>)</span>
@@ -316,9 +365,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 五因子</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/STK_MKT_FIVEFACMONTH.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第三步整理数据" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="第三步整理数据"><span class="header-section-number">6.3.3</span> 第三步：整理数据</h3>
+<section id="第三步整理数据" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="第三步整理数据"><span class="header-section-number">6.4.3</span> 第三步：整理数据</h3>
 <p>数据读入后，我们需要对数据进行整理和初步分析。这包括：行业分类、过滤非A股和金融公用事业公司、处理借壳上市情况等。特别地，我们为每个公司创建唯一标识符，以便更好地追踪其随时间变化的特性。</p>
+<p>对于借壳上市的公司，我们通过添加后缀来创建新的标识符： - “0”表示非借壳上市公司 - “1”表示借壳上市前的公司 - “2”表示借壳上市后的公司</p>
+<p>这种处理方式确保了我们能够正确捕捉借壳上市前后公司特性的变化。</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 行业信息</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>indinfo <span class="op">=</span> (cominfo.groupby([<span class="st">'IndustryName'</span>, <span class="st">'IndustryCode'</span>])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           .size()</span>
@@ -363,9 +414,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>comA_all[<span class="st">'Symbol1'</span>] <span class="op">=</span> comA_all.<span class="bu">apply</span>(create_symbol1, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>comA_all <span class="op">=</span> comA_all[[<span class="st">'Symbol'</span>, <span class="st">'Symbol1'</span>, <span class="st">'year'</span>, <span class="st">'RMyear'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第四步财务数据处理" class="level3" data-number="6.3.4">
-<h3 data-number="6.3.4" class="anchored" data-anchor-id="第四步财务数据处理"><span class="header-section-number">6.3.4</span> 第四步：财务数据处理</h3>
-<p>这一步我们处理财务数据，包括与公司信息的合并、处理借壳上市数据、填充缺失值等。同时对交易数据、无风险利率和市场因子进行相应处理，为后续构建因子做准备。</p>
+<section id="第四步财务数据处理" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="第四步财务数据处理"><span class="header-section-number">6.4.4</span> 第四步：财务数据处理</h3>
+<p>这一步我们处理财务数据，包括与公司信息的合并、处理借壳上市数据、填充缺失值等。由于财务数据的披露通常有滞后性，我们需要确保使用最新可获得的财务数据。我们还需要处理一些特殊情况，例如：</p>
+<ul>
+<li>过滤借壳上市当年的财务数据，避免借壳上市带来的财务信息不连续性</li>
+<li>对财务数据进行向下填充，确保在新数据公布前使用最近期的有效数据</li>
+<li>将交易数据转换为适当的格式，并调整收益率计算方式</li>
+</ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 财务数据处理</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>comfin1 <span class="op">=</span> comfin.copy()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>comfin1[<span class="st">'Accper'</span>] <span class="op">=</span> pd.to_datetime(comfin1[<span class="st">'Accper'</span>])</span>
@@ -407,8 +463,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>factor_cols <span class="op">=</span> [<span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>, <span class="st">'RMW2'</span>, <span class="st">'CMA2'</span>]</span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>facmnth[factor_cols] <span class="op">=</span> facmnth[factor_cols] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第五步合并数据集与构造变量" class="level3" data-number="6.3.5">
-<h3 data-number="6.3.5" class="anchored" data-anchor-id="第五步合并数据集与构造变量"><span class="header-section-number">6.3.5</span> 第五步：合并数据集与构造变量</h3>
+<section id="第五步合并数据集与构造变量" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="第五步合并数据集与构造变量"><span class="header-section-number">6.4.5</span> 第五步：合并数据集与构造变量</h3>
 <p>在这一步，我们将合并处理后的各数据集，并计算关键变量，如市值和市盈率(E/P)。特别地，为了实现中国特色三因子模型的核心思想，我们筛选出市值最大的70%的企业，以剔除可能受到壳价值影响的小市值股票。</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 定义财务年度和月份映射函数</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_financial_year(year, month_series):</span>
@@ -452,8 +508,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata[(trddata[<span class="st">'ym_dt'</span>] <span class="op">&gt;=</span> pd.Timestamp(<span class="st">'2007-05-01'</span>)) <span class="op">&amp;</span> </span>
 <span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                  (trddata[<span class="st">'ym_dt'</span>] <span class="op">&lt;=</span> pd.Timestamp(<span class="st">'2019-02-28'</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第六步对sizevalueroe进行排序分组" class="level3" data-number="6.3.6">
-<h3 data-number="6.3.6" class="anchored" data-anchor-id="第六步对sizevalueroe进行排序分组"><span class="header-section-number">6.3.6</span> 第六步：对size、value、ROE进行排序分组</h3>
+<section id="第六步对sizevalueroe进行排序分组" class="level3" data-number="6.4.6">
+<h3 data-number="6.4.6" class="anchored" data-anchor-id="第六步对sizevalueroe进行排序分组"><span class="header-section-number">6.4.6</span> 第六步：对size、value、ROE进行排序分组</h3>
 <p>按照Fama-French的经典方法，我们需要对股票进行分组以构建因子。在这一步，我们将按照市值进行2组划分，按照E/P进行3组划分，并额外对ROE进行10组划分用于后续异象分析。</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 按市值、EP、ROE进行分组</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>trddata_grp <span class="op">=</span> trddata.copy()</span>
@@ -492,9 +548,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>trddata_grp <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size1'</span>]).<span class="bu">apply</span>(cond_sort_roe).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第七步计算加权平均股票回报率与定价因子" class="level3" data-number="6.3.7">
-<h3 data-number="6.3.7" class="anchored" data-anchor-id="第七步计算加权平均股票回报率与定价因子"><span class="header-section-number">6.3.7</span> 第七步：计算加权平均股票回报率与定价因子</h3>
+<section id="第七步计算加权平均股票回报率与定价因子" class="level3" data-number="6.4.7">
+<h3 data-number="6.4.7" class="anchored" data-anchor-id="第七步计算加权平均股票回报率与定价因子"><span class="header-section-number">6.4.7</span> 第七步：计算加权平均股票回报率与定价因子</h3>
 <p>这一步是构建因子的核心环节。我们首先计算市场超额收益率(MKT)，然后构建2×3分组的投资组合，计算基于规模的SMB因子和基于价值的VMG因子。</p>
+<p>CH-3模型采用的分组方式与经典Fama-French模型相似，但有一些关键调整： 1. 我们使用已剔除最小30%市值股票的样本进行分组 2. 按市值分为两组（小市值和大市值） 3. 按E/P比率分为三组（30%-40%-30%） 4. 形成6个投资组合：小市值低E/P(11)、小市值中E/P(12)、小市值高E/P(13)、大市值低E/P(21)、大市值中E/P(22)、大市值高E/P(23)</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算市场超额收益率（市值加权）</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>factor1 <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>).<span class="bu">apply</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: pd.Series({</span>
@@ -531,9 +588,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 加入传统Fama-French因子以便后续比较</span></span>
 <span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor.merge(facmnth[[<span class="st">'ym'</span>, <span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>]], on<span class="op">=</span><span class="st">'ym'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第八步描述性统计和因子相关性分析" class="level3" data-number="6.3.8">
-<h3 data-number="6.3.8" class="anchored" data-anchor-id="第八步描述性统计和因子相关性分析"><span class="header-section-number">6.3.8</span> 第八步：描述性统计和因子相关性分析</h3>
-<p>在构建完成三因子后，我们需要对因子进行统计分析，了解其基本特征和相互关系。</p>
+<section id="第八步描述性统计和因子相关性分析" class="level3" data-number="6.4.8">
+<h3 data-number="6.4.8" class="anchored" data-anchor-id="第八步描述性统计和因子相关性分析"><span class="header-section-number">6.4.8</span> 第八步：描述性统计和因子相关性分析</h3>
+<p>在构建完成三因子后，我们需要对因子进行统计分析，了解其基本特征和相互关系。这些分析可以帮助我们了解： - 各因子的平均收益率和波动性 - 因子的分布特性（最小值、最大值、中位数等） - 因子之间的相关性，这对了解多因子模型中的因子独立性很重要</p>
+<p>通常，我们希望看到因子之间的相关性不太高，这样每个因子都能捕捉股票收益率中的不同风险来源。</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 描述性统计</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>factor_stats <span class="op">=</span> factor[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]].describe().T</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>factor_stats[<span class="st">'P0'</span>] <span class="op">=</span> factor_stats[<span class="st">'min'</span>]</span>
@@ -549,9 +607,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">因子相关系数:"</span>)</span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(factor_corr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第九步roe异象分析" class="level3" data-number="6.3.9">
-<h3 data-number="6.3.9" class="anchored" data-anchor-id="第九步roe异象分析"><span class="header-section-number">6.3.9</span> 第九步：ROE异象分析</h3>
-<p>为了验证CH-3模型的有效性，我们分析其对ROE异象的解释能力。我们首先构建基于ROE的投资组合，包括无条件分组和市值中性分组两种方式。</p>
+<section id="第九步roe异象分析" class="level3" data-number="6.4.9">
+<h3 data-number="6.4.9" class="anchored" data-anchor-id="第九步roe异象分析"><span class="header-section-number">6.4.9</span> 第九步：ROE异象分析</h3>
+<p>为了验证CH-3模型的有效性，我们分析其对ROE异象的解释能力。ROE（净资产收益率）是衡量公司盈利能力的重要指标，高ROE的股票通常表现出超额收益。</p>
+<p>我们使用两种方法构建ROE异象组合： 1. <strong>无条件分组</strong>：直接按ROE对所有股票进行十分位分组，计算高ROE组合与低ROE组合的收益率差 2. <strong>市值中性分组</strong>：在每个市值十分位内分别按ROE进行分组，控制规模效应的影响</p>
+<p>两种方法的对比可以帮助我们了解ROE异象是否受到规模效应的影响。</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 基于ROE的投资组合形成（无条件分组）</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_roe_portfolio(trddata_grp):</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 无条件分组</span></span>
@@ -599,8 +659,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并所有因子数据</span></span>
 <span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>factor_all <span class="op">=</span> factor.merge(factor3, on<span class="op">=</span><span class="st">'ym'</span>).merge(factor4, on<span class="op">=</span><span class="st">'ym'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第十步使用newey-west调整的标准误差估计因子模型" class="level3" data-number="6.3.10">
-<h3 data-number="6.3.10" class="anchored" data-anchor-id="第十步使用newey-west调整的标准误差估计因子模型"><span class="header-section-number">6.3.10</span> 第十步：使用Newey-West调整的标准误差估计因子模型</h3>
+<section id="第十步使用newey-west调整的标准误差估计因子模型" class="level3" data-number="6.4.10">
+<h3 data-number="6.4.10" class="anchored" data-anchor-id="第十步使用newey-west调整的标准误差估计因子模型"><span class="header-section-number">6.4.10</span> 第十步：使用Newey-West调整的标准误差估计因子模型</h3>
 <p>接下来，我们使用Newey-West调整的标准误差进行回归分析，比较CH-3模型与传统CAPM、FF-3模型在解释ROE异象方面的能力。</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用Newey-West调整的标准误差估计因子模型</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nw_regression(y, X, lags<span class="op">=</span><span class="dv">4</span>):</span>
@@ -650,8 +710,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">条件分组 - Fama-French三因子模型:"</span>)</span>
 <span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model6.summary().tables[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="第十一步绘图分析" class="level3" data-number="6.3.11">
-<h3 data-number="6.3.11" class="anchored" data-anchor-id="第十一步绘图分析"><span class="header-section-number">6.3.11</span> 第十一步：绘图分析</h3>
+<section id="第十一步绘图分析" class="level3" data-number="6.4.11">
+<h3 data-number="6.4.11" class="anchored" data-anchor-id="第十一步绘图分析"><span class="header-section-number">6.4.11</span> 第十一步：绘图分析</h3>
 <p>为了直观展示因子表现，我们绘制三因子和ROE异象收益的时间序列图。</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 绘制因子收益时间序列图</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
@@ -692,8 +752,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'ROE异象收益.png'</span>)</span>
 <span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="计算绩效指标函数用于评估" class="level3" data-number="6.3.12">
-<h3 data-number="6.3.12" class="anchored" data-anchor-id="计算绩效指标函数用于评估"><span class="header-section-number">6.3.12</span> 计算绩效指标函数（用于评估）</h3>
+<section id="计算绩效指标函数用于评估" class="level3" data-number="6.4.12">
+<h3 data-number="6.4.12" class="anchored" data-anchor-id="计算绩效指标函数用于评估"><span class="header-section-number">6.4.12</span> 计算绩效指标函数（用于评估）</h3>
 <p>以下是计算投资组合绩效指标的函数，可用于评估因子表现：</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_performance(returns_series):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -739,8 +799,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="结果分析与讨论" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="结果分析与讨论"><span class="header-section-number">6.4</span> 结果分析与讨论</h2>
+<section id="结果分析与讨论" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="结果分析与讨论"><span class="header-section-number">6.5</span> 结果分析与讨论</h2>
 <p>通过上述分析，我们可以评估中国特色三因子模型(CH-3)的有效性。从理论和实证结果看，CH-3模型相比传统FF-3模型在中国市场有以下优势：</p>
 <ol type="1">
 <li><p><strong>规模因子改进</strong>：通过剔除最小30%市值股票，避免了壳价值效应对规模因子的影响，使规模因子更能反映真实的风险溢价。</p></li>
@@ -750,8 +810,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>这一结果印证了Liu, Stambaugh和Yuan (2019)的研究发现，即中国股票市场存在独特的壳价值现象，需要针对这一特点调整因子模型。同时，选择更适合中国市场的价值指标也是提高模型性能的关键。</p>
 </section>
-<section id="实验思考题" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="实验思考题"><span class="header-section-number">6.5</span> 实验思考题</h2>
+<section id="实验思考题" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="实验思考题"><span class="header-section-number">6.6</span> 实验思考题</h2>
 <ol type="1">
 <li><p>为什么在中国市场需要剔除市值最小的30%股票？这种剔除对规模因子表现有何影响？</p></li>
 <li><p>为什么在中国市场中E/P比B/M更有效？这与中国股票市场的哪些特点有关？</p></li>
@@ -760,8 +820,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>如果政策环境变化导致反向收购监管趋严，你预计这会对CH-3模型的有效性产生什么影响？</p></li>
 </ol>
 </section>
-<section id="参考资料" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="参考资料"><span class="header-section-number">6.6</span> 参考资料</h2>
+<section id="参考资料" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="参考资料"><span class="header-section-number">6.7</span> 参考资料</h2>
 <ol type="1">
 <li><p>Liu, J., Stambaugh, R. F., &amp; Yuan, Y. (2019). Size and Value in China. <em>Journal of Financial Economics</em>, 134(1), 48-69.</p></li>
 <li><p>Fama, E. F., &amp; French, K. R. (1993). Common risk factors in the returns on stocks and bonds. <em>Journal of Financial Economics</em>, 33(1), 3-56.</p></li>
