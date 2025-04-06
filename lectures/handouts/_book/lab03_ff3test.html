@@ -253,10 +253,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="6.1" class="anchored" data-anchor-id="数据说明"><span class="header-section-number">6.1</span> 数据说明</h2>
 <section id="数据来源" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="数据来源"><span class="header-section-number">6.1.1</span> 数据来源</h3>
-<p>本实验所使用的数据来自CSMAR(国泰安) http://cn.gtadata.com/，主要包括：</p>
+<p>本实验所使用的数据来自CSMAR(国泰安) http://data.csmar.com/，主要包括：</p>
 <ul>
 <li><strong>基本信息</strong>: 公司研究系列 -&gt; 上市公司基本信息 -&gt; 上市公司基本信息年度表</li>
-<li><strong>借壳上市</strong>: 专题研究系列 -&gt; 事件研究 -&gt; 公司事件 -&gt; IPO事件表</li>
 <li><strong>股票市场信息</strong>: 股票市场系列 -&gt; 股票市场交易 -&gt; 个股交易数据 -&gt; 月个股回报率文件</li>
 <li><strong>无风险利率</strong>: 股票市场系列 -&gt; 股票市场交易 -&gt; 汇率及利率 -&gt; 无风险利率文件</li>
 <li><strong>多因子</strong>: 因子研究系列 -&gt; Fama-French因子 -&gt; 五因子模型指标(月)</li>
@@ -349,27 +348,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="6.4.2" class="anchored" data-anchor-id="第二步读入数据"><span class="header-section-number">6.4.2</span> 第二步：读入数据</h3>
 <p>接下来，我们需要读取中国股票市场的相关数据。这些数据包括：公司基本信息、财务指标、交易数据、无风险利率和市场因子数据。在实际应用中，这些数据通常来自于CSMAR、Wind等专业金融数据库。</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 基本信息</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cominfo <span class="op">=</span> pd.read_excel(<span class="st">"data/STK_LISTEDCOINFOANL.xlsx"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 财务指标</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> pd.read_excel(<span class="st">"data/FI_T2.xlsx"</span>, header<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                      names<span class="op">=</span>[<span class="st">"Stkcd"</span>, <span class="st">"Accper"</span>, <span class="st">"Indcd"</span>, <span class="st">"nr"</span>, <span class="st">"npexnr"</span>, <span class="st">"ROE"</span>, <span class="st">"ROE_exnr"</span>],</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                      skiprows<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 个股交易数据</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>trdmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/TRD_Mnth.xlsx"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 无风险利率</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>nrrate <span class="op">=</span> pd.read_excel(<span class="st">"data/TRD_Nrrate.xlsx"</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 五因子</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/STK_MKT_FIVEFACMONTH.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cominfo <span class="op">=</span> pd.read_excel(<span class="st">"data/basic_info/STK_LISTEDCOINFOANL.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                       names<span class="op">=</span>[<span class="st">"Symbol"</span>, <span class="st">"ShortName"</span>, <span class="st">"EndDate"</span>, <span class="st">"ListedCoID"</span>, <span class="st">"SecurityID"</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"IndustryName"</span>, <span class="st">"IndustryCode"</span>, <span class="st">"IndustryNameC"</span>, <span class="st">"IndustryCodeC"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"IndustryNameD"</span>, <span class="st">"IndustryCodeD"</span>, <span class="st">"RegisterAddress"</span>, <span class="st">"OfficeAddress"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Zipcode"</span>, <span class="st">"Secretary"</span>, <span class="st">"SecretaryTel"</span>, <span class="st">"SecretaryFax"</span>, <span class="st">"SecretaryEmail"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"SecurityConsultant"</span>, <span class="st">"SocialCreditCode"</span>, <span class="st">"Sigchange"</span>, <span class="st">"Lng"</span>, <span class="st">"Lat"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"ISIN"</span>, <span class="st">"FullName"</span>, <span class="st">"LegalRepresentative"</span>, <span class="st">"EstablishDate"</span>, <span class="st">"Crcd"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"RegisterCapital"</span>, <span class="st">"Website"</span>, <span class="st">"BusinessScope"</span>, <span class="st">"RegisterLongitude"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"RegisterLatitude"</span>, <span class="st">"EMAIL"</span>, <span class="st">"LISTINGDATE"</span>, <span class="st">"PROVINCECODE"</span>, <span class="st">"PROVINCE"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"CITYCODE"</span>, <span class="st">"CITY"</span>, <span class="st">"MAINBUSSINESS"</span>, <span class="st">"LISTINGSTATE"</span>])</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 财务指标(ROE)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> pd.read_excel(<span class="st">"data/ROE/FI_T2.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                      names<span class="op">=</span>[<span class="st">"Stkcd"</span>, <span class="st">"ShortName"</span>, <span class="st">"Accper"</span>, <span class="st">"nr"</span>, <span class="st">"npexnr"</span>, <span class="st">"ROE"</span>, <span class="st">"ROE_exnr"</span>],</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                      dtype<span class="op">=</span>{<span class="st">'Stkcd'</span>: <span class="bu">str</span>, <span class="st">'nr'</span>: <span class="bu">float</span>, <span class="st">'npexnr'</span>: <span class="bu">float</span>, <span class="st">'ROE'</span>: <span class="bu">float</span>, <span class="st">'ROE_exnr'</span>: <span class="bu">float</span>})</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 个股交易数据</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>trdmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/stk_monthly/TRD_Mnth.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                       names<span class="op">=</span>[<span class="st">"Stkcd"</span>, <span class="st">"Trdmnt"</span>, <span class="st">"Opndt"</span>, <span class="st">"Mopnprc"</span>, <span class="st">"Clsdt"</span>, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Mclsprc"</span>, <span class="st">"Mnshrtrd"</span>, <span class="st">"Mnvaltrd"</span>, <span class="st">"Msmvosd"</span>, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Msmvttl"</span>, <span class="st">"Ndaytrd"</span>, <span class="st">"Mretwd"</span>, <span class="st">"Mretnd"</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Markettype"</span>, <span class="st">"Capchgdt"</span>, <span class="st">"Ahshrtrd_M"</span>, <span class="st">"Ahvaltrd_M"</span>])</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 无风险利率</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>nrrate <span class="op">=</span> pd.read_excel(<span class="st">"data/rf_monthly/TRD_Nrrate.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                      names<span class="op">=</span>[<span class="st">"Nrr1"</span>, <span class="st">"Clsdt"</span>, <span class="st">"Nrrmtdt"</span>])</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 五因子</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/five_factors/STK_MKT_FIVEFACMONTH.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                       names<span class="op">=</span>[<span class="st">"MarkettypeID"</span>, <span class="st">"TradingMonth"</span>, <span class="st">"Portfolios"</span>, </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"RiskPremium1"</span>, <span class="st">"RiskPremium2"</span>, <span class="st">"SMB1"</span>, <span class="st">"SMB2"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"HML1"</span>, <span class="st">"HML2"</span>, <span class="st">"RMW1"</span>, <span class="st">"RMW2"</span>, <span class="st">"CMA1"</span>, <span class="st">"CMA2"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第三步整理数据" class="level3" data-number="6.4.3">
 <h3 data-number="6.4.3" class="anchored" data-anchor-id="第三步整理数据"><span class="header-section-number">6.4.3</span> 第三步：整理数据</h3>
-<p>数据读入后，我们需要对数据进行整理和初步分析。这包括：行业分类、过滤非A股和金融公用事业公司、处理借壳上市情况等。特别地，我们为每个公司创建唯一标识符，以便更好地追踪其随时间变化的特性。</p>
-<p>对于借壳上市的公司，我们通过添加后缀来创建新的标识符： - “0”表示非借壳上市公司 - “1”表示借壳上市前的公司 - “2”表示借壳上市后的公司</p>
-<p>这种处理方式确保了我们能够正确捕捉借壳上市前后公司特性的变化。</p>
+<p>数据读入后，我们需要对数据进行整理和初步分析。这包括：行业分类、过滤非A股和金融公用事业公司等。</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 行业信息</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>indinfo <span class="op">=</span> (cominfo.groupby([<span class="st">'IndustryName'</span>, <span class="st">'IndustryCode'</span>])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           .size()</span>
@@ -388,125 +402,99 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (comA[<span class="st">'EndDate'</span>] <span class="op">&gt;=</span> comA[<span class="st">'LISTINGDATE'</span>]) <span class="op">&amp;</span> </span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'IndustryCode'</span>].<span class="bu">str</span>.startswith(<span class="st">'J'</span>)) <span class="op">&amp;</span> </span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'IndustryCode'</span>].<span class="bu">str</span>.startswith(<span class="st">'D'</span>)) <span class="op">&amp;</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'Symbol'</span>].<span class="bu">str</span>.startswith(<span class="st">'900'</span>)) <span class="op">&amp;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'Symbol'</span>].<span class="bu">str</span>.startswith(<span class="st">'200'</span>))</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 借壳上市</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>IPO <span class="op">=</span> pd.read_excel(<span class="st">"Anomaly_data/ER_IPO.xlsx"</span>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>IPO <span class="op">=</span> IPO[IPO[<span class="st">'ListSign'</span>] <span class="op">==</span> <span class="st">'A'</span>]</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>IPO[<span class="st">'LatestBackdoorDate'</span>] <span class="op">=</span> pd.to_datetime(IPO[<span class="st">'LatestBackdoorDate'</span>])</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>IPO[<span class="st">'RMyear'</span>] <span class="op">=</span> IPO[<span class="st">'LatestBackdoorDate'</span>].dt.year</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>IPO <span class="op">=</span> IPO[[<span class="st">'Symbol'</span>, <span class="st">'RMyear'</span>]]</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 重新定义证券ID</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>comA_all <span class="op">=</span> pd.merge(comA, IPO, on<span class="op">=</span><span class="st">'Symbol'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co"># 为每家公司创建唯一标识符</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_symbol1(row):</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(row[<span class="st">'RMyear'</span>]):</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> row[<span class="st">'Symbol'</span>] <span class="op">+</span> <span class="st">'0'</span>  <span class="co"># 非借壳上市</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> row[<span class="st">'year'</span>] <span class="op">&gt;=</span> row[<span class="st">'RMyear'</span>]:</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> row[<span class="st">'Symbol'</span>] <span class="op">+</span> <span class="st">'2'</span>  <span class="co"># 借壳上市后</span></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> row[<span class="st">'Symbol'</span>] <span class="op">+</span> <span class="st">'1'</span>  <span class="co"># 借壳上市前</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>comA_all[<span class="st">'Symbol1'</span>] <span class="op">=</span> comA_all.<span class="bu">apply</span>(create_symbol1, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>comA_all <span class="op">=</span> comA_all[[<span class="st">'Symbol'</span>, <span class="st">'Symbol1'</span>, <span class="st">'year'</span>, <span class="st">'RMyear'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'Symbol'</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>[:<span class="dv">3</span>].isin([<span class="st">'900'</span>, <span class="st">'200'</span>]))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第四步财务数据处理" class="level3" data-number="6.4.4">
 <h3 data-number="6.4.4" class="anchored" data-anchor-id="第四步财务数据处理"><span class="header-section-number">6.4.4</span> 第四步：财务数据处理</h3>
-<p>这一步我们处理财务数据，包括与公司信息的合并、处理借壳上市数据、填充缺失值等。由于财务数据的披露通常有滞后性，我们需要确保使用最新可获得的财务数据。我们还需要处理一些特殊情况，例如：</p>
+<p>这一步我们处理财务数据，包括与公司信息的合并、填充缺失值等。由于财务数据的披露通常有滞后性，我们需要确保使用最新可获得的财务数据。我们还需要处理一些特殊情况，例如：</p>
 <ul>
-<li>过滤借壳上市当年的财务数据，避免借壳上市带来的财务信息不连续性</li>
 <li>对财务数据进行向下填充，确保在新数据公布前使用最近期的有效数据</li>
 <li>将交易数据转换为适当的格式，并调整收益率计算方式</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 财务数据处理</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>comfin1 <span class="op">=</span> comfin.copy()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>comfin1[<span class="st">'Accper'</span>] <span class="op">=</span> pd.to_datetime(comfin1[<span class="st">'Accper'</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>comfin1[<span class="st">'year'</span>] <span class="op">=</span> comfin1[<span class="st">'Accper'</span>].dt.year</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>comfin1[<span class="st">'month'</span>] <span class="op">=</span> comfin1[<span class="st">'Accper'</span>].dt.month</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并财务数据与公司基本信息</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>comfin1 <span class="op">=</span> pd.merge(comfin1, comA_all, left_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year'</span>], </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                   right_on<span class="op">=</span>[<span class="st">'Symbol'</span>, <span class="st">'year'</span>], how<span class="op">=</span><span class="st">'inner'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 过滤借壳上市当年的数据</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>comfin1 <span class="op">=</span> comfin1[(comfin1[<span class="st">'RMyear'</span>].isna()) <span class="op">|</span> (comfin1[<span class="st">'year'</span>] <span class="op">!=</span> comfin1[<span class="st">'RMyear'</span>])]</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 向下填充财务数据（模拟R中的fill函数）</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>comfin1 <span class="op">=</span> comfin1.sort_values([<span class="st">'Symbol1'</span>, <span class="st">'year'</span>, <span class="st">'month'</span>])</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>comfin1[<span class="st">'npexnr'</span>] <span class="op">=</span> comfin1.groupby(<span class="st">'Symbol1'</span>)[<span class="st">'npexnr'</span>].fillna(method<span class="op">=</span><span class="st">'ffill'</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>comfin1[<span class="st">'ROE'</span>] <span class="op">=</span> comfin1.groupby(<span class="st">'Symbol1'</span>)[<span class="st">'ROE'</span>].fillna(method<span class="op">=</span><span class="st">'ffill'</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 交易数据处理</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'Trdmnt'</span>] <span class="op">=</span> pd.to_datetime(trdmnth[<span class="st">'Trdmnt'</span>])</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'ym'</span>] <span class="op">=</span> pd.to_datetime(trdmnth[<span class="st">'Trdmnt'</span>]).dt.to_period(<span class="st">'M'</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'year'</span>] <span class="op">=</span> trdmnth[<span class="st">'Trdmnt'</span>].dt.year</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'month'</span>] <span class="op">=</span> trdmnth[<span class="st">'Trdmnt'</span>].dt.month</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'Mretwd'</span>] <span class="op">=</span> trdmnth[<span class="st">'Mretwd'</span>] <span class="op">*</span> <span class="dv">100</span>  <span class="co"># 转换为百分比</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 无风险利率处理</span></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>nrrate <span class="op">=</span> nrrate[nrrate[<span class="st">'Nrr1'</span>] <span class="op">==</span> <span class="st">'NRI01'</span>]</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'Clsdt'</span>] <span class="op">=</span> pd.to_datetime(nrrate[<span class="st">'Clsdt'</span>])</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'year'</span>] <span class="op">=</span> nrrate[<span class="st">'Clsdt'</span>].dt.year</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'month'</span>] <span class="op">=</span> nrrate[<span class="st">'Clsdt'</span>].dt.month</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> nrrate.groupby([<span class="st">'year'</span>, <span class="st">'month'</span>])[<span class="st">'Nrrmtdt'</span>].mean().reset_index()</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> rf.rename(columns<span class="op">=</span>{<span class="st">'Nrrmtdt'</span>: <span class="st">'rf'</span>})</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 因子数据处理</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> facmnth[(facmnth[<span class="st">'MarkettypeID'</span>] <span class="op">==</span> <span class="st">'P9714'</span>) <span class="op">&amp;</span> (facmnth[<span class="st">'Portfolios'</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>facmnth[<span class="st">'TradingMonth'</span>] <span class="op">=</span> pd.to_datetime(facmnth[<span class="st">'TradingMonth'</span>])</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>facmnth[<span class="st">'ym'</span>] <span class="op">=</span> facmnth[<span class="st">'TradingMonth'</span>].dt.to_period(<span class="st">'M'</span>)</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 转换为百分比</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>factor_cols <span class="op">=</span> [<span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>, <span class="st">'RMW2'</span>, <span class="st">'CMA2'</span>]</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>facmnth[factor_cols] <span class="op">=</span> facmnth[factor_cols] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'Accper'</span>] <span class="op">=</span> pd.to_datetime(comfin[<span class="st">'Accper'</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'year'</span>] <span class="op">=</span> comfin[<span class="st">'Accper'</span>].dt.year</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'month'</span>] <span class="op">=</span> comfin[<span class="st">'Accper'</span>].dt.month</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并财务数据与公司基本信息</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> pd.merge(comfin, comA, left_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year'</span>], </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                   right_on<span class="op">=</span>[<span class="st">'Symbol'</span>, <span class="st">'year'</span>], how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 向下填充财务数据（模拟R中的fill函数）</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> comfin.sort_values([<span class="st">'Stkcd'</span>, <span class="st">'year'</span>, <span class="st">'month'</span>])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'npexnr'</span>] <span class="op">=</span> comfin.groupby(<span class="st">'Stkcd'</span>)[<span class="st">'npexnr'</span>].fillna(method<span class="op">=</span><span class="st">'ffill'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'ROE'</span>] <span class="op">=</span> comfin.groupby(<span class="st">'Stkcd'</span>)[<span class="st">'ROE'</span>].fillna(method<span class="op">=</span><span class="st">'ffill'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'Stkcd'</span>] <span class="op">=</span> pd.to_numeric(comfin[<span class="st">'Stkcd'</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 交易数据处理</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'Trdmnt'</span>] <span class="op">=</span> pd.to_datetime(trdmnth[<span class="st">'Trdmnt'</span>])</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'ym'</span>] <span class="op">=</span> pd.to_datetime(trdmnth[<span class="st">'Trdmnt'</span>]).dt.to_period(<span class="st">'M'</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'year'</span>] <span class="op">=</span> trdmnth[<span class="st">'Trdmnt'</span>].dt.year</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'month'</span>] <span class="op">=</span> trdmnth[<span class="st">'Trdmnt'</span>].dt.month</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'Mretwd'</span>] <span class="op">=</span> trdmnth[<span class="st">'Mretwd'</span>] <span class="op">*</span> <span class="dv">100</span>  <span class="co"># 转换为百分比</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 无风险利率处理</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'Clsdt'</span>] <span class="op">=</span> pd.to_datetime(nrrate[<span class="st">'Clsdt'</span>])</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'year'</span>] <span class="op">=</span> nrrate[<span class="st">'Clsdt'</span>].dt.year</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'month'</span>] <span class="op">=</span> nrrate[<span class="st">'Clsdt'</span>].dt.month</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> nrrate.groupby([<span class="st">'year'</span>, <span class="st">'month'</span>])[<span class="st">'Nrrmtdt'</span>].mean().reset_index()</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> rf.rename(columns<span class="op">=</span>{<span class="st">'Nrrmtdt'</span>: <span class="st">'rf'</span>})</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 因子数据处理</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> facmnth[(facmnth[<span class="st">'MarkettypeID'</span>] <span class="op">==</span> <span class="st">'P9714'</span>) <span class="op">&amp;</span> (facmnth[<span class="st">'Portfolios'</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>facmnth[<span class="st">'TradingMonth'</span>] <span class="op">=</span> pd.to_datetime(facmnth[<span class="st">'TradingMonth'</span>])</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>facmnth[<span class="st">'ym'</span>] <span class="op">=</span> facmnth[<span class="st">'TradingMonth'</span>].dt.to_period(<span class="st">'M'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 转换为百分比</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>factor_cols <span class="op">=</span> [<span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>, <span class="st">'RMW2'</span>, <span class="st">'CMA2'</span>]</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>facmnth[factor_cols] <span class="op">=</span> facmnth[factor_cols] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第五步合并数据集与构造变量" class="level3" data-number="6.4.5">
 <h3 data-number="6.4.5" class="anchored" data-anchor-id="第五步合并数据集与构造变量"><span class="header-section-number">6.4.5</span> 第五步：合并数据集与构造变量</h3>
 <p>在这一步，我们将合并处理后的各数据集，并计算关键变量，如市值和市盈率(E/P)。特别地，为了实现中国特色三因子模型的核心思想，我们筛选出市值最大的70%的企业，以剔除可能受到壳价值影响的小市值股票。</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 定义财务年度和月份映射函数</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_financial_year(year, month_series):</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 根据月份调整财务年度</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 12月以前的数据使用上一年的财务数据</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> year <span class="op">-</span> <span class="dv">1</span> <span class="cf">if</span> month_series.iloc[<span class="dv">0</span>] <span class="op">&lt;</span> <span class="dv">4</span> <span class="cf">else</span> year</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_financial_month(month):</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 财务月份映射</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">12</span> <span class="cf">if</span> month <span class="op">&lt;</span> <span class="dv">4</span> <span class="cf">else</span> <span class="dv">3</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 应用规则到交易数据</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trdmnth.copy()</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'year1'</span>] <span class="op">=</span> trddata[<span class="st">'year'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> y: get_financial_year(y, trddata[<span class="st">'month'</span>]))</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'month1'</span>] <span class="op">=</span> trddata[<span class="st">'month'</span>].<span class="bu">apply</span>(get_financial_month)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 应用规则到交易数据</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trdmnth.copy()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据月份调整年份：1-4月使用上一年，其他月份使用当前年</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'year1'</span>] <span class="op">=</span> np.where((trddata[<span class="st">'month'</span>] <span class="op">&gt;=</span> <span class="dv">1</span>) <span class="op">&amp;</span> (trddata[<span class="st">'month'</span>] <span class="op">&lt;=</span> <span class="dv">4</span>), </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                           trddata[<span class="st">'year'</span>] <span class="op">-</span> <span class="dv">1</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                           trddata[<span class="st">'year'</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据月份调整财务月份：</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 5-8月对应3月（一季报），9-10月对应6月（二季报），其他月份对应9月（三季报）</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'month1'</span>] <span class="op">=</span> np.select(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    [(trddata[<span class="st">'month'</span>] <span class="op">&gt;=</span> <span class="dv">5</span>) <span class="op">&amp;</span> (trddata[<span class="st">'month'</span>] <span class="op">&lt;=</span> <span class="dv">8</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>     (trddata[<span class="st">'month'</span>] <span class="op">==</span> <span class="dv">9</span>) <span class="op">|</span> (trddata[<span class="st">'month'</span>] <span class="op">==</span> <span class="dv">10</span>)],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">3</span>, <span class="dv">6</span>],</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    default<span class="op">=</span><span class="dv">9</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并财务数据</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> pd.merge(trddata, comfin1, </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># a. 合并财务数据</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> pd.merge(trddata, comfin, </span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                  left_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year1'</span>, <span class="st">'month1'</span>], </span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                  right_on<span class="op">=</span>[<span class="st">'Symbol'</span>, <span class="st">'year'</span>, <span class="st">'month'</span>], </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                  right_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year'</span>, <span class="st">'month'</span>], </span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                  how<span class="op">=</span><span class="st">'inner'</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算总市值和市盈率</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.sort_values([<span class="st">'Symbol1'</span>, <span class="st">'ym'</span>])</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'size'</span>] <span class="op">=</span> trddata.groupby(<span class="st">'Symbol1'</span>)[<span class="st">'Mclsprc'</span>].shift(<span class="dv">1</span>) <span class="op">*</span> (trddata[<span class="st">'Msmvttl'</span>] <span class="op">/</span> trddata[<span class="st">'Mclsprc'</span>])</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'EP'</span>] <span class="op">=</span> trddata[<span class="st">'npexnr'</span>] <span class="op">/</span> trddata[<span class="st">'size'</span>]</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选市值最大的70%的企业 - 这是中国特色三因子模型的关键步骤</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_by_size(group):</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    size_threshold <span class="op">=</span> group[<span class="st">'size'</span>].quantile(<span class="fl">0.3</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> group[group[<span class="st">'size'</span>] <span class="op">&gt;=</span> size_threshold]</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.groupby(<span class="st">'ym'</span>).<span class="bu">apply</span>(filter_by_size).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.drop(columns<span class="op">=</span>[<span class="st">'year_y'</span>, <span class="st">'month_y'</span>])</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.rename(columns<span class="op">=</span>{<span class="st">'year_x'</span>: <span class="st">'year'</span>, <span class="st">'month_x'</span>: <span class="st">'month'</span>})</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># b. 计算总市值和市盈率</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.sort_values([<span class="st">'Stkcd'</span>, <span class="st">'ym'</span>])</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'size'</span>] <span class="op">=</span> trddata.groupby(<span class="st">'Stkcd'</span>)[<span class="st">'Mclsprc'</span>].shift(<span class="dv">1</span>) <span class="op">*</span> (trddata[<span class="st">'Msmvttl'</span>] <span class="op">/</span> trddata[<span class="st">'Mclsprc'</span>])</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'EP'</span>] <span class="op">=</span> trddata[<span class="st">'npexnr'</span>] <span class="op">/</span> trddata[<span class="st">'size'</span>]</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># c. 筛选市值最大的70%的企业</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_by_size(group):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    size_threshold <span class="op">=</span> group[<span class="st">'size'</span>].quantile(<span class="fl">0.3</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> group[group[<span class="st">'size'</span>] <span class="op">&gt;=</span> size_threshold]</span>
 <span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并无风险利率并计算超额收益率</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> pd.merge(trddata, rf, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'exret'</span>] <span class="op">=</span> trddata[<span class="st">'Mretwd'</span>] <span class="op">-</span> trddata[<span class="st">'rf'</span>]</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 筛选时间范围</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'ym_dt'</span>] <span class="op">=</span> trddata[<span class="st">'ym'</span>].dt.to_timestamp()</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata[(trddata[<span class="st">'ym_dt'</span>] <span class="op">&gt;=</span> pd.Timestamp(<span class="st">'2007-05-01'</span>)) <span class="op">&amp;</span> </span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                  (trddata[<span class="st">'ym_dt'</span>] <span class="op">&lt;=</span> pd.Timestamp(<span class="st">'2019-02-28'</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.groupby(<span class="st">'ym'</span>).<span class="bu">apply</span>(filter_by_size).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># d. 合并无风险利率并计算超额收益率</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> pd.merge(trddata, rf, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'exret'</span>] <span class="op">=</span> trddata[<span class="st">'Mretwd'</span>] <span class="op">-</span> trddata[<span class="st">'rf'</span>]</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># e. 筛选时间范围</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'ym_dt'</span>] <span class="op">=</span> trddata[<span class="st">'ym'</span>].dt.to_timestamp()</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata[(trddata[<span class="st">'ym_dt'</span>] <span class="op">&gt;=</span> pd.Timestamp(<span class="st">'2007-05-01'</span>)) <span class="op">&amp;</span> </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>                  (trddata[<span class="st">'ym_dt'</span>] <span class="op">&lt;=</span> pd.Timestamp(<span class="st">'2019-02-28'</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第六步对sizevalueroe进行排序分组" class="level3" data-number="6.4.6">
 <h3 data-number="6.4.6" class="anchored" data-anchor-id="第六步对sizevalueroe进行排序分组"><span class="header-section-number">6.4.6</span> 第六步：对size、value、ROE进行排序分组</h3>
@@ -514,79 +502,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 按市值、EP、ROE进行分组</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>trddata_grp <span class="op">=</span> trddata.copy()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_groups(group):</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 市值分组（2组）- 对应SMB因子</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    group[<span class="st">'grp_size'</span>] <span class="op">=</span> pd.qcut(group[<span class="st">'size'</span>], <span class="dv">2</span>, labels<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>]).astype(<span class="bu">int</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># EP价值分组（3组）- 对应VMG因子</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> group[<span class="st">'EP'</span>].notna().<span class="bu">any</span>():</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        low_val <span class="op">=</span> group[<span class="st">'EP'</span>].quantile(<span class="fl">0.3</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        high_val <span class="op">=</span> group[<span class="st">'EP'</span>].quantile(<span class="fl">0.7</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        group[<span class="st">'grp_value'</span>] <span class="op">=</span> np.select(</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            [group[<span class="st">'EP'</span>] <span class="op">&lt;=</span> low_val, group[<span class="st">'EP'</span>] <span class="op">&lt;=</span> high_val],</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            [<span class="dv">1</span>, <span class="dv">2</span>],</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="dv">3</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        group[<span class="st">'grp_value'</span>] <span class="op">=</span> np.nan</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ROE分组（10组）- 用于ROE异象分析</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    group[<span class="st">'grp_ROE'</span>] <span class="op">=</span> pd.qcut(group[<span class="st">'ROE'</span>], <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>)).astype(<span class="bu">int</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 市值分组（10组，用于条件分组）</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    group[<span class="st">'grp_size1'</span>] <span class="op">=</span> pd.qcut(group[<span class="st">'size'</span>], <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>)).astype(<span class="bu">int</span>)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> group</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 应用分组函数</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>trddata_grp <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>).<span class="bu">apply</span>(create_groups).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 在每个市值组内对ROE进行条件分组（控制规模效应）</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cond_sort_roe(group):</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    group[<span class="st">'grp_ROE_con'</span>] <span class="op">=</span> pd.qcut(group[<span class="st">'ROE'</span>], <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>)).astype(<span class="bu">int</span>)</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> group</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>trddata_grp <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size1'</span>]).<span class="bu">apply</span>(cond_sort_roe).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 市值分组（2组）</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_size'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'size'</span>].transform(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: pd.qcut(x, <span class="dv">2</span>, labels<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>]).astype(<span class="bu">int</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># EP价值分组（3组）</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_value_group(x):</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x.notna().<span class="bu">any</span>():</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        low_val <span class="op">=</span> x.quantile(<span class="fl">0.3</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        high_val <span class="op">=</span> x.quantile(<span class="fl">0.7</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.select(</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            [x <span class="op">&lt;=</span> low_val, x <span class="op">&lt;=</span> high_val],</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="dv">3</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.nan</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_value'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'EP'</span>].transform(get_value_group)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># ROE分组（10组），处理空值情况</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roe_group(x):</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x.notna().<span class="bu">any</span>():</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 先处理空值，将空值替换为-1</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        x_filled <span class="op">=</span> x.fillna(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 使用qcut分组，将-1单独分为一组</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> pd.qcut(x_filled, <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>), duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 将-1对应的组别设为NaN</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> groups.where(x_filled <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>, np.nan)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> groups.astype(<span class="st">'Int64'</span>)  <span class="co"># 使用可空整数类型</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.nan</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_ROE'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'ROE'</span>].transform(roe_group)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># 市值分组（10组，用于条件分组）</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_size1'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'size'</span>].transform(</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: pd.qcut(x, <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>)).astype(<span class="bu">int</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 在每个市值组内对ROE进行条件分组，处理空值情况</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roe_con_group(x):</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x.notna().<span class="bu">any</span>():</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 先处理空值，将空值替换为-1</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        x_filled <span class="op">=</span> x.fillna(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 使用qcut分组，将-1单独分为一组</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> pd.qcut(x_filled, <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>), duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># 将-1对应的组别设为NaN</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> groups.where(x_filled <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>, np.nan)</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> groups.astype(<span class="st">'Int64'</span>)  <span class="co"># 使用可空整数类型</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.nan</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_ROE_con'</span>] <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size1'</span>])[<span class="st">'ROE'</span>].transform(roe_con_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第七步计算加权平均股票回报率与定价因子" class="level3" data-number="6.4.7">
 <h3 data-number="6.4.7" class="anchored" data-anchor-id="第七步计算加权平均股票回报率与定价因子"><span class="header-section-number">6.4.7</span> 第七步：计算加权平均股票回报率与定价因子</h3>
 <p>这一步是构建因子的核心环节。我们首先计算市场超额收益率(MKT)，然后构建2×3分组的投资组合，计算基于规模的SMB因子和基于价值的VMG因子。</p>
 <p>CH-3模型采用的分组方式与经典Fama-French模型相似，但有一些关键调整： 1. 我们使用已剔除最小30%市值股票的样本进行分组 2. 按市值分为两组（小市值和大市值） 3. 按E/P比率分为三组（30%-40%-30%） 4. 形成6个投资组合：小市值低E/P(11)、小市值中E/P(12)、小市值高E/P(13)、大市值低E/P(21)、大市值中E/P(22)、大市值高E/P(23)</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算市场超额收益率（市值加权）</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>factor1 <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>).<span class="bu">apply</span>(</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: pd.Series({</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'MKT'</span>: np.average(x[<span class="st">'exret'</span>], weights<span class="op">=</span>x[<span class="st">'size'</span>])</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    })</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据size和value排序计算投资组合回报（市值加权）</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_portfolio_return(group):</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.average(group[<span class="st">'Mretwd'</span>], weights<span class="op">=</span>group[<span class="st">'size'</span>])</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>factor2 <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size'</span>, <span class="st">'grp_value'</span>]).<span class="bu">apply</span>(</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    calc_portfolio_return</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>factor2.columns <span class="op">=</span> [<span class="st">'ym'</span>, <span class="st">'grp_size'</span>, <span class="st">'grp_value'</span>, <span class="st">'vwret'</span>]</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 只保留不含NaN的组合</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>factor2 <span class="op">=</span> factor2[factor2[<span class="st">'grp_size'</span>].notna() <span class="op">&amp;</span> factor2[<span class="st">'grp_value'</span>].notna()]</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建组合标识并透视表</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>factor2[<span class="st">'grp'</span>] <span class="op">=</span> factor2[<span class="st">'grp_size'</span>] <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> factor2[<span class="st">'grp_value'</span>]</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>factor2_pivot <span class="op">=</span> factor2.pivot(index<span class="op">=</span><span class="st">'ym'</span>, columns<span class="op">=</span><span class="st">'grp'</span>, values<span class="op">=</span><span class="st">'vwret'</span>).reset_index()</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算SMB和VMG因子</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># SMB: 小市值组合(11,12,13)减去大市值组合(21,22,23)的平均收益率</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>factor2_pivot[<span class="st">'SMB'</span>] <span class="op">=</span> (factor2_pivot[<span class="dv">11</span>] <span class="op">+</span> factor2_pivot[<span class="dv">12</span>] <span class="op">+</span> factor2_pivot[<span class="dv">13</span>]) <span class="op">/</span> <span class="dv">3</span> <span class="op">-</span> <span class="op">\</span></span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                      (factor2_pivot[<span class="dv">21</span>] <span class="op">+</span> factor2_pivot[<span class="dv">22</span>] <span class="op">+</span> factor2_pivot[<span class="dv">23</span>]) <span class="op">/</span> <span class="dv">3</span></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># VMG: 高E/P组合(13,23)减去低E/P组合(11,21)的平均收益率</span></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>factor2_pivot[<span class="st">'VMG'</span>] <span class="op">=</span> (factor2_pivot[<span class="dv">13</span>] <span class="op">+</span> factor2_pivot[<span class="dv">23</span>]) <span class="op">/</span> <span class="dv">2</span> <span class="op">-</span> <span class="op">\</span></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                      (factor2_pivot[<span class="dv">11</span>] <span class="op">+</span> factor2_pivot[<span class="dv">21</span>]) <span class="op">/</span> <span class="dv">2</span></span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并所有因子</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor2_pivot.merge(factor1, on<span class="op">=</span><span class="st">'ym'</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 加入传统Fama-French因子以便后续比较</span></span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor.merge(facmnth[[<span class="st">'ym'</span>, <span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>]], on<span class="op">=</span><span class="st">'ym'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算市场超额收益率</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>factor1 <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>).agg(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    MKT<span class="op">=</span>(<span class="st">'exret'</span>, <span class="kw">lambda</span> x: np.average(x, weights<span class="op">=</span>trddata_grp.loc[x.index, <span class="st">'size'</span>]))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据size和value排序计算投资组合回报</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_portfolio_return(group):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.average(group[<span class="st">'Mretwd'</span>], weights<span class="op">=</span>group[<span class="st">'size'</span>])</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>factor2 <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size'</span>, <span class="st">'grp_value'</span>]).<span class="bu">apply</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    calc_portfolio_return</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>factor2.columns <span class="op">=</span> [<span class="st">'ym'</span>, <span class="st">'grp_size'</span>, <span class="st">'grp_value'</span>, <span class="st">'vwret'</span>]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 只保留不含NaN的组合</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>factor2 <span class="op">=</span> factor2[factor2[<span class="st">'grp_size'</span>].notna() <span class="op">&amp;</span> factor2[<span class="st">'grp_value'</span>].notna()]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建组合标识并透视表</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>factor2[<span class="st">'grp'</span>] <span class="op">=</span> factor2[<span class="st">'grp_size'</span>] <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> factor2[<span class="st">'grp_value'</span>]</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>factor2_pivot <span class="op">=</span> factor2.pivot(index<span class="op">=</span><span class="st">'ym'</span>, columns<span class="op">=</span><span class="st">'grp'</span>, values<span class="op">=</span><span class="st">'vwret'</span>).reset_index()</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算SMB和VMG因子</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>factor2_pivot[<span class="st">'SMB'</span>] <span class="op">=</span> (factor2_pivot[<span class="dv">11</span>] <span class="op">+</span> factor2_pivot[<span class="dv">12</span>] <span class="op">+</span> factor2_pivot[<span class="dv">13</span>]) <span class="op">/</span> <span class="dv">3</span> <span class="op">-</span> <span class="op">\</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                      (factor2_pivot[<span class="dv">21</span>] <span class="op">+</span> factor2_pivot[<span class="dv">22</span>] <span class="op">+</span> factor2_pivot[<span class="dv">23</span>]) <span class="op">/</span> <span class="dv">3</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>factor2_pivot[<span class="st">'VMG'</span>] <span class="op">=</span> (factor2_pivot[<span class="dv">13</span>] <span class="op">+</span> factor2_pivot[<span class="dv">23</span>]) <span class="op">/</span> <span class="dv">2</span> <span class="op">-</span> <span class="op">\</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                      (factor2_pivot[<span class="dv">11</span>] <span class="op">+</span> factor2_pivot[<span class="dv">21</span>]) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 合并所有因子</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor2_pivot.merge(factor1, on<span class="op">=</span><span class="st">'ym'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor.merge(facmnth[[<span class="st">'ym'</span>, <span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>]], on<span class="op">=</span><span class="st">'ym'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="第八步描述性统计和因子相关性分析" class="level3" data-number="6.4.8">
 <h3 data-number="6.4.8" class="anchored" data-anchor-id="第八步描述性统计和因子相关性分析"><span class="header-section-number">6.4.8</span> 第八步：描述性统计和因子相关性分析</h3>
@@ -627,14 +628,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 转为宽格式</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    roe_port_wide <span class="op">=</span> roe_port.pivot(index<span class="op">=</span><span class="st">'ym'</span>, columns<span class="op">=</span><span class="st">'grp_ROE'</span>, values<span class="op">=</span><span class="st">'vwret'</span>).reset_index()</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算高减低ROE组合回报（第10组减第1组）</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 计算高减低ROE组合回报</span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    roe_port_wide[<span class="st">'rmw'</span>] <span class="op">=</span> roe_port_wide[<span class="dv">10</span>] <span class="op">-</span> roe_port_wide[<span class="dv">1</span>]</span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> roe_port_wide[[<span class="st">'ym'</span>, <span class="st">'rmw'</span>]]</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 基于市值中性的ROE投资组合形成（条件分组）</span></span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_size_neutral_roe(trddata_grp):</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 条件分组（市值中性）- 在每个市值组内分别进行ROE排序</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 条件分组（市值中性）</span></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    sn_port <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_ROE_con'</span>]).<span class="bu">apply</span>(</span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lambda</span> x: pd.Series({</span>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">'vwret'</span>: np.average(x[<span class="st">'Mretwd'</span>], weights<span class="op">=</span>x[<span class="st">'size'</span>])</span>
@@ -685,9 +686,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">无条件分组 - CAPM模型:"</span>)</span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model1.summary().tables[<span class="dv">1</span>])</span>
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 无条件分组 - 三因子(CH-3)</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 无条件分组 - 三因子</span></span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw'</span>], factor_all[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]])</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">无条件分组 - 三因子模型(CH-3):"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">无条件分组 - 三因子模型:"</span>)</span>
 <span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model2.summary().tables[<span class="dv">1</span>])</span>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 无条件分组 - Fama-French三因子</span></span>
@@ -700,9 +701,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">条件分组 - CAPM模型:"</span>)</span>
 <span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model4.summary().tables[<span class="dv">1</span>])</span>
 <span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 条件分组 - 三因子(CH-3)</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 条件分组 - 三因子</span></span>
 <span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>model5 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw_sn'</span>], factor_all[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]])</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">条件分组 - 三因子模型(CH-3):"</span>)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">条件分组 - 三因子模型:"</span>)</span>
 <span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model5.summary().tables[<span class="dv">1</span>])</span>
 <span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 条件分组 - Fama-French三因子</span></span>
@@ -750,7 +751,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'ROE异象收益.png'</span>)</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="co"># 保存三因子数据</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>factor_all.to_csv(<span class="st">'中国三因子与ROE异象.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">因子数据已保存到'中国三因子与ROE异象.csv'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="计算绩效指标函数用于评估" class="level3" data-number="6.4.12">
 <h3 data-number="6.4.12" class="anchored" data-anchor-id="计算绩效指标函数用于评估"><span class="header-section-number">6.4.12</span> 计算绩效指标函数（用于评估）</h3>
@@ -817,7 +822,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>为什么在中国市场中E/P比B/M更有效？这与中国股票市场的哪些特点有关？</p></li>
 <li><p>在构建CH-3模型时，你认为中国市场的反向收购机制如何影响了小市值股票的定价？</p></li>
 <li><p>比较CH-3模型与传统FF-3模型在解释中国市场异象方面的差异，哪些异象能被CH-3模型更好地解释？</p></li>
-<li><p>如果政策环境变化导致反向收购监管趋严，你预计这会对CH-3模型的有效性产生什么影响？</p></li>
+<li><p>如果政策环境变化导致上市公司的壳价值发生变化，你预计这会对CH-3模型的有效性产生什么影响？</p></li>
 </ol>
 </section>
 <section id="参考资料" class="level2" data-number="6.7">

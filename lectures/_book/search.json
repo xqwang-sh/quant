@@ -1,0 +1,690 @@
+[
+  {
+    "objectID": "slides/week01_intro.html",
+    "href": "slides/week01_intro.html",
+    "title": "2  《量化投资》课程导论",
+    "section": "",
+    "text": "2.1 关于任课老师",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#关于任课老师",
+    "href": "slides/week01_intro.html#关于任课老师",
+    "title": "2  《量化投资》课程导论",
+    "section": "",
+    "text": "汪小圈\n办公室: 松江校区博萃楼103室\n电子邮箱: xqwang@suibe.edu.cn\n答疑安排:\n\n每周一8:15-9:45；13:00-14:30；18:00-19:30\n每周二8:30-11:30\n其他时间需发邮件预约",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#量化投资定义与特点",
+    "href": "slides/week01_intro.html#量化投资定义与特点",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.2 量化投资：定义与特点",
+    "text": "2.2 量化投资：定义与特点\n\n定义：\n\n量化投资是指以数据为基础，以数学模型为工具，以计算机程序为手段，系统化地执行投资策略，旨在获取稳定、可持续的超额收益的投资方法。\n实践中，量化投资涵盖数据收集与清洗、策略模型开发、回测与优化、交易执行、风险管理等环节。\n\n实践特点：\n\n纪律性与客观性：模型信号驱动，克服情绪偏差，程序化交易，客观一致。\n系统性与流程化：完整流程，规范明确，模块化 (策略、组合、风控、评估)。\n程序化与可回测性：代码实现 (Python/R/C++)，历史回测，评估策略表现。\n模型化与迭代优化：数学模型驱动，分析规律，迭代优化，适应市场。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#量化投资相关岗位与技能",
+    "href": "slides/week01_intro.html#量化投资相关岗位与技能",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.3 量化投资相关岗位与技能",
+    "text": "2.3 量化投资相关岗位与技能\n\n量化研究员 (Quant Researcher)：\n\n职责：策略研究与模型开发，因子挖掘，绩效分析等。\n技能：扎实的数理统计基础，编程能力 (Python/R)，金融市场知识，数据分析能力，研究能力。\n\n量化开发工程师 (Quant Developer)：\n\n职责：策略代码实现，交易系统开发与维护，数据平台搭建等。\n技能：精通编程 (Python/C++/Java)，软件工程能力，数据库知识，Linux系统操作，高频交易系统经验 (可选)。\n\n量化交易员 (Quant Trader)：\n\n职责：监控交易系统运行，处理异常情况，优化交易执行，风险控制等。\n技能：熟悉交易流程，风险管理意识，快速反应能力，一定的编程基础 (Python)，沟通协调能力。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#课程概述",
+    "href": "slides/week01_intro.html#课程概述",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.4 课程概述",
+    "text": "2.4 课程概述\n\n课程名称：《量化投资》\n教学对象：金融学院本科三年级学生\n课时安排：16周，每周2学时\n模块划分：\n\n模块1：传统因子投资 (9周)\n模块2：机器学习与另类数据 (7周)\n\n考核方式：策略开发项目 + 期末考试",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#模块1传统因子投资-第1-9周",
+    "href": "slides/week01_intro.html#模块1传统因子投资-第1-9周",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.5 模块1：传统因子投资 (第1-9周)",
+    "text": "2.5 模块1：传统因子投资 (第1-9周)\n\n目标：深入理解因子投资理论，掌握经典多因子模型构建与检验方法\n核心内容：\n\nCAPM 模型与市场有效性\nFama-French 三因子模型\n多因子模型与异象\n因子有效性检验\n多因子组合优化\n因子择时与动态配置\n风险模型与绩效归因",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#模块2机器学习与另类数据-第10-16周",
+    "href": "slides/week01_intro.html#模块2机器学习与另类数据-第10-16周",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.6 模块2：机器学习与另类数据 (第10-16周)",
+    "text": "2.6 模块2：机器学习与另类数据 (第10-16周)\n\n目标：掌握机器学习在因子投资中的应用，融合另类数据提升策略收益\n核心内容：\n\n监督学习与因子预测\n另类数据的获取与处理\n另类数据与新因子策略\n策略组合增强\n风险管理进阶\n项目迭代与答辩",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#考核方式与评分标准",
+    "href": "slides/week01_intro.html#考核方式与评分标准",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.7 考核方式与评分标准",
+    "text": "2.7 考核方式与评分标准\n\n策略开发项目（50%）：\n\n\n第一部分（中期答辩）：\n\n内容：传统多因子策略开发（至少Fama-French三因子模型）\n要求：代码可复现、因子逻辑清晰、回测报告完整\n\n第二部分（最终答辩）：\n\n内容：融合传统因子、另类数据与机器学习模型\n\n要求：至少使用1种另类数据源 或者 1种机器学习模型\n\n\n\n期末考试（50%）：\n\n形式：闭卷笔试（简答 + 案例分析）\n\n范围：\n\n传统因子投资理论\n机器学习与另类数据案例分析",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#策略开发项目要求",
+    "href": "slides/week01_intro.html#策略开发项目要求",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.8 策略开发项目要求",
+    "text": "2.8 策略开发项目要求\n小组作业，每组2-3人\n项目报告要求：\n\n项目背景与目标\n策略开发过程\n回测结果与评估\n风险管理措施\n项目总结与反思\n项目过程中的收获\n\n项目代码提交要求：\n\n包含完整的回测过程、回测评估、回测风险管理",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#课程资料",
+    "href": "slides/week01_intro.html#课程资料",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.9 课程资料",
+    "text": "2.9 课程资料\n\n\n\n学习通平台：\n\n理论课课件\n提交作业\n课程通知\n\n实践课网站：https://e.coding.net/g-hcnn4565/lecture/quant.git\n课程参考书：《因子投资：方法与实践》",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#有效市场假说-efficient-market-hypothesis-emh",
+    "href": "slides/week01_intro.html#有效市场假说-efficient-market-hypothesis-emh",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.10 有效市场假说 (Efficient Market Hypothesis, EMH)",
+    "text": "2.10 有效市场假说 (Efficient Market Hypothesis, EMH)\n\n核心思想：\n\n市场价格已经充分反映了所有可获得的信息。\n投资者无法通过分析信息来获取超额收益。\n\n三种形式：\n\n弱式有效市场：价格反映了所有历史市场信息 (价格、成交量)。技术分析无效。\n半强式有效市场：价格反映了所有公开信息 (财务报告、新闻)。基本面分析无效。\n强式有效市场：价格反映了所有信息 (公开 + 内幕信息)。任何分析都无效。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#有效市场假说图示",
+    "href": "slides/week01_intro.html#有效市场假说图示",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.11 有效市场假说图示",
+    "text": "2.11 有效市场假说图示",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#emh-与量化投资",
+    "href": "slides/week01_intro.html#emh-与量化投资",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.12 EMH 与量化投资",
+    "text": "2.12 EMH 与量化投资\n如果市场完全有效，量化投资还有意义吗？\n\n弱式有效市场下\n\n基本面量化有意义，通过深入分析财务报表、行业数据、宏观经济数据等基本面信息，构建超额收益策略。\n另类数据量化有意义，通过分析社交媒体、新闻、专利、地理信息等另类数据，构建超额收益策略。\n\n半强式有效市场下\n\n需要挖掘更深层次的信息或利用行为偏差。\n行为金融学量化投资策略，通过识别和利用投资者非理性行为导致的市场异象来获取收益。\n另类数据的重要性进一步提升，因为它们可能提供尚未被市场广泛认知的增量信息。\n\n即使市场是强有效的\n\n量化投资仍然可以在风险管理、交易执行等方面发挥优势。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#因子-factor-的定义",
+    "href": "slides/week01_intro.html#因子-factor-的定义",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.13 因子 (Factor) 的定义",
+    "text": "2.13 因子 (Factor) 的定义\n\n因子定义：\n\n能够解释资产收益率横截面差异的共同特征或风险来源。\n可以理解为影响资产收益率的”驱动力”。\n\n因子与选股：\n\n通过因子分析，识别影响股票收益的关键因素。\n基于因子暴露构建投资组合，获取因子溢价。\n\n市场异象（anomaly）：\n\n市场价格与因子模型预测结果不一致的现象。\n因子投资依赖的市场异象通常表现为因子溢价。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#因子投资发展历程",
+    "href": "slides/week01_intro.html#因子投资发展历程",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.14 因子投资：发展历程",
+    "text": "2.14 因子投资：发展历程\n\n早期萌芽 (1950s-1960s)：\n\nMarkowitz 投资组合理论 (1952)\nSharpe CAPM 模型 (1964)\n\n经典模型构建 (1970s-1990s)：\n\nFama-French 三因子模型 (1993)\nCarhart 四因子模型 (1997)\n\n因子爆炸与异象研究 (2000s-2010s)：\n\n大量新的因子被发现 (价值、动量、质量等)\n行为金融学解释市场异象\n\n智能化因子投资 (2010s-至今)：\n\n机器学习在因子挖掘与预测中的应用\n另类数据驱动的新型因子策略",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#因子投资所依赖的市场异象是否与-emh-矛盾",
+    "href": "slides/week01_intro.html#因子投资所依赖的市场异象是否与-emh-矛盾",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.15 因子投资所依赖的“市场异象”是否与 EMH 矛盾？",
+    "text": "2.15 因子投资所依赖的“市场异象”是否与 EMH 矛盾？\n\n矛盾之处：\n\nEMH 认为市场价格应充分反映所有信息，不应存在可被持续利用的、明显的超额收益机会（即 “异象”）。\n因子投资正是基于对历史数据的研究，发现某些因子（如价值、动量等）在长期内能够带来显著的风险调整后收益，这似乎与 EMH 的有效性相悖。\n\n调和与解释：\n\n市场并非完全有效：现实市场信息传播和价格调整存在时滞，为因子投资提供了盈利空间。\n风险溢价解释：因子溢价可能并非真正的 “异象”，而是对承担某种系统性风险的补偿。\n行为金融学解释：市场异象也可能源于投资者的非理性行为，例如过度自信、羊群效应、处置效应等。行为金融学认为，投资者并非完全理性，其行为偏差会导致市场价格出现可预测的模式，从而产生可被量化策略利用的”异象”。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#上机课准备",
+    "href": "slides/week01_intro.html#上机课准备",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.16 上机课准备",
+    "text": "2.16 上机课准备\n\n安装Python环境（3.8及以上版本）\n安装代码编辑器，推荐集成AI辅助编程功能的代码编辑器\n安装量化投资相关库\n\nnumpy\npandas\nmatplotlib\nscikit-learn\npyfolio\nalphalens\ncvxpy",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#ai辅助编程",
+    "href": "slides/week01_intro.html#ai辅助编程",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.17 AI辅助编程",
+    "text": "2.17 AI辅助编程\n\nVSCode + GitHub Copilot / 通义灵码 插件\n\nGitHub Copilot 支持Claude-3.5-Sonnet / ChatGPT-4o，每天限50次免费问答，有免费学生账号可用\n通义灵码 支持Qwen2.5 / DeepSeek大模型，全免费\n\nCursor\n\n支持Claude-3.5-Sonnet / ChatGPT-4o / DeepSeek等大模型，试用期免费，后续订阅$20/月\n\nTrae\n\n支持Claude-3.5-Sonnet / ChatGPT-4o，全免费\n\n推荐注册GitHub账号（校园IP可访问）",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#金融数据获取",
+    "href": "slides/week01_intro.html#金融数据获取",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.18 金融数据获取",
+    "text": "2.18 金融数据获取\n\nTushare\n\n免费，需要注册账号\n获取数据有积分要求（https://tushare.pro/document/1?doc_id=108）\n\nCSMAR\n\n学校购买，直接学校IP访问\n学校账户不可API访问\n\nWind\n\n学校购买，在WIND终端、或个人账号访问\n个人账户可API访问\n\nCNRDS\n\n学校购买，账号访问\n不可API访问",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "slides/week01_intro.html#课后作业",
+    "href": "slides/week01_intro.html#课后作业",
+    "title": "2  《量化投资》课程导论",
+    "section": "2.19 课后作业",
+    "text": "2.19 课后作业\n\n下载贵州茅台 (600519.SH) 2020-01-01 至 2024-12-31 的日线数据\n下载贵州茅台 2020-2023年度财报数据（包括资产负债表、利润表、现金流量表）",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>《量化投资》课程导论</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html",
+    "href": "labs/w2_tushare_data_download.html",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "",
+    "text": "3.1 1. 安装 Tushare\nTushare 是一个流行的 Python 财经数据接口包，提供了丰富的金融数据，包括股票、基金、期货、债券、外汇、行业大数据等。本文将详细介绍如何使用 Tushare 下载常用的金融数据，包括股票行情数据和财务报表数据。\n首先，您需要安装 Tushare 库。在命令行或终端中使用 pip 安装：\nCode\npip install tushare\n或者使用国内镜像源加速安装 (可选)：\nCode\npip install tushare -i https://pypi.tuna.tsinghua.edu.cn/simple",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#安装-tushare",
+    "href": "labs/w2_tushare_data_download.html#安装-tushare",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "4.1 1. 安装 Tushare",
+    "text": "4.1 1. 安装 Tushare\n首先，您需要安装 Tushare 库。在命令行或终端中使用 pip 安装：\n\npip install tushare\n\n或者使用国内镜像源加速安装 (可选)：\n\npip install tushare -i https://pypi.tuna.tsinghua.edu.cn/simple",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#获取-tushare-api-token",
+    "href": "labs/w2_tushare_data_download.html#获取-tushare-api-token",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "3.2 2. 获取 Tushare API Token",
+    "text": "3.2 2. 获取 Tushare API Token\n使用 Tushare 接口需要注册账号并获取 API Token。\n\n访问 Tushare 官网 https://tushare.pro/ 注册账号。\n登录后，在 个人主页 -&gt; API令牌 中获取您的 API Token。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#设置-api-token",
+    "href": "labs/w2_tushare_data_download.html#设置-api-token",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "3.3 3. 设置 API Token",
+    "text": "3.3 3. 设置 API Token\n在 Python 代码中，您需要设置您的 API Token，才能正常使用 Tushare 接口。通常在代码的开头进行设置：\n\n\nCode\nimport tushare as ts\n\n# 设置 API Token (请替换成您自己的 API Token)\nts.set_token('YOUR_API_TOKEN')\n\n# 初始化 pro 接口\npro = ts.pro_api()\n\n\n请将 'YOUR_API_TOKEN' 替换为您在 Tushare 官网获取的真实 API Token。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#下载股票行情数据",
+    "href": "labs/w2_tushare_data_download.html#下载股票行情数据",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "3.4 4. 下载股票行情数据",
+    "text": "3.4 4. 下载股票行情数据\n\n3.4.1 4.1 下载股票日线行情数据\n使用 ts.pro_bar() 函数可以下载股票的日线行情数据，包括开盘价、最高价、最低价、收盘价、成交量等。\n\n\nCode\nimport pandas as pd\n\n# 下载 贵州茅台 (600519.SH) 从 2023-01-01 到 2024-01-01 的日线数据\ndf_daily = pro.pro_bar(ts_code='600519.SH', start_date='20230101', end_date='20240101',\n                      asset='E', freq='D') # asset='E' 代表股票，freq='D' 代表日线\n\n# 打印数据\nprint(df_daily.head())\n\n\n参数说明:\n\nts_code: 股票代码，例如 ‘600519.SH’ (SH 代表上海证券交易所，SZ 代表深圳证券交易所)\nstart_date: 开始日期，格式 ‘YYYYMMDD’\nend_date: 结束日期，格式 ‘YYYYMMDD’\nasset: 资产类别，‘E’ 代表股票\nfreq: 数据频率，‘D’ 代表日线，‘W’ 代表周线，‘M’ 代表月线\n\n\n\n3.4.2 4.2 下载股票分钟线行情数据\n使用 ts.pro_bar() 函数，并设置 freq 参数为分钟频率 (例如 ‘1min’, ‘5min’, ‘15min’, ‘30min’, ‘60min’)，可以下载股票的分钟线行情数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 在 2024-01-02 的 5分钟线数据\ndf_min = pro.pro_bar(ts_code='600519.SH', start_date='20240102', end_date='20240102',\n                    asset='E', freq='5min') # freq='5min' 代表 5分钟线\n\n# 打印数据\nprint(df_min.head())\n\n\n\n\n\n\n\n\nWarning\n\n\n\n分钟线数据的数据量较大，请根据需要下载。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#下载财务报表数据-三大报表",
+    "href": "labs/w2_tushare_data_download.html#下载财务报表数据-三大报表",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "3.5 5. 下载财务报表数据 (三大报表)",
+    "text": "3.5 5. 下载财务报表数据 (三大报表)\nTushare 提供了下载上市公司财务报表数据的接口，包括资产负债表、利润表和现金流量表。\n\n3.5.1 5.1 下载资产负债表 (Balance Sheet)\n使用 pro.balancesheet() 函数下载资产负债表数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 2020年度的资产负债表\ndf_balance = pro.balancesheet(ts_code='600519.SH', start_date='20200101', end_date='20201231',\n                           period='20201231') # period 参数指定报告期\n\n# 打印数据\nprint(df_balance.head())\n\n\n参数说明:\n\nts_code: 股票代码\nstart_date: 开始日期 (可选)\nend_date: 结束日期 (可选)\nperiod: 报告期，例如 ‘20201231’ (年报), ‘20200630’ (半年报), ‘20200331’ (一季报), ‘20200930’ (三季报)\n\n\n\n3.5.2 5.2 下载利润表 (Income Statement)\n使用 pro.income() 函数下载利润表数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 2020年度的利润表\ndf_income = pro.income(ts_code='600519.SH', start_date='20200101', end_date='20201231',\n                      period='20201231')\n\n# 打印数据\nprint(df_income.head())\n\n\n\n\n3.5.3 5.3 下载现金流量表 (Cash Flow Statement)\n使用 pro.cashflow() 函数下载现金流量表数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 2020年度的现金流量表\ndf_cashflow = pro.cashflow(ts_code='600519.SH', start_date='20200101', end_date='20201231',\n                          period='20201231')\n\n# 打印数据\nprint(df_cashflow.head())\n\n\n\n\n\n\n\n\nNote\n\n\n\n财务报表数据通常是定期发布的，period 参数需要设置为报告期末的日期。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#其他常用数据",
+    "href": "labs/w2_tushare_data_download.html#其他常用数据",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "3.6 6. 其他常用数据",
+    "text": "3.6 6. 其他常用数据\n除了股票行情和财务报表数据，Tushare 还提供了丰富的其他金融数据，例如：\n\n指数数据: pro.index_daily() 下载指数日线行情，pro.index_dailybasic() 下载指数日线基本指标\n基金数据: pro.fund_basic() 下载基金基本信息, pro.fund_nav() 下载基金净值数据\n债券数据: pro.bond_basic() 下载债券基本信息, pro.bond_daily() 下载债券日线行情\n期货数据: pro.fut_basic() 下载期货合约信息, pro.fut_daily() 下载期货日线行情\n宏观经济数据: pro.macro_china() 下载中国宏观经济数据\n行业数据: pro.industry_classify() 下载行业分类数据\n\n您可以参考 Tushare 官方文档 https://tushare.pro/document/2 了解更多数据接口和使用方法。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "labs/w2_tushare_data_download.html#总结",
+    "href": "labs/w2_tushare_data_download.html#总结",
+    "title": "3  使用 Tushare 下载金融数据",
+    "section": "3.7 7. 总结",
+    "text": "3.7 7. 总结\nTushare 是一个非常方便易用的 Python 财经数据接口包，可以帮助您快速获取各种金融市场数据，为量化投资研究和策略开发提供数据支持。通过本文的示例，您应该已经掌握了使用 Tushare 下载股票行情数据和财务报表数据的基本方法。希望 Tushare 能帮助您在量化投资的学习和实践中取得更大的进步！\n\n\n\n\n\n\n注意事项\n\n\n\n\nTushare Pro 接口需要注册账号并获取 API Token 才能使用。\n部分高级数据接口可能需要付费会员才能访问。\n请仔细阅读 Tushare 官方文档，了解各个接口的参数和使用限制。\n数据使用请遵守 Tushare 的用户协议和相关法律法规。",
+    "crumbs": [
+      "第一部分：传统因子投资",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>使用 Tushare 下载金融数据</span>"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "量化投资",
+    "section": "",
+    "text": "1 量化投资",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#如何使用这本书",
+    "href": "index.html#如何使用这本书",
+    "title": "量化投资",
+    "section": "1.1 如何使用这本书",
+    "text": "1.1 如何使用这本书\n\n每一章节对应一次课程内容\n理论部分包含详细的概念解释和案例分析\n实践部分包含完整的代码示例和操作指导\n所有代码示例都可以直接运行\n每章末尾配有练习题和实践作业",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#课程安排",
+    "href": "index.html#课程安排",
+    "title": "量化投资",
+    "section": "1.1 课程安排",
+    "text": "1.1 课程安排\n本课程共16周，每周2学时，分为两个主要模块：\n\n传统因子投资（第1-9周）\n机器学习与另类数据（第10-16周）",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#week1",
+    "href": "index.html#week1",
+    "title": "量化投资",
+    "section": "2.1 第1周：量化投资导论",
+    "text": "2.1 第1周：量化投资导论\n\n2.1.1 理论课程\n\n\n\n\n\n\nNote\n\n\n\n本周主要介绍量化投资的基本概念、发展历史、主要方法和应用领域。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#关于任课老师",
+    "href": "index.html#关于任课老师",
+    "title": "量化投资",
+    "section": "2.1 关于任课老师",
+    "text": "2.1 关于任课老师\n\n汪小圈\n办公室: 松江校区博萃楼103室\n电子邮箱: xqwang@suibe.edu.cn\n答疑安排:\n\n每周一8:15-9:45；13:00-14:30；18:00-19:30\n每周二8:30-11:30\n其他时间需发邮件预约",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#量化投资定义与特点",
+    "href": "index.html#量化投资定义与特点",
+    "title": "量化投资",
+    "section": "2.2 量化投资：定义与特点",
+    "text": "2.2 量化投资：定义与特点\n\n定义：\n\n量化投资是指以数据为基础，以数学模型为工具，以计算机程序为手段，系统化地执行投资策略，旨在获取稳定、可持续的超额收益的投资方法。\n实践中，量化投资涵盖数据收集与清洗、策略模型开发、回测与优化、交易执行、风险管理等环节。\n\n实践特点：\n\n纪律性与客观性：模型信号驱动，克服情绪偏差，程序化交易，客观一致。\n系统性与流程化：完整流程，规范明确，模块化 (策略、组合、风控、评估)。\n程序化与可回测性：代码实现 (Python/R/C++)，历史回测，评估策略表现。\n模型化与迭代优化：数学模型驱动，分析规律，迭代优化，适应市场。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#量化投资相关岗位与技能",
+    "href": "index.html#量化投资相关岗位与技能",
+    "title": "量化投资",
+    "section": "2.3 量化投资相关岗位与技能",
+    "text": "2.3 量化投资相关岗位与技能\n\n量化研究员 (Quant Researcher)：\n\n职责：策略研究与模型开发，因子挖掘，绩效分析等。\n技能：扎实的数理统计基础，编程能力 (Python/R)，金融市场知识，数据分析能力，研究能力。\n\n量化开发工程师 (Quant Developer)：\n\n职责：策略代码实现，交易系统开发与维护，数据平台搭建等。\n技能：精通编程 (Python/C++/Java)，软件工程能力，数据库知识，Linux系统操作，高频交易系统经验 (可选)。\n\n量化交易员 (Quant Trader)：\n\n职责：监控交易系统运行，处理异常情况，优化交易执行，风险控制等。\n技能：熟悉交易流程，风险管理意识，快速反应能力，一定的编程基础 (Python)，沟通协调能力。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#课程概述",
+    "href": "index.html#课程概述",
+    "title": "量化投资",
+    "section": "2.4 课程概述",
+    "text": "2.4 课程概述\n\n课程名称：《量化投资》\n教学对象：金融学院本科三年级学生\n课时安排：16周，每周2学时\n模块划分：\n\n模块1：传统因子投资 (9周)\n模块2：机器学习与另类数据 (7周)\n\n考核方式：策略开发项目 + 期末考试",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#模块1传统因子投资-第1-9周",
+    "href": "index.html#模块1传统因子投资-第1-9周",
+    "title": "量化投资",
+    "section": "2.5 模块1：传统因子投资 (第1-9周)",
+    "text": "2.5 模块1：传统因子投资 (第1-9周)\n\n目标：深入理解因子投资理论，掌握经典多因子模型构建与检验方法\n核心内容：\n\nCAPM 模型与市场有效性\nFama-French 三因子模型\n多因子模型与异象\n因子有效性检验\n多因子组合优化\n因子择时与动态配置\n风险模型与绩效归因",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#模块2机器学习与另类数据-第10-16周",
+    "href": "index.html#模块2机器学习与另类数据-第10-16周",
+    "title": "量化投资",
+    "section": "2.6 模块2：机器学习与另类数据 (第10-16周)",
+    "text": "2.6 模块2：机器学习与另类数据 (第10-16周)\n\n目标：掌握机器学习在因子投资中的应用，融合另类数据提升策略收益\n核心内容：\n\n监督学习与因子预测\n另类数据的获取与处理\n另类数据与新因子策略\n策略组合增强\n风险管理进阶\n项目迭代与答辩",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#考核方式与评分标准",
+    "href": "index.html#考核方式与评分标准",
+    "title": "量化投资",
+    "section": "2.7 考核方式与评分标准",
+    "text": "2.7 考核方式与评分标准\n\n策略开发项目（50%）：\n\n\n第一部分（中期答辩）：\n\n内容：传统多因子策略开发（至少Fama-French三因子模型）\n要求：代码可复现、因子逻辑清晰、回测报告完整\n\n第二部分（最终答辩）：\n\n内容：融合传统因子、另类数据与机器学习模型\n\n要求：至少使用1种另类数据源 或者 1种机器学习模型\n\n\n\n期末考试（50%）：\n\n形式：闭卷笔试（简答 + 案例分析）\n\n范围：\n\n传统因子投资理论\n机器学习与另类数据案例分析",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#策略开发项目要求",
+    "href": "index.html#策略开发项目要求",
+    "title": "量化投资",
+    "section": "2.8 策略开发项目要求",
+    "text": "2.8 策略开发项目要求\n小组作业，每组2-3人\n项目报告要求：\n\n项目背景与目标\n策略开发过程\n回测结果与评估\n风险管理措施\n项目总结与反思\n项目过程中的收获\n\n项目代码提交要求：\n\n包含完整的回测过程、回测评估、回测风险管理",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#课程资料",
+    "href": "index.html#课程资料",
+    "title": "量化投资",
+    "section": "2.9 课程资料",
+    "text": "2.9 课程资料\n\n\n\n学习通平台：\n\n理论课课件\n提交作业\n课程通知\n\n实践课网站：https://e.coding.net/g-hcnn4565/lecture/quant.git\n课程参考书：《因子投资：方法与实践》",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#有效市场假说-efficient-market-hypothesis-emh",
+    "href": "index.html#有效市场假说-efficient-market-hypothesis-emh",
+    "title": "量化投资",
+    "section": "2.10 有效市场假说 (Efficient Market Hypothesis, EMH)",
+    "text": "2.10 有效市场假说 (Efficient Market Hypothesis, EMH)\n\n核心思想：\n\n市场价格已经充分反映了所有可获得的信息。\n投资者无法通过分析信息来获取超额收益。\n\n三种形式：\n\n弱式有效市场：价格反映了所有历史市场信息 (价格、成交量)。技术分析无效。\n半强式有效市场：价格反映了所有公开信息 (财务报告、新闻)。基本面分析无效。\n强式有效市场：价格反映了所有信息 (公开 + 内幕信息)。任何分析都无效。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#有效市场假说图示",
+    "href": "index.html#有效市场假说图示",
+    "title": "量化投资",
+    "section": "2.11 有效市场假说图示",
+    "text": "2.11 有效市场假说图示",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#emh-与量化投资",
+    "href": "index.html#emh-与量化投资",
+    "title": "量化投资",
+    "section": "2.12 EMH 与量化投资",
+    "text": "2.12 EMH 与量化投资\n如果市场完全有效，量化投资还有意义吗？\n\n弱式有效市场下\n\n基本面量化有意义，通过深入分析财务报表、行业数据、宏观经济数据等基本面信息，构建超额收益策略。\n另类数据量化有意义，通过分析社交媒体、新闻、专利、地理信息等另类数据，构建超额收益策略。\n\n半强式有效市场下\n\n需要挖掘更深层次的信息或利用行为偏差。\n行为金融学量化投资策略，通过识别和利用投资者非理性行为导致的市场异象来获取收益。\n另类数据的重要性进一步提升，因为它们可能提供尚未被市场广泛认知的增量信息。\n\n即使市场是强有效的\n\n量化投资仍然可以在风险管理、交易执行等方面发挥优势。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#因子-factor-的定义",
+    "href": "index.html#因子-factor-的定义",
+    "title": "量化投资",
+    "section": "2.13 因子 (Factor) 的定义",
+    "text": "2.13 因子 (Factor) 的定义\n\n因子定义：\n\n能够解释资产收益率横截面差异的共同特征或风险来源。\n可以理解为影响资产收益率的”驱动力”。\n\n因子与选股：\n\n通过因子分析，识别影响股票收益的关键因素。\n基于因子暴露构建投资组合，获取因子溢价。\n\n市场异象（anomaly）：\n\n市场价格与因子模型预测结果不一致的现象。\n因子投资依赖的市场异象通常表现为因子溢价。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#因子投资发展历程",
+    "href": "index.html#因子投资发展历程",
+    "title": "量化投资",
+    "section": "2.14 因子投资：发展历程",
+    "text": "2.14 因子投资：发展历程\n\n早期萌芽 (1950s-1960s)：\n\nMarkowitz 投资组合理论 (1952)\nSharpe CAPM 模型 (1964)\n\n经典模型构建 (1970s-1990s)：\n\nFama-French 三因子模型 (1993)\nCarhart 四因子模型 (1997)\n\n因子爆炸与异象研究 (2000s-2010s)：\n\n大量新的因子被发现 (价值、动量、质量等)\n行为金融学解释市场异象\n\n智能化因子投资 (2010s-至今)：\n\n机器学习在因子挖掘与预测中的应用\n另类数据驱动的新型因子策略",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#因子投资所依赖的市场异象是否与-emh-矛盾",
+    "href": "index.html#因子投资所依赖的市场异象是否与-emh-矛盾",
+    "title": "量化投资",
+    "section": "2.15 因子投资所依赖的“市场异象”是否与 EMH 矛盾？",
+    "text": "2.15 因子投资所依赖的“市场异象”是否与 EMH 矛盾？\n\n矛盾之处：\n\nEMH 认为市场价格应充分反映所有信息，不应存在可被持续利用的、明显的超额收益机会（即 “异象”）。\n因子投资正是基于对历史数据的研究，发现某些因子（如价值、动量等）在长期内能够带来显著的风险调整后收益，这似乎与 EMH 的有效性相悖。\n\n调和与解释：\n\n市场并非完全有效：现实市场信息传播和价格调整存在时滞，为因子投资提供了盈利空间。\n风险溢价解释：因子溢价可能并非真正的 “异象”，而是对承担某种系统性风险的补偿。\n行为金融学解释：市场异象也可能源于投资者的非理性行为，例如过度自信、羊群效应、处置效应等。行为金融学认为，投资者并非完全理性，其行为偏差会导致市场价格出现可预测的模式，从而产生可被量化策略利用的”异象”。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#上机课准备",
+    "href": "index.html#上机课准备",
+    "title": "量化投资",
+    "section": "2.16 上机课准备",
+    "text": "2.16 上机课准备\n\n安装Python环境（3.8及以上版本）\n安装代码编辑器，推荐集成AI辅助编程功能的代码编辑器\n安装量化投资相关库\n\nnumpy\npandas\nmatplotlib\nscikit-learn\npyfolio\nalphalens\ncvxpy",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#ai辅助编程",
+    "href": "index.html#ai辅助编程",
+    "title": "量化投资",
+    "section": "2.17 AI辅助编程",
+    "text": "2.17 AI辅助编程\n\nVSCode + GitHub Copilot / 通义灵码 插件\n\nGitHub Copilot 支持Claude-3.5-Sonnet / ChatGPT-4o，每天限50次免费问答，有免费学生账号可用\n通义灵码 支持Qwen2.5 / DeepSeek大模型，全免费\n\nCursor\n\n支持Claude-3.5-Sonnet / ChatGPT-4o / DeepSeek等大模型，试用期免费，后续订阅$20/月\n\nTrae\n\n支持Claude-3.5-Sonnet / ChatGPT-4o，全免费\n\n推荐注册GitHub账号（校园IP可访问）",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#金融数据获取",
+    "href": "index.html#金融数据获取",
+    "title": "量化投资",
+    "section": "2.18 金融数据获取",
+    "text": "2.18 金融数据获取\n\nTushare\n\n免费，需要注册账号\n获取数据有积分要求（https://tushare.pro/document/1?doc_id=108）\n\nCSMAR\n\n学校购买，直接学校IP访问\n学校账户不可API访问\n\nWind\n\n学校购买，在WIND终端、或个人账号访问\n个人账户可API访问\n\nCNRDS\n\n学校购买，账号访问\n不可API访问",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#课后作业",
+    "href": "index.html#课后作业",
+    "title": "量化投资",
+    "section": "2.19 课后作业",
+    "text": "2.19 课后作业\n\n下载贵州茅台 (600519.SH) 2020-01-01 至 2024-12-31 的日线数据\n下载贵州茅台 2020-2023年度财报数据（包括资产负债表、利润表、现金流量表）\n\n\n2.19.0.1 实验内容\n\n\n\n\n\n\nTip\n\n\n\n本周实验课主要完成 Python 环境配置和基本库的安装。\n\n\n\n\n2.19.1 第2周：数据获取与处理\n\n2.19.1.1 理论课程\n\n\n\n\n\n\nNote\n\n\n\n本周介绍金融数据的类型、来源和处理方法。\n\n\n\n\n2.19.1.2 实验内容\n\n\n\n\n\n\nTip\n\n\n\n学习使用 tushare 获取股票数据并进行基本处理。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#week2",
+    "href": "index.html#week2",
+    "title": "量化投资",
+    "section": "3.20 第2周：数据获取与处理",
+    "text": "3.20 第2周：数据获取与处理\n\n3.20.1 理论课程\n\n\n\n\n\n\nNote\n\n\n\n本周介绍金融数据的类型、来源和处理方法。\n\n\n\n\n3.20.2 实验内容\n\n\n\n\n\n\nTip\n\n\n\n学习使用 tushare 获取股票数据并进行基本处理。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#安装-tushare",
+    "href": "index.html#安装-tushare",
+    "title": "量化投资",
+    "section": "3.1 1. 安装 Tushare",
+    "text": "3.1 1. 安装 Tushare\n首先，您需要安装 Tushare 库。在命令行或终端中使用 pip 安装：\n\n\nCode\npip install tushare\n\n\n或者使用国内镜像源加速安装 (可选)：\n\n\nCode\npip install tushare -i https://pypi.tuna.tsinghua.edu.cn/simple",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#获取-tushare-api-token",
+    "href": "index.html#获取-tushare-api-token",
+    "title": "量化投资",
+    "section": "3.2 2. 获取 Tushare API Token",
+    "text": "3.2 2. 获取 Tushare API Token\n使用 Tushare 接口需要注册账号并获取 API Token。\n\n访问 Tushare 官网 https://tushare.pro/ 注册账号。\n登录后，在 个人主页 -&gt; API令牌 中获取您的 API Token。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#设置-api-token",
+    "href": "index.html#设置-api-token",
+    "title": "量化投资",
+    "section": "3.3 3. 设置 API Token",
+    "text": "3.3 3. 设置 API Token\n在 Python 代码中，您需要设置您的 API Token，才能正常使用 Tushare 接口。通常在代码的开头进行设置：\n\n\nCode\nimport tushare as ts\n\n# 设置 API Token (请替换成您自己的 API Token)\nts.set_token('YOUR_API_TOKEN')\n\n# 初始化 pro 接口\npro = ts.pro_api()\n\n\n请将 'YOUR_API_TOKEN' 替换为您在 Tushare 官网获取的真实 API Token。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#下载股票行情数据",
+    "href": "index.html#下载股票行情数据",
+    "title": "量化投资",
+    "section": "3.4 4. 下载股票行情数据",
+    "text": "3.4 4. 下载股票行情数据\n\n3.4.1 4.1 下载股票日线行情数据\n使用 ts.pro_bar() 函数可以下载股票的日线行情数据，包括开盘价、最高价、最低价、收盘价、成交量等。\n\n\nCode\nimport pandas as pd\n\n# 下载 贵州茅台 (600519.SH) 从 2023-01-01 到 2024-01-01 的日线数据\ndf_daily = pro.pro_bar(ts_code='600519.SH', start_date='20230101', end_date='20240101',\n                      asset='E', freq='D') # asset='E' 代表股票，freq='D' 代表日线\n\n# 打印数据\nprint(df_daily.head())\n\n\n参数说明:\n\nts_code: 股票代码，例如 ‘600519.SH’ (SH 代表上海证券交易所，SZ 代表深圳证券交易所)\nstart_date: 开始日期，格式 ‘YYYYMMDD’\nend_date: 结束日期，格式 ‘YYYYMMDD’\nasset: 资产类别，‘E’ 代表股票\nfreq: 数据频率，‘D’ 代表日线，‘W’ 代表周线，‘M’ 代表月线\n\n\n\n3.4.2 4.2 下载股票分钟线行情数据\n使用 ts.pro_bar() 函数，并设置 freq 参数为分钟频率 (例如 ‘1min’, ‘5min’, ‘15min’, ‘30min’, ‘60min’)，可以下载股票的分钟线行情数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 在 2024-01-02 的 5分钟线数据\ndf_min = pro.pro_bar(ts_code='600519.SH', start_date='20240102', end_date='20240102',\n                    asset='E', freq='5min') # freq='5min' 代表 5分钟线\n\n# 打印数据\nprint(df_min.head())\n\n\n\n\n\n\n\n\nWarning\n\n\n\n分钟线数据的数据量较大，请根据需要下载。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#下载财务报表数据-三大报表",
+    "href": "index.html#下载财务报表数据-三大报表",
+    "title": "量化投资",
+    "section": "3.5 5. 下载财务报表数据 (三大报表)",
+    "text": "3.5 5. 下载财务报表数据 (三大报表)\nTushare 提供了下载上市公司财务报表数据的接口，包括资产负债表、利润表和现金流量表。\n\n3.5.1 5.1 下载资产负债表 (Balance Sheet)\n使用 pro.balancesheet() 函数下载资产负债表数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 2020年度的资产负债表\ndf_balance = pro.balancesheet(ts_code='600519.SH', start_date='20200101', end_date='20201231',\n                           period='20201231') # period 参数指定报告期\n\n# 打印数据\nprint(df_balance.head())\n\n\n参数说明:\n\nts_code: 股票代码\nstart_date: 开始日期 (可选)\nend_date: 结束日期 (可选)\nperiod: 报告期，例如 ‘20201231’ (年报), ‘20200630’ (半年报), ‘20200331’ (一季报), ‘20200930’ (三季报)\n\n\n\n3.5.2 5.2 下载利润表 (Income Statement)\n使用 pro.income() 函数下载利润表数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 2020年度的利润表\ndf_income = pro.income(ts_code='600519.SH', start_date='20200101', end_date='20201231',\n                      period='20201231')\n\n# 打印数据\nprint(df_income.head())\n\n\n\n\n3.5.3 5.3 下载现金流量表 (Cash Flow Statement)\n使用 pro.cashflow() 函数下载现金流量表数据。\n\n\nCode\n# 下载 贵州茅台 (600519.SH) 2020年度的现金流量表\ndf_cashflow = pro.cashflow(ts_code='600519.SH', start_date='20200101', end_date='20201231',\n                          period='20201231')\n\n# 打印数据\nprint(df_cashflow.head())\n\n\n\n\n\n\n\n\nNote\n\n\n\n财务报表数据通常是定期发布的，period 参数需要设置为报告期末的日期。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#其他常用数据",
+    "href": "index.html#其他常用数据",
+    "title": "量化投资",
+    "section": "3.6 6. 其他常用数据",
+    "text": "3.6 6. 其他常用数据\n除了股票行情和财务报表数据，Tushare 还提供了丰富的其他金融数据，例如：\n\n指数数据: pro.index_daily() 下载指数日线行情，pro.index_dailybasic() 下载指数日线基本指标\n基金数据: pro.fund_basic() 下载基金基本信息, pro.fund_nav() 下载基金净值数据\n债券数据: pro.bond_basic() 下载债券基本信息, pro.bond_daily() 下载债券日线行情\n期货数据: pro.fut_basic() 下载期货合约信息, pro.fut_daily() 下载期货日线行情\n宏观经济数据: pro.macro_china() 下载中国宏观经济数据\n行业数据: pro.industry_classify() 下载行业分类数据\n\n您可以参考 Tushare 官方文档 https://tushare.pro/document/2 了解更多数据接口和使用方法。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#总结",
+    "href": "index.html#总结",
+    "title": "量化投资",
+    "section": "3.7 7. 总结",
+    "text": "3.7 7. 总结\nTushare 是一个非常方便易用的 Python 财经数据接口包，可以帮助您快速获取各种金融市场数据，为量化投资研究和策略开发提供数据支持。通过本文的示例，您应该已经掌握了使用 Tushare 下载股票行情数据和财务报表数据的基本方法。希望 Tushare 能帮助您在量化投资的学习和实践中取得更大的进步！\n\n\n\n\n\n\n注意事项\n\n\n\n\nTushare Pro 接口需要注册账号并获取 API Token 才能使用。\n部分高级数据接口可能需要付费会员才能访问。\n请仔细阅读 Tushare 官方文档，了解各个接口的参数和使用限制。\n数据使用请遵守 Tushare 的用户协议和相关法律法规。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#week10",
+    "href": "index.html#week10",
+    "title": "量化投资",
+    "section": "5.1 第10周：机器学习基础",
+    "text": "5.1 第10周：机器学习基础\n\n5.1.1 理论课程\n\n\n\n\n\n\nNote\n\n\n\n介绍机器学习在量化投资中的应用基础。\n\n\n\n\n5.1.2 实验内容\n\n\n\n\n\n\nTip\n\n\n\n使用 scikit-learn 实现基本的机器学习模型。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#环境配置指南",
+    "href": "index.html#环境配置指南",
+    "title": "量化投资",
+    "section": "6.1 环境配置指南",
+    "text": "6.1 环境配置指南\n\n6.1.1 Python 环境安装\n# 创建新的虚拟环境\nconda create -n quant python=3.8\n\n# 激活环境\nconda activate quant\n\n# 安装必要的包\npip install numpy pandas matplotlib scikit-learn pyfolio alphalens cvxpy",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#参考文献",
+    "href": "index.html#参考文献",
+    "title": "量化投资",
+    "section": "3.10 参考文献",
+    "text": "3.10 参考文献",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#前言",
+    "href": "index.html#前言",
+    "title": "量化投资",
+    "section": "前言",
+    "text": "前言\n这本书包含了量化投资课程的所有内容，包括课堂讲义和实验内容。本课程旨在帮助学生掌握量化投资的基本理论和实践技能，从传统因子投资到现代机器学习应用。\n\n1.0.1 如何使用这本书\n\n每一章节对应一次课程内容\n理论部分包含详细的概念解释和案例分析\n实践部分包含完整的代码示例和操作指导\n所有代码示例都可以直接运行\n每章末尾配有练习题和实践作业\n\n\n\n1.0.2 课程安排\n本课程共16周，每周2学时，分为两个主要模块：\n\n传统因子投资（第1-9周）\n机器学习与另类数据（第10-16周）",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#第一部分传统因子投资",
+    "href": "index.html#第一部分传统因子投资",
+    "title": "量化投资",
+    "section": "1.1 第一部分：传统因子投资",
+    "text": "1.1 第一部分：传统因子投资\n\n1.1.1 第1周：量化投资导论\n\n1.1.1.1 理论课程\n\n\n\n\n\n\nNote\n\n\n\n本周主要介绍量化投资的基本概念、发展历史、主要方法和应用领域。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#第二部分机器学习与另类数据",
+    "href": "index.html#第二部分机器学习与另类数据",
+    "title": "量化投资",
+    "section": "3.8 第二部分：机器学习与另类数据",
+    "text": "3.8 第二部分：机器学习与另类数据\n\n3.8.1 第10周：机器学习基础\n\n3.8.1.1 理论课程\n\n\n\n\n\n\nNote\n\n\n\n介绍机器学习在量化投资中的应用基础。\n\n\n\n\n3.8.1.2 实验内容\n\n\n\n\n\n\nTip\n\n\n\n使用 scikit-learn 实现基本的机器学习模型。",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#附录",
+    "href": "index.html#附录",
+    "title": "量化投资",
+    "section": "3.9 附录",
+    "text": "3.9 附录\n\n3.9.1 环境配置指南\n\n3.9.1.1 Python 环境安装\n# 创建新的虚拟环境\nconda create -n quant python=3.8\n\n# 激活环境\nconda activate quant\n\n# 安装必要的包\npip install numpy pandas matplotlib scikit-learn pyfolio alphalens cvxpy",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>量化投资</span>"
+    ]
+  }
+]
