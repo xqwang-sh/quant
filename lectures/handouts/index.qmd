@@ -13,16 +13,20 @@ title: "前言"
 1.  [有效市场假说 (EMH)](01_emh.qmd)
 2.  [资本资产定价模型 (CAPM)](02_capm.qmd)
 3.  [三因子模型](03_ff3.qmd)
+4.  [预测变量选择与投资组合优化](10_selecting.qmd)
+5.  [因子择时与风格分析](11_timing.qmd)
+6.  [另类数据与机器学习](12_alternative.qmd)
 
 **课程内容（实践）:**
 
 1.  [CAPM实证检验](lab02_capmtest.qmd)
 2.  [三因子模型实证检验](lab03_ff3test.qmd)
+3.  [EP因子分析、增强与组合优化](lab11_EP.qmd)
 
 **课程项目:**
 
 1.  [传统多因子投资](project1_factor.qmd)
-2.  [机器学习与另类数据](project2_ml_alt_data.qmd)
+2.  [因子投资策略的优化与提升](project2_enhance.qmd)
 
 **使用说明:**
 

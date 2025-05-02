@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; 项目2：机器学习与替代数据在量化投资中的应用 – 量化投资课程讲义</title>
+<title>12&nbsp; 项目2：因子投资策略的优化与提升 – 量化投资课程讲义</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project2_ml_alt_data.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project2_enhance.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -143,14 +143,38 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project2_ml_alt_data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></span></a>
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab11_EP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
   </div>
 </li>
     </ul>
@@ -163,24 +187,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#项目背景" id="toc-项目背景" class="nav-link active" data-scroll-target="#项目背景"><span class="header-section-number">9</span> 项目背景</a></li>
-  <li><a href="#项目目标" id="toc-项目目标" class="nav-link" data-scroll-target="#项目目标"><span class="header-section-number">10</span> 项目目标</a></li>
-  <li><a href="#数据要求" id="toc-数据要求" class="nav-link" data-scroll-target="#数据要求"><span class="header-section-number">11</span> 数据要求</a></li>
-  <li><a href="#项目步骤建议仅供参考" id="toc-项目步骤建议仅供参考" class="nav-link" data-scroll-target="#项目步骤建议仅供参考"><span class="header-section-number">12</span> 项目步骤建议（仅供参考）</a>
+  <li><a href="#项目背景" id="toc-项目背景" class="nav-link active" data-scroll-target="#项目背景"><span class="header-section-number">13</span> 项目背景</a></li>
+  <li><a href="#项目目标" id="toc-项目目标" class="nav-link" data-scroll-target="#项目目标"><span class="header-section-number">14</span> 项目目标</a></li>
+  <li><a href="#优化方向建议至少选择两个" id="toc-优化方向建议至少选择两个" class="nav-link" data-scroll-target="#优化方向建议至少选择两个"><span class="header-section-number">15</span> 优化方向建议（至少选择两个）</a>
   <ul class="collapse">
-  <li><a href="#机器学习路线" id="toc-机器学习路线" class="nav-link" data-scroll-target="#机器学习路线"><span class="header-section-number">12.1</span> 机器学习路线</a></li>
-  <li><a href="#另类数据路线" id="toc-另类数据路线" class="nav-link" data-scroll-target="#另类数据路线"><span class="header-section-number">12.2</span> 另类数据路线</a></li>
+  <li><a href="#方向一收益模型构建与优化" id="toc-方向一收益模型构建与优化" class="nav-link" data-scroll-target="#方向一收益模型构建与优化"><span class="header-section-number">15.1</span> 方向一：收益模型构建与优化</a></li>
+  <li><a href="#方向二投资组合优化方法" id="toc-方向二投资组合优化方法" class="nav-link" data-scroll-target="#方向二投资组合优化方法"><span class="header-section-number">15.2</span> 方向二：投资组合优化方法</a></li>
+  <li><a href="#方向三因子择时策略" id="toc-方向三因子择时策略" class="nav-link" data-scroll-target="#方向三因子择时策略"><span class="header-section-number">15.3</span> 方向三：因子择时策略</a></li>
+  <li><a href="#方向四风险归因与管理" id="toc-方向四风险归因与管理" class="nav-link" data-scroll-target="#方向四风险归因与管理"><span class="header-section-number">15.4</span> 方向四：风险归因与管理</a></li>
   </ul></li>
-  <li><a href="#提交要求" id="toc-提交要求" class="nav-link" data-scroll-target="#提交要求"><span class="header-section-number">13</span> 提交要求</a>
+  <li><a href="#项目步骤建议" id="toc-项目步骤建议" class="nav-link" data-scroll-target="#项目步骤建议"><span class="header-section-number">16</span> 项目步骤建议</a></li>
+  <li><a href="#提交要求" id="toc-提交要求" class="nav-link" data-scroll-target="#提交要求"><span class="header-section-number">17</span> 提交要求</a>
   <ul class="collapse">
-  <li><a href="#评分标准" id="toc-评分标准" class="nav-link" data-scroll-target="#评分标准"><span class="header-section-number">13.1</span> 评分标准</a></li>
-  </ul></li>
-  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">14</span> 参考文献</a>
-  <ul class="collapse">
-  <li><a href="#机器学习部分" id="toc-机器学习部分" class="nav-link" data-scroll-target="#机器学习部分"><span class="header-section-number">14.1</span> 机器学习部分</a>
-  <ul class="collapse">
-  <li><a href="#另类数据部分" id="toc-另类数据部分" class="nav-link" data-scroll-target="#另类数据部分"><span class="header-section-number">14.1.1</span> 另类数据部分</a></li>
-  </ul></li>
+  <li><a href="#评分标准" id="toc-评分标准" class="nav-link" data-scroll-target="#评分标准"><span class="header-section-number">17.1</span> 评分标准</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -190,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">项目2：机器学习与替代数据在量化投资中的应用</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></h1>
 </div>
 
 
@@ -207,202 +226,277 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="项目背景" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> 项目背景</h1>
-<p>随着计算能力的提升和数据可获取性的增强，机器学习技术与替代数据已成为现代量化投资的重要前沿领域。传统因子投资策略虽然有坚实的理论基础，但往往依赖于线性关系假设和人工特征工程，难以捕捉市场中存在的复杂非线性关系和动态变化。</p>
-<p>机器学习方法通过其强大的模式识别和预测能力，可以自动从大量数据中提取有价值的信息，发现传统方法难以察觉的市场规律。同时，卫星图像、社交媒体情绪、网络搜索量、信用卡消费等替代数据源为投资决策提供了全新的信息维度，可能包含尚未被市场充分定价的信号。</p>
-<p>在本项目中，你将有机会将机器学习算法应用于投资策略开发，或利用替代数据构建创新的量化模型，从而探索超越传统因子投资的可能性。</p>
+<section id="项目背景" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> 项目背景</h1>
+<p>基于项目1中构建的初步因子投资策略，本项目将进一步探索如何通过先进的组合优化方法、因子择时技术以及风险管理手段来提升策略的风险调整收益。在实践中，因子投资策略的成功不仅取决于所选因子的有效性，还高度依赖于收益模型的精确度、投资组合构建的方法以及风险控制的严谨性。</p>
+<p>量化投资实践表明，即使使用相同的因子，不同的投资组合构建方法也会导致显著不同的投资结果。此外，因子收益在时间序列上表现出的波动性和周期性，为动态调整因子权重（因子择时）提供了可能性。而全面的风险归因分析则有助于更好地理解策略风险来源，进一步优化投资决策。</p>
+<p>在本项目中，你将有机会将项目1中的因子投资策略进行全面优化，探索如何在保持策略稳健性的同时提升其风险调整收益。</p>
 </section>
-<section id="项目目标" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> 项目目标</h1>
-<p>本项目的主要目标是让你设计并实现一个基于机器学习方法和/或替代数据的量化投资策略，该策略能够显著优于传统因子模型的表现。具体目标包括：</p>
+<section id="项目目标" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> 项目目标</h1>
+<p>本项目的主要目标是在项目1所构建因子策略的基础上，通过优化收益预测模型、组合构建方法和风险管理技术，显著提升策略的风险调整收益。具体目标包括：</p>
 <ol type="1">
-<li><strong>模型设计</strong>：选择并实现适合金融预测任务的机器学习模型，或设计基于替代数据的创新预测方法</li>
-<li><strong>特征工程</strong>：从传统金融数据和/或替代数据中提取有预测价值的特征</li>
-<li><strong>模型训练与评估</strong>：使用适当的交叉验证方法训练和评估模型性能</li>
-<li><strong>投资组合构建</strong>：基于模型预测结果设计投资组合构建规则</li>
-<li><strong>绩效分析</strong>：全面评估策略表现，并与传统因子模型和基准指数进行比较</li>
-<li><strong>可解释性分析</strong>：探索模型决策的可解释性，理解预测背后的驱动因素</li>
+<li><strong>收益模型优化</strong>：改进原有因子对收益的预测能力，构建更精确的收益预测模型</li>
+<li><strong>投资组合优化</strong>：设计并实现高效的投资组合构建方法，平衡收益预期与风险控制</li>
+<li><strong>因子择时研究</strong>：探索因子择时的可行性，寻找有效的因子权重动态调整方法</li>
+<li><strong>风险归因分析</strong>：深入分析策略风险来源，优化风险管理方案</li>
+<li><strong>策略评估</strong>：全面评估优化后策略的表现，与原始策略和市场基准进行比较</li>
 </ol>
 </section>
-<section id="数据要求" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> 数据要求</h1>
-<p>你可以使用以下数据资源：</p>
+<section id="优化方向建议至少选择两个" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> 优化方向建议（至少选择两个）</h1>
+<section id="方向一收益模型构建与优化" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="方向一收益模型构建与优化"><span class="header-section-number">15.1</span> 方向一：收益模型构建与优化</h2>
+<p>基于项目1中的因子，构建更有效的收益预测模型：</p>
 <ol type="1">
-<li><strong>传统市场数据</strong>：股票价格、交易量、财务指标等（可从CSMAR或WIND数据库获取）</li>
-<li><strong>替代数据</strong>（至少选择其中一种）：
+<li><strong>预测变量处理</strong>：
 <ul>
-<li>财务报表文本、图片数据</li>
-<li>业绩说明会文本、音频数据</li>
-<li>企业公告文本数据</li>
-<li>供应链数据</li>
-<li>专利数据</li>
-<li>新闻情绪数据</li>
-<li>社交媒体内容</li>
-<li>网络搜索趋势</li>
-<li>卫星图像分析</li>
-<li>其他创新性替代数据源（需提前获得老师批准）</li>
+<li>异常值处理（如缩尾法、中位数绝对偏差法）</li>
+<li>横截面标准化（Z-Score）</li>
+<li>分层合成（先维度内合成再维度间合成）</li>
 </ul></li>
-</ol>
-</section>
-<section id="项目步骤建议仅供参考" class="level1" data-number="12">
-<h1 data-number="12"><span class="header-section-number">12</span> 项目步骤建议（仅供参考）</h1>
-<p>为了顺利完成本项目，以下提供两条技术路线的建议步骤：</p>
-<section id="机器学习路线" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="机器学习路线"><span class="header-section-number">12.1</span> 机器学习路线</h2>
-<ol type="1">
-<li><strong>模型选择与设计</strong>（1周）
+<li><strong>预测方法探索</strong>：
 <ul>
-<li>研究不同机器学习模型在金融预测中的优缺点（如随机森林、梯度提升树、神经网络等）</li>
-<li>了解金融数据的特殊性对模型选择的影响</li>
-<li>制定模型设计方案，确定模型架构</li>
+<li>非参数化预测（条件选股法、排序打分法等）</li>
+<li>参数化预测（截面回归、面板回归等）</li>
+<li>权重分配方法（IC加权、等权重等）</li>
 </ul></li>
-<li><strong>数据准备与特征工程</strong>（2周）
+<li><strong>预测模型评估</strong>：
 <ul>
-<li>整合传统市场数据和基本面数据</li>
-<li>设计并实现特征工程管道</li>
-<li>处理样本不平衡、缺失值和异常值</li>
-<li>特征选择与降维</li>
-</ul></li>
-<li><strong>模型训练与验证</strong>（2周）
-<ul>
-<li>实现时间序列交叉验证框架</li>
-<li>避免前视偏差和数据泄露</li>
-<li>参数调优与模型集成</li>
-<li>评估模型预测能力</li>
-</ul></li>
-<li><strong>投资组合构建与回测</strong>（2周）
-<ul>
-<li>基于模型预测设计组合权重分配规则</li>
-<li>实现考虑交易成本的回测系统</li>
-<li>分析不同市场环境下的模型表现</li>
-<li>风险管理与绩效归因</li>
+<li>使用IC/IR衡量预测能力</li>
+<li>评估预测信号的衰减速度（半衰期）</li>
+<li>分析不同市场环境下的预测稳定性</li>
 </ul></li>
 </ol>
 </section>
-<section id="另类数据路线" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="另类数据路线"><span class="header-section-number">12.2</span> 另类数据路线</h2>
+<section id="方向二投资组合优化方法" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="方向二投资组合优化方法"><span class="header-section-number">15.2</span> 方向二：投资组合优化方法</h2>
+<p>基于收益预测结果，探索不同的投资组合构建方法：</p>
 <ol type="1">
-<li><strong>数据源选择与获取</strong>（1周）
+<li><strong>目标函数选择</strong>：
 <ul>
-<li>评估不同替代数据源的可获取性与潜在价值</li>
-<li>设计数据收集方案</li>
-<li>建立数据获取管道</li>
-<li>确保数据使用合规性</li>
+<li>均值-方差优化（Mean-Variance Optimization）</li>
+<li>最小方差（Minimum Variance）</li>
+<li>最大多样化（Maximum Diversification）</li>
+<li>风险平价（Risk Parity）</li>
 </ul></li>
-<li><strong>数据处理与信号提取</strong>（2周）
+<li><strong>约束条件设计</strong>：
 <ul>
-<li>文本数据：NLP预处理、情感分析、主题建模</li>
-<li>图像数据：计算机视觉技术、特征提取</li>
-<li>结构化替代数据：时间序列处理、异常检测</li>
-<li>信号构建与初步测试</li>
+<li>卖空约束与杠杆约束</li>
+<li>个股/行业集中度约束</li>
+<li>因子暴露约束</li>
+<li>换手率约束</li>
 </ul></li>
-<li><strong>信号评估与整合</strong>（2周）
+<li><strong>交易成本建模</strong>：
 <ul>
-<li>评估信号的预测能力</li>
-<li>信号去噪与转换</li>
-<li>与传统因子的相关性分析</li>
-<li>信号组合方法设计</li>
+<li>线性成本函数</li>
+<li>二次成本函数（考虑冲击成本）</li>
+<li>优化中纳入交易成本的方法</li>
 </ul></li>
-<li><strong>投资组合构建与回测</strong>（2周）
+</ol>
+</section>
+<section id="方向三因子择时策略" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="方向三因子择时策略"><span class="header-section-number">15.3</span> 方向三：因子择时策略</h2>
+<p>探索动态调整因子权重的择时策略：</p>
+<ol type="1">
+<li><strong>基于因子估值的择时</strong>：
 <ul>
-<li>基于替代数据信号设计投资规则</li>
-<li>实现考虑交易成本和信号时效性的回测系统</li>
-<li>与传统因子策略的比较分析</li>
-<li>风险管理与绩效归因</li>
+<li>计算因子估值指标（如价值价差）</li>
+<li>基于历史分位数调整因子权重</li>
+<li>评估估值信号的有效性</li>
+</ul></li>
+<li><strong>基于因子动量的择时</strong>：
+<ul>
+<li>计算短期/中期因子收益动量</li>
+<li>构建因子动量择时规则</li>
+<li>分析因子动量的稳定性</li>
+</ul></li>
+<li><strong>基于市场环境的择时</strong>：
+<ul>
+<li>识别不同市场环境（如牛熊市、高/低波动率环境）</li>
+<li>分析不同因子在各市场环境下的表现规律</li>
+<li>设计基于市场环境的因子配置方法</li>
+</ul></li>
+</ol>
+</section>
+<section id="方向四风险归因与管理" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="方向四风险归因与管理"><span class="header-section-number">15.4</span> 方向四：风险归因与管理</h2>
+<p>深入分析策略风险，优化风险管理方案：</p>
+<ol type="1">
+<li><strong>风险分解与归因</strong>：
+<ul>
+<li>将策略风险分解为系统性风险和特质性风险</li>
+<li>使用风险归因三要素（暴露×波动率×相关性）分析风险来源</li>
+<li>评估不同因子对总风险的贡献</li>
+</ul></li>
+<li><strong>压力测试</strong>：
+<ul>
+<li>设计历史场景和假设场景下的压力测试</li>
+<li>分析极端市场环境下的策略表现</li>
+<li>基于压力测试结果调整风险控制参数</li>
+</ul></li>
+<li><strong>尾部风险管理</strong>：
+<ul>
+<li>监测风险偏好变化和市场相关性激增</li>
+<li>设计避险机制以应对极端市场波动</li>
+<li>评估避险策略的成本与效益</li>
 </ul></li>
 </ol>
 </section>
 </section>
-<section id="提交要求" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> 提交要求</h1>
+<section id="项目步骤建议" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> 项目步骤建议</h1>
 <ol type="1">
+<li><strong>基础分析与方向选择</strong>（1周）
+<ul>
+<li>评估项目1中策略的优势与不足</li>
+<li>选择至少两个优化方向</li>
+<li>设计优化方案</li>
+</ul></li>
+<li><strong>模型构建与实现</strong>（3周）
+<ul>
+<li>实现收益预测模型优化</li>
+<li>设计投资组合优化方法</li>
+<li>构建择时策略或风险管理框架</li>
+</ul></li>
+<li><strong>策略回测与分析</strong>（2周）
+<ul>
+<li>进行全样本回测</li>
+<li>分析不同市场环境下的表现</li>
+<li>比较优化前后的策略表现差异</li>
+</ul></li>
+<li><strong>风险评估与微调</strong>（1周）
+<ul>
+<li>进行风险归因分析</li>
+<li>识别策略的潜在风险点</li>
+<li>微调策略参数以平衡风险和收益</li>
+</ul></li>
+</ol>
+</section>
+<section id="提交要求" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> 提交要求</h1>
+<ol type="1">
+<li><strong>项目报告</strong>（30页以内，报告必须包含这七个章节，但每个章节内的内容可以适当调整）
+<ul>
+<li>项目摘要（不超过300字）</li>
+<li>第一部分：预测变量选择的理论基础
+<ul>
+<li>阐述所选因子的经济学或金融学原理</li>
+<li>回顾相关文献对因子有效性的理论解释与实证证据</li>
+<li>说明因子间相互关系及组合逻辑</li>
+</ul></li>
+<li>第二部分：数据来源与预处理
+<ul>
+<li>详细说明数据来源、时间跨度及频率</li>
+<li>描述数据清洗流程（如异常值处理、缺失值处理等）</li>
+<li>阐述因子构建的具体计算方法</li>
+<li>展示数据的基本统计特征</li>
+</ul></li>
+<li>第三部分：因子策略收益率分析
+<ul>
+<li>分析原始策略的收益特征（年化收益、波动率、最大回撤等）</li>
+<li>评估因子的预测能力（IC值分析、衰减速度等）</li>
+<li>分解策略风险来源（系统性风险与特质性风险）</li>
+<li>识别策略存在的问题并提出优化思路</li>
+</ul></li>
+<li>第四部分：策略优化的具体做法
+<ul>
+<li>详细阐述所选优化方向的方法论</li>
+<li>说明优化算法的实现细节与参数选择</li>
+<li>描述优化过程中的关键决策及其理由</li>
+<li>解释如何平衡模型复杂度与过拟合风险</li>
+</ul></li>
+<li>第五部分：优化后策略的收益率分析
+<ul>
+<li>全面评估优化后策略的表现指标</li>
+<li>与原始策略进行对比分析（超额收益、风险调整收益等）</li>
+<li>进行分子期分析，验证策略在不同市场环境下的稳健性</li>
+<li>展示策略的归因分析结果</li>
+</ul></li>
+<li>第六部分：结论与未来改进方向
+<ul>
+<li>总结优化成果与主要发现</li>
+<li>分析策略可能存在的局限性</li>
+<li>提出进一步改进的具体方向与方法</li>
+<li>探讨策略的实际应用前景</li>
+</ul></li>
+<li>第七部分：参考文献
+<ul>
+<li>按学术规范列出所有引用的文献</li>
+<li>包括学术论文、专业书籍及其他资料来源</li>
+<li>确保引用格式统一且完整</li>
+</ul></li>
+<li>格式要求（请严格按照以下规范撰写项目报告）：
+<ol type="1">
+<li><strong>封面页（第一页）</strong>：
+<ul>
+<li>包含项目题目、项目摘要（不超过300字）、小组成员名单、学号、提交日期等信息，居中排版。</li>
+</ul></li>
+<li><strong>目录页（第二页）</strong>：
+<ul>
+<li>自动生成目录，列出各章节标题及页码。</li>
+</ul></li>
+<li><strong>正文部分（第三页起）</strong>：
+<ul>
+<li>正文采用<strong>中文宋体五号</strong>，1.5倍行距。</li>
+<li>章节标题采用<strong>黑体</strong>，一级标题四号，二级标题小四，三级标题五号，加粗。</li>
+<li>页边距：上、下、左、右均为2.5厘米。</li>
+<li>页码从正文第一页（即第三页）开始，居中显示。</li>
+<li>正文段落首行缩进2字符。</li>
+</ul></li>
+<li><strong>图表要求</strong>：
+<ul>
+<li>图表需居中插入，图题置于图下方，表题置于表上方，均采用五号宋体，编号规范（如“图1-1 XXX”、“表2-1 XXX”）。</li>
+<li>图表需清晰美观，建议使用矢量格式，分辨率不低于300dpi。</li>
+<li>每个图表必须有简要说明，正文中需引用（如“见图2-1”）。</li>
+<li>图表内容应与正文分析紧密相关，避免堆砌无关图表。</li>
+</ul></li>
+<li><strong>排版与格式统一</strong>：
+<ul>
+<li>全文格式规范统一，字体、字号、行距、标题层级、编号等保持一致。</li>
+<li>参考文献格式统一，建议采用APA或Harvard等主流学术格式。</li>
+<li>报告总页数（含封面、目录、正文、参考文献、附录等）<strong>不超过20页</strong>。</li>
+<li>版面整洁，逻辑清晰，避免出现错别字、语法错误和排版混乱。</li>
+</ul></li>
+<li><strong>其他说明</strong>：
+<ul>
+<li>建议使用Word或LaTeX等专业排版工具完成报告。</li>
+<li>如有附录（如代码片段、补充数据等），请单独列于报告末尾，并在目录中标明。</li>
+</ul></li>
+</ol></li>
+</ul></li>
 <li><strong>课堂展示</strong>（10分钟）
 <ul>
-<li>清晰展示项目核心内容和主要发现</li>
-<li>演示代码运行和回测结果</li>
-<li>展示策略在不同市场环境下的表现</li>
-<li>解释模型决策或信号生成的原理</li>
-<li>回答老师提问</li>
+<li>清晰展示优化思路和主要创新点</li>
+<li>呈现优化前后的策略表现对比</li>
+<li>解释优化过程中的关键决策</li>
 </ul></li>
 <li><strong>代码与数据</strong>
 <ul>
 <li>完整、可运行的代码（Python或R）</li>
-<li>数据处理管道和模型实现</li>
 <li>必要的配置文件和依赖说明</li>
 <li>详细的README文件，说明代码结构与运行方法</li>
-<li>替代数据的样本或获取方法说明</li>
 </ul></li>
 <li><strong>提交方式与截止日期</strong>：
 <ul>
-<li>通过学习通平台提交代码与数据（ZIP格式）</li>
+<li>通过学习通平台提交项目报告、代码与数据（ZIP格式）</li>
 <li>同时提交展示幻灯片（PPT或PDF格式）</li>
 <li>截止日期：2025年6月8日23:59</li>
 </ul></li>
 </ol>
-<section id="评分标准" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="评分标准"><span class="header-section-number">13.1</span> 评分标准</h2>
+<section id="评分标准" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="评分标准"><span class="header-section-number">17.1</span> 评分标准</h2>
 <p>项目评分将基于以下几个方面：</p>
 <ul>
-<li><strong>创新性</strong>（20%）：方法设计和数据使用的创新程度</li>
-<li><strong>技术实现</strong>（25%）：机器学习模型或替代数据处理的技术水平</li>
-<li><strong>实证结果</strong>（25%）：策略表现及其相对于传统方法的优势</li>
-<li><strong>风险控制</strong>（15%）：对策略风险的理解和控制</li>
-<li><strong>可解释性</strong>（10%）：对模型决策过程的解释能力</li>
-<li><strong>展示质量</strong>（5%）：报告与展示的清晰度和专业性</li>
+<li><strong>优化思路</strong>（20%）：优化方向的选择与设计思路的合理性</li>
+<li><strong>实现质量</strong>（20%）：代码实现的准确性与效率</li>
+<li><strong>实证结果</strong>（20%）：优化后策略相比原始策略的改进程度</li>
+<li><strong>报告质量</strong>（20%）：报告的完整性、逻辑性与学术规范</li>
+<li><strong>风险控制</strong>（10%）：对策略风险的理解和控制能力</li>
+<li><strong>展示质量</strong>（10%）：展示的清晰度和专业性</li>
 </ul>
-</section>
-</section>
-<section id="参考文献" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> 参考文献</h1>
-<section id="机器学习部分" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="机器学习部分"><span class="header-section-number">14.1</span> 机器学习部分</h2>
-<p>[1] Adämmer, P., &amp; Schüssler, R. A. (2020). Forecasting the equity premium: mind the news!. Review of Finance, 24(6), 1313-1355.</p>
-<p>[2] Cao, S., Jiang, W., Wang, J. L., &amp; Yang, B. (2021). From man vs.&nbsp;machine to man+ machine: The art and AI of stock analyses (No.&nbsp;w28800). National Bureau of Economic Research.</p>
-<p>[3] Chen, X., Cho, Y. H., Dou, Y., &amp; Lev, B. (2022). Predicting future earnings changes using machine learning and detailed financial data. Journal of Accounting Research, 60(2), 467-515.</p>
-<p>[4] Chen, L., Pelger, M., &amp; Zhu, J. (2023). Deep learning in asset pricing. Management Science, 70(2), 3329-3348.</p>
-<p>[5] Dong, X., Li, Y., Rapach, D. E., &amp; Zhou, G. (2022). Anomalies and the expected market return. The Journal of Finance, 77(1), 639-681.</p>
-<p>[6] Easley, D., López de Prado, M., O’Hara, M., &amp; Zhang, Z. (2021). Microstructure in the machine age. The Review of Financial Studies, 34(7), 3316-3363.</p>
-<p>[7] Freyberger, J., Neuhierl, A., &amp; Weber, M. (2020). Dissecting characteristics nonparametrically. The Review of Financial Studies, 33(5), 2326-2377.</p>
-<p>[8] Gu, S., Kelly, B., &amp; Xiu, D. (2020). Empirical asset pricing via machine learning. The Review of Financial Studies, 33(5), 2223-2273.</p>
-<p>[9] Jiang, J., Kelly, B. T., &amp; Xiu, D. (2023). (Re-)Imag(in)ing price trends. Journal of Finance, 78(6), 3193-3249.</p>
-<p>[10] Ke, Z. T., Kelly, B. T., &amp; Xiu, D. (2019). Predicting returns with text data (No.&nbsp;w26186). National Bureau of Economic Research.</p>
-<p>[11] Kozak, S., Nagel, S., &amp; Santosh, S. (2020). Shrinking the cross-section. Journal of Financial Economics, 135(2), 271-292.</p>
-<p>[12] Leippold, M., Wang, Q., &amp; Zhou, W. (2022). Machine learning in the Chinese stock market. Journal of Financial Economics, 145(2), 64-82.</p>
-<section id="另类数据部分" class="level3" data-number="14.1.1">
-<h3 data-number="14.1.1" class="anchored" data-anchor-id="另类数据部分"><span class="header-section-number">14.1.1</span> 另类数据部分</h3>
-<p>[13] Bartov, E., Faurel, L., &amp; Mohanram, P. S. (2018). Can Twitter help predict firm-level earnings and stock returns?. The Accounting Review, 93(3), 25-57.</p>
-<p>[14] Bernard, D., Blackburne, T., &amp; Thornock, J. (2020). Information flows among rivals and corporate investment. Journal of Financial Economics, 136(3), 760-779.</p>
-<p>[15] Brown, N. C., Crowley, R. M., &amp; Elliott, W. B. (2020). What are you saying? Using topic to detect financial misreporting. Journal of Accounting Research, 58(1), 237-291.</p>
-<p>[16] Buehlmaier, M. M., &amp; Whited, T. M. (2018). Are financial constraints priced? Evidence from textual analysis. The Review of Financial Studies, 31(7), 2693-2728.</p>
-<p>[17] Cao, S., Jiang, W., Yang, B., &amp; Zhang, A. L. (2023). How to talk when a machine is listening: Corporate disclosure in the age of AI. The Review of Financial Studies, 36(9), 3603-3642.</p>
-<p>[18] Cong, L., T., Liang, X., Zhang, &amp; Zhu, W. (2022). Textual Factors: A Scalable, interpretable, and data-driven Approach to Analyzing Unstructured Information. (w33168) Management Science 68(11), 7893-8359.</p>
-<p>[19] Cookson, J. A., &amp; Niessner, M. (2020). Why don’t we agree? Evidence from a social network of investors. The Journal of Finance, 75(1), 173-228.</p>
-<p>[20] Da, Z., Huang, X., &amp; Jin, L. J. (2021). Extrapolative beliefmusics in the cross-section: What can we learn from the crowds?. Journal of Financial Economics, 140(1), 175-196.</p>
-<p>[21] Edmans, A., Fernandez-Perez, A., Garel, A., &amp; Indriawan, I. (2022). Music sentiment and stock returns around the world. Journal of Financial Economics, 145(2), 234-254.</p>
-<p>[22] Eisdorfer, A., Froot, K., Ozik, G., &amp; Sadka, R. (2022). Competition links and stock returns. The Review of Financial Studies, 35(9), 4300-4340.</p>
-<p>[23] Florackis, C., Louca, C., Michaely, R., &amp; Weber, M. (2023). Cybersecurity risk. The Review of Financial Studies, 36(1), 351-407.</p>
-<p>[24] Garcia, D., Hu, X., &amp; Rohrer, M. (2023). The colour of finance words. Journal of Financial Economics, 147(3), 525-549.</p>
-<p>[25] Gómez-Cram, R., &amp; Grotteria, M. (2022). Real-time price discovery via verbal communication: Method and application to Fedspeak. Journal of Financial Economics, 143(3), 993-1025.</p>
-<p>[26] Green, T. C., Huang, R., Wen, Q., &amp; Zhou, D. (2019). Crowdsourced employer reviews and stock returns. Journal of Financial Economics, 134(1), 236-251.</p>
-<p>[27] Hanley, K. W., &amp; Hoberg, G. (2019). Dynamic interpretation of emerging risks in the financial sector. The Review of Financial Studies, 32(12), 4543-4603.</p>
-<p>[28] Hassan, T. A., Hollander, S., Van Lent, L., &amp; Tahoun, A. (2019). Firm-level political risk: Measurement and effects. The Quarterly Journal of Economics, 134(4), 2135-2202.</p>
-<p>[29] Hoberg, G., &amp; Phillips, G. (2016). Text-based network industries and endogenous product differentiation. Journal of Political Economy, 124(5), 1423-1465.</p>
-<p>[30] Hsieh, T. S., Kim, J. B., Wang, R. R., &amp; Wang, Z. (2020). Seeing is believing? Executives’ facial trustworthiness, auditor tenure, and audit fees. Journal极 of Accounting and Economics, 69(1), 101260.</p>
-<p>[31] Huang, X., Ivković, Z., Jiang, J. X., &amp; Wang, I. Y. (202极3). Angel investment and first impressions. Journal of Financial Economics, 149(2), 161-178.</p>
-<p>[32] Huang, A. H., Zang, A. Y., &amp; Zheng, R. (2014). Evidence on the information content of text in analyst reports. The Accounting Review, 89(6), 2151-2180.</p>
-<p>[33] Kalmenovitz, J. (2023). Regulatory intensity and firm-specific exposure. The Review of Financial Studies, 36(8), 3311-3347.</p>
-<p>[34] Li, K., Mai, F., Shen, R., &amp; Yan, X. (2021). Measuring corporate culture using machine learning. The Review of Financial Studies, 34(7), 3265-3315.</p>
-<p>[35] Lowry, M., Michaely, R., &amp; Volkova, E. (2020). Information revealed through the regulatory process: Interactions between the SEC and companies ahead of their IPO. The Review of Financial Studies, 33(12), 5510-5554.</p>
-<p>[36] Manela, A., &amp; Moreira, A. (2017). News implied volatility and disaster concerns. Journal of Financial Economics, 123(1), 137-162.</p>
-<p>[37] Mukherjee, A., Panayotov极, G., &amp; Shon, J. (2021). Eye in the sky: Private satellites and government macro data. Journal of Financial Economics, 141(1), 234-254.</p>
-<p>[38] Obaid, K., &amp; Pukthuanthong, K. (2022). A picture is worth a thousand words: Measuring investor sentiment by combining machine learning and photos from news. Journal of Financial Economics, 144(1), 273-297.</p>
-<p>[39] Sautner, Z., Van Lent, L., Vilkov, G., &amp; Zhang, R. (2023). Firm‐level climate change exposure. The Journal of Finance, 78(3), 1449-1498.</p>
-<p>[40] Tang, V. W. (2018). Wisdom of crowds: Cross‐sectional variation in the informativeness of third‐party‐generated product information on Twitter. Journal of Accounting Research, 56(3), 989-1034.</p>
-<p>[41] Zhu, C. (2019). Big data as a governance mechanism. The Review of Financial Studies, 32(5), 2021-2061.</p>
 
 
-</section>
 </section>
 </section>
 
@@ -830,7 +924,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./project1_factor.html" class="pagination-link" aria-label="项目1：因子投资策略构建">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

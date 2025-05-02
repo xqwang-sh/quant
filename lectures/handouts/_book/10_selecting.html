@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; 收益模型与组合优化 – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11_timing.html" rel="next">
+<link href="./lab03_ff3test.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_selecting.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM) 实证检验</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French三因子模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">实践：构建和回测中国特色三因子模型(CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab11_EP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#part-1-收益率预测模型寻找阿尔法" id="toc-part-1-收益率预测模型寻找阿尔法" class="nav-link active" data-scroll-target="#part-1-收益率预测模型寻找阿尔法"><span class="header-section-number">7.1</span> Part 1: 收益率预测模型——寻找阿尔法</a>
+  <ul class="collapse">
+  <li><a href="#引言" id="toc-引言" class="nav-link" data-scroll-target="#引言"><span class="header-section-number">7.1.1</span> 引言</a></li>
+  <li><a href="#收益率模型获取阿尔法" id="toc-收益率模型获取阿尔法" class="nav-link" data-scroll-target="#收益率模型获取阿尔法"><span class="header-section-number">7.1.2</span> 1. 收益率模型：获取”阿尔法”</a></li>
+  </ul></li>
+  <li><a href="#part-2-投资组合优化与实践考量" id="toc-part-2-投资组合优化与实践考量" class="nav-link" data-scroll-target="#part-2-投资组合优化与实践考量"><span class="header-section-number">7.2</span> Part 2: 投资组合优化与实践考量</a>
+  <ul class="collapse">
+  <li><a href="#过渡" id="toc-过渡" class="nav-link" data-scroll-target="#过渡"><span class="header-section-number">7.2.1</span> 过渡</a></li>
+  <li><a href="#风险模型简介" id="toc-风险模型简介" class="nav-link" data-scroll-target="#风险模型简介"><span class="header-section-number">7.2.2</span> 2.1 风险模型简介</a></li>
+  <li><a href="#收益与风险模型错位-misalignment" id="toc-收益与风险模型错位-misalignment" class="nav-link" data-scroll-target="#收益与风险模型错位-misalignment"><span class="header-section-number">7.2.3</span> 2.2 收益与风险模型错位 (Misalignment)</a></li>
+  <li><a href="#常见目标函数" id="toc-常见目标函数" class="nav-link" data-scroll-target="#常见目标函数"><span class="header-section-number">7.2.4</span> 2.3 常见目标函数</a></li>
+  <li><a href="#不同目标函数的比较与等价条件" id="toc-不同目标函数的比较与等价条件" class="nav-link" data-scroll-target="#不同目标函数的比较与等价条件"><span class="header-section-number">7.2.5</span> 2.4 不同目标函数的比较与等价条件</a></li>
+  <li><a href="#常见约束条件" id="toc-常见约束条件" class="nav-link" data-scroll-target="#常见约束条件"><span class="header-section-number">7.2.6</span> 2.5 常见约束条件</a></li>
+  <li><a href="#交易成本模型" id="toc-交易成本模型" class="nav-link" data-scroll-target="#交易成本模型"><span class="header-section-number">7.2.7</span> 2.6 交易成本模型</a></li>
+  <li><a href="#补充-回测与评估" id="toc-补充-回测与评估" class="nav-link" data-scroll-target="#补充-回测与评估"><span class="header-section-number">7.2.8</span> 3. [补充] 回测与评估</a></li>
+  </ul></li>
+  <li><a href="#结论与总结" id="toc-结论与总结" class="nav-link" data-scroll-target="#结论与总结"><span class="header-section-number">7.3</span> 结论与总结</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>课程目标:</strong> 本讲旨在深入探讨量化投资策略构建中的两个核心环节：如何构建有效的<strong>股票收益率预测模型</strong>以捕捉阿尔法，以及如何运用<strong>投资组合优化</strong>技术将预测转化为实际的投资组合，同时有效管理风险和成本。我们将覆盖从因子挖掘、筛选、预测到组合构建、约束管理、风险模型及回测评估的全过程。</p>
+<p><strong>课程结构:</strong></p>
+<ul>
+<li><strong>Part 1: 收益率预测模型——寻找阿尔法</strong>
+<ul>
+<li>引言与基本概念</li>
+<li>预测变量的来源与实例</li>
+<li>预测变量的筛选标准详解</li>
+<li>收益率预测的具体流程与方法</li>
+</ul></li>
+<li><strong>Part 2: 投资组合优化与实践考量</strong>
+<ul>
+<li>风险模型简介</li>
+<li>收益与风险模型错位问题</li>
+<li>常见的组合优化目标函数</li>
+<li>优化中的常见约束条件</li>
+<li>交易成本的考量</li>
+<li>策略回测与评估要点</li>
+</ul></li>
+<li>结论与总结</li>
+</ul>
+<hr>
+<section id="part-1-收益率预测模型寻找阿尔法" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="part-1-收益率预测模型寻找阿尔法"><span class="header-section-number">7.1</span> Part 1: 收益率预测模型——寻找阿尔法</h2>
+<section id="引言" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="引言"><span class="header-section-number">7.1.1</span> 引言</h3>
+<p>在量化投资的世界里，我们追求的是系统性、纪律性地获取超越市场基准的收益，即阿尔法 (Alpha)。这趟旅程通常始于对未来资产收益的预测。为何需要复杂的模型？因为市场有效性假说告诉我们，无风险的超额收益难以持续存在。我们需要依赖严谨的数据分析和模型构建，发掘市场中可能存在的定价偏差或风险补偿机会。</p>
+<p>然而，仅仅拥有好的预测是不够的。如何将成百上千个股票的预测收益率转化为一个实际可投资、风险可控的投资组合？这就是投资组合优化的用武之地。它帮助我们在预期收益、风险暴露、交易成本和各种现实约束之间做出最优的权衡。</p>
+<p>本讲座将遵循 <strong>预测 -&gt; 优化</strong> 的逻辑链条，带你深入了解这两个关键步骤。</p>
+</section>
+<section id="收益率模型获取阿尔法" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="收益率模型获取阿尔法"><span class="header-section-number">7.1.2</span> 1. 收益率模型：获取”阿尔法”</h3>
+<section id="基本术语澄清" class="level4" data-number="7.1.2.1">
+<h4 data-number="7.1.2.1" class="anchored" data-anchor-id="基本术语澄清"><span class="header-section-number">7.1.2.1</span> 1.1 基本术语澄清</h4>
+<p>在深入细节之前，必须厘清几个核心概念，它们的混淆常常导致误解：</p>
+<ul>
+<li><strong>预测变量 (Return Predictors):</strong> 这是我们用来<strong>预测</strong>未来股票（或其他资产）收益率的指标、特征或信号。例如，市净率 (Book-to-Market)、过去12个月的动量、分析师盈利预测修正等。<strong>这是我们构建收益模型的基础。</strong></li>
+<li><strong>因子 (Factors):</strong> 在学术金融（特别是资产定价理论）中，“因子”通常指解释资产收益<strong>共同变动</strong>的系统性风险来源（如市场因子、规模因子、价值因子），或者是构建用于捕捉这些风险溢价的<strong>投资组合</strong>（如Fama-French三因子模型中的SMB, HML投资组合）。</li>
+<li><strong>阿尔法 (Alpha, α):</strong> 在资产定价模型（如CAPM或多因子模型）的语境下，阿尔法指模型<strong>无法解释</strong>的那部分超额收益，通常被视为衡量投资经理技巧或策略有效性的指标（定价误差）。</li>
+</ul>
+<p><strong>关键区别与联系:</strong></p>
+<ul>
+<li>我们寻找的<strong>预测变量</strong>，其有效性可能来源于它能捕捉到未被主流风险<strong>因子</strong>定价的<strong>阿尔法</strong>（错误定价），也可能因为它本身就是对某种风险<strong>因子</strong>暴露的衡量（风险补偿）。例如，低市净率（预测变量）可能有效，因为它代表了价值<strong>因子</strong>的暴露（获取价值风险溢价），也可能因为它捕捉到了市场对价值股的暂时性错误定价（获取<strong>阿尔法</strong>）。</li>
+<li>业界的”阿尔法因子”通常指的就是我们所说的”预测变量”，这与学术定义有所不同。<strong>本讲将主要使用”预测变量”来指代用于预测收益的指标，用”因子”指代风险因子或因子组合，用”阿尔法”指代定价模型残差或超额收益目标。</strong> 清晰区分这些概念，有助于我们理解预测的来源，并为后续的风险管理和组合优化打下基础。</li>
+</ul>
+</section>
+<section id="寻找预测变量" class="level4" data-number="7.1.2.2">
+<h4 data-number="7.1.2.2" class="anchored" data-anchor-id="寻找预测变量"><span class="header-section-number">7.1.2.2</span> 1.2 寻找预测变量</h4>
+<p>预测变量的来源多种多样，主要可以归为以下几类：</p>
+<ul>
+<li><strong>基于传统量价和财务数据发现新异象:</strong>
+<ul>
+<li>这是最经典也是最常用的领域。研究者通过分析历史数据寻找能够预测未来收益的模式。</li>
+<li><strong>实例:</strong>
+<ul>
+<li><strong>价值类:</strong> 低市净率 (P/B)、低市盈率 (P/E)、低市销率 (P/S)、高股息率 (Dividend Yield)。逻辑：买入被低估的公司。</li>
+<li><strong>动量类:</strong> 过去6-12个月收益率高 (Momentum)。逻辑：赢者恒赢的趋势持续。</li>
+<li><strong>反转类:</strong> 过去1个月收益率低 (Short-term Reversal)。逻辑：对短期过度反应的修正。</li>
+<li><strong>质量类:</strong> 高净资产收益率 (ROE)、高毛利率 (Gross Profitability)、低财务杠杆、稳健的盈利增长。逻辑：优质公司长期表现更优。</li>
+<li><strong>低风险/低波动类:</strong> 低历史波动率 (Low Volatility)、低Beta。逻辑：“低风险异象”，低风险股票反而有更高的风险调整后收益。</li>
+<li>其他：小市值 (Size，尽管争议较大)、高流动性/低流动性（根据市场环境）、机构持股变化、分析师预期修正等。</li>
+</ul></li>
+</ul></li>
+<li><strong>改进已有变量:</strong>
+<ul>
+<li>随着市场演变和研究深入，对现有变量的简单应用可能效果减弱，需要不断改进。</li>
+<li><strong>实例:</strong>
+<ul>
+<li><strong>考虑无形资产的价值因子:</strong> 传统的P/B可能低估了技术、医药等行业公司的价值，可以尝试加入研发投入、品牌价值等调整Book Value。</li>
+<li><strong>经行业调整的因子:</strong> 某些指标在行业间不可比（如金融业的P/B与其他行业差异巨大），需要进行行业中性化处理或计算行业内相对值。</li>
+<li><strong>动态调整因子:</strong> 某些因子的有效性可能具有周期性（如动量在市场剧烈反转时可能失效），需要结合市场状态进行调整或切换。</li>
+</ul></li>
+</ul></li>
+<li><strong>使用另类数据 (Alternative Data):</strong>
+<ul>
+<li>随着技术发展，非传统的、结构化程度较低的数据源成为新的阿尔法矿藏。</li>
+<li><strong>实例:</strong>
+<ul>
+<li><strong>文本数据:</strong> 利用自然语言处理 (NLP) 技术分析新闻报道、社交媒体帖子、分析师电话会议记录、公司公告，提取市场情绪、关注度、管理层态度等信息。</li>
+<li><strong>卫星图像:</strong> 分析停车场车辆密度预测零售商业绩，监测工厂活动判断工业产出，评估港口货物吞吐量判断贸易活跃度，观察农作物长势预测产量。</li>
+<li><strong>信用卡/电子支付交易数据:</strong> 分析消费者支出模式、特定商户流水，提前预测公司销售额和经济景气度。</li>
+<li><strong>供应链数据:</strong> 通过追踪公司间的订单流、物流信息，判断上下游需求变化，预测行业趋势。</li>
+<li><strong>网络爬虫数据:</strong> 抓取电商平台价格与销量、招聘网站职位数量、APP下载量与活跃度等。</li>
+<li><strong>地理位置数据:</strong> 通过手机信令分析人流密度，预测商场、景点的客流量。</li>
+<li><strong>ESG数据:</strong> 环境、社会、公司治理数据，用于评估公司的可持续性和潜在风险。</li>
+</ul></li>
+<li><strong>优势与挑战:</strong> 另类数据通常<strong>时效性强</strong>，能提供传统数据以外的<strong>独特视角</strong>。但面临<strong>数据清洗难度大、非结构化处理复杂、获取成本高、可能存在隐私和合规风险、历史数据短、信噪比可能较低</strong>等挑战。需要强大的数据处理能力和模型构建能力。</li>
+</ul></li>
+</ul>
+</section>
+<section id="挑选预测变量的标准" class="level4" data-number="7.1.2.3">
+<h4 data-number="7.1.2.3" class="anchored" data-anchor-id="挑选预测变量的标准"><span class="header-section-number">7.1.2.3</span> 1.3 挑选预测变量的标准</h4>
+<p>并非所有看似相关的变量都能成为好的预测变量。一个理想的预测变量应满足以下六大核心标准：</p>
+<ol type="1">
+<li><strong>逻辑性 (Intuitiveness):</strong>
+<ul>
+<li><strong>要求:</strong> 变量背后应有合理的经济学或行为金融学解释，说明它为什么能够预测未来收益（是风险补偿还是错误定价？）。</li>
+<li><strong>重要性:</strong> 这是避免<strong>数据挖掘 (Data Mining / Data Snooping)</strong> 的第一道防线。如果一个变量缺乏逻辑支撑，即使历史回测表现很好，也可能是偶然发现的伪相关，未来很可能失效。</li>
+<li><strong>检验:</strong> 进行文献回顾，思考其经济学含义，能否构建一个令人信服的故事。</li>
+</ul></li>
+<li><strong>持续性 (Persistence):</strong>
+<ul>
+<li><strong>要求:</strong> 实证数据必须支持理论逻辑，变量的预测能力需要在样本内外都能持续存在，尤其是在样本外（Out-of-Sample）。</li>
+<li><strong>检验方法:</strong>
+<ul>
+<li><strong>信息系数 (Information Coefficient, IC):</strong>
+<ul>
+<li>计算：每期计算预测变量 <span class="math inline">\(z_{it}\)</span> （通常是截面排序百分位或标准化值）与下一期收益率 <span class="math inline">\(R_{it+1}\)</span> 的<strong>截面相关系数</strong> <span class="math inline">\(IC_t = corr(z_{it}, R_{it+1})\)</span>。</li>
+<li>评估：
+<ul>
+<li><strong>IC均值 (Mean IC):</strong> <span class="math inline">\(\overline{IC} = \frac{1}{T} \sum_{t=1}^T IC_t\)</span>。衡量平均预测能力。通常要求绝对值大于2%（月频）或1%（日频）才被认为有较好的潜力，但无绝对标准。</li>
+<li><strong>IC标准差 (Std Dev of IC):</strong> <span class="math inline">\(\sigma_{IC}\)</span>。衡量预测能力稳定性。</li>
+<li><strong>信息比率 (Information Ratio, IR):</strong> <span class="math inline">\(IR = \frac{\overline{IC}}{\sigma_{IC}}\)</span>。衡量预测能力的<strong>夏普比率</strong>，越高越好，表示预测能力越稳定。IR &gt; 0.5 通常被认为不错。</li>
+<li><strong>IC的t统计量:</strong> <span class="math inline">\(t(IC) = \frac{\overline{IC}}{\sigma_{IC} / \sqrt{T}}\)</span>。检验IC均值是否显著异于零，通常要求绝对值大于2。</li>
+</ul></li>
+<li><strong>可视化:</strong> 绘制IC值的时间序列图，观察其稳定性。绘制IC的分布直方图。 [此处可插入图表演示IC时间序列和分布]</li>
+</ul></li>
+<li><strong>分层回测 (Portfolio Sort / Backtesting):</strong>
+<ul>
+<li>步骤：
+<ol type="1">
+<li>每期期末，根据预测变量 <span class="math inline">\(z_{it}\)</span> 对所有股票进行排序。</li>
+<li>将股票分成N组（如5组或10组，称为Quintiles或Deciles）。</li>
+<li>构建多空组合：做多表现预期最好的一组（Top Quintile/Decile），做空表现预期最差的一组（Bottom Quintile/Decile）。通常是等权重或市值加权。</li>
+<li>计算该多空组合在下一期的收益率。</li>
+<li>重复以上步骤，得到多空组合的净值曲线。</li>
+</ol></li>
+<li>评估：观察净值曲线是否长期向上，计算年化收益、夏普比率、最大回撤等指标。检验多空组合平均收益的t统计量。 [此处可插入典型的分层回测净值曲线图]</li>
+</ul></li>
+<li><strong>因子衰减 (Alpha Decay):</strong> 关注预测能力是否随时间减弱。原因可能是因子被市场发现和学习后逐渐失效，或者市场结构发生变化。检验方法包括比较前期和后期的IC或回测表现。</li>
+</ul></li>
+</ul></li>
+<li><strong>信息增量性 (Information Increasement):</strong>
+<ul>
+<li><strong>要求:</strong> 新发现的预测变量相对于已有的变量（尤其是已知的因子，如市值、价值、动量等）应该能提供<strong>额外的、独立的</strong>预测信息，而不是已有信息的简单重复。</li>
+<li><strong>检验方法:</strong>
+<ul>
+<li><strong>变量相关性分析:</strong> 计算新变量与已有变量（或其他候选变量）之间的相关系数。如果相关性过高（如绝对值 &gt; 0.7），则增量信息有限，可能存在共线性问题。</li>
+<li><strong>条件排序法 (Conditional Sort):</strong> 先根据一个已知因子（如市值）将股票分组，然后在每个组内再根据新变量排序并构建多空组合。观察新变量在控制了已知因子后是否仍然有效。</li>
+<li><strong>Fama-MacBeth 回归:</strong> 这是检验增量信息最常用的方法。
+<ul>
+<li>模型：在每个截面期 <span class="math inline">\(t\)</span>，用新变量 <span class="math inline">\(z_{new, it}\)</span> 和一组控制变量 <span class="math inline">\(z_{control, kit}\)</span> （如市场Beta、市值、账面市值比、动量等）同时预测下一期收益 <span class="math inline">\(R_{it+1}\)</span>： [ R_{it+1} = <em>{0t} + </em>{new, t} z_{new, it} + <em>k </em>{k, t} z_{control, kit} + _{it+1} ]</li>
+<li>检验：计算每个控制变量系数的时间序列均值 <span class="math inline">\(\bar{\gamma}_k\)</span> 及其t统计量。关键是看新变量的系数均值 <span class="math inline">\(\bar{\gamma}_{new}\)</span> 是否在统计上显著异于零（t绝对值 &gt; 2）。如果显著，说明在控制了其他因素后，新变量仍有独立的预测能力。</li>
+</ul></li>
+<li><strong>变量正交化:</strong> 将新变量对已有因子进行回归，取残差作为新的、与已有因子正交的变量，再检验这个残差项的预测能力。</li>
+</ul></li>
+</ul></li>
+<li><strong>稳健性 (Robustness):</strong>
+<ul>
+<li><strong>要求:</strong> 预测变量的有效性不应过度依赖于特定的参数设定、算法选择、样本区间或市场环境。</li>
+<li><strong>检验方法:</strong>
+<ul>
+<li><strong>参数敏感性:</strong> 改变因子的计算方式（如动量因子用过去11个月还是12个月？价值因子用P/B还是P/E？）、异常值处理方法（Winsorization比例？MAD阈值？）、数据频率（日频？周频？月频？）等，观察结果是否依然显著。</li>
+<li><strong>算法敏感性:</strong> 如果使用了复杂的模型（如机器学习），尝试不同的算法或超参数设定。</li>
+<li><strong>样本区间检验:</strong> 将整个样本期分成几段（如按时间前后分、按牛熊市分），检验因子在不同子样本内的表现是否一致。</li>
+<li><strong>不同市场检验:</strong> 如果条件允许，检验该因子在不同国家或地区的市场（如A股、港股、美股）是否同样有效。</li>
+<li><strong>不同资产类别检验:</strong> 检验因子是否能推广到其他资产（如债券、商品、货币）。</li>
+</ul></li>
+</ul></li>
+<li><strong>可投资性 (Investability):</strong>
+<ul>
+<li><strong>要求:</strong> 因子策略需要在现实中能够以合理的成本和规模进行投资。</li>
+<li><strong>考量因素:</strong>
+<ul>
+<li><strong>信息衰减速度 (Half-life of Information):</strong> 因子信号从产生到失效的时间有多长？高频因子（如基于订单簿信息）可能几分钟或几小时就失效了，需要极快的交易系统。低频因子（如基于年报的价值因子）可能持续几个月甚至几年。</li>
+<li><strong>换手率 (Turnover):</strong> 基于该因子构建的投资组合需要多频繁地调整持仓？换手率 = （期间买入金额 + 期间卖出金额） / 2 / 期初资产净值。高换手率意味着高交易成本。</li>
+<li><strong>交易成本 (Transaction Costs):</strong> 包括显性成本（佣金、印花税）和隐性成本（冲击成本、价差成本）。冲击成本指大额交易对市场价格产生不利影响，与交易规模和市场流动性有关。</li>
+<li><strong>流动性 (Liquidity):</strong> 因子是否集中在低流动性的股票上？如果是，当资金规模扩大时，可能难以按照理想价格买卖，导致实际收益低于回测收益。</li>
+<li><strong>策略容量 (Strategy Capacity):</strong> 该策略能够容纳多大的资金规模？当管理资金超过一定规模后，交易成本会显著上升，或者因子有效性本身会因为市场冲击而下降，从而限制了策略的扩展能力。</li>
+</ul></li>
+</ul></li>
+<li><strong>普适性 (Pervasiveness):</strong>
+<ul>
+<li><strong>要求:</strong> 最优秀的因子往往具有一定的普适性，即它们不仅在最初发现的市场或资产类别中有效，在其他市场、其他资产类别、不同时间段内也或多或少能观察到类似的效果。</li>
+<li><strong>意义:</strong> 这进一步增强了我们对因子逻辑性和稳健性的信心，降低了它是数据挖掘偶然结果的可能性。</li>
+<li><strong>实例:</strong> Fama-French因子中的价值和规模效应、动量效应，在不同国家股票市场、甚至其他资产类别（如债券、商品）中都有文献支持其存在性（尽管强度和形式可能不同）。</li>
+</ul></li>
+</ol>
+<p><strong>总结:</strong> 一个真正好的预测变量需要通过这六大标准的严格考验，这是一个系统性的筛选过程。</p>
+</section>
+<section id="收益率预测流程" class="level4" data-number="7.1.2.4">
+<h4 data-number="7.1.2.4" class="anchored" data-anchor-id="收益率预测流程"><span class="header-section-number">7.1.2.4</span> 1.4 收益率预测流程</h4>
+<p>将筛选出的合格预测变量应用于实际预测，通常遵循以下步骤：</p>
+<ol type="1">
+<li><strong>确定投资范围 (Universe Selection):</strong>
+<ul>
+<li><strong>原始股票池:</strong> 首先定义一个基础范围，如全部A股、沪深300成分股、中证500成分股、特定行业（如医药、科技）等。</li>
+<li><strong>优化股票池 (剔除黑名单):</strong> 在原始池基础上，剔除不适合量化交易或风险过高的股票：
+<ul>
+<li><strong>流动性过低:</strong> 如日均交易额过小、长期停牌的股票。</li>
+<li><strong>风险过高:</strong> ST、*ST股票、即将退市股、净资产为负的公司。</li>
+<li><strong>上市时间过短:</strong> 次新股（通常波动大，历史数据短，规律不稳定）。</li>
+<li>[可选] <strong>某些负面特征:</strong> 如极高换手率、极高波动率、估值极高但盈利能力差、近期有重大负面事件（如财务造假、监管处罚）等。 <strong>目标:</strong> 聚焦于具有较好流动性和基本面、行为相对规范的股票池，提高模型的稳定性和有效性。</li>
+</ul></li>
+</ul></li>
+<li><strong>剔除预测变量异常值 (Outlier Treatment):</strong>
+<ul>
+<li><strong>原因:</strong> 原始因子数据中可能存在极端值，会对后续的标准化、打分或回归产生不成比例的影响，需要处理。</li>
+<li><strong>常用方法:</strong>
+<ul>
+<li><strong>缩尾法 (Winsorization):</strong> 将超出特定分位数（如1%和99%）的值替换为边界值。简单直接，但可能损失信息。</li>
+<li><strong>截尾法 (Trimming):</strong> 直接删除超出特定分位数的值。损失信息更多。</li>
+<li><strong>标准差法:</strong> 将超出均值加减 N 倍标准差（如 N=3）的值进行处理（缩尾或截尾）。对数据分布形态敏感，易受极端值本身影响。</li>
+<li><strong>中位数绝对偏差法 (Median Absolute Deviation, MAD):</strong>
+<ul>
+<li>计算: <span class="math inline">\(MAD = median(|X_i - median(X)|)\)</span>。</li>
+<li>处理: 将 <span class="math inline">\(X_i\)</span> 替换为 <span class="math inline">\(median(X) \pm N \times MAD / 0.6745\)</span> （分母是为了在正态分布下近似标准差）。N通常取3或5。</li>
+<li>优点: 对极端值不敏感，更为稳健。 <strong>推荐优先考虑MAD法。</strong></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>预测收益率 (Return Forecasting):</strong>
+<ul>
+<li><strong>非参数化预测:</strong>
+<ul>
+<li><strong>条件选股法:</strong> 根据多个指标设定阈值筛选股票，简单直接但可能持股不稳定、易过拟合。</li>
+<li><strong>排序打分法 (Ranking and Scoring):</strong>
+<ol type="1">
+<li>对每个通过检验的预测变量 <span class="math inline">\(k\)</span>，计算其因子值 <span class="math inline">\(z_{kit}\)</span>。</li>
+<li><strong>因子值标准化:</strong> 通常进行截面标准化，使其在不同因子间可比。常用<strong>Z-Score</strong>：<span class="math inline">\(Z_{Score, kit} = \frac{z_{kit} - mean_i(z_{kit})}{std_i(z_{kit})}\)</span> （注意是每期对所有股票计算均值和标准差）。</li>
+<li><strong>多因子合成综合得分:</strong> 将多个标准化后的因子得分合成为一个综合得分 <span class="math inline">\(Z_{Score, it}\)</span>。
+<ul>
+<li><strong>等权合成:</strong> <span class="math inline">\(Z_{Score, it} = \sum_{k} \frac{1}{K} Z_{Score, kit}\)</span>。</li>
+<li><strong>IC加权合成:</strong> <span class="math inline">\(w_k \propto \overline{IC}_k\)</span> 或 <span class="math inline">\(w_k \propto IR_k = \overline{IC}_k / \sigma_{IC_k}\)</span> 或 <span class="math inline">\(w_k \propto t(IC_k)\)</span>。给历史表现更好、更稳定的因子赋予更高权重。</li>
+<li><strong>分层合成:</strong> 先在同一大类（如价值类、动量类）内部进行合成，再在不同大类之间进行合成。可以降低因子间的相关性干扰。</li>
+</ul></li>
+<li><strong>最终排序:</strong> 根据综合得分 <span class="math inline">\(Z_{Score, it}\)</span> 对股票池中的股票进行排序，预期得分越高的股票未来收益越高。 <strong>优点:</strong> 选股数量可控，相对简单。<strong>缺点:</strong> 未完全利用因子与收益间的定量关系，权重设定相对主观。</li>
+</ol></li>
+</ul></li>
+<li><strong>参数化预测 (线性回归):</strong>
+<ul>
+<li>目标：建立预测变量 <span class="math inline">\(z_{it-1}\)</span> 与未来收益 <span class="math inline">\(R_{it}\)</span> 之间的定量关系。</li>
+<li><strong>方法一：基于历史系数的预测</strong>
+<ol type="1">
+<li>在每个历史截面期 <span class="math inline">\(t=1, ..., T\)</span>，进行截面回归：<span class="math inline">\(R_{it} = c_t + b_t z_{it-1} + \epsilon_{it}\)</span> （如果是多因子，则 <span class="math inline">\(R_{it} = c_t + \sum_k b_{kt} z_{k,it-1} + \epsilon_{it}\)</span>）。</li>
+<li>得到系数的时间序列 <span class="math inline">\(c_t, b_t\)</span> （或 <span class="math inline">\(b_{kt}\)</span>）。</li>
+<li>计算历史系数的均值 <span class="math inline">\(\bar{c}, \bar{b}\)</span> （或 <span class="math inline">\(\bar{b}_k\)</span>）。</li>
+<li>使用当前最新因子值 <span class="math inline">\(z_{iT}\)</span> （或 <span class="math inline">\(z_{k,iT}\)</span>）预测下一期收益：<span class="math inline">\(\hat{R}_{i,T+1} = \bar{c} + \bar{b} z_{iT}\)</span> （或 <span class="math inline">\(\hat{R}_{i,T+1} = \bar{c} + \sum_k \bar{b}_k z_{k,iT}\)</span>）。</li>
+</ol>
+<ul>
+<li>优点：考虑了因子系数的时变性。缺点：需要足够长的历史数据计算稳定的均值。</li>
+</ul></li>
+<li><strong>方法二：基于面板回归的预测</strong>
+<ol type="1">
+<li>将所有时间和截面数据放在一起进行面板回归（固定效应或随机效应模型）：<span class="math inline">\(R_{it} = c + b z_{it-1} + \alpha_i + \eta_t + \epsilon_{it}\)</span> （此处简化， <span class="math inline">\(\alpha_i\)</span> 个体效应， <span class="math inline">\(\eta_t\)</span> 时间效应）。</li>
+<li>得到估计系数 <span class="math inline">\(\hat{c}, \hat{b}\)</span>。</li>
+<li>使用当前最新因子值 <span class="math inline">\(z_{iT}\)</span> 预测下一期（相对）收益：<span class="math inline">\(\hat{R}_{i,T+1} = \hat{c} + \hat{b} z_{iT}\)</span>。</li>
+</ol>
+<ul>
+<li>优点：利用了所有数据，系数估计可能更稳健。缺点：假设了系数不随时变。</li>
+</ul></li>
+<li><strong>注意:</strong> 回归方法需要处理潜在的多重共线性问题（如果因子间相关性高），可以考虑使用逐步回归筛选变量，或使用正则化方法（如Ridge回归、Lasso回归）来压缩系数，提高模型稳定性。</li>
+<li><strong>与主动收益 <span class="math inline">\(\alpha\)</span> 的关系 (Grinold’s Fundamental Law of Active Management):</strong> 预测的超额收益 <span class="math inline">\(\hat{\alpha}_{it}\)</span> 可以近似理解为： [ <em>{it} </em>{} Z_{Score, it} ] 其中 IC 是信息系数，<span class="math inline">\(\sigma_{\alpha}\)</span> 是主动收益波动率，Z-Score 是标准化因子得分。这说明预测收益的幅度取决于预测能力 (IC)、承担的主动风险 (<span class="math inline">\(\sigma_{\alpha}\)</span>) 以及当前因子暴露强度 (Z-Score)。</li>
+</ul></li>
+<li><strong>[可选] 机器学习预测:</strong>
+<ul>
+<li>对于复杂的非线性关系、高维数据交互，可以使用机器学习模型，如：
+<ul>
+<li><strong>树模型:</strong> 随机森林 (Random Forest)、梯度提升决策树 (GBDT, XGBoost, LightGBM)。能自动处理非线性和交互效应，对异常值不敏感。</li>
+<li><strong>神经网络:</strong> 深度学习模型。能捕捉更复杂的模式。</li>
+</ul></li>
+<li><strong>挑战:</strong> 模型复杂度高，容易过拟合，可解释性差，对数据量和计算资源要求高。需要非常谨慎地进行模型选择、调优和验证。</li>
+</ul></li>
+</ul></li>
+</ol>
+<hr>
+</section>
+</section>
+</section>
+<section id="part-2-投资组合优化与实践考量" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="part-2-投资组合优化与实践考量"><span class="header-section-number">7.2</span> Part 2: 投资组合优化与实践考量</h2>
+<section id="过渡" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="过渡"><span class="header-section-number">7.2.1</span> 过渡</h3>
+<p>上一部分，我们探讨了如何寻找和验证能够预测股票未来收益的变量，并最终得到对每个股票的预期收益 (<span class="math inline">\(\mu\)</span>) 或综合评分。现在，我们面临的问题是：如何利用这些预测信息，结合风险考量和现实约束，构建一个最优的投资组合？这就是<strong>投资组合优化 (Portfolio Optimization)</strong> 要解决的核心问题。</p>
+</section>
+<section id="风险模型简介" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="风险模型简介"><span class="header-section-number">7.2.2</span> 2.1 风险模型简介</h3>
+<p>组合优化不仅仅是最大化预期收益，更是在预期收益和风险之间进行权衡。因此，一个准确的<strong>风险模型</strong>，即对资产未来收益波动性及其相互关系的预测（通常体现为<strong>协方差矩阵 <span class="math inline">\(\Sigma\)</span></strong>），与收益模型同等重要。</p>
+<ul>
+<li><strong>为何需要风险模型?</strong>
+<ul>
+<li><strong>风险衡量:</strong> 量化组合的整体风险（如波动率、VaR）。</li>
+<li><strong>风险分解:</strong> 理解风险的来源（是来自市场？行业？还是特定风格因子？）。</li>
+<li><strong>风险控制:</strong> 在优化过程中限制特定的风险暴露。</li>
+<li><strong>优化输入:</strong> 协方差矩阵 <span class="math inline">\(\Sigma\)</span> 是大多数优化目标函数（如均值-方差优化）的关键输入。</li>
+</ul></li>
+<li><strong>常见风险模型类型:</strong>
+<ul>
+<li><strong>因子模型 (Factor Models):</strong> 假设股票收益的波动主要由对一系列共同因子的暴露驱动。
+<ul>
+<li><span class="math inline">\(R_i = \alpha_i + \sum_{k=1}^K \beta_{ik} f_k + \epsilon_i\)</span></li>
+<li>其中 <span class="math inline">\(f_k\)</span> 是共同因子（如市场、行业、风格因子）的收益，<span class="math inline">\(\beta_{ik}\)</span> 是股票 <span class="math inline">\(i\)</span> 对因子 <span class="math inline">\(k\)</span> 的暴露（敏感度），<span class="math inline">\(\epsilon_i\)</span> 是特质性风险（Idiosyncratic Risk）。</li>
+<li><strong>优点:</strong>
+<ul>
+<li><strong>降维:</strong> 将估计 <span class="math inline">\(N \times N\)</span> 的协方差矩阵问题简化为估计 <span class="math inline">\(K\)</span> 个因子收益的协方差和 <span class="math inline">\(N\)</span> 个特质风险方差（通常 <span class="math inline">\(K \ll N\)</span>）。</li>
+<li><strong>结构清晰:</strong> 因子通常具有经济含义（如行业风险、规模风险），便于理解和控制风险来源。</li>
+<li><strong>常用模型:</strong> Barra (MSCI) 的基本面因子模型（Fundamental Factor Model），包含国家、行业以及多种风格因子（如波动率、流动性、规模、价值、成长、动量、杠杆等）。</li>
+</ul></li>
+<li><strong>缺点:</strong> 模型设定依赖于正确的因子选择，可能遗漏重要风险因子。</li>
+</ul></li>
+<li><strong>统计模型 (Statistical Models):</strong>
+<ul>
+<li>通过统计方法（如主成分分析 PCA）从历史收益数据中直接提取影响收益的主要共同因素。</li>
+<li><strong>优点:</strong> 完全由数据驱动，不依赖于预先设定的因子。</li>
+<li><strong>缺点:</strong> 提取出的统计因子通常缺乏明确的经济含义，不易解释和控制，且可能不稳定。</li>
+</ul></li>
+<li><strong>历史协方差矩阵 (Historical Covariance Matrix):</strong>
+<ul>
+<li>直接使用过去一段时间的日收益率（或其他频率）计算样本协方差矩阵。</li>
+<li><strong>优点:</strong> 简单直接。</li>
+<li><strong>缺点:</strong>
+<ul>
+<li><strong>噪声大:</strong> 对历史数据敏感，估计误差大，尤其在股票数量 N 远大于观测期 T 时。</li>
+<li><strong>非平稳性:</strong> 假设历史关系能代表未来，但市场结构和波动性是时变的。</li>
+<li><strong>维度灾难:</strong> 当 N 很大时，计算和求逆都非常困难。</li>
+</ul></li>
+</ul></li>
+<li><strong>压缩估计 (Shrinkage Estimation):</strong>
+<ul>
+<li>为了解决历史协方差矩阵噪声大的问题，将其向一个更稳定、结构更简单的目标矩阵（如等相关系数矩阵、单因子模型矩阵、或单位矩阵乘以平均方差）进行”压缩”。</li>
+<li>代表方法：Ledoit-Wolf 压缩。在偏差 (Bias) 和方差 (Variance) 之间取得平衡，通常能得到更稳健的协方差矩阵估计。</li>
+</ul></li>
+<li><strong>指数加权移动平均 (EWMA):</strong>
+<ul>
+<li>计算协方差时给予近期数据更高的权重，以适应时变性。</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>选择哪个风险模型取决于具体的应用场景、数据可得性、计算能力以及对风险来源的理解。</strong> 实践中，因子模型（尤其是商用的如Barra模型）因其结构化和解释性而被广泛使用。</p>
+</section>
+<section id="收益与风险模型错位-misalignment" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="收益与风险模型错位-misalignment"><span class="header-section-number">7.2.3</span> 2.2 收益与风险模型错位 (Misalignment)</h3>
+<p>一个实践中非常重要但常被忽视的问题是：<strong>你用于预测收益的模型（Alpha Model）与你用于衡量和控制风险的模型（Risk Model）可能并不一致，即模型错位。</strong></p>
+<ul>
+<li><strong>问题根源:</strong>
+<ul>
+<li>Alpha模型关注的是<strong>预测变量</strong> <span class="math inline">\(z_{\alpha}\)</span> (或 <span class="math inline">\(\beta_{\alpha}\)</span>，即对预测变量的暴露)。</li>
+<li>Risk模型关注的是<strong>风险因子</strong> <span class="math inline">\(f_R\)</span> 及其暴露 <span class="math inline">\(\beta_R\)</span>。</li>
+<li>当 <span class="math inline">\(z_{\alpha}\)</span> 所代表的信息不能被风险模型中的因子 <span class="math inline">\(f_R\)</span> 完全解释时，就发生了错位。例如，你可能用一个独特的另类数据因子预测收益，但你的风险模型（比如一个标准的Barra模型）并不包含这个因子。</li>
+</ul></li>
+<li><strong>影响:</strong>
+<ul>
+<li>我们可以将预期收益 <span class="math inline">\(\mu\)</span> (来自Alpha模型) 分解为两部分：
+<ul>
+<li><span class="math inline">\(\mu_{\parallel}\)</span>: 能够被风险模型因子空间解释的部分。</li>
+<li><span class="math inline">\(\mu_{\perp}\)</span>: <strong>不能</strong>被风险模型因子空间解释的部分（即 <span class="math inline">\(\text{Cov}(\mu_{\perp}, f_R) = 0\)</span>）。这部分收益的风险在风险模型看来是<strong>特质性风险 (Idiosyncratic Risk)</strong>。</li>
+</ul></li>
+<li>标准的均值-方差优化器 <span class="math inline">\(\max \omega' \mu - \frac{\zeta}{2} \omega' \Sigma \omega\)</span> 在评估风险时，只会认为 <span class="math inline">\(\mu_{\perp}\)</span> 的风险是 <span class="math inline">\(\sigma_{\epsilon}^2\)</span> （特质风险），而 <span class="math inline">\(\mu_{\parallel}\)</span> 的风险包含了系统性因子风险（来自 <span class="math inline">\(\Sigma\)</span> 的因子协方差部分）和特质风险。</li>
+<li>由于优化器<strong>低估了 <span class="math inline">\(\mu_{\perp}\)</span> 的真实（但未被风险模型捕捉的）系统性风险</strong>，它会倾向于<strong>过度配置</strong>在这部分”伪阿尔法”上，因为它看起来提供了”低风险”的收益。这会导致最终组合的实际风险特征与优化目标不符。</li>
+</ul></li>
+<li><strong>简化数值案例:</strong>
+<ul>
+<li>假设只有两个资产A和B，一个风险因子F。真实收益过程：<span class="math inline">\(R_A = 0.5 F + \epsilon_A\)</span>, <span class="math inline">\(R_B = -0.5 F + \epsilon_B\)</span>。<span class="math inline">\(\sigma_F^2 = 1\)</span>, <span class="math inline">\(\sigma_{\epsilon_A}^2 = \sigma_{\epsilon_B}^2 = 1\)</span>。风险模型 <span class="math inline">\(\Sigma\)</span> 能完美捕捉 F。</li>
+<li>你的Alpha模型预测 <span class="math inline">\(\mu_A = 1, \mu_B = 1\)</span>。这个Alpha (<span class="math inline">\(\mu = [1, 1]'\)</span>) 与风险因子 F 正交 (<span class="math inline">\(\beta_F = [0.5, -0.5]'\)</span>)，即 <span class="math inline">\(\mu = \mu_{\perp}\)</span>。</li>
+<li>无约束 MVO 解 <span class="math inline">\(\omega \propto \Sigma^{-1} \mu\)</span>。由于 <span class="math inline">\(\mu\)</span> 与 F 正交，<span class="math inline">\(\Sigma^{-1} \mu\)</span> 将主要由特质风险的倒数决定，导致对A和B的配置很高。</li>
+<li>但实际上，<span class="math inline">\(\mu\)</span> 的来源可能隐含着某种未被F捕捉的系统风险。优化器基于错误的风险评估（认为 <span class="math inline">\(\mu\)</span> 的风险只是特质风险）做出了过于激进的配置。</li>
+</ul></li>
+<li><strong>解决方法:</strong>
+<ul>
+<li><strong>调整风险模型 (理论上可行，实践中困难):</strong> 将Alpha模型中的预测变量也纳入风险模型中作为风险因子。但这可能需要构建自己的风险模型，尤其在使用第三方风险模型时不可行。</li>
+<li><strong>改进优化过程 (更常用):</strong> 在优化目标函数中加入对这部分”无法解释的阿尔法”<span class="math inline">\(\mu_{\perp}\)</span> 的额外惩罚项。
+<ul>
+<li><span class="math inline">\(\max_{\omega} \omega' \mu - \frac{\zeta}{2} \omega' \Sigma \omega - \frac{\theta}{2} \omega' (\mu_{\perp} \mu_{\perp}') \omega\)</span></li>
+<li>这个惩罚项 <span class="math inline">\(\frac{\theta}{2} \omega' (\mu_{\perp} \mu_{\perp}') \omega\)</span> 实质上是增加了对 <span class="math inline">\(\mu_{\perp}\)</span> 方向风险的惩罚。<span class="math inline">\(\theta\)</span> 是惩罚系数，需要根据对 <span class="math inline">\(\mu_{\perp}\)</span> 真实风险的估计来设定。<span class="math inline">\(\mu_{\perp}\)</span> 可以通过将 <span class="math inline">\(\mu\)</span> 对风险因子 <span class="math inline">\(\beta_R\)</span> 回归取残差得到。</li>
+</ul></li>
+</ul></li>
+<li><strong>现状:</strong> 这个问题在实践中需要关注，尤其是在使用内部Alpha模型和外部通用风险模型时。忽视模型错位可能导致策略的实际风险远超预期。</li>
+</ul>
+</section>
+<section id="常见目标函数" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="常见目标函数"><span class="header-section-number">7.2.4</span> 2.3 常见目标函数</h3>
+<p>给定预期收益向量 <span class="math inline">\(\mu\)</span> 和协方差矩阵 <span class="math inline">\(\Sigma\)</span>，投资组合优化的目标是在收益和风险之间找到最佳平衡点。以下是几种常见的优化目标函数：</p>
+<ol type="1">
+<li><strong>均值-方差优化 (Mean-Variance Optimization, MVO):</strong> (Markowitz, 1952)
+<ul>
+<li><strong>目标:</strong> 最大化预期收益，同时惩罚组合方差（风险）。 [ _{} ’ - ’ ] 其中 <span class="math inline">\(\omega\)</span> 是投资组合权重向量，<span class="math inline">\(\zeta\)</span> 是<strong>风险厌恶系数 (Risk Aversion Parameter)</strong>。<span class="math inline">\(\zeta\)</span> 越大，投资者越厌恶风险，优化结果中风险的比重越大（越倾向于低风险组合）。</li>
+<li><strong>无约束解:</strong> <span class="math inline">\(\omega_{mvo} = (\zeta \Sigma)^{-1} \mu\)</span>。（假设 <span class="math inline">\(\Sigma\)</span> 可逆）</li>
+<li><strong>直观理解:</strong> 在所有预期收益相同的组合中选择方差最小的；在所有方差相同的组合中选择预期收益最高的。这些最优组合构成了<strong>效率前沿 (Efficient Frontier)</strong>。 [此处可插入效率前沿图]</li>
+<li><strong>优点:</strong> 理论基础坚实（基于投资者效用最大化），是现代投资组合理论的基石。明确在风险和收益间进行权衡。</li>
+<li><strong>缺点/挑战:</strong>
+<ul>
+<li><strong>参数敏感性:</strong> 优化结果对输入参数 <span class="math inline">\(\mu\)</span> 和 <span class="math inline">\(\Sigma\)</span> <strong>高度敏感</strong>，尤其是 <span class="math inline">\(\mu\)</span>。实践中，<span class="math inline">\(\mu\)</span> 的预测误差很大，微小的 <span class="math inline">\(\mu\)</span> 变化可能导致权重 <span class="math inline">\(\omega\)</span> 发生剧烈变动。这被称为<strong>“误差最大化器” (Error Maximization)</strong> 问题，即优化过程可能放大了 <span class="math inline">\(\mu\)</span> 的估计误差。</li>
+<li><strong>估计误差:</strong> <span class="math inline">\(\mu\)</span> 和 <span class="math inline">\(\Sigma\)</span> 都需要基于历史数据或其他模型进行估计，存在估计误差。</li>
+<li><strong>极端权重:</strong> 无约束或约束较弱时，可能产生非常集中或极端（极大或极小/负）的权重，不符合实际。</li>
+</ul></li>
+<li><strong>改进:</strong> 针对参数敏感性问题，发展出了<strong>鲁棒优化 (Robust Optimization)</strong>、<strong>Black-Litterman 模型</strong>（结合市场均衡预期和主观观点）、<strong>重采样 (Resampling)</strong>、<strong>风险预算 (Risk Budgeting)</strong> 等方法。对 <span class="math inline">\(\Sigma\)</span> 的估计可以使用<strong>压缩估计量 (Shrinkage Estimators)</strong> 提高稳健性。</li>
+</ul></li>
+<li><strong>最小方差 (Minimum Variance):</strong>
+<ul>
+<li><strong>目标:</strong> 找到具有最低可能风险（方差）的投资组合，不考虑预期收益 <span class="math inline">\(\mu\)</span>。 [ _{} ’ ] 通常带有约束，如 <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> （权重和为1，即全投资）。</li>
+<li><strong>最优解 (带 <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> 约束):</strong> <span class="math inline">\(\omega_{mv} = \frac{\Sigma^{-1} \mathbf{1}}{\mathbf{1}' \Sigma^{-1} \mathbf{1}}\)</span>。</li>
+<li><strong>优点:</strong> <strong>不依赖于难以准确预测的预期收益 <span class="math inline">\(\mu\)</span></strong>，结果相对更稳健。</li>
+<li><strong>缺点:</strong> 完全忽略了收益目标，可能选出一个预期收益非常低的组合。</li>
+<li><strong>适用场景:</strong> 当对收益预测极度不自信时，或投资者的首要目标是绝对风险最小化。</li>
+</ul></li>
+<li><strong>最大多样化 (Maximum Diversification):</strong>
+<ul>
+<li><strong>目标:</strong> 最大化组合的<strong>多样化比率 (Diversification Ratio)</strong>，即组合内各资产加权平均波动率与组合整体波动率之比。 [ _{} ] 其中 <span class="math inline">\(\sigma\)</span> 是各资产的预期波动率向量 (<span class="math inline">\(\sigma_i = \sqrt{\Sigma_{ii}}\)</span>)。通常也带 <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> 约束。</li>
+<li><strong>最优解 (带 <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> 约束):</strong> <span class="math inline">\(\omega_{md} \propto \Sigma^{-1} \sigma\)</span> （与MVO形式类似，只是用 <span class="math inline">\(\sigma\)</span> 替代了 <span class="math inline">\(\mu\)</span>）。</li>
+<li><strong>直观理解:</strong> 目标是让组合的风险（分母）相对于其成分资产的（加权）平均风险（分子）尽可能小，即通过资产间的低相关性来分散风险。</li>
+<li><strong>优点:</strong> 关注于风险结构的分散化，也不直接依赖于 <span class="math inline">\(\mu\)</span> 的预测（但依赖于 <span class="math inline">\(\sigma\)</span> 和 <span class="math inline">\(\Sigma\)</span>）。</li>
+</ul></li>
+<li><strong>风险平价 (Risk Parity / Equal Risk Contribution, ERC):</strong>
+<ul>
+<li><strong>目标:</strong> 构建一个组合，使得<strong>每个资产对组合总风险的贡献相等</strong>。</li>
+<li><strong>风险贡献:</strong> 资产 <span class="math inline">\(i\)</span> 的边际风险贡献 (Marginal Contribution to Risk) 是 <span class="math inline">\(\frac{\partial \sigma_p}{\partial \omega_i} = \frac{(\Sigma \omega)_i}{\sigma_p}\)</span>，总风险贡献是 <span class="math inline">\(\omega_i \times \frac{\partial \sigma_p}{\partial \omega_i} = \frac{\omega_i (\Sigma \omega)_i}{\sigma_p}\)</span>，其中 <span class="math inline">\(\sigma_p = \sqrt{\omega' \Sigma \omega}\)</span> 是组合总波动率。</li>
+<li><strong>优化问题:</strong> （形式不唯一，一种是）最小化各资产风险贡献之间的差异： [ <em>{} </em>{i=1}^N _{j=1}^N ( _i ()_i - _j ()_j )^2 ] 通常带 <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> 和 <span class="math inline">\(\omega \ge 0\)</span> 约束。</li>
+<li><strong>特殊解析解 (简化条件下):</strong> 如果所有资产两两之间的相关系数 <span class="math inline">\(\rho_{ij}\)</span> 都相等 (即 <span class="math inline">\(\rho_{ij} = \rho\)</span> for <span class="math inline">\(i \neq j\)</span>)，则风险平价组合的权重近似与其<strong>波动率的倒数</strong>成正比：<span class="math inline">\(\omega_{rp,i} \propto 1 / \sigma_i\)</span>。即波动率越低的资产，权重越高。</li>
+<li><strong>优点:</strong>
+<ul>
+<li>实现了风险在各资产间的均衡分配，避免风险过度集中于少数高波动资产。</li>
+<li>同样不直接依赖于 <span class="math inline">\(\mu\)</span> 的预测。</li>
+<li>在多资产类别配置（股票、债券、商品等）中非常流行。</li>
+</ul></li>
+<li><strong>求解:</strong> 通常需要数值优化算法（迭代求解）。</li>
+</ul></li>
+</ol>
+</section>
+<section id="不同目标函数的比较与等价条件" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="不同目标函数的比较与等价条件"><span class="header-section-number">7.2.5</span> 2.4 不同目标函数的比较与等价条件</h3>
+<p>这些不同的优化目标函数看似不同，但在特定条件下是等价的，这有助于我们理解它们背后的假设：</p>
+<ul>
+<li><strong>MVO 是最一般化的框架。</strong> 其他几种可以看作是MVO在对预期收益 <span class="math inline">\(\mu\)</span> 做出特定假设时的特例：
+<ul>
+<li><strong>最小方差 (Min Variance)</strong> 等价于 MVO 中假设<strong>所有资产的预期超额收益都相等</strong> (<span class="math inline">\(\mu_i = \mu_j\)</span> for all i, j)。此时优化目标只剩下最小化 <span class="math inline">\(\omega' \Sigma \omega\)</span>。</li>
+<li><strong>最大多样化 (Max Diversification)</strong> 等价于 MVO 中假设<strong>所有资产的预期夏普比率都相等</strong> (<span class="math inline">\(\mu_i / \sigma_i = \mu_j / \sigma_j\)</span> for all i, j)。此时 MVO 的解 <span class="math inline">\(\omega \propto \Sigma^{-1} \mu\)</span> 变为 <span class="math inline">\(\omega \propto \Sigma^{-1} \sigma\)</span> (因为 <span class="math inline">\(\mu \propto \sigma\)</span>)，这与最大多样化解一致。</li>
+<li><strong>风险平价 (Risk Parity)</strong> 在更严格的条件下等价于MVO：假设<strong>所有资产夏普比率相等</strong>，并且<strong>所有资产间的相关系数也都相等</strong> (<span class="math inline">\(\rho_{ij} = \rho\)</span> for all <span class="math inline">\(i \neq j\)</span>)。</li>
+<li><strong>等权重 (Equal Weight)</strong> 是一种更特殊的风险平价，需要假设<strong>所有资产夏普比率相等、相关系数相等、且波动率也相等</strong> (<span class="math inline">\(\sigma_i = \sigma_j\)</span>)。</li>
+</ul></li>
+<li><strong>核心启示:</strong>
+<ul>
+<li>你选择哪种优化方法，实际上反映了你<strong>对输入参数（尤其是预期收益 <span class="math inline">\(\mu\)</span>）有多少信心</strong>。</li>
+<li>如果你对 <span class="math inline">\(\mu\)</span> 的预测非常有信心，MVO 理论上最优。</li>
+<li>如果你对 <span class="math inline">\(\mu\)</span> 的预测完全没信心，最小方差或风险平价可能是更稳健的选择。</li>
+<li>如果你相信所有资产提供相似的风险调整后收益（夏普比率），最大多样化可能是合适的。</li>
+<li>如果连对波动率和相关性的估计都没信心，或者作为一种最朴素的起点，等权重也是一种选择（它隐含了最强的对称性假设）。</li>
+<li><strong>实践中，往往需要在 MVO 的理论最优和 MinVar/MaxDiv/RP 的稳健性之间进行权衡，或者使用改进的 MVO 方法（如鲁棒优化）。</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="常见约束条件" class="level3" data-number="7.2.6">
+<h3 data-number="7.2.6" class="anchored" data-anchor-id="常见约束条件"><span class="header-section-number">7.2.6</span> 2.5 常见约束条件</h3>
+<p>理论上的最优解往往不符合现实投资的限制和风控要求。因此，在优化过程中必须加入各种<strong>约束条件 (Constraints)</strong>。</p>
+<ol type="1">
+<li><strong>预算约束 (Budget Constraint):</strong>
+<ul>
+<li><strong>全投资:</strong> <span class="math inline">\(\sum_i \omega_i = \omega' \mathbf{1} = 1\)</span>。表示所有资金都投出去。这是最常见的约束。</li>
+<li><strong>允许现金:</strong> <span class="math inline">\(\sum_i \omega_i \le 1\)</span>。</li>
+<li><strong>美元中性 (Dollar Neutral):</strong> <span class="math inline">\(\sum_i \omega_i = 0\)</span>。常见于多空策略，多头头寸总金额等于空头头寸总金额。</li>
+</ul></li>
+<li><strong>卖空约束 (Short-Selling Constraint):</strong>
+<ul>
+<li><strong>禁止卖空:</strong> <span class="math inline">\(\omega_i \ge 0\)</span> for all i。即不允许持有负权重。在中国A股市场，融券做空受到较多限制。</li>
+<li><strong>限制卖空:</strong> 如 <span class="math inline">\(\omega_i \ge -L_{short}\)</span>。</li>
+<li><strong>原因:</strong> 监管限制、券源限制、风险控制（理论上卖空损失无限）。</li>
+</ul></li>
+<li><strong>头寸上下限约束 (Position Limits):</strong>
+<ul>
+<li><strong>个股层面:</strong> <span class="math inline">\(L_i \le \omega_i \le U_i\)</span>。例如，单只股票权重不超过5%。</li>
+<li><strong>组合层面:</strong> 对特定集合（如行业、板块）的总权重进行限制 <span class="math inline">\(L_p \le \sum_{i \in \text{Group } p} \omega_i \le U_p\)</span>。例如，单一行业权重不超过20%。</li>
+<li><strong>原因:</strong> 分散化要求（避免风险过度集中）、流动性考虑（大权重难以快速建仓/平仓）、满足基金合同或监管要求。</li>
+</ul></li>
+<li><strong>换手率约束 (Turnover Constraint):</strong>
+<ul>
+<li><strong>目标:</strong> 限制投资组合相对于上期组合 <span class="math inline">\(\omega^-\)</span> 的调整幅度，以控制交易成本。</li>
+<li><strong>个股换手:</strong> <span class="math inline">\(|\omega_i - \omega^-_i| \le \phi_i\)</span>。</li>
+<li><strong>组合总换手:</strong> <span class="math inline">\(\sum_i |\omega_i - \omega^-_i| \le \Phi\)</span> (单边换手率)。</li>
+<li><strong>原因:</strong> 交易成本是侵蚀收益的重要因素，必须加以控制。过于频繁的交易也可能是不必要的噪音交易。</li>
+</ul></li>
+<li><strong>持仓数量约束 (Cardinality Constraint):</strong>
+<ul>
+<li><strong>目标:</strong> 控制组合中持有股票的数量范围。</li>
+<li><strong>形式:</strong> <span class="math inline">\(N_L \le \sum_i \delta_i \le N_U\)</span>，其中 <span class="math inline">\(\delta_i\)</span> 是一个0/1的整数变量，当 <span class="math inline">\(\omega_i \neq 0\)</span> 时 <span class="math inline">\(\delta_i = 1\)</span>，否则 <span class="math inline">\(\delta_i = 0\)</span>。还需要配合 <span class="math inline">\(\omega_i\)</span> 的上下限约束。</li>
+<li><strong>原因:</strong> 避免持仓过于分散（难以管理和跟踪）或过于集中。某些策略希望维持一个相对集中的组合。</li>
+<li><strong>影响:</strong> 引入整数变量 <span class="math inline">\(\delta_i\)</span> 会使优化问题从标准的二次规划 (QP) 或线性规划 (LP) 变为<strong>混合整数规划 (Mixed Integer Programming, MIP)</strong>，计算复杂度<strong>显著增加</strong>。</li>
+</ul></li>
+<li><strong>因子暴露约束 (Factor Exposure Constraint):</strong>
+<ul>
+<li><strong>目标:</strong> 控制组合在某些风险因子上的暴露程度。</li>
+<li><strong>绝对暴露:</strong> <span class="math inline">\(L_k \le \sum_i \omega_i \beta_{ik} \le U_k\)</span>，其中 <span class="math inline">\(\beta_{ik}\)</span> 是股票 <span class="math inline">\(i\)</span> 在因子 <span class="math inline">\(k\)</span> (如市值因子、价值因子)上的暴露度。例如，限制组合的整体市盈率范围。</li>
+<li><strong>主动暴露 (Active Exposure):</strong> <span class="math inline">\(L_k \le \sum_i (\omega_i - \omega_{Bi}) \beta_{ik} \le U_k\)</span>，其中 <span class="math inline">\(\omega_B\)</span> 是基准组合的权重。用于控制组合相对于基准在特定风格上的偏离。</li>
+<li><strong>风格中性 (Style Neutral):</strong> 将主动暴露的上下限设为0，即 <span class="math inline">\(\sum_i (\omega_i - \omega_{Bi}) \beta_{ik} = 0\)</span>。例如，构建一个对市值因子、价值因子都保持中性的组合，以剥离这些常见的风险来源，专注于其他Alpha来源。</li>
+<li><strong>行业中性 (Industry Neutral):</strong> 将每个行业的总权重 <span class="math inline">\(\sum_{i \in \text{Industry } j} \omega_i\)</span> 约束为等于基准在该行业的权重 <span class="math inline">\(\sum_{i \in \text{Industry } j} \omega_{Bi}\)</span> （或在一个小范围内）。</li>
+<li><strong>原因:</strong> 主动管理风险，确保组合的风险收益特征符合预期，避免承担不希望承担的风险（如不希望赌行业轮动，就做行业中性）。</li>
+</ul></li>
+<li><strong>跟踪误差约束 (Tracking Error Constraint):</strong>
+<ul>
+<li><strong>目标:</strong> 控制组合收益率相对于基准组合 <span class="math inline">\(B\)</span> 的波动性（标准差）。</li>
+<li><strong>形式:</strong> <span class="math inline">\((\omega - \omega_B)' \Sigma (\omega - \omega_B) \le \sigma^2_{TE, max}\)</span>，其中 <span class="math inline">\(\sigma_{TE}\)</span> 是跟踪误差。</li>
+<li><strong>原因:</strong> 适用于有明确跟踪基准的增强型指数基金或相对收益策略，确保组合表现不会过度偏离基准。</li>
+</ul></li>
+</ol>
+<p><strong>约束的影响:</strong></p>
+<ul>
+<li><strong>降低理论最优解:</strong> 加入约束通常会使得优化结果在目标函数上的表现（如夏普比率）差于无约束的最优解。</li>
+<li><strong>提高实际可行性:</strong> 约束使得组合满足了现实要求，更易于管理和执行。</li>
+<li><strong>改变组合结构:</strong> 约束会直接影响最终的权重分配。</li>
+<li><strong>计算复杂度:</strong> 线性约束通常不增加优化难度（LP、QP仍是标准问题），但绝对值约束（如换手率）、二次约束（如跟踪误差）会增加一些复杂度，而整数约束（如持仓数量）则会大大增加计算难度。</li>
+<li><strong>可能无解:</strong> 过于严格或相互冲突的约束可能导致优化问题没有可行解。</li>
+</ul>
+</section>
+<section id="交易成本模型" class="level3" data-number="7.2.7">
+<h3 data-number="7.2.7" class="anchored" data-anchor-id="交易成本模型"><span class="header-section-number">7.2.7</span> 2.6 交易成本模型</h3>
+<p>交易成本是量化投资中不可忽视的部分，它直接侵蚀策略收益。聪明的做法是<strong>在投资组合优化阶段就将预期的交易成本纳入考量</strong>，而不是优化完再估算成本。</p>
+<ul>
+<li><p><strong>将交易成本作为惩罚项加入目标函数:</strong> [ <em>{} </em>{} - _{} ] 其中 <span class="math inline">\(TC(\omega, \omega^-)\)</span> 是从当前持仓 <span class="math inline">\(\omega^-\)</span> 调整到目标持仓 <span class="math inline">\(\omega\)</span> 所产生的总交易成本，<span class="math inline">\(\gamma_{TC}\)</span> 是对交易成本的厌恶系数（或直接令 <span class="math inline">\(\gamma_{TC}=1\)</span>，将成本视为对收益的直接抵扣）。</p></li>
+<li><p><strong>交易成本的构成:</strong></p>
+<ul>
+<li><strong>显性成本 (Explicit Costs):</strong>
+<ul>
+<li><strong>佣金 (Commission):</strong> 券商收取的费用，通常按交易金额的一定比例计算。</li>
+<li><strong>印花税 (Stamp Duty):</strong> 政府收取的税费，通常只在卖出时收取（A股）。</li>
+<li><strong>交易所规费等。</strong></li>
+<li>这些成本相对固定和明确。</li>
+</ul></li>
+<li><strong>隐性成本 (Implicit Costs):</strong>
+<ul>
+<li><strong>价差成本 (Bid-Ask Spread Cost):</strong> 买入价（Ask）通常高于卖出价（Bid），这个差额就是交易者必须支付的成本。对于流动性差的股票，价差可能很大。成本约等于交易金额 × (Spread / Mid-Price) / 2。</li>
+<li><strong>冲击成本 (Market Impact Cost):</strong> 指交易行为本身对市场价格产生的不利影响。当你大量买入时，可能会推高价格；大量卖出时，可能会压低价格。这种成本难以精确事前估计，通常与<strong>交易规模、交易速度、股票流动性、市场波动性</strong>等因素有关。 <strong>冲击成本往往是机构投资者最大的交易成本来源。</strong></li>
+<li><strong>机会成本 (Opportunity Cost):</strong> 指未能及时完成交易或分拆交易导致错失的价格变动。</li>
+</ul></li>
+</ul></li>
+<li><p><strong>交易成本的建模:</strong> 优化中常用简化的模型来近似总交易成本。</p>
+<ul>
+<li><strong>线性成本函数:</strong> [ TC() = _i c_i |_i - ^-_i| ] 其中 <span class="math inline">\(c_i\)</span> 代表交易资产 <span class="math inline">\(i\)</span> 的<strong>单位边际成本</strong>（可以包含佣金、税费、价差成本等的估计）。这个模型假设单位交易成本是固定的，与交易量大小无关。适用于小额交易或主要考虑固定比例成本的情况。优化问题通常仍是QP或LP（如果目标函数也是线性的）。</li>
+<li><strong>二次成本函数 (考虑冲击成本):</strong> [ TC() = _i c_i |_i - ^-_i| + _i d_i (_i - ^-_i)^2 ] 这里增加了一个<strong>交易量平方的项</strong>，用来模拟<strong>冲击成本</strong>——交易量越大 (<span class="math inline">\(\Delta \omega_i = |\omega_i - \omega^-_i|\)</span> 越大)，单位冲击成本越高 (<span class="math inline">\(d_i \Delta \omega_i\)</span>)，总冲击成本增长更快。<span class="math inline">\(d_i\)</span> 是与流动性相关的冲击成本系数（流动性越差，<span class="math inline">\(d_i\)</span> 越大）。
+<ul>
+<li><strong>优点:</strong> 更真实地反映了大额交易的成本。</li>
+<li><strong>影响:</strong> 目标函数变为非线性（即使原始目标是线性的），但如果 <span class="math inline">\(\Sigma\)</span> 是正定的，且 <span class="math inline">\(d_i \ge 0\)</span>，通常仍然是凸优化问题（QP），可以用标准求解器解决。</li>
+</ul></li>
+<li><strong>更复杂的模型:</strong> 还可能包括分段线性函数、幂函数等来更精细地刻画冲击成本。</li>
+</ul></li>
+<li><p><strong>参数估计:</strong> <span class="math inline">\(c_i\)</span> 和 <span class="math inline">\(d_i\)</span> 需要根据历史交易数据、市场微观结构信息或第三方模型（如券商提供的TCA报告分析）来估计。</p></li>
+<li><p><strong>关键作用:</strong> 将交易成本纳入优化，可以使得优化器在追求预期收益和控制风险的同时，<strong>自动平衡交易带来的成本</strong>，从而找到一个<strong>净收益（扣除成本后）</strong> 更优的投资组合，并有助于<strong>平滑组合的换手率</strong>。</p></li>
+</ul>
+</section>
+<section id="补充-回测与评估" class="level3" data-number="7.2.8">
+<h3 data-number="7.2.8" class="anchored" data-anchor-id="补充-回测与评估"><span class="header-section-number">7.2.8</span> 3. [补充] 回测与评估</h3>
+<p>设计好了收益预测模型和组合优化框架后，<strong>绝不能直接投入实盘</strong>。必须通过严格的<strong>历史回测 (Backtesting)</strong> 来评估整个策略的表现，并发现潜在问题。</p>
+<ul>
+<li><strong>回测的重要性:</strong>
+<ul>
+<li><strong>绩效评估:</strong> 检验策略在过去市场环境中的实际表现（收益、风险、稳定性）。</li>
+<li><strong>模型验证:</strong> 验证模型假设的有效性（因子是否持续有效？优化是否达到预期效果？）。</li>
+<li><strong>参数调优:</strong> 基于回测结果调整模型参数或规则（但要警惕过拟合）。</li>
+<li><strong>风险识别:</strong> 发现策略在特定市场条件下可能出现的极端风险（如大幅回撤）。</li>
+<li><strong>可行性检验:</strong> 考虑交易成本、流动性等现实因素后，策略是否仍然有利可图。</li>
+</ul></li>
+<li><strong>关键回测指标:</strong>
+<ul>
+<li><strong>收益类:</strong> 年化收益率 (Annualized Return)、累计收益率。</li>
+<li><strong>风险类:</strong> 年化波动率 (Annualized Volatility)、最大回撤 (Max Drawdown，衡量策略可能经历的最大损失幅度)、下方波动率 (Downside Deviation)、风险价值 (Value at Risk, VaR)、条件风险价值 (Conditional VaR / Expected Shortfall)。</li>
+<li><strong>风险调整后收益:</strong> 夏普比率 (Sharpe Ratio，(年化收益 - 无风险利率) / 年化波动率)、索提诺比率 (Sortino Ratio，使用下方波动率代替总波动率)、信息比率 (Information Ratio, IR，(策略年化收益 - 基准年化收益) / 年化跟踪误差，衡量主动管理能力)。</li>
+<li><strong>交易类:</strong> 年化换手率 (Annualized Turnover，衡量交易频率和潜在成本)、平均持仓周期。</li>
+</ul></li>
+<li><strong>回测中的常见陷阱 (必须避免):</strong>
+<ul>
+<li><strong>前视偏差 (Lookahead Bias):</strong> 在回测的某个时间点，使用了当时尚未发生的未来信息。例如：
+<ul>
+<li>使用了当天收盘价做出的交易决策，但在当天开盘或盘中就执行了交易（应该用T-1或更早的信息做T时刻的决策）。</li>
+<li>使用了发布日期晚于决策日期的财务数据（如用1月底发布的年报数据做1月初的决策）。</li>
+<li>对全样本数据进行了标准化或参数估计，然后用于样本内不同时间点的决策（应该是滚动使用截止到当前时间点的数据）。</li>
+</ul></li>
+<li><strong>幸存者偏差 (Survivorship Bias):</strong> 回测只使用了当前仍然存在于市场上的股票数据，忽略了那些历史上曾经存在但后来退市、被并购的公司。这会<strong>高估</strong>策略表现，因为差的公司被排除了。<strong>必须使用包含已退市股票的数据库进行回测。</strong></li>
+<li><strong>数据挖掘/过拟合偏差 (Data Snooping / Overfitting Bias):</strong> 过度拟合历史数据，找到了看似有效但实际上只是噪音的模式。策略在样本内表现极好，但在样本外（未来实盘）表现很差。<strong>解决方法包括：</strong>
+<ul>
+<li>坚持经济学逻辑。</li>
+<li>严格区分样本内（In-Sample, IS）用于模型开发和样本外（Out-of-Sample, OOS）用于模型验证。</li>
+<li>进行交叉验证 (Cross-Validation)。</li>
+<li>对模型复杂度进行惩罚（如正则化）。</li>
+<li>进行敏感性分析和压力测试。</li>
+</ul></li>
+<li><strong>未充分考虑交易成本和冲击:</strong> 回测假设能以理论价格成交，忽略或低估了佣金、税费、价差和市场冲击，导致结果过于乐观。<strong>应在回测中加入合理的交易成本模型。</strong></li>
+<li><strong>忽略流动性约束:</strong> 假设可以无限量地买卖任何股票，而实际中小盘股或低流动性股票可能无法承载大资金。</li>
+</ul></li>
+<li><strong>好的回测实践:</strong>
+<ul>
+<li>使用高质量、干净、包含退市股票的数据。</li>
+<li>严格模拟实际交易流程，避免前视偏差。</li>
+<li>包含合理的交易成本和滑点假设。</li>
+<li>进行严格的样本外测试。</li>
+<li>不仅关注平均表现，还要分析极端事件和风险暴露。</li>
+<li>进行多维度归因分析，理解收益和风险的来源。</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="结论与总结" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="结论与总结"><span class="header-section-number">7.3</span> 结论与总结</h2>
+<p>本次课我们深入探讨了量化投资策略构建的两个核心支柱：<strong>收益率预测模型</strong>和<strong>投资组合优化</strong>。</p>
+<ul>
+<li><strong>收益预测方面:</strong> 我们讨论了从哪里寻找预测变量（传统数据、另类数据），如何用严格的标准（逻辑性、持续性、增量性、稳健性、可投资性、普适性）进行筛选，以及将这些变量转化为具体收益预测的流程和方法（打分法、回归法等）。<strong>核心是找到真正有效、稳健且具有逻辑支撑的阿尔法来源。</strong></li>
+<li><strong>组合优化方面:</strong> 我们介绍了优化所需的关键输入（预期收益 <span class="math inline">\(\mu\)</span> 和风险模型 <span class="math inline">\(\Sigma\)</span>），强调了两者<strong>模型错位</strong>的风险及应对。我们对比了不同的优化目标函数（MVO、最小方差、最大多样化、风险平价），理解了它们背后的假设和适用场景。我们还详细讨论了实践中必须考虑的<strong>各类约束条件</strong>（预算、卖空、头寸、换手、因子暴露、跟踪误差等）以及<strong>交易成本模型</strong>，并将它们整合进优化框架。<strong>核心是将预测转化为风险可控、成本有效、满足现实约束的最优投资组合。</strong></li>
+<li><strong>实践考量:</strong> 我们补充了风险模型的重要性，并强调了<strong>严格回测</strong>在策略上线前的关键作用，指出了常见的陷阱。</li>
+</ul>
+<p><strong>量化投资是一个不断迭代、持续优化的过程。</strong> 从因子挖掘、模型构建、组合优化到业绩归因、风险监控，每个环节都需要精细的设计和严格的检验。随着技术的发展（如AI/ML的应用深化）、数据的丰富（更多另类数据的涌现）和市场的演变，这个领域始终充满挑战与机遇。</p>
+<p><strong>最终目标是，通过系统化、纪律化的方法，构建能够穿越市场周期、持续创造价值的投资策略。</strong> 希望本次讲座能为你理解和实践量化投资提供一个坚实的框架。</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./lab03_ff3test.html" class="pagination-link" aria-label="实践：构建和回测中国特色三因子模型(CH-3)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">实践：构建和回测中国特色三因子模型(CH-3)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11_timing.html" class="pagination-link" aria-label="因子择时与风格分析">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10&nbsp; 因子投资展望：另类数据与机器学习 – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./project1_factor.html" rel="next">
+<link href="./lab11_EP.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_alternative.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM) 实证检验</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French三因子模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">实践：构建和回测中国特色三因子模型(CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab11_EP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#前言" id="toc-前言" class="nav-link active" data-scroll-target="#前言"><span class="header-section-number">10.1</span> 前言</a></li>
+  <li><a href="#另类数据与因子投资" id="toc-另类数据与因子投资" class="nav-link" data-scroll-target="#另类数据与因子投资"><span class="header-section-number">10.2</span> 1. 另类数据与因子投资</a>
+  <ul class="collapse">
+  <li><a href="#另类数据概述" id="toc-另类数据概述" class="nav-link" data-scroll-target="#另类数据概述"><span class="header-section-number">10.2.1</span> 1.1 另类数据概述</a></li>
+  <li><a href="#另类数据在因子投资中的应用流程" id="toc-另类数据在因子投资中的应用流程" class="nav-link" data-scroll-target="#另类数据在因子投资中的应用流程"><span class="header-section-number">10.2.2</span> 1.2 另类数据在因子投资中的应用流程</a></li>
+  <li><a href="#另类数据应用的挑战与解决策略" id="toc-另类数据应用的挑战与解决策略" class="nav-link" data-scroll-target="#另类数据应用的挑战与解决策略"><span class="header-section-number">10.2.3</span> 1.3 另类数据应用的挑战与解决策略</a></li>
+  <li><a href="#另类数据应用前景" id="toc-另类数据应用前景" class="nav-link" data-scroll-target="#另类数据应用前景"><span class="header-section-number">10.2.4</span> 1.4 另类数据应用前景</a></li>
+  </ul></li>
+  <li><a href="#机器学习在因子投资中的应用" id="toc-机器学习在因子投资中的应用" class="nav-link" data-scroll-target="#机器学习在因子投资中的应用"><span class="header-section-number">10.3</span> 2. 机器学习在因子投资中的应用</a>
+  <ul class="collapse">
+  <li><a href="#资产定价中的机器学习应用" id="toc-资产定价中的机器学习应用" class="nav-link" data-scroll-target="#资产定价中的机器学习应用"><span class="header-section-number">10.3.1</span> 2.1 资产定价中的机器学习应用</a></li>
+  <li><a href="#机器学习在因子研究中的特殊应用" id="toc-机器学习在因子研究中的特殊应用" class="nav-link" data-scroll-target="#机器学习在因子研究中的特殊应用"><span class="header-section-number">10.3.2</span> 2.2 机器学习在因子研究中的特殊应用</a></li>
+  <li><a href="#自然语言处理在因子投资中的特殊应用" id="toc-自然语言处理在因子投资中的特殊应用" class="nav-link" data-scroll-target="#自然语言处理在因子投资中的特殊应用"><span class="header-section-number">10.3.3</span> 2.3 自然语言处理在因子投资中的特殊应用</a></li>
+  <li><a href="#机器学习在因子投资中的实践挑战" id="toc-机器学习在因子投资中的实践挑战" class="nav-link" data-scroll-target="#机器学习在因子投资中的实践挑战"><span class="header-section-number">10.3.4</span> 2.4 机器学习在因子投资中的实践挑战</a></li>
+  <li><a href="#机器学习因子投资的未来发展" id="toc-机器学习因子投资的未来发展" class="nav-link" data-scroll-target="#机器学习因子投资的未来发展"><span class="header-section-number">10.3.5</span> 2.5 机器学习因子投资的未来发展</a></li>
+  </ul></li>
+  <li><a href="#因子投资未来整合展望" id="toc-因子投资未来整合展望" class="nav-link" data-scroll-target="#因子投资未来整合展望"><span class="header-section-number">10.4</span> 3. 因子投资未来整合展望</a>
+  <ul class="collapse">
+  <li><a href="#另类数据与机器学习的协同效应" id="toc-另类数据与机器学习的协同效应" class="nav-link" data-scroll-target="#另类数据与机器学习的协同效应"><span class="header-section-number">10.4.1</span> 3.1 另类数据与机器学习的协同效应</a></li>
+  <li><a href="#因子投资的未来格局" id="toc-因子投资的未来格局" class="nav-link" data-scroll-target="#因子投资的未来格局"><span class="header-section-number">10.4.2</span> 3.2 因子投资的未来格局</a></li>
+  <li><a href="#实践路径建议" id="toc-实践路径建议" class="nav-link" data-scroll-target="#实践路径建议"><span class="header-section-number">10.4.3</span> 3.3 实践路径建议</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="前言" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="前言"><span class="header-section-number">10.1</span> 前言</h2>
+<p>随着金融市场的不断发展，因子投资面临新的机遇与挑战。本讲将展望因子投资的未来发展趋势，重点关注两个前沿领域：另类数据的应用与机器学习技术在因子投资中的实践。这两个领域正在深刻改变传统因子投资的方法论和实践路径，为投资者提供了新的超额收益来源。</p>
+</section>
+<section id="另类数据与因子投资" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="另类数据与因子投资"><span class="header-section-number">10.2</span> 1. 另类数据与因子投资</h2>
+<section id="另类数据概述" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="另类数据概述"><span class="header-section-number">10.2.1</span> 1.1 另类数据概述</h3>
+<ul>
+<li><strong>动机:</strong> 传统量价、财务数据因子日益拥挤，收益降低，寻求新的、未被充分挖掘的数据源以获取超额收益</li>
+<li><strong>定义:</strong> 相对于传统数据的非传统数据源，通常为非结构化或半结构化数据</li>
+<li><strong>常见类型与典型案例:</strong>
+<ul>
+<li><strong>网络抓取数据:</strong>
+<ul>
+<li><strong>职位发布数据:</strong> LinkedIn、Indeed等平台的招聘信息可反映公司扩张计划和战略重点</li>
+<li><strong>企业评价数据:</strong> Glassdoor员工评价可预测公司文化、管理质量和未来业绩</li>
+<li><strong>产品评价与排名:</strong> Amazon、App Store等平台的产品评分可预测销售趋势</li>
+<li><strong>在线促销监测:</strong> 电商平台促销频率、折扣力度可预测零售商利润率变化</li>
+<li><strong>案例:</strong> 对LinkedIn职位数据研究表明，职位发布增长率与企业未来收入增长、股价表现正相关</li>
+</ul></li>
+<li><strong>情绪数据:</strong>
+<ul>
+<li><strong>社交媒体情绪:</strong> Twitter、微博等社交媒体文本情绪分析可预测市场短期走势</li>
+<li><strong>新闻情绪分析:</strong> 金融新闻情绪可作为风险因子，预测资产波动性</li>
+<li><strong>会议记录/财报电话会文本:</strong> 分析管理层语调、词汇选择可预测业绩趋势</li>
+<li><strong>案例:</strong> RavenPack通过分析新闻数据建立情绪指标，发现情绪因子与股票收益率显著相关</li>
+</ul></li>
+<li><strong>卫星/地理空间数据:</strong>
+<ul>
+<li><strong>零售商停车场监测:</strong> 通过卫星图像统计商场、超市停车场车辆数量预测销售额</li>
+<li><strong>石油储存设施监控:</strong> 通过卫星监测原油储罐浮顶高度估算库存变化</li>
+<li><strong>农作物生长监测:</strong> 卫星图像分析农作物长势预测产量变化和期货价格走势</li>
+<li><strong>船运追踪:</strong> AIS数据监测全球货轮动向预测大宗商品供需变化</li>
+<li><strong>案例:</strong> RS Metrics通过分析沃尔玛停车场卫星图像预测季度销售，准确率显著高于分析师预期</li>
+</ul></li>
+<li><strong>消费数据:</strong>
+<ul>
+<li><strong>信用卡交易数据:</strong> Visa、万事达等交易数据可提前预测企业收入变化</li>
+<li><strong>忠诚计划数据:</strong> 零售商会员购买行为可预测消费趋势变化</li>
+<li><strong>电子收据数据:</strong> 如email收据聚合可追踪线上消费习惯变化</li>
+<li><strong>案例:</strong> 对星巴克的研究显示，信用卡消费数据能提前2-3周预测其季度销售业绩</li>
+</ul></li>
+<li><strong>物联网与传感器数据:</strong>
+<ul>
+<li><strong>手机位置数据:</strong> 分析人流量可预测零售商、餐饮业绩</li>
+<li><strong>工业传感器数据:</strong> 监测设备使用率预测制造业景气度</li>
+<li><strong>智能家居设备数据:</strong> 如Nest等智能温控器数据可预测能源消费</li>
+<li><strong>案例:</strong> Thasos利用匿名手机位置数据创建了零售客流指数，成功预测多家零售商季度业绩</li>
+</ul></li>
+<li><strong>ESG数据:</strong>
+<ul>
+<li><strong>公司碳排放数据:</strong> 监测碳排放趋势预测监管风险</li>
+<li><strong>供应链监测:</strong> 识别供应链中的ESG风险可预测品牌声誉风险</li>
+<li><strong>董事会多样性数据:</strong> 分析治理结构变化与企业表现关系</li>
+<li><strong>案例:</strong> MSCI ESG数据研究表明良好ESG实践的公司在长期风险调整收益上表现更佳</li>
+</ul></li>
+<li><strong>另类金融数据:</strong>
+<ul>
+<li><strong>网络搜索量:</strong> Google Trends数据预测消费者兴趣变化</li>
+<li><strong>众筹平台数据:</strong> Kickstarter等平台数据可评估创新产品前景</li>
+<li><strong>在线贷款申请数据:</strong> 分析区域贷款需求变化预测宏观经济趋势</li>
+<li><strong>案例:</strong> 通过分析Google搜索量与汽车销售关系，可提前数周预测汽车制造商销量</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="另类数据在因子投资中的应用流程" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="另类数据在因子投资中的应用流程"><span class="header-section-number">10.2.2</span> 1.2 另类数据在因子投资中的应用流程</h3>
+<ol type="1">
+<li><strong>数据获取与清洗:</strong>
+<ul>
+<li>建立数据采集渠道（直接采集或第三方购买）</li>
+<li>处理缺失值、异常值，标准化格式</li>
+<li>实现数据更新自动化</li>
+</ul></li>
+<li><strong>信号提取与因子构建:</strong>
+<ul>
+<li>应用统计技术从原始数据中提取有效信号</li>
+<li>转化信号为可量化的投资因子</li>
+<li>控制因子噪音，提高信噪比</li>
+</ul></li>
+<li><strong>因子测试与评估:</strong>
+<ul>
+<li>进行历史回测分析预测能力</li>
+<li>检验因子对传统因子的增量贡献</li>
+<li>评估因子稳定性与衰减速度</li>
+</ul></li>
+<li><strong>投资组合整合:</strong>
+<ul>
+<li>将新因子整合入现有多因子模型</li>
+<li>确定最优权重或风险预算</li>
+<li>监控因子表现，动态调整</li>
+</ul></li>
+</ol>
+</section>
+<section id="另类数据应用的挑战与解决策略" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="另类数据应用的挑战与解决策略"><span class="header-section-number">10.2.3</span> 1.3 另类数据应用的挑战与解决策略</h3>
+<ul>
+<li><strong>主要挑战:</strong>
+<ol type="1">
+<li><strong>技术与数据需匹配:</strong> 处理复杂/非结构化数据需要NLP、计算机视觉、深度学习等高级技术；高维数据易引发维度灾难和过拟合风险；需注意多重假设检验问题
+<ul>
+<li><strong>案例:</strong> 传统分析技术难以处理卫星图像数据，需要专业的计算机视觉模型才能从原始图像中提取有效的停车场车辆计数信息</li>
+</ul></li>
+<li><strong>需要专业知识 (Domain Knowledge):</strong> 理解数据产生背景、业务流程、金融含义是关键，否则难以有效挖掘价值；依赖第三方加工数据可能失去独特性和时效性
+<ul>
+<li><strong>案例:</strong> 仅依靠统计相关性分析社交媒体数据可能误判，需结合行业知识理解品牌提及是正面评价还是负面抱怨</li>
+</ul></li>
+<li><strong>数据是否无偏:</strong> 需警惕数据采集过程中的偏差（如选择性偏差、幸存者偏差、地域偏差），确保数据能代表总体
+<ul>
+<li><strong>案例:</strong> Glassdoor员工评价可能过度代表不满员工声音；信用卡数据可能偏向中高收入人群消费行为</li>
+</ul></li>
+<li><strong>历史样本数据较短:</strong> 大多数另类数据历史短（常&lt;5年），加剧过拟合风险，难以进行长期稳健性检验
+<ul>
+<li><strong>案例:</strong> 社交媒体情绪数据通常只有近几年的历史，无法验证其在不同市场周期中的表现</li>
+</ul></li>
+<li><strong>检验增量贡献:</strong> 需验证另类数据因子是否能提供超越传统因子的<strong>增量</strong>信息和收益，避免仅是已有因子的”新瓶装旧酒”
+<ul>
+<li><strong>案例:</strong> 某些消费数据可能仅提供与公开零售销售数据相似的信号，无实质增量价值</li>
+</ul></li>
+</ol></li>
+<li><strong>有效利用策略:</strong>
+<ol type="1">
+<li><strong>从业务假设出发:</strong> 先建立合理业务假设，再寻找相应数据验证，避免盲目数据挖掘</li>
+<li><strong>价值链视角:</strong> 从公司全价值链角度思考各环节可能的另类数据监测点</li>
+<li><strong>组合使用:</strong> 单一数据源信号弱，多源数据结合可提高信噪比</li>
+<li><strong>时效性优先:</strong> 优先考虑能提供传统数据无法达到时效性的另类数据</li>
+<li><strong>构建数据护城河:</strong> 建立难以复制的专有数据来源或分析方法</li>
+</ol></li>
+</ul>
+</section>
+<section id="另类数据应用前景" class="level3" data-number="10.2.4">
+<h3 data-number="10.2.4" class="anchored" data-anchor-id="另类数据应用前景"><span class="header-section-number">10.2.4</span> 1.4 另类数据应用前景</h3>
+<p>潜力巨大，但需客观认识挑战，结合专业知识和科学方法谨慎使用。随着数据获取成本降低、处理技术进步，另类数据很可能成为机构投资者未来超额收益的重要来源。领先的对冲基金和资产管理公司已经建立了专门的另类数据团队，这一趋势预计将继续扩展到更广泛的投资机构。</p>
+</section>
+</section>
+<section id="机器学习在因子投资中的应用" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="机器学习在因子投资中的应用"><span class="header-section-number">10.3</span> 2. 机器学习在因子投资中的应用</h2>
+<section id="资产定价中的机器学习应用" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="资产定价中的机器学习应用"><span class="header-section-number">10.3.1</span> 2.1 资产定价中的机器学习应用</h3>
+<ul>
+<li><strong>传统方法的局限性:</strong>
+<ul>
+<li>线性模型假设难以捕捉资产定价中的非线性关系</li>
+<li>预设因子模型可能遗漏重要信息或包含无关变量</li>
+<li>难以处理大量特征间的复杂交互效应</li>
+<li>对参数稳定性敏感，容易过拟合样本内数据</li>
+</ul></li>
+<li><strong>机器学习方法的优势:</strong>
+<ul>
+<li>能捕捉数据中的非线性关系和交互作用</li>
+<li>模型灵活性高，适应性强</li>
+<li>强大的特征选择能力，能处理高维数据</li>
+<li>集成方法可减少单一模型的过拟合风险</li>
+</ul></li>
+<li><strong>Empirical Asset Pricing via Machine Learning (Gu, Kelly, and Xiu, 2020)主要发现:</strong>
+<ul>
+<li>机器学习方法(特别是神经网络和随机森林)在预测股票收益方面显著优于传统线性模型</li>
+<li>非线性方法能捕捉传统因子模型无法识别的预测信号</li>
+<li>机器学习预测表现在经济衰退期和高市场波动期间表现尤为突出</li>
+<li>机器学习方法能发现传统因子之间的重要交互作用</li>
+<li>预测能力主要来源于非线性特征关系，而非仅仅是特征数量增加</li>
+</ul></li>
+<li><strong>常用机器学习方法在资产定价中的应用:</strong>
+<ol type="1">
+<li><strong>树模型系列:</strong>
+<ul>
+<li><strong>决策树:</strong> 基于条件规则划分数据，直观易解释但单棵树预测能力有限</li>
+<li><strong>随机森林:</strong> 集成多棵随机生成的决策树，提高稳定性和泛化能力</li>
+<li><strong>梯度提升树(GBDT/XGBoost):</strong> 连续建树修正残差，预测性能强大</li>
+<li><strong>应用案例:</strong> Two Sigma使用提升树模型预测股票收益，结合多源数据构建量化策略</li>
+</ul></li>
+<li><strong>深度学习方法:</strong>
+<ul>
+<li><strong>多层感知机(MLP):</strong> 能捕捉高度非线性关系，适合复杂特征交互建模</li>
+<li><strong>卷积神经网络(CNN):</strong> 适用于处理时间序列数据中的局部模式和图像类数据</li>
+<li><strong>循环神经网络(RNN/LSTM):</strong> 处理时间序列数据，捕捉长期依赖关系</li>
+<li><strong>应用案例:</strong> WorldQuant使用深度学习模型从替代数据中提取交易信号</li>
+</ul></li>
+<li><strong>集成与混合方法:</strong>
+<ul>
+<li><strong>Stacking:</strong> 组合多种机器学习模型的预测结果，降低单一模型风险</li>
+<li><strong>Blending:</strong> 不同参数设置下的模型组合，提高稳定性</li>
+<li><strong>应用案例:</strong> AQR Capital结合机器学习和传统因子模型的混合策略</li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="机器学习在因子研究中的特殊应用" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="机器学习在因子研究中的特殊应用"><span class="header-section-number">10.3.2</span> 2.2 机器学习在因子研究中的特殊应用</h3>
+<ul>
+<li><strong>因子发现与构建:</strong>
+<ul>
+<li><strong>特征重要性排序:</strong> 使用随机森林、XGBoost等方法评估大量潜在特征的预测价值</li>
+<li><strong>自动特征组合:</strong> 通过神经网络、遗传算法等发现有效的特征交互组合</li>
+<li><strong>案例:</strong> Man AHL使用机器学习从数千个原始信号中筛选和组合因子，构建稳定的预测模型</li>
+</ul></li>
+<li><strong>因子优化与组合:</strong>
+<ul>
+<li><strong>非线性投资组合优化:</strong> 超越传统均值-方差框架，考虑高阶矩和尾部风险</li>
+<li><strong>动态权重分配:</strong> 使用强化学习根据市场状态自适应调整因子权重</li>
+<li><strong>案例:</strong> DE Shaw采用机器学习动态调整因子模型参数，适应不同市场环境</li>
+</ul></li>
+<li><strong>降维技术在因子分析中的应用:</strong>
+<ul>
+<li><strong>主成分分析(PCA):</strong> 提取因子数据中的主要变异来源，减少冗余</li>
+<li><strong>t-SNE和UMAP:</strong> 非线性降维技术，更好地保留数据高维结构</li>
+<li><strong>自编码器:</strong> 深度学习降维方法，能捕捉复杂非线性关系</li>
+<li><strong>案例研究:</strong>
+<ul>
+<li><strong>因子纯化:</strong> 通过PCA从传统因子中提取正交信号，减少共线性</li>
+<li><strong>因子集群:</strong> 使用聚类算法识别相似因子组，避免冗余暴露</li>
+<li><strong>市场状态识别:</strong> 使用降维技术将高维市场数据映射至二维空间，直观识别市场环境</li>
+<li><strong>风格轮动检测:</strong> 通过降维技术监测投资风格的动态变化</li>
+</ul></li>
+</ul></li>
+<li><strong>异常检测与风险管理:</strong>
+<ul>
+<li><strong>无监督学习检测异常市场状态:</strong> 识别潜在的市场异常或风险事件</li>
+<li><strong>情景分析的深度生成模型:</strong> 使用GAN或VAE生成压力测试情景</li>
+<li><strong>案例:</strong> 通过孤立森林算法检测因子表现异常，及时调整投资组合</li>
+</ul></li>
+</ul>
+</section>
+<section id="自然语言处理在因子投资中的特殊应用" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="自然语言处理在因子投资中的特殊应用"><span class="header-section-number">10.3.3</span> 2.3 自然语言处理在因子投资中的特殊应用</h3>
+<ul>
+<li><strong>文本数据的因子化处理:</strong>
+<ul>
+<li><strong>情绪分析:</strong> 从新闻、社交媒体、公司公告中提取情绪因子</li>
+<li><strong>主题建模:</strong> 使用LDA等提取文本的潜在主题结构作为因子信号</li>
+<li><strong>语义变化跟踪:</strong> 监测关键词语义随时间变化，预测市场趋势转变</li>
+<li><strong>案例:</strong> Bloomberg使用NLP分析财报电话会议，构建管理层言论可信度因子</li>
+</ul></li>
+<li><strong>大语言模型(LLM)的创新应用:</strong>
+<ul>
+<li><strong>事件提取与分类:</strong> 使用LLM从非结构化数据中提取投资相关事件</li>
+<li><strong>商业洞察生成:</strong> 分析公司披露文件，提取战略变化信号</li>
+<li><strong>自动因子假设生成:</strong> 利用LLM生成新的因子假设进行测试</li>
+<li><strong>案例:</strong> 使用GPT类模型分析管理层讨论部分，生成比简单情绪分析更深入的洞察</li>
+</ul></li>
+</ul>
+</section>
+<section id="机器学习在因子投资中的实践挑战" class="level3" data-number="10.3.4">
+<h3 data-number="10.3.4" class="anchored" data-anchor-id="机器学习在因子投资中的实践挑战"><span class="header-section-number">10.3.4</span> 2.4 机器学习在因子投资中的实践挑战</h3>
+<ul>
+<li><strong>数据挑战:</strong>
+<ul>
+<li><strong>样本外性能下降:</strong> 机器学习模型样本外表现往往显著弱于样本内</li>
+<li><strong>金融数据的低信噪比:</strong> 相比其他领域，金融数据信号微弱、噪音大</li>
+<li><strong>非平稳性:</strong> 市场结构变化导致数据生成过程不断演变</li>
+<li><strong>稀疏事件:</strong> 罕见事件(如危机)数据有限，难以有效学习</li>
+</ul></li>
+<li><strong>方法论挑战:</strong>
+<ul>
+<li><strong>过拟合风险:</strong> 复杂模型容易捕捉数据中的噪音而非信号</li>
+<li><strong>模型可解释性:</strong> 复杂模型通常难以解释，阻碍投资决策信任</li>
+<li><strong>计算资源需求:</strong> 训练和部署复杂模型需要大量计算资源</li>
+<li><strong>超参数敏感性:</strong> 模型表现对超参数选择高度敏感</li>
+</ul></li>
+<li><strong>解决策略:</strong>
+<ol type="1">
+<li><strong>稳健性设计:</strong>
+<ul>
+<li>严格的样本外测试与时间序列交叉验证</li>
+<li>正则化技术(L1/L2正则、Dropout等)减少过拟合</li>
+<li>集成方法提高模型稳定性</li>
+<li>考虑模型不确定性，构建置信区间</li>
+</ul></li>
+<li><strong>可解释性提升:</strong>
+<ul>
+<li>SHAP值解释预测贡献</li>
+<li>部分依赖图(PDP)展示特征影响</li>
+<li>使用本地可解释近似(LIME)提供直观解释</li>
+<li>案例：Venn XL通过归因分析提供机器学习投资决策的透明解释</li>
+</ul></li>
+<li><strong>结合领域知识:</strong>
+<ul>
+<li>使用金融理论指导特征工程和模型设计</li>
+<li>设置合理的先验约束限制模型搜索空间</li>
+<li>基于经济直觉对模型输出进行验证</li>
+<li>案例：AQR的机器学习方法会保留经典因子框架，仅在此基础上增强</li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="机器学习因子投资的未来发展" class="level3" data-number="10.3.5">
+<h3 data-number="10.3.5" class="anchored" data-anchor-id="机器学习因子投资的未来发展"><span class="header-section-number">10.3.5</span> 2.5 机器学习因子投资的未来发展</h3>
+<ul>
+<li><strong>方法创新:</strong>
+<ul>
+<li><strong>因果机器学习:</strong> 从相关性向因果关系推断转变，建立更稳健的预测模型</li>
+<li><strong>强化学习:</strong> 将投资视为序贯决策问题，优化长期策略而非单期预测</li>
+<li><strong>迁移学习:</strong> 将其他领域或市场的知识迁移到目标投资问题</li>
+<li><strong>联邦学习:</strong> 在保护数据隐私的前提下实现多方协作建模</li>
+</ul></li>
+<li><strong>应用扩展:</strong>
+<ul>
+<li><strong>私募市场:</strong> 机器学习方法从公开市场扩展到私募股权、私募债等领域</li>
+<li><strong>多资产策略:</strong> 跨资产类别的机器学习信号集成和风险管理</li>
+<li><strong>可持续投资:</strong> 机器学习辅助ESG因子构建和影响力评估</li>
+<li><strong>个性化投资解决方案:</strong> 为不同投资者定制的机器学习因子组合</li>
+</ul></li>
+<li><strong>行业趋势:</strong>
+<ul>
+<li><strong>人机协作:</strong> 不是完全取代人类，而是发展人机协作的决策模式</li>
+<li><strong>基础设施投资:</strong> 机构持续投资于数据科学基础设施和人才培养</li>
+<li><strong>监管关注:</strong> 监管对算法交易、模型风险和公平性的关注将增加</li>
+<li><strong>开源生态:</strong> 开源工具和研究推动机器学习因子投资的民主化</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="因子投资未来整合展望" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="因子投资未来整合展望"><span class="header-section-number">10.4</span> 3. 因子投资未来整合展望</h2>
+<section id="另类数据与机器学习的协同效应" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="另类数据与机器学习的协同效应"><span class="header-section-number">10.4.1</span> 3.1 另类数据与机器学习的协同效应</h3>
+<ul>
+<li><strong>互补优势:</strong>
+<ul>
+<li>另类数据提供新信息源，机器学习提供处理能力</li>
+<li>机器学习能从非结构化另类数据中提取有效信号</li>
+<li>大规模数据处理需要机器学习方法的支持</li>
+<li>案例：通过深度学习分析卫星图像数据，自动提取农作物产量预测指标</li>
+</ul></li>
+<li><strong>协同应用策略:</strong>
+<ul>
+<li><strong>分层处理架构:</strong> 使用不同机器学习算法处理不同类型的另类数据</li>
+<li><strong>多源数据融合:</strong> 整合传统与另类数据源，建立更全面的市场视图</li>
+<li><strong>动态数据权重:</strong> 根据市场环境调整对不同数据源的依赖程度</li>
+</ul></li>
+</ul>
+</section>
+<section id="因子投资的未来格局" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="因子投资的未来格局"><span class="header-section-number">10.4.2</span> 3.2 因子投资的未来格局</h3>
+<ul>
+<li><strong>市场效应:</strong>
+<ul>
+<li><strong>因子拥挤化加速:</strong> 先进数据和技术的普及可能加速因子收益衰减</li>
+<li><strong>新因子半衰期缩短:</strong> 新发现因子被套利的速度将更快</li>
+<li><strong>传统与新兴因子分化:</strong> 传统因子可能成为风险溢价来源，而交易性超额收益主要来自新兴数据和方法</li>
+</ul></li>
+<li><strong>机构布局:</strong>
+<ul>
+<li><strong>技术驱动型机构优势扩大:</strong> 在技术基础设施投入领先的机构优势将放大</li>
+<li><strong>小型精品机构的专业化生存空间:</strong> 专注特定领域或市场的精品机构仍有生存空间</li>
+<li><strong>传统资产管理商的转型:</strong> 传统机构将通过合作或并购获取技术能力</li>
+</ul></li>
+<li><strong>人才与组织:</strong>
+<ul>
+<li><strong>复合型人才需求:</strong> 同时具备金融、数据科学和领域专业知识的人才价值提升</li>
+<li><strong>组织结构转型:</strong> 从传统研究团队向跨学科项目组转变</li>
+<li><strong>科技伦理与责任:</strong> 对算法公平性、透明度和责任的关注增加</li>
+</ul></li>
+</ul>
+</section>
+<section id="实践路径建议" class="level3" data-number="10.4.3">
+<h3 data-number="10.4.3" class="anchored" data-anchor-id="实践路径建议"><span class="header-section-number">10.4.3</span> 3.3 实践路径建议</h3>
+<ul>
+<li><strong>机构投资者策略:</strong>
+<ul>
+<li><strong>从小处起步:</strong> 先解决有明确价值的小问题，逐步扩大应用范围</li>
+<li><strong>采用MVP方法论:</strong> 快速迭代实验，早期验证价值假设</li>
+<li><strong>结合传统优势:</strong> 将新技术与机构现有优势结合，而非完全颠覆</li>
+<li><strong>建立数据战略:</strong> 系统规划数据资产管理与利用路径</li>
+<li><strong>培养学习文化:</strong> 鼓励持续学习和技术实验</li>
+</ul></li>
+<li><strong>个人投资者思考:</strong>
+<ul>
+<li><strong>认知优势重新定位:</strong> 个人投资者在信息时代的优势与劣势重新思考</li>
+<li><strong>利用公开资源:</strong> 有效利用开源工具和公开数据资源</li>
+<li><strong>简洁策略优先:</strong> 避免复杂模型，专注简洁但有效的策略</li>
+<li><strong>专注长期视角:</strong> 在短期交易领域与机构竞争困难，聚焦长期投资优势</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./lab11_EP.html" class="pagination-link" aria-label="实践教学示例：EP 因子分析、增强与组合优化">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./project1_factor.html" class="pagination-link" aria-label="项目1：因子投资策略构建">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

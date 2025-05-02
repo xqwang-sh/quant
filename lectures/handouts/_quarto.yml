@@ -12,5 +12,9 @@ book:
     - lab02_capmtest.qmd     # 第二节：CAPM实证检验
     - 03_ff3.qmd          # 第三节：三因子模型
     - lab03_ff3test.qmd    # 第三节：三因子模型实证检验
+    - 10_selecting.qmd    # 第四节：预测变量选择与投资组合优化
+    - 11_timing.qmd      # 第五节：因子择时与风格分析
+    - lab11_EP.qmd        # 第六节：EP因子分析、增强与组合优化
+    - 12_alternative.qmd # 第七节：另类数据与机器学习
     - project1_factor.qmd  # 项目1：传统多因子投资
-    - project2_ml_alt_data.qmd  # 项目2：机器学习与另类数据
+    - project2_enhance.qmd  # 项目2：因子投资策略的优化与提升

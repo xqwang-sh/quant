@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; 因子择时与风格分析 – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./lab11_EP.html" rel="next">
+<link href="./10_selecting.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11_timing.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">前言</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">有效市场假说 (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">资本资产定价模型 (CAPM) 实证检验</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French三因子模型</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">实践：构建和回测中国特色三因子模型(CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab11_EP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#前言" id="toc-前言" class="nav-link active" data-scroll-target="#前言"><span class="header-section-number">8.1</span> 前言</a></li>
+  <li><a href="#因子择时-factor-timing" id="toc-因子择时-factor-timing" class="nav-link" data-scroll-target="#因子择时-factor-timing"><span class="header-section-number">8.2</span> 1. 因子择时 (Factor Timing)</a>
+  <ul class="collapse">
+  <li><a href="#动机与目标" id="toc-动机与目标" class="nav-link" data-scroll-target="#动机与目标"><span class="header-section-number">8.2.1</span> 1.1 动机与目标</a></li>
+  <li><a href="#如何进行因子择时五大依据与操作方法" id="toc-如何进行因子择时五大依据与操作方法" class="nav-link" data-scroll-target="#如何进行因子择时五大依据与操作方法"><span class="header-section-number">8.2.2</span> 1.2 如何进行因子择时：五大依据与操作方法</a></li>
+  <li><a href="#因子择时很难现实的挑战" id="toc-因子择时很难现实的挑战" class="nav-link" data-scroll-target="#因子择时很难现实的挑战"><span class="header-section-number">8.2.3</span> 1.3 因子择时很难：现实的挑战</a></li>
+  </ul></li>
+  <li><a href="#风格分析-style-analysis" id="toc-风格分析-style-analysis" class="nav-link" data-scroll-target="#风格分析-style-analysis"><span class="header-section-number">8.3</span> 2. 风格分析 (Style Analysis)</a>
+  <ul class="collapse">
+  <li><a href="#引言与目的" id="toc-引言与目的" class="nav-link" data-scroll-target="#引言与目的"><span class="header-section-number">8.3.1</span> 2.1 引言与目的</a></li>
+  <li><a href="#经典风格分析-sharpe-1992" id="toc-经典风格分析-sharpe-1992" class="nav-link" data-scroll-target="#经典风格分析-sharpe-1992"><span class="header-section-number">8.3.2</span> 2.2 经典风格分析 (Sharpe, 1992)</a></li>
+  <li><a href="#基于多空因子的现代风格分析" id="toc-基于多空因子的现代风格分析" class="nav-link" data-scroll-target="#基于多空因子的现代风格分析"><span class="header-section-number">8.3.3</span> 2.3 基于多空因子的现代风格分析</a></li>
+  <li><a href="#如何应用分析现有基金组合的风格-以巴菲特为例" id="toc-如何应用分析现有基金组合的风格-以巴菲特为例" class="nav-link" data-scroll-target="#如何应用分析现有基金组合的风格-以巴菲特为例"><span class="header-section-number">8.3.4</span> 2.4 如何应用：分析现有基金/组合的风格 (以巴菲特为例)</a></li>
+  <li><a href="#总结与讨论" id="toc-总结与讨论" class="nav-link" data-scroll-target="#总结与讨论"><span class="header-section-number">8.3.5</span> 2.5 总结与讨论</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="前言" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="前言"><span class="header-section-number">8.1</span> 前言</h2>
+<ul>
+<li><strong>课程目标:</strong> 本讲聚焦于因子投资实践中的两个进阶话题：因子择时 (Factor Timing) 和风格分析 (Style Analysis)。我们将探讨如何在获得不同因子暴露后，尝试动态调整以优化收益；以及如何剖析一个投资组合（如基金）的真实收益来源。</li>
+<li><strong>回顾:</strong> 因子投资旨在获取因子风险溢价 (Factor Risk Premia)，如价值、动量、规模、质量、低风险等。简单的策略是构建一个多元化的静态因子组合（例如等权重）。</li>
+<li><strong>引入问题:</strong> 静态配置是否最优？因子收益率在时间序列上存在显著的波动性和可能的周期性 [<strong>建议:</strong> 展示因子历史滚动收益图]。这引发了因子择时的想法：能否预测因子未来表现，在表现好时增配，表现差时减配，以战胜静态基准？</li>
+<li><strong>风格分析的意义:</strong> 对于一个给定的投资组合或基金，其收益究竟是来自承担了哪些因子风险 (Beta)，还是来自管理人超越市场的选股/择时能力 (Alpha)？风格分析是回答这个问题的关键工具。</li>
+</ul>
+</section>
+<section id="因子择时-factor-timing" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="因子择时-factor-timing"><span class="header-section-number">8.2</span> 1. 因子择时 (Factor Timing)</h2>
+<p>因子择时的核心在于利用某些信息预测因子未来的相对表现，并据此动态调整因子权重。</p>
+<section id="动机与目标" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="动机与目标"><span class="header-section-number">8.2.1</span> 1.1 动机与目标</h3>
+<ul>
+<li><strong>动机:</strong> 因子收益存在时变性，抓住表现好的时期，规避表现差的时期。</li>
+<li><strong>目标:</strong> <strong>战胜</strong>简单的静态因子配置策略（如等权重、风险平价）。这是一种<strong>战术性</strong>资产配置。</li>
+<li><strong>核心挑战:</strong> 金融市场信噪比低，时序预测极其困难，择时效果不稳定且易受各种偏差影响。</li>
+</ul>
+</section>
+<section id="如何进行因子择时五大依据与操作方法" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="如何进行因子择时五大依据与操作方法"><span class="header-section-number">8.2.2</span> 1.2 如何进行因子择时：五大依据与操作方法</h3>
+<p>重点是如何利用这些信息来<strong>调整因子权重</strong>。</p>
+<ol type="1">
+<li><strong>基于因子估值 (Factor Valuation):</strong>
+<ul>
+<li><strong>逻辑:</strong> 因子也存在”估值”，高估（低估）预示未来低（高）收益，存在均值回归现象。当某个因子变得”便宜”时买入，变”贵”时卖出。</li>
+<li><strong>如何衡量”估值” (价值价差 Value Spread):</strong>
+<ul>
+<li>构建因子多空组合的长短两端（如按因子值排序最高/最低的 10-30% 股票）。</li>
+<li>计算两端组合的某个估值指标之差。例如，对于价值因子 (HML)，常用其自身的 B/M 或 E/P。计算<strong>价值组合 (H) 的平均 E/P</strong> 减去 <strong>成长组合 (L) 的平均 E/P</strong>：<span class="math inline">\(VS_{E/P} = (E/P)_H - (E/P)_L\)</span>。[cite: 368] (Asness et al., 2018)</li>
+<li>类似的，可以用 B/M 价差 <span class="math inline">\(VS_{B/M} = (B/M)_H - (B/M)_L\)</span> 等。<strong>价差越大，通常认为该因子估值越低（越便宜）。</strong></li>
+</ul></li>
+<li><strong>如何应用 (调整权重):</strong>
+<ul>
+<li><strong>标准化:</strong> 计算当前价值价差 <span class="math inline">\(VS_t\)</span> 在其历史分布（如过去 3-5 年滚动窗口）中的分位数 <span class="math inline">\(NormVal_t = \frac{VS_t - \text{mean}(VS)}{\text{sd}(VS)}\)</span> 或 <span class="math inline">\(NormVal_t = \frac{VS_t - \min(VS)}{\max(VS) - \min(VS)}\)</span>。<span class="math inline">\(NormVal_t\)</span> 接近 1 表示因子估值处于历史高位（贵），接近 0 或 -1 表示处于历史低位（便宜）。</li>
+<li><strong>权重调整:</strong> 根据标准化估值调整因子 <span class="math inline">\(k\)</span> 的目标权重 <span class="math inline">\(\omega_k\)</span>。例如：
+<ul>
+<li><strong>反向线性调整:</strong> <span class="math inline">\(\omega_k \propto (1 - NormVal_t)\)</span> (估值越低，权重越高)</li>
+<li><strong>指数调整:</strong> <span class="math inline">\(\omega_k \propto \exp(-c \times NormVal_t)\)</span> (c &gt; 0，放大调整幅度)</li>
+</ul></li>
+</ul></li>
+<li><strong>讨论:</strong> 逻辑清晰，但效果与价值因子本身相关性高。若价值因子长期低迷，此策略可能失效。</li>
+</ul></li>
+<li><strong>基于因子动量 (Factor Momentum):</strong>
+<ul>
+<li><strong>逻辑:</strong> 因子表现存在<strong>截面动量</strong>，“强者恒强，弱者恒弱”。近期表现好的因子可能在未来一段时间继续表现较好。</li>
+<li><strong>如何衡量”动量”:</strong>
+<ul>
+<li>计算各因子过去 T 个月（常用 T=3, 6, 12，剔除最近一个月）的累积收益率或夏普比率。</li>
+</ul></li>
+<li><strong>如何应用 (调整权重):</strong>
+<ul>
+<li><strong>排序加权:</strong> 根据近期表现对因子进行排序，给表现好的因子更高权重，表现差的因子更低权重（甚至负权重）。</li>
+<li><strong>信号组合:</strong> 构建一个”因子动量因子”，其收益是近期表现好的因子组合减去表现差的因子组合，然后将这个动量信号用于调整原始因子权重。</li>
+</ul></li>
+<li><strong>讨论:</strong> 因子动量效应在实证中较为显著 (Gupta and Kelly, 2019)。但需警惕<strong>动量反转</strong>风险，尤其在市场风格剧烈切换时。</li>
+</ul></li>
+<li><strong>基于因子波动 (Factor Volatility):</strong>
+<ul>
+<li><strong>逻辑:</strong> 主要从<strong>风险管理</strong>角度出发，调整因子权重以达到特定的风险目标，而非直接追求超额收益。</li>
+<li><strong>如何衡量”波动”:</strong>
+<ul>
+<li>计算各因子过去一段时间（如 60 或 120 个交易日）的<strong>已实现波动率 (Realized Volatility)</strong> <span class="math inline">\(\sigma_k\)</span>。</li>
+<li>估计因子间的<strong>协方差矩阵</strong> <span class="math inline">\(\Sigma\)</span>（如果使用最小方差或风险平价）。</li>
+</ul></li>
+<li><strong>如何应用 (调整权重):</strong>
+<ul>
+<li><strong>波动率倒数加权 (朴素风险平价):</strong> <span class="math inline">\(\omega_k \propto 1 / \sigma_k\)</span>。简单有效，给近期波动率较低的因子更高权重。<strong>优点:</strong> 无需估计相关性。<strong>缺点:</strong> 忽略了因子间相关性可能带来的风险分散效果。</li>
+<li><strong>最小方差:</strong> 求解优化问题 <span class="math inline">\(\min_{\omega} \omega' \Sigma \omega\)</span>，使得组合整体波动率最小。<strong>优点:</strong> 直接最小化风险。<strong>缺点:</strong> 对协方差矩阵 <span class="math inline">\(\Sigma\)</span> 的估计误差非常敏感。</li>
+<li><strong>风险平价:</strong> 求解使得每个因子对组合总风险的贡献相等 <span class="math inline">\(\omega_k (\Sigma \omega)_k = \text{constant}\)</span>。<strong>优点:</strong> 风险分散更均衡。<strong>缺点:</strong> 同样依赖 <span class="math inline">\(\Sigma\)</span> 的估计。</li>
+</ul></li>
+<li><strong>讨论:</strong> 主要效果在于降低组合整体波动和回撤，对绝对收益的提升不确定。</li>
+</ul></li>
+<li><strong>基于市场情绪 (Market Sentiment):</strong>
+<ul>
+<li><strong>逻辑:</strong> 市场整体的乐观或悲观情绪会影响投资者的风险偏好，进而影响不同风格因子的相对表现。</li>
+<li><strong>如何衡量”情绪”:</strong>
+<ul>
+<li><strong>综合指数:</strong> 如 Baker and Wurgler (2006) 情绪指数（基于 IPO 活动、换手率、股息贴水、封闭式基金折价等多个指标）。</li>
+<li><strong>单一指标:</strong> VIX 指数（恐慌指数）、Put-Call Ratio、投资者信心调查等。</li>
+</ul></li>
+<li><strong>如何应用 (调整权重):</strong>
+<ul>
+<li><strong>规则基础:</strong>
+<ul>
+<li><strong>情绪高涨时:</strong> 投资者风险偏好高，可能过度追逐进攻型因子（小盘、成长、高 Beta），导致其未来收益降低；防御型因子（低波、质量、价值）可能相对被低估。<strong>策略:</strong> 减配进攻型，增配防御型。</li>
+<li><strong>情绪低迷时:</strong> 投资者风险厌恶，防御型因子通常表现更优。<strong>策略:</strong> 增配防御型。</li>
+</ul></li>
+<li><strong>Stambaugh et al.&nbsp;(2012, 2014) 的发现:</strong> 情绪主要驱动<strong>异象 (Anomalies) 的空头端</strong>。情绪高 -&gt; 垃圾股 (高估值、低质量、高风险) 被进一步高估 -&gt; 做空这些股票的未来收益更高 -&gt; 异象多空策略 (Long 好公司, Short 垃圾公司) 收益更高。<strong>策略:</strong> 当情绪高涨时，加大对依赖空头端获利的因子策略（如一些质量、低风险因子）的配置。</li>
+</ul></li>
+<li><strong>讨论:</strong> 情绪指标对某些因子（尤其是涉及”垃圾股”做空的异象）具有一定的预测能力。</li>
+</ul></li>
+<li><strong>基于宏观因素 (Macro Factors):</strong>
+<ul>
+<li><strong>逻辑:</strong> 宏观经济环境（经济周期、利率、通胀、政策等）系统性地影响企业基本面和风险定价，进而影响不同因子的表现。</li>
+<li><strong>如何衡量”宏观状态”:</strong>
+<ul>
+<li><strong>经济周期:</strong> NBER 衰退/扩张期、产出缺口、PMI 指数等。</li>
+<li><strong>利率环境:</strong> 利率水平（高/低）、利率变化（上升/下降）、期限利差 (Term Spread)。</li>
+<li><strong>通胀环境:</strong> 通胀水平 (CPI/PPI)、通胀预期、通胀变化。</li>
+<li><strong>信用环境:</strong> 信用利差 (Credit Spread)、TED 利差。</li>
+</ul></li>
+<li><strong>如何应用 (调整权重):</strong>
+<ul>
+<li><strong>状态依存 (State-Dependent) 配置:</strong> 识别当前宏观状态，根据历史经验或模型预测，增配在该状态下预期表现较好的因子，减配预期表现较差的因子。例如 [<strong>参考:</strong> 教材表 7.25 或类似研究，如 Bender et al.&nbsp;(2013)]:
+<ul>
+<li><strong>扩张期:</strong> 顺周期因子（价值、动量、规模）可能占优。</li>
+<li><strong>收缩/衰退期:</strong> 防御性/逆周期因子（低波、质量）可能占优。</li>
+<li><strong>利率上升期:</strong> 对久期敏感的因子（如成长股的部分代理因子）可能承压，价值因子可能相对占优。</li>
+<li><strong>通胀上升期:</strong> 价值因子可能受益，成长因子可能受损。</li>
+</ul></li>
+<li><strong>构建预测模型:</strong> 使用宏观变量作为输入，直接预测未来因子收益率，据此调整权重。</li>
+</ul></li>
+<li><strong>讨论:</strong> 逻辑上合理，但宏观预测难度大，关系不稳定，数据存在滞后和修正问题。</li>
+</ul></li>
+</ol>
+</section>
+<section id="因子择时很难现实的挑战" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="因子择时很难现实的挑战"><span class="header-section-number">8.2.3</span> 1.3 因子择时很难：现实的挑战</h3>
+<p>尽管上述方法提供了因子择时的思路，但实践中困难重重。</p>
+<ul>
+<li><p><strong>预测关系不稳定:</strong> 历史上有效的择时信号（无论是估值、动量还是宏观联系）在未来可能失效或减弱。金融市场是动态演化的。</p></li>
+<li><p><strong>数据挖掘风险 (Data Snooping):</strong> 过度拟合历史数据可能找到虚假的择时规律。样本外表现往往远逊于样本内。</p></li>
+<li><p><strong>交易成本:</strong> 因子择时必然导致更高的换手率。交易成本（佣金、滑点、市场冲击成本）会显著侵蚀择时带来的潜在超额收益，甚至使其得不偿失。</p></li>
+<li><p><strong>模型风险:</strong> 依赖的择时模型可能存在设定错误或参数估计误差。</p></li>
+<li><p><strong>实证证据:</strong> 大量学术研究和业界实践表明，持续有效地进行因子择时并稳定战胜简单静态配置<strong>极其困难</strong> (Asness, 2016)。许多看似有效的策略在考虑成本和样本外检验后效果大打折扣。</p></li>
+<li><p><strong>结论:</strong> 因子择时”知易行难”。虽然理论上吸引人，但投资者应<strong>高度谨慎</strong>。对于大多数人而言，坚持一个<strong>战略性、长期、多元化</strong>的因子配置（如等权或基于风险的配置）通常是更务实、更稳健的选择。择时可能更适用于风险管理（如极端估值或宏观冲击时调整风险暴露）而非追求超额收益。</p></li>
+</ul>
+</section>
+</section>
+<section id="风格分析-style-analysis" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="风格分析-style-analysis"><span class="header-section-number">8.3</span> 2. 风格分析 (Style Analysis)</h2>
+<p>风格分析旨在回答：一个投资组合（如共同基金、对冲基金、甚至个人投资组合）的收益到底从哪里来？</p>
+<section id="引言与目的" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="引言与目的"><span class="header-section-number">8.3.1</span> 2.1 引言与目的</h3>
+<ul>
+<li><strong>核心问题:</strong> 将组合收益分解为 <strong>Alpha (主动管理能力)</strong> 和 <strong>Beta (承担系统性风险/风格暴露的回报)</strong>。
+<ul>
+<li><span class="math inline">\(R_{portfolio} = \alpha + \sum \beta_k \times R_{factor, k} + \epsilon\)</span></li>
+</ul></li>
+<li><strong>重要性:</strong>
+<ul>
+<li><strong>基金评估:</strong> 判断基金经理是依靠真实选股/择时能力 (<span class="math inline">\(\alpha\)</span>) 创造价值，还是仅仅通过承担已知的因子风险 (<span class="math inline">\(\beta\)</span>) 来获取收益。支付高额管理费是否值得？</li>
+<li><strong>风险管理:</strong> 了解组合真实的风险暴露，避免风格过于集中或漂移。</li>
+<li><strong>组合构建:</strong> 确保组合的风格符合预期目标。</li>
+</ul></li>
+<li><strong>主要方法:</strong>
+<ul>
+<li><strong>基于收益的风格分析 (RBSA):</strong> 使用组合的历史<strong>收益率</strong>数据和因子收益率数据进行回归分析。<strong>优点:</strong> 数据易得（基金净值、因子指数）、计算相对简单、能反映实际交易结果。<strong>缺点:</strong> 依赖所选因子模型、可能无法完全区分 Beta 和 Alpha、回顾性。<strong>本讲重点。</strong></li>
+<li><strong>基于持仓的风格分析 (HBSA):</strong> 分析组合在某个时间点的<strong>实际持仓</strong>，计算其在各个因子上的得分或暴露。<strong>优点:</strong> 更精确、更前瞻性、能直接看到投资决策。<strong>缺点:</strong> 持仓数据获取难（频率低、滞后、不完整）、计算复杂。</li>
+</ul></li>
+</ul>
+</section>
+<section id="经典风格分析-sharpe-1992" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="经典风格分析-sharpe-1992"><span class="header-section-number">8.3.2</span> 2.2 经典风格分析 (Sharpe, 1992)</h3>
+<ul>
+<li><strong>模型:</strong> <span class="math inline">\(R_{it} = \sum_{k=1}^K \beta_{ik} \lambda_{kt} + \epsilon_{it}\)</span> (注意 <span class="math inline">\(R_{it}\)</span> 是基金<strong>总收益率</strong>)</li>
+<li><strong>核心思想:</strong> 用一组<strong>互斥且完备 (MECE)</strong> 的<strong>资产类别</strong>指数（如大盘价值、大盘成长、小盘价值、小盘成长、债券、现金等）的<strong>静态组合</strong>来复制基金的历史收益。</li>
+<li><strong>关键约束:</strong>
+<ul>
+<li><span class="math inline">\(\lambda_k\)</span>: 使用<strong>纯多头</strong>的资产类别指数收益率。</li>
+<li><span class="math inline">\(\sum_{k=1}^K \beta_{ik} = 1\)</span>: 暴露（权重）之和为 100%。</li>
+<li><span class="math inline">\(\beta_{ik} \ge 0\)</span>: 不允许卖空资产类别。</li>
+</ul></li>
+<li><strong>求解:</strong> 二次规划。</li>
+<li><strong>解读:</strong> <span class="math inline">\(\beta_{ik}\)</span> 代表基金在第 k 个<strong>资产类别</strong>上的平均配置比例。<span class="math inline">\(\alpha_i = \bar{\epsilon}_i\)</span> 代表超越这种静态资产配置的选股/择时收益。</li>
+<li><strong>局限性:</strong> 对资产类别指数选择敏感；约束条件可能不现实；难以纳入现代的多空风险因子（如 HML, SMB, MOM）。</li>
+</ul>
+</section>
+<section id="基于多空因子的现代风格分析" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="基于多空因子的现代风格分析"><span class="header-section-number">8.3.3</span> 2.3 基于多空因子的现代风格分析</h3>
+<p>这是当前主流的方法，更灵活且符合现代资产定价理论。</p>
+<ul>
+<li><strong>模型:</strong> 使用常见的<strong>多空因子模型</strong>进行回归：
+<ul>
+<li><span class="math inline">\(R^e_{it} = \alpha_i + \beta_{i, MKT} R^e_{Mt} + \sum_{k=1}^K \beta_{ik} \lambda_{kt} + \epsilon_{it}\)</span></li>
+<li>其中，<span class="math inline">\(R^e_{it} = R_{it} - R_{ft}\)</span> 是基金<strong>超额收益率</strong> (减去无风险利率)。</li>
+<li><span class="math inline">\(R^e_{Mt}\)</span> 是市场因子超额收益率。</li>
+<li><span class="math inline">\(\lambda_{kt}\)</span> 是其他<strong>多空对冲因子</strong>的收益率 (如 Fama-French 的 SMB, HML；Carhart 的 MOM；FF5 的 RMW, CMA；q 模型的 ROE, I/A；AQR 的 QMJ, BAB 等)。</li>
+</ul></li>
+<li><strong>优势:</strong>
+<ul>
+<li>使用<strong>风险因子 (Risk Factors)</strong> 而非资产类别。</li>
+<li>分析<strong>超额收益</strong>，<strong>无需</strong> <span class="math inline">\(\sum \beta = 1\)</span> 和 <span class="math inline">\(\beta \ge 0\)</span> 的约束。<span class="math inline">\(\beta_{ik}\)</span> 直接衡量基金在第 k 个风险因子上的<strong>敏感度 (Sensitivity) 或暴露 (Exposure)</strong>。<span class="math inline">\(\beta\)</span> 可以为负值（例如，对 SMB 的负暴露表示偏好大盘股）。</li>
+<li>可以灵活选择和组合不同的因子模型（三因子、四因子、五因子、六因子等）来解释收益。</li>
+</ul></li>
+<li><strong>求解:</strong> 普通最小二乘法 (OLS) 回归。</li>
+<li><strong>解读:</strong>
+<ul>
+<li><span class="math inline">\(\beta_{ik}\)</span>: 基金每承担一单位第 k 个因子风险，预期能带来多少收益（或损失）。<strong>反映了基金的投资风格</strong>。</li>
+<li><span class="math inline">\(\alpha_i\)</span>: 在控制了所有已知系统性风险因子暴露后，基金剩余的无法解释的超额收益。理论上代表了基金经理<strong>独特的选股或择时能力</strong>。</li>
+<li><strong>R-squared (R²):</strong> 回归的拟合优度，表示模型中的因子暴露解释了基金收益波动的多大比例。R² 越高，说明基金收益主要由风格暴露驱动；R² 较低，则可能存在显著的 Alpha 或未被模型捕捉的其他风险。</li>
+</ul></li>
+</ul>
+</section>
+<section id="如何应用分析现有基金组合的风格-以巴菲特为例" class="level3" data-number="8.3.4">
+<h3 data-number="8.3.4" class="anchored" data-anchor-id="如何应用分析现有基金组合的风格-以巴菲特为例"><span class="header-section-number">8.3.4</span> 2.4 如何应用：分析现有基金/组合的风格 (以巴菲特为例)</h3>
+<p>风格分析最常见的应用就是评估基金经理的业绩和风格。</p>
+<ul>
+<li><strong>案例：揭秘巴菲特的超额收益 (Frazzini, Kabiller, and Pedersen, 2018)</strong>
+<ul>
+<li><strong>背景:</strong> 巴菲特旗下伯克希尔·哈撒韦公司长期取得惊人业绩（年化超额收益约 19%, 夏普比率 0.76）。使用传统的 Carhart 四因子模型回归，仍有高达 12.1% 的年化 Alpha 无法解释。这真的是”魔法”吗？</li>
+<li><strong>方法:</strong> 作者认为传统模型缺少了重要的风险因子。他们在 Carhart 四因子 (市场 MKT, 规模 SMB, 价值 HML, 动量 MOM) 基础上，加入了两个新因子：
+<ul>
+<li><strong>BAB (Betting Against Beta):</strong> 做多低 Beta 股票，做空高 Beta 股票，并进行杠杆调整。反映了”低风险异象”。</li>
+<li><strong>QMJ (Quality Minus Junk):</strong> 做多高质量（盈利能力强、增长好、安全边际高）股票，做空低质量（垃圾）股票。</li>
+<li>构建 <strong>AQR 六因子模型</strong>，对伯克希尔的<strong>公开持股组合</strong>（模拟巴菲特的选股）的超额收益进行回归。</li>
+</ul></li>
+<li><strong>关键发现:</strong>
+<ul>
+<li><strong>Alpha 消失了:</strong> 在六因子模型下，伯克希尔组合的 Alpha 不再显著异于零！</li>
+<li><strong>显著的因子暴露:</strong> 组合在 <strong>市场 (MKT, <span class="math inline">\(\beta &gt; 1\)</span>)、价值 (HML)、低风险 (BAB)、质量 (QMJ)</strong> 上有显著的<strong>正暴露</strong>，在<strong>规模 (SMB)</strong> 上有显著的<strong>负暴露</strong>（偏好大盘股）。动量 (MOM) 暴露不显著。</li>
+<li><strong>杠杆的作用:</strong> 巴菲特实际投资中使用了相当程度的<strong>杠杆</strong>（估计约 1.6 倍），放大了这些因子暴露带来的收益。</li>
+</ul></li>
+<li><strong>结论与启示:</strong>
+<ul>
+<li>巴菲特的巨大成功并非无法解释的魔法 Alpha，而是来自于他很早就<strong>识别并坚持投资于有效的风险因子</strong>：主要是<strong>高质量、低风险、价值</strong>的大盘股，并聪明地运用了<strong>低成本杠杆</strong>。</li>
+<li><strong>“高质量投资”</strong> 可能比”价值投资”更能准确地概括其核心风格。</li>
+<li>这个案例完美展示了风格分析的力量：将看似神秘的超额收益分解为可理解、可复制（至少理论上）的<strong>因子风险暴露 (Beta)</strong>。优秀的基金经理可能正是那些更早发现、更有效利用这些系统性风险溢价的人。</li>
+</ul></li>
+</ul></li>
+<li><strong>一般基金分析流程:</strong>
+<ol type="1">
+<li>获取基金的历史<strong>月度（或周度/日度）净值</strong>数据，计算超额收益率 <span class="math inline">\(R^e_{it}\)</span>。</li>
+<li>选择一个（或多个）合适的<strong>多因子模型</strong>（如 FF3, Carhart4, FF5, AQR6, q-factor 等），获取对应的因子历史收益率数据 (<span class="math inline">\(\lambda_{kt}\)</span>)。模型的选择取决于分析目标和对市场风险来源的理解。</li>
+<li>进行<strong>时间序列回归</strong>: <span class="math inline">\(R^e_{it} = \alpha_i + \sum \beta_{ik} \lambda_{kt} + \epsilon_{it}\)</span>。</li>
+<li><strong>解读结果:</strong>
+<ul>
+<li><strong>Alpha (<span class="math inline">\(\alpha_i\)</span>)</strong>: 是否显著？统计上显著的正 Alpha 表明基金经理可能具备选股能力。但要注意 Alpha 可能来自运气或未被模型捕捉的风险。</li>
+<li><strong>因子暴露 (<span class="math inline">\(\beta_{ik}\)</span>)</strong>: 哪些因子暴露显著？暴露的方向和大小是怎样的？这揭示了基金的<strong>真实投资风格</strong>（例如，显著为正的 HML 暴露表示价值风格，显著为负的 SMB 暴露表示大盘风格）。</li>
+<li><strong>拟合优度 (R²)</strong>: R² 多高？高 R² (如 &gt; 0.8 或 0.9) 意味着基金收益主要由其风格暴露驱动，更像一个指数基金或 Smart Beta 产品。低 R² 可能意味着独特的选股策略或风格漂移。</li>
+</ul></li>
+<li><strong>(可选) 风格稳定性分析:</strong> 使用<strong>滚动回归 (Rolling Regression)</strong>，在滚动的窗口（如 36 或 60 个月）上重复步骤 3，得到时变的 <span class="math inline">\(\beta_{ik}(t)\)</span> 和 <span class="math inline">\(\alpha_i(t)\)</span>。绘制 <span class="math inline">\(\beta_{ik}(t)\)</span> 的时间序列图，可以判断基金的<strong>风格是否稳定</strong>，是否存在<strong>风格漂移</strong>。</li>
+</ol></li>
+</ul>
+</section>
+<section id="总结与讨论" class="level3" data-number="8.3.5">
+<h3 data-number="8.3.5" class="anchored" data-anchor-id="总结与讨论"><span class="header-section-number">8.3.5</span> 2.5 总结与讨论</h3>
+<ul>
+<li>风格分析是理解投资组合（尤其是基金）<strong>收益来源</strong>和<strong>风险特征</strong>的强大工具。</li>
+<li>基于<strong>多空因子</strong>的现代风格分析方法（RBSA）是主流，相比经典 Sharpe 模型更灵活、解释力更强。</li>
+<li>核心应用是<strong>区分 Alpha 和 Beta</strong>，更公允地评价基金经理表现，识别真实的投资风格及其稳定性。</li>
+<li><strong>重要提示:</strong> 风格分析的结果<strong>高度依赖于所选的因子模型</strong>。使用不同的模型可能得到不同的 Alpha 和 Beta。因此，解释结果时应保持审慎，最好结合基金的投资策略、持仓信息（如果可得）和经济逻辑进行综合判断。</li>
+<li><strong>讨论:</strong> 在实践中，选择哪个因子模型最合适？对于一个 Alpha 不显著但 R² 很高的基金，意味着什么？风格分析结果如何指导我们的基金投资决策？</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./10_selecting.html" class="pagination-link" aria-label="收益模型与组合优化">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">收益模型与组合优化</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./lab11_EP.html" class="pagination-link" aria-label="实践教学示例：EP 因子分析、增强与组合优化">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
