@@ -21,12 +21,15 @@ title: "前言"
 
 1.  [CAPM实证检验](lab02_capmtest.qmd)
 2.  [三因子模型实证检验](lab03_ff3test.qmd)
-3.  [EP因子分析、增强与组合优化](lab11_EP.qmd)
 
 **课程项目:**
 
 1.  [传统多因子投资](project1_factor.qmd)
 2.  [因子投资策略的优化与提升](project2_enhance.qmd)
+
+**期末考试:**
+
+1.  [期末考试复习指南](review.qmd)
 
 **使用说明:**
 

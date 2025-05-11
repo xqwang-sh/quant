@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>10&nbsp; 因子投资展望：另类数据与机器学习 – 量化投资课程讲义</title>
+<title>9&nbsp; 因子投资展望：另类数据与机器学习 – 量化投资课程讲义</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./project1_factor.html" rel="next">
-<link href="./lab11_EP.html" rel="prev">
+<link href="./11_timing.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -81,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_alternative.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_alternative.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -156,26 +156,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lab11_EP.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./12_alternative.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">《量化投资》期末考试复习指南</span></span></a>
   </div>
 </li>
     </ul>
@@ -188,27 +188,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#前言" id="toc-前言" class="nav-link active" data-scroll-target="#前言"><span class="header-section-number">10.1</span> 前言</a></li>
-  <li><a href="#另类数据与因子投资" id="toc-另类数据与因子投资" class="nav-link" data-scroll-target="#另类数据与因子投资"><span class="header-section-number">10.2</span> 1. 另类数据与因子投资</a>
+  <li><a href="#前言" id="toc-前言" class="nav-link active" data-scroll-target="#前言"><span class="header-section-number">9.1</span> 前言</a></li>
+  <li><a href="#另类数据与因子投资" id="toc-另类数据与因子投资" class="nav-link" data-scroll-target="#另类数据与因子投资"><span class="header-section-number">9.2</span> 另类数据与因子投资</a>
   <ul class="collapse">
-  <li><a href="#另类数据概述" id="toc-另类数据概述" class="nav-link" data-scroll-target="#另类数据概述"><span class="header-section-number">10.2.1</span> 1.1 另类数据概述</a></li>
-  <li><a href="#另类数据在因子投资中的应用流程" id="toc-另类数据在因子投资中的应用流程" class="nav-link" data-scroll-target="#另类数据在因子投资中的应用流程"><span class="header-section-number">10.2.2</span> 1.2 另类数据在因子投资中的应用流程</a></li>
-  <li><a href="#另类数据应用的挑战与解决策略" id="toc-另类数据应用的挑战与解决策略" class="nav-link" data-scroll-target="#另类数据应用的挑战与解决策略"><span class="header-section-number">10.2.3</span> 1.3 另类数据应用的挑战与解决策略</a></li>
-  <li><a href="#另类数据应用前景" id="toc-另类数据应用前景" class="nav-link" data-scroll-target="#另类数据应用前景"><span class="header-section-number">10.2.4</span> 1.4 另类数据应用前景</a></li>
+  <li><a href="#另类数据概述" id="toc-另类数据概述" class="nav-link" data-scroll-target="#另类数据概述"><span class="header-section-number">9.2.1</span> 另类数据概述</a></li>
+  <li><a href="#另类数据在因子投资中的应用流程" id="toc-另类数据在因子投资中的应用流程" class="nav-link" data-scroll-target="#另类数据在因子投资中的应用流程"><span class="header-section-number">9.2.2</span> 另类数据在因子投资中的应用流程</a></li>
+  <li><a href="#另类数据应用的挑战与解决策略" id="toc-另类数据应用的挑战与解决策略" class="nav-link" data-scroll-target="#另类数据应用的挑战与解决策略"><span class="header-section-number">9.2.3</span> 另类数据应用的挑战与解决策略</a></li>
+  <li><a href="#另类数据应用前景" id="toc-另类数据应用前景" class="nav-link" data-scroll-target="#另类数据应用前景"><span class="header-section-number">9.2.4</span> 另类数据应用前景</a></li>
   </ul></li>
-  <li><a href="#机器学习在因子投资中的应用" id="toc-机器学习在因子投资中的应用" class="nav-link" data-scroll-target="#机器学习在因子投资中的应用"><span class="header-section-number">10.3</span> 2. 机器学习在因子投资中的应用</a>
+  <li><a href="#机器学习在因子投资中的应用" id="toc-机器学习在因子投资中的应用" class="nav-link" data-scroll-target="#机器学习在因子投资中的应用"><span class="header-section-number">9.3</span> 机器学习在因子投资中的应用</a>
   <ul class="collapse">
-  <li><a href="#资产定价中的机器学习应用" id="toc-资产定价中的机器学习应用" class="nav-link" data-scroll-target="#资产定价中的机器学习应用"><span class="header-section-number">10.3.1</span> 2.1 资产定价中的机器学习应用</a></li>
-  <li><a href="#机器学习在因子研究中的特殊应用" id="toc-机器学习在因子研究中的特殊应用" class="nav-link" data-scroll-target="#机器学习在因子研究中的特殊应用"><span class="header-section-number">10.3.2</span> 2.2 机器学习在因子研究中的特殊应用</a></li>
-  <li><a href="#自然语言处理在因子投资中的特殊应用" id="toc-自然语言处理在因子投资中的特殊应用" class="nav-link" data-scroll-target="#自然语言处理在因子投资中的特殊应用"><span class="header-section-number">10.3.3</span> 2.3 自然语言处理在因子投资中的特殊应用</a></li>
-  <li><a href="#机器学习在因子投资中的实践挑战" id="toc-机器学习在因子投资中的实践挑战" class="nav-link" data-scroll-target="#机器学习在因子投资中的实践挑战"><span class="header-section-number">10.3.4</span> 2.4 机器学习在因子投资中的实践挑战</a></li>
-  <li><a href="#机器学习因子投资的未来发展" id="toc-机器学习因子投资的未来发展" class="nav-link" data-scroll-target="#机器学习因子投资的未来发展"><span class="header-section-number">10.3.5</span> 2.5 机器学习因子投资的未来发展</a></li>
+  <li><a href="#资产定价中的机器学习应用" id="toc-资产定价中的机器学习应用" class="nav-link" data-scroll-target="#资产定价中的机器学习应用"><span class="header-section-number">9.3.1</span> 资产定价中的机器学习应用</a></li>
+  <li><a href="#机器学习在因子研究中的特殊应用" id="toc-机器学习在因子研究中的特殊应用" class="nav-link" data-scroll-target="#机器学习在因子研究中的特殊应用"><span class="header-section-number">9.3.2</span> 机器学习在因子研究中的特殊应用</a></li>
+  <li><a href="#自然语言处理在因子投资中的特殊应用" id="toc-自然语言处理在因子投资中的特殊应用" class="nav-link" data-scroll-target="#自然语言处理在因子投资中的特殊应用"><span class="header-section-number">9.3.3</span> 自然语言处理在因子投资中的特殊应用</a></li>
+  <li><a href="#机器学习在因子投资中的实践挑战" id="toc-机器学习在因子投资中的实践挑战" class="nav-link" data-scroll-target="#机器学习在因子投资中的实践挑战"><span class="header-section-number">9.3.4</span> 机器学习在因子投资中的实践挑战</a></li>
+  <li><a href="#机器学习因子投资的未来发展" id="toc-机器学习因子投资的未来发展" class="nav-link" data-scroll-target="#机器学习因子投资的未来发展"><span class="header-section-number">9.3.5</span> 机器学习因子投资的未来发展</a></li>
   </ul></li>
-  <li><a href="#因子投资未来整合展望" id="toc-因子投资未来整合展望" class="nav-link" data-scroll-target="#因子投资未来整合展望"><span class="header-section-number">10.4</span> 3. 因子投资未来整合展望</a>
+  <li><a href="#因子投资未来整合展望" id="toc-因子投资未来整合展望" class="nav-link" data-scroll-target="#因子投资未来整合展望"><span class="header-section-number">9.4</span> 因子投资未来整合展望</a>
   <ul class="collapse">
-  <li><a href="#另类数据与机器学习的协同效应" id="toc-另类数据与机器学习的协同效应" class="nav-link" data-scroll-target="#另类数据与机器学习的协同效应"><span class="header-section-number">10.4.1</span> 3.1 另类数据与机器学习的协同效应</a></li>
-  <li><a href="#因子投资的未来格局" id="toc-因子投资的未来格局" class="nav-link" data-scroll-target="#因子投资的未来格局"><span class="header-section-number">10.4.2</span> 3.2 因子投资的未来格局</a></li>
-  <li><a href="#实践路径建议" id="toc-实践路径建议" class="nav-link" data-scroll-target="#实践路径建议"><span class="header-section-number">10.4.3</span> 3.3 实践路径建议</a></li>
+  <li><a href="#另类数据与机器学习的协同效应" id="toc-另类数据与机器学习的协同效应" class="nav-link" data-scroll-target="#另类数据与机器学习的协同效应"><span class="header-section-number">9.4.1</span> 另类数据与机器学习的协同效应</a></li>
+  <li><a href="#因子投资的未来格局" id="toc-因子投资的未来格局" class="nav-link" data-scroll-target="#因子投资的未来格局"><span class="header-section-number">9.4.2</span> 因子投资的未来格局</a></li>
+  <li><a href="#实践路径建议" id="toc-实践路径建议" class="nav-link" data-scroll-target="#实践路径建议"><span class="header-section-number">9.4.3</span> 实践路径建议</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -218,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">因子投资展望：另类数据与机器学习</span></h1>
 </div>
 
 
@@ -235,14 +235,14 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="前言" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="前言"><span class="header-section-number">10.1</span> 前言</h2>
+<section id="前言" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="前言"><span class="header-section-number">9.1</span> 前言</h2>
 <p>随着金融市场的不断发展，因子投资面临新的机遇与挑战。本讲将展望因子投资的未来发展趋势，重点关注两个前沿领域：另类数据的应用与机器学习技术在因子投资中的实践。这两个领域正在深刻改变传统因子投资的方法论和实践路径，为投资者提供了新的超额收益来源。</p>
 </section>
-<section id="另类数据与因子投资" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="另类数据与因子投资"><span class="header-section-number">10.2</span> 1. 另类数据与因子投资</h2>
-<section id="另类数据概述" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="另类数据概述"><span class="header-section-number">10.2.1</span> 1.1 另类数据概述</h3>
+<section id="另类数据与因子投资" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="另类数据与因子投资"><span class="header-section-number">9.2</span> 另类数据与因子投资</h2>
+<section id="另类数据概述" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="另类数据概述"><span class="header-section-number">9.2.1</span> 另类数据概述</h3>
 <ul>
 <li><strong>动机:</strong> 传统量价、财务数据因子日益拥挤，收益降低，寻求新的、未被充分挖掘的数据源以获取超额收益</li>
 <li><strong>定义:</strong> 相对于传统数据的非传统数据源，通常为非结构化或半结构化数据</li>
@@ -302,8 +302,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="另类数据在因子投资中的应用流程" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="另类数据在因子投资中的应用流程"><span class="header-section-number">10.2.2</span> 1.2 另类数据在因子投资中的应用流程</h3>
+<section id="另类数据在因子投资中的应用流程" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="另类数据在因子投资中的应用流程"><span class="header-section-number">9.2.2</span> 另类数据在因子投资中的应用流程</h3>
 <ol type="1">
 <li><strong>数据获取与清洗:</strong>
 <ul>
@@ -331,8 +331,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ol>
 </section>
-<section id="另类数据应用的挑战与解决策略" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="另类数据应用的挑战与解决策略"><span class="header-section-number">10.2.3</span> 1.3 另类数据应用的挑战与解决策略</h3>
+<section id="另类数据应用的挑战与解决策略" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="另类数据应用的挑战与解决策略"><span class="header-section-number">9.2.3</span> 另类数据应用的挑战与解决策略</h3>
 <ul>
 <li><strong>主要挑战:</strong>
 <ol type="1">
@@ -367,15 +367,15 @@ ul.task-list li input[type="checkbox"] {
 </ol></li>
 </ul>
 </section>
-<section id="另类数据应用前景" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="另类数据应用前景"><span class="header-section-number">10.2.4</span> 1.4 另类数据应用前景</h3>
+<section id="另类数据应用前景" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="另类数据应用前景"><span class="header-section-number">9.2.4</span> 另类数据应用前景</h3>
 <p>潜力巨大，但需客观认识挑战，结合专业知识和科学方法谨慎使用。随着数据获取成本降低、处理技术进步，另类数据很可能成为机构投资者未来超额收益的重要来源。领先的对冲基金和资产管理公司已经建立了专门的另类数据团队，这一趋势预计将继续扩展到更广泛的投资机构。</p>
 </section>
 </section>
-<section id="机器学习在因子投资中的应用" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="机器学习在因子投资中的应用"><span class="header-section-number">10.3</span> 2. 机器学习在因子投资中的应用</h2>
-<section id="资产定价中的机器学习应用" class="level3" data-number="10.3.1">
-<h3 data-number="10.3.1" class="anchored" data-anchor-id="资产定价中的机器学习应用"><span class="header-section-number">10.3.1</span> 2.1 资产定价中的机器学习应用</h3>
+<section id="机器学习在因子投资中的应用" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="机器学习在因子投资中的应用"><span class="header-section-number">9.3</span> 机器学习在因子投资中的应用</h2>
+<section id="资产定价中的机器学习应用" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="资产定价中的机器学习应用"><span class="header-section-number">9.3.1</span> 资产定价中的机器学习应用</h3>
 <ul>
 <li><strong>传统方法的局限性:</strong>
 <ul>
@@ -424,8 +424,8 @@ ul.task-list li input[type="checkbox"] {
 </ol></li>
 </ul>
 </section>
-<section id="机器学习在因子研究中的特殊应用" class="level3" data-number="10.3.2">
-<h3 data-number="10.3.2" class="anchored" data-anchor-id="机器学习在因子研究中的特殊应用"><span class="header-section-number">10.3.2</span> 2.2 机器学习在因子研究中的特殊应用</h3>
+<section id="机器学习在因子研究中的特殊应用" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="机器学习在因子研究中的特殊应用"><span class="header-section-number">9.3.2</span> 机器学习在因子研究中的特殊应用</h3>
 <ul>
 <li><strong>因子发现与构建:</strong>
 <ul>
@@ -460,8 +460,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="自然语言处理在因子投资中的特殊应用" class="level3" data-number="10.3.3">
-<h3 data-number="10.3.3" class="anchored" data-anchor-id="自然语言处理在因子投资中的特殊应用"><span class="header-section-number">10.3.3</span> 2.3 自然语言处理在因子投资中的特殊应用</h3>
+<section id="自然语言处理在因子投资中的特殊应用" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="自然语言处理在因子投资中的特殊应用"><span class="header-section-number">9.3.3</span> 自然语言处理在因子投资中的特殊应用</h3>
 <ul>
 <li><strong>文本数据的因子化处理:</strong>
 <ul>
@@ -479,8 +479,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="机器学习在因子投资中的实践挑战" class="level3" data-number="10.3.4">
-<h3 data-number="10.3.4" class="anchored" data-anchor-id="机器学习在因子投资中的实践挑战"><span class="header-section-number">10.3.4</span> 2.4 机器学习在因子投资中的实践挑战</h3>
+<section id="机器学习在因子投资中的实践挑战" class="level3" data-number="9.3.4">
+<h3 data-number="9.3.4" class="anchored" data-anchor-id="机器学习在因子投资中的实践挑战"><span class="header-section-number">9.3.4</span> 机器学习在因子投资中的实践挑战</h3>
 <ul>
 <li><strong>数据挑战:</strong>
 <ul>
@@ -522,8 +522,8 @@ ul.task-list li input[type="checkbox"] {
 </ol></li>
 </ul>
 </section>
-<section id="机器学习因子投资的未来发展" class="level3" data-number="10.3.5">
-<h3 data-number="10.3.5" class="anchored" data-anchor-id="机器学习因子投资的未来发展"><span class="header-section-number">10.3.5</span> 2.5 机器学习因子投资的未来发展</h3>
+<section id="机器学习因子投资的未来发展" class="level3" data-number="9.3.5">
+<h3 data-number="9.3.5" class="anchored" data-anchor-id="机器学习因子投资的未来发展"><span class="header-section-number">9.3.5</span> 机器学习因子投资的未来发展</h3>
 <ul>
 <li><strong>方法创新:</strong>
 <ul>
@@ -549,10 +549,10 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 </section>
 </section>
-<section id="因子投资未来整合展望" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="因子投资未来整合展望"><span class="header-section-number">10.4</span> 3. 因子投资未来整合展望</h2>
-<section id="另类数据与机器学习的协同效应" class="level3" data-number="10.4.1">
-<h3 data-number="10.4.1" class="anchored" data-anchor-id="另类数据与机器学习的协同效应"><span class="header-section-number">10.4.1</span> 3.1 另类数据与机器学习的协同效应</h3>
+<section id="因子投资未来整合展望" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="因子投资未来整合展望"><span class="header-section-number">9.4</span> 因子投资未来整合展望</h2>
+<section id="另类数据与机器学习的协同效应" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="另类数据与机器学习的协同效应"><span class="header-section-number">9.4.1</span> 另类数据与机器学习的协同效应</h3>
 <ul>
 <li><strong>互补优势:</strong>
 <ul>
@@ -569,8 +569,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="因子投资的未来格局" class="level3" data-number="10.4.2">
-<h3 data-number="10.4.2" class="anchored" data-anchor-id="因子投资的未来格局"><span class="header-section-number">10.4.2</span> 3.2 因子投资的未来格局</h3>
+<section id="因子投资的未来格局" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="因子投资的未来格局"><span class="header-section-number">9.4.2</span> 因子投资的未来格局</h3>
 <ul>
 <li><strong>市场效应:</strong>
 <ul>
@@ -592,8 +592,8 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 </ul>
 </section>
-<section id="实践路径建议" class="level3" data-number="10.4.3">
-<h3 data-number="10.4.3" class="anchored" data-anchor-id="实践路径建议"><span class="header-section-number">10.4.3</span> 3.3 实践路径建议</h3>
+<section id="实践路径建议" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="实践路径建议"><span class="header-section-number">9.4.3</span> 实践路径建议</h3>
 <ul>
 <li><strong>机构投资者策略:</strong>
 <ul>
@@ -1039,13 +1039,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./lab11_EP.html" class="pagination-link" aria-label="实践教学示例：EP 因子分析、增强与组合优化">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">实践教学示例：EP 因子分析、增强与组合优化</span></span>
+      <a href="./11_timing.html" class="pagination-link" aria-label="因子择时与风格分析">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">因子择时与风格分析</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./project1_factor.html" class="pagination-link" aria-label="项目1：因子投资策略构建">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

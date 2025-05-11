@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>11&nbsp; 项目2：因子投资策略的优化与提升 – 量化投资课程讲义</title>
+<title>12&nbsp; 《量化投资》期末考试复习指南 – 量化投资课程讲义</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./review.html" rel="next">
-<link href="./project1_factor.html" rel="prev">
+<link href="./project2_enhance.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -81,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./project2_enhance.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./review.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">《量化投资》期末考试复习指南</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -168,13 +196,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link active">
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./review.html" class="sidebar-item-text sidebar-link">
+  <a href="./review.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">《量化投资》期末考试复习指南</span></span></a>
   </div>
 </li>
@@ -183,34 +211,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#项目背景" id="toc-项目背景" class="nav-link active" data-scroll-target="#项目背景"><span class="header-section-number">12</span> 项目背景</a></li>
-  <li><a href="#项目目标" id="toc-项目目标" class="nav-link" data-scroll-target="#项目目标"><span class="header-section-number">13</span> 项目目标</a></li>
-  <li><a href="#优化方向建议至少选择两个" id="toc-优化方向建议至少选择两个" class="nav-link" data-scroll-target="#优化方向建议至少选择两个"><span class="header-section-number">14</span> 优化方向建议（至少选择两个）</a>
-  <ul class="collapse">
-  <li><a href="#方向一收益模型构建与优化" id="toc-方向一收益模型构建与优化" class="nav-link" data-scroll-target="#方向一收益模型构建与优化"><span class="header-section-number">14.1</span> 方向一：收益模型构建与优化</a></li>
-  <li><a href="#方向二投资组合优化方法" id="toc-方向二投资组合优化方法" class="nav-link" data-scroll-target="#方向二投资组合优化方法"><span class="header-section-number">14.2</span> 方向二：投资组合优化方法</a></li>
-  <li><a href="#方向三因子择时策略" id="toc-方向三因子择时策略" class="nav-link" data-scroll-target="#方向三因子择时策略"><span class="header-section-number">14.3</span> 方向三：因子择时策略</a></li>
-  <li><a href="#方向四风险归因与管理" id="toc-方向四风险归因与管理" class="nav-link" data-scroll-target="#方向四风险归因与管理"><span class="header-section-number">14.4</span> 方向四：风险归因与管理</a></li>
-  </ul></li>
-  <li><a href="#项目步骤建议" id="toc-项目步骤建议" class="nav-link" data-scroll-target="#项目步骤建议"><span class="header-section-number">15</span> 项目步骤建议</a></li>
-  <li><a href="#提交要求" id="toc-提交要求" class="nav-link" data-scroll-target="#提交要求"><span class="header-section-number">16</span> 提交要求</a>
-  <ul class="collapse">
-  <li><a href="#评分标准" id="toc-评分标准" class="nav-link" data-scroll-target="#评分标准"><span class="header-section-number">16.1</span> 评分标准</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">《量化投资》期末考试复习指南</span></h1>
 </div>
 
 
@@ -227,279 +236,131 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="项目背景" class="level1" data-number="12">
-<h1 data-number="12"><span class="header-section-number">12</span> 项目背景</h1>
-<p>基于项目1中构建的初步因子投资策略，本项目将进一步探索如何通过先进的组合优化方法、因子择时技术以及风险管理手段来提升策略的风险调整收益。在实践中，因子投资策略的成功不仅取决于所选因子的有效性，还高度依赖于收益模型的精确度、投资组合构建的方法以及风险控制的严谨性。</p>
-<p>量化投资实践表明，即使使用相同的因子，不同的投资组合构建方法也会导致显著不同的投资结果。此外，因子收益在时间序列上表现出的波动性和周期性，为动态调整因子权重（因子择时）提供了可能性。而全面的风险归因分析则有助于更好地理解策略风险来源，进一步优化投资决策。</p>
-<p>在本项目中，你将有机会将项目1中的因子投资策略进行全面优化，探索如何在保持策略稳健性的同时提升其风险调整收益。</p>
-</section>
-<section id="项目目标" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> 项目目标</h1>
-<p>本项目的主要目标是在项目1所构建因子策略的基础上，通过优化收益预测模型、组合构建方法和风险管理技术，显著提升策略的风险调整收益。具体目标包括：</p>
-<ol type="1">
-<li><strong>收益模型优化</strong>：改进原有因子对收益的预测能力，构建更精确的收益预测模型</li>
-<li><strong>投资组合优化</strong>：设计并实现高效的投资组合构建方法，平衡收益预期与风险控制</li>
-<li><strong>因子择时研究</strong>：探索因子择时的可行性，寻找有效的因子权重动态调整方法</li>
-<li><strong>风险归因分析</strong>：深入分析策略风险来源，优化风险管理方案</li>
-<li><strong>策略评估</strong>：全面评估优化后策略的表现，与原始策略和市场基准进行比较</li>
-</ol>
-</section>
-<section id="优化方向建议至少选择两个" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> 优化方向建议（至少选择两个）</h1>
-<section id="方向一收益模型构建与优化" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="方向一收益模型构建与优化"><span class="header-section-number">14.1</span> 方向一：收益模型构建与优化</h2>
-<p>基于项目1中的因子，构建更有效的收益预测模型：</p>
-<ol type="1">
-<li><strong>预测变量处理</strong>：
+<p>各位同学：</p>
+<p>大家好！本学期《量化投资》课程即将结束，为帮助大家更好地准备期末考试，特整理本复习指南。期末考试旨在考察大家对课程核心理论知识的理解和应用能力。</p>
+<p>考试形式： 闭卷笔试 题型分布（参考）： 选择题、判断题、简答题、案例分析题 考试范围： 主要覆盖课程讲义及课堂讲解的核心内容。</p>
+<p>复习要点：</p>
+<p><strong>1. 有效市场假说 (EMH - Efficient Market Hypothesis)</strong></p>
 <ul>
-<li>异常值处理（如缩尾法、中位数绝对偏差法）</li>
-<li>横截面标准化（Z-Score）</li>
-<li>分层合成（先维度内合成再维度间合成）</li>
+<li><strong>核心内容:</strong>
+<ul>
+<li>理解弱式、半强式、强式有效市场的定义和关键区别。</li>
+<li>掌握在不同市场有效性假设下，技术分析、基于公开信息的基本面分析以及内幕信息交易的有效性。（<strong>重点关注半强式有效市场及其对基本面分析的影响</strong>）</li>
 </ul></li>
-<li><strong>预测方法探索</strong>：
-<ul>
-<li>非参数化预测（条件选股法、排序打分法等）</li>
-<li>参数化预测（截面回归、面板回归等）</li>
-<li>权重分配方法（IC加权、等权重等）</li>
-</ul></li>
-<li><strong>预测模型评估</strong>：
-<ul>
-<li>使用IC/IR衡量预测能力</li>
-<li>评估预测信号的衰减速度（半衰期）</li>
-<li>分析不同市场环境下的预测稳定性</li>
-</ul></li>
-</ol>
-</section>
-<section id="方向二投资组合优化方法" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="方向二投资组合优化方法"><span class="header-section-number">14.2</span> 方向二：投资组合优化方法</h2>
-<p>基于收益预测结果，探索不同的投资组合构建方法：</p>
-<ol type="1">
-<li><strong>目标函数选择</strong>：
-<ul>
-<li>均值-方差优化（Mean-Variance Optimization）</li>
-<li>最小方差（Minimum Variance）</li>
-<li>最大多样化（Maximum Diversification）</li>
-<li>风险平价（Risk Parity）</li>
-</ul></li>
-<li><strong>约束条件设计</strong>：
-<ul>
-<li>卖空约束与杠杆约束</li>
-<li>个股/行业集中度约束</li>
-<li>因子暴露约束</li>
-<li>换手率约束</li>
-</ul></li>
-<li><strong>交易成本建模</strong>：
-<ul>
-<li>线性成本函数</li>
-<li>二次成本函数（考虑冲击成本）</li>
-<li>优化中纳入交易成本的方法</li>
-</ul></li>
-</ol>
-</section>
-<section id="方向三因子择时策略" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="方向三因子择时策略"><span class="header-section-number">14.3</span> 方向三：因子择时策略</h2>
-<p>探索动态调整因子权重的择时策略：</p>
-<ol type="1">
-<li><strong>基于因子估值的择时</strong>：
-<ul>
-<li>计算因子估值指标（如价值价差）</li>
-<li>基于历史分位数调整因子权重</li>
-<li>评估估值信号的有效性</li>
-</ul></li>
-<li><strong>基于因子动量的择时</strong>：
-<ul>
-<li>计算短期/中期因子收益动量</li>
-<li>构建因子动量择时规则</li>
-<li>分析因子动量的稳定性</li>
-</ul></li>
-<li><strong>基于市场环境的择时</strong>：
-<ul>
-<li>识别不同市场环境（如牛熊市、高/低波动率环境）</li>
-<li>分析不同因子在各市场环境下的表现规律</li>
-<li>设计基于市场环境的因子配置方法</li>
-</ul></li>
-</ol>
-</section>
-<section id="方向四风险归因与管理" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="方向四风险归因与管理"><span class="header-section-number">14.4</span> 方向四：风险归因与管理</h2>
-<p>深入分析策略风险，优化风险管理方案：</p>
-<ol type="1">
-<li><strong>风险分解与归因</strong>：
-<ul>
-<li>将策略风险分解为系统性风险和特质性风险</li>
-<li>使用风险归因三要素（暴露×波动率×相关性）分析风险来源</li>
-<li>评估不同因子对总风险的贡献</li>
-</ul></li>
-<li><strong>压力测试</strong>：
-<ul>
-<li>设计历史场景和假设场景下的压力测试</li>
-<li>分析极端市场环境下的策略表现</li>
-<li>基于压力测试结果调整风险控制参数</li>
-</ul></li>
-<li><strong>尾部风险管理</strong>：
-<ul>
-<li>监测风险偏好变化和市场相关性激增</li>
-<li>设计避险机制以应对极端市场波动</li>
-<li>评估避险策略的成本与效益</li>
-</ul></li>
-</ol>
-</section>
-</section>
-<section id="项目步骤建议" class="level1" data-number="15">
-<h1 data-number="15"><span class="header-section-number">15</span> 项目步骤建议</h1>
-<ol type="1">
-<li><strong>基础分析与方向选择</strong>（1周）
-<ul>
-<li>评估项目1中策略的优势与不足</li>
-<li>选择至少两个优化方向</li>
-<li>设计优化方案</li>
-</ul></li>
-<li><strong>模型构建与实现</strong>（3周）
-<ul>
-<li>实现收益预测模型优化</li>
-<li>设计投资组合优化方法</li>
-<li>构建择时策略或风险管理框架</li>
-</ul></li>
-<li><strong>策略回测与分析</strong>（2周）
-<ul>
-<li>进行全样本回测</li>
-<li>分析不同市场环境下的表现</li>
-<li>比较优化前后的策略表现差异</li>
-</ul></li>
-<li><strong>风险评估与微调</strong>（1周）
-<ul>
-<li>进行风险归因分析</li>
-<li>识别策略的潜在风险点</li>
-<li>微调策略参数以平衡风险和收益</li>
-</ul></li>
-</ol>
-</section>
-<section id="提交要求" class="level1" data-number="16">
-<h1 data-number="16"><span class="header-section-number">16</span> 提交要求</h1>
-<ol type="1">
-<li><strong>项目报告</strong>（30页以内，报告必须包含这七个章节，但每个章节内的内容可以适当调整）
-<ul>
-<li>项目摘要（不超过300字）</li>
-<li>第一部分：预测变量选择的理论基础
-<ul>
-<li>阐述所选因子的经济学或金融学原理</li>
-<li>回顾相关文献对因子有效性的理论解释与实证证据</li>
-<li>说明因子间相互关系及组合逻辑</li>
-</ul></li>
-<li>第二部分：数据来源与预处理
-<ul>
-<li>详细说明数据来源、时间跨度及频率</li>
-<li>描述数据清洗流程（如异常值处理、缺失值处理等）</li>
-<li>阐述因子构建的具体计算方法</li>
-<li>展示数据的基本统计特征</li>
-</ul></li>
-<li>第三部分：因子策略收益率分析
-<ul>
-<li>分析原始策略的收益特征（年化收益、波动率、最大回撤等）</li>
-<li>评估因子的预测能力（IC值分析、衰减速度等）</li>
-<li>分解策略风险来源（系统性风险与特质性风险）</li>
-<li>识别策略存在的问题并提出优化思路</li>
-</ul></li>
-<li>第四部分：策略优化的具体做法
-<ul>
-<li>详细阐述所选优化方向的方法论</li>
-<li>说明优化算法的实现细节与参数选择</li>
-<li>描述优化过程中的关键决策及其理由</li>
-<li>解释如何平衡模型复杂度与过拟合风险</li>
-</ul></li>
-<li>第五部分：优化后策略的收益率分析
-<ul>
-<li>全面评估优化后策略的表现指标</li>
-<li>与原始策略进行对比分析（超额收益、风险调整收益等）</li>
-<li>进行分子期分析，验证策略在不同市场环境下的稳健性</li>
-<li>展示策略的归因分析结果</li>
-</ul></li>
-<li>第六部分：结论与未来改进方向
-<ul>
-<li>总结优化成果与主要发现</li>
-<li>分析策略可能存在的局限性</li>
-<li>提出进一步改进的具体方向与方法</li>
-<li>探讨策略的实际应用前景</li>
-</ul></li>
-<li>第七部分：参考文献
-<ul>
-<li>按学术规范列出所有引用的文献</li>
-<li>包括学术论文、专业书籍及其他资料来源</li>
-<li>确保引用格式统一且完整</li>
-</ul></li>
-<li>格式要求（请严格按照以下规范撰写项目报告）：
-<ol type="1">
-<li><strong>封面页（第一页）</strong>：
-<ul>
-<li>包含项目题目、项目摘要（不超过300字）、小组成员名单、学号、提交日期等信息，居中排版。</li>
-</ul></li>
-<li><strong>目录页（第二页）</strong>：
-<ul>
-<li>自动生成目录，列出各章节标题及页码。</li>
-</ul></li>
-<li><strong>正文部分（第三页起）</strong>：
-<ul>
-<li>正文采用<strong>中文宋体五号</strong>，1.5倍行距。</li>
-<li>章节标题采用<strong>黑体</strong>，一级标题四号，二级标题小四，三级标题五号，加粗。</li>
-<li>页边距：上、下、左、右均为2.5厘米。</li>
-<li>页码从正文第一页（即第三页）开始，居中显示。</li>
-<li>正文段落首行缩进2字符。</li>
-</ul></li>
-<li><strong>图表要求</strong>：
-<ul>
-<li>图表需居中插入，图题置于图下方，表题置于表上方，均采用五号宋体，编号规范（如“图1-1 XXX”、“表2-1 XXX”）。</li>
-<li>图表需清晰美观，建议使用矢量格式，分辨率不低于300dpi。</li>
-<li>每个图表必须有简要说明，正文中需引用（如“见图2-1”）。</li>
-<li>图表内容应与正文分析紧密相关，避免堆砌无关图表。</li>
-</ul></li>
-<li><strong>排版与格式统一</strong>：
-<ul>
-<li>全文格式规范统一，字体、字号、行距、标题层级、编号等保持一致。</li>
-<li>参考文献格式统一，建议采用APA或Harvard等主流学术格式。</li>
-<li>报告总页数（含封面、目录、正文、参考文献、附录等）<strong>不超过20页</strong>。</li>
-<li>版面整洁，逻辑清晰，避免出现错别字、语法错误和排版混乱。</li>
-</ul></li>
-<li><strong>其他说明</strong>：
-<ul>
-<li>建议使用Word或LaTeX等专业排版工具完成报告。</li>
-<li>如有附录（如代码片段、补充数据等），请单独列于报告末尾，并在目录中标明。</li>
-</ul></li>
-</ol></li>
-</ul></li>
-<li><strong>课堂展示</strong>（10分钟）
-<ul>
-<li>清晰展示优化思路和主要创新点</li>
-<li>呈现优化前后的策略表现对比</li>
-<li>解释优化过程中的关键决策</li>
-</ul></li>
-<li><strong>代码与数据</strong>
-<ul>
-<li>完整、可运行的代码（Python或R）</li>
-<li>必要的配置文件和依赖说明</li>
-<li>详细的README文件，说明代码结构与运行方法</li>
-</ul></li>
-<li><strong>提交方式与截止日期</strong>：
-<ul>
-<li>通过学习通平台提交项目报告、代码与数据（ZIP格式）</li>
-<li>同时提交展示幻灯片（PPT或PDF格式）</li>
-<li>截止日期：2025年6月8日23:59</li>
-</ul></li>
-</ol>
-<section id="评分标准" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="评分标准"><span class="header-section-number">16.1</span> 评分标准</h2>
-<p>项目评分将基于以下几个方面：</p>
-<ul>
-<li><strong>优化思路</strong>（20%）：优化方向的选择与设计思路的合理性</li>
-<li><strong>实现质量</strong>（20%）：代码实现的准确性与效率</li>
-<li><strong>实证结果</strong>（20%）：优化后策略相比原始策略的改进程度</li>
-<li><strong>报告质量</strong>（20%）：报告的完整性、逻辑性与学术规范</li>
-<li><strong>风险控制</strong>（10%）：对策略风险的理解和控制能力</li>
-<li><strong>展示质量</strong>（10%）：展示的清晰度和专业性</li>
+<li><strong>考点提示:</strong> 选择题可能直接考察定义或不同分析方法的有效性。</li>
 </ul>
+<p><strong>2. 资本资产定价模型 (CAPM - Capital Asset Pricing Model)</strong></p>
+<ul>
+<li><strong>核心内容:</strong>
+<ul>
+<li><strong>思想:</strong> 解释风险与预期收益的关系，强调只有系统性风险（用 Beta $ $ 衡量）才能获得风险溢价。理解系统性风险与非系统性风险的区别，以及分散化投资的作用。</li>
+<li><strong>公式:</strong> $ E(R_i) = R_f + _i (E(R_m) - R_f) $，理解公式中每一项的含义。</li>
+<li><strong>假设:</strong> 熟记 CAPM 的主要假设（投资者理性、追求效用最大化、无风险资产存在、同质预期、市场无摩擦等），尤其要清楚<strong>哪些不是</strong>其假设（例如：存在交易成本和税收）。</li>
+<li><strong>局限性:</strong> 了解 CAPM 在现实应用中的不足（例如：对市场 Beta 的依赖、对“市场异象”如规模/价值效应解释力不足、假设过于严格等）。</li>
+</ul></li>
+<li><strong>考点提示:</strong> 选择题考假设、局限性；简答题可能要求解释核心思想、局限性。</li>
+</ul>
+<p><strong>3. 三因子模型 (Fama-French Three-Factor Model)</strong></p>
+<ul>
+<li><strong>核心内容:</strong>
+<ul>
+<li><strong>动机与改进:</strong> 理解 FF3 模型是对 CAPM 的扩展，旨在更好地解释 CAPM 无法解释的股票收益横截面差异。</li>
+<li><strong>因子构成:</strong> 熟记三个因子：市场风险因子 (MKT)、规模因子 (SMB - Small Minus Big)、价值因子 (HML - High Minus Low)。知道哪些因子属于 FF3，哪些不属于（例如：动量因子 Momentum）。</li>
+<li><strong>因子构建:</strong>
+<ul>
+<li><strong>重点:</strong> 详细理解 SMB 和 HML 因子的构建逻辑和步骤（如何根据市值 Size 和账面市值比 B/M 进行排序、分组（2x3交叉分组）、如何计算多空组合的因子收益）。</li>
+<li>理解 SMB 旨在捕捉“规模效应”，HML 旨在捕捉“价值效应”。</li>
+</ul></li>
+<li><strong>因子的一般概念:</strong> 理解什么是因子（驱动收益的共同来源），因子研究的目的是识别这些来源。</li>
+<li><strong>因子模拟投资组合 (Factor Mimicking Portfolio):</strong> 理解其构建目的（获得对特定因子的纯粹风险暴露，衡量风险溢价）。</li>
+<li><strong>价值因子专题 (结合案例):</strong>
+<ul>
+<li>理解价值因子为何可能有效（风险补偿 vs.&nbsp;行为金融学解释）。</li>
+<li>熟悉构建价值策略的流程（选指标如 B/M、P/E；排序筛选；构建组合-多头/多空/权重；调仓频率）。</li>
+</ul></li>
+<li><strong>理想因子的特征:</strong> 了解一个好的因子应具备的特性（持续性、普遍性、稳健性、可投资性、有经济解释）。</li>
+<li><strong>因子模型扩展:</strong> 了解 FF3 之后还有其他因子模型（如五因子模型，增加了 RMW、CMA）和重要因子（如动量 MOM）。</li>
+<li><strong>中国市场应用:</strong> 了解在中国市场构建和应用 FF3 模型时需要考虑的特殊问题（数据质量/长度、市场结构、分组方式调整、因子有效性差异等）。</li>
+</ul></li>
+<li><strong>考点提示:</strong> 选择题考因子构成、因子特征；判断题考因子定义；简答题重点考 SMB/HML 构建过程、模型比较 (vs CAPM)、中国市场应用；案例分析可能围绕某个具体因子展开。</li>
+</ul>
+<p><strong>4. 预测变量选择与投资组合优化 (Predictor Selection &amp; Portfolio Optimization)</strong></p>
+<ul>
+<li><strong>核心内容:</strong>
+<ul>
+<li><strong>预测变量选择:</strong> 理解此阶段的目标是识别哪些变量（信号）能够有效预测未来股票的横截面收益差异，这些变量可能成为新的因子或策略信号。</li>
+<li><strong>回测 (Backtesting):</strong>
+<ul>
+<li><strong>重要性:</strong> 检验因子或策略历史有效性的关键环节。</li>
+<li><strong>重点：理解并区分回测偏差:</strong>
+<ul>
+<li><strong>幸存者偏差 (Survivorship Bias):</strong> 定义、产生原因、对结果的影响（高估表现）。</li>
+<li><strong>前视偏差 (Look-ahead Bias):</strong> 定义、产生原因、对结果的影响（使用未来数据，结果虚高）。</li>
+<li><strong>数据窥探偏差 (Data Snooping Bias):</strong> 定义（过度测试/挖掘）、对结果的影响（发现伪关系）。</li>
+</ul></li>
+<li>强调进行严格、无偏差回测的重要性。</li>
+</ul></li>
+<li><strong>投资组合优化:</strong>
+<ul>
+<li>理解在因子投资背景下，优化的目标通常是在给定的风险预算（如对各因子的暴露限制、跟踪误差限制）下最大化预期收益，或者在给定收益目标下最小化风险。</li>
+<li>优化过程涉及调整对不同因子的暴露度（权重）。</li>
+</ul></li>
+</ul></li>
+<li><strong>考点提示:</strong> 选择题可能考偏差定义、优化目标；判断题考偏差定义；简答题重点考各种偏差的定义、影响及区分。</li>
+</ul>
+<p><strong>5. 因子择时与风格分析 (Factor Timing &amp; Style Analysis)</strong></p>
+<ul>
+<li><strong>核心内容:</strong>
+<ul>
+<li><strong>因子择时 (Factor Timing):</strong>
+<ul>
+<li>定义：试图预测不同因子未来的相对表现，并据此动态调整组合的因子暴露。</li>
+<li><strong>重点：理解其困难性</strong>（预测因子表现本身很难、择时错误代价高、交易成本）。</li>
+</ul></li>
+<li><strong>风格分析 (Style Analysis):</strong>
+<ul>
+<li>目的：使用因子模型（如回归分析）来判断一个基金或投资组合的主要收益来源和风险暴露（即它主要暴露在哪些因子风格上，如价值、成长、大盘、小盘等）。</li>
+<li><strong>因子回归分析 (Factor Regression):</strong> 理解其用途是评估组合收益在多大程度上可被已知因子解释，并计算其 Alpha。</li>
+</ul></li>
+<li><strong>绩效评估指标:</strong>
+<ul>
+<li><strong>重点：Alpha (<span class="math inline">\(\alpha\)</span>):</strong> 必须清晰理解其定义——在控制了已知系统性风险因子暴露后，策略所获得的超额收益，常被视为策略能力的体现。区别于 Beta 带来的收益。</li>
+<li><strong>Beta (<span class="math inline">\(\beta\)</span>):</strong> 对市场或其他因子的敏感度。</li>
+<li><strong>夏普比率 (Sharpe Ratio):</strong> 基于总风险的风险调整后收益。</li>
+<li><strong>信息比率 (Information Ratio - IR):</strong> 基于相对风险（跟踪误差）的风险调整后主动收益，衡量超额收益稳定性。</li>
+<li><strong>最大回撤 (Maximum Drawdown - MDD):</strong> 衡量极端下行风险。</li>
+</ul></li>
+</ul></li>
+<li><strong>考点提示:</strong> 选择题考风格分析目的、Alpha定义、绩效指标含义；判断题考 Alpha 定义、因子回归用途；简答题可能要求解释因子择时及其困难性；案例分析可能要求选择和解释评估策略表现的指标。</li>
+</ul>
+<p><strong>6. 另类数据与机器学习 (Alternative Data &amp; Machine Learning)</strong></p>
+<ul>
+<li><strong>核心内容:</strong>
+<ul>
+<li><strong>另类数据 (Alternative Data):</strong>
+<ul>
+<li>定义与例子（卫星图、信用卡交易、网络爬虫、社交媒体情绪等）。</li>
+<li>作用：作为传统财务数据之外的新信息来源，可能包含额外的预测价值。</li>
+<li>面临的挑战（非结构化、噪声、数据清洗、历史短等）。</li>
+</ul></li>
+<li><strong>机器学习 (Machine Learning):</strong>
+<ul>
+<li>在量化投资中的潜在优势（处理高维数据、发现复杂非线性关系、识别新模式/预测变量）。</li>
+<li>认识到其局限性（不能保证盈利、可能过拟合、模型可解释性问题、不能完全替代研究员、无法消除所有偏差）。</li>
+</ul></li>
+</ul></li>
+<li><strong>考点提示:</strong> 选择题考另类数据作用/挑战、机器学习优势。</li>
+</ul>
+<p><strong>三、 最后复习建议</strong></p>
+<ul>
+<li><strong>回归讲义:</strong> 以本指南为线索，重点回顾课堂讲义和笔记中对应章节的内容。</li>
+<li><strong>理解优先:</strong> 注重理解概念背后的逻辑和模型推导的思路，而不仅仅是记忆结论。</li>
+<li><strong>区分概念:</strong> 注意区分易混淆的概念，如不同类型的偏差、不同绩效指标的侧重点、Alpha 与 Beta 等。</li>
+<li><strong>勤加思考:</strong> 对于简答题和案例分析，尝试自己组织语言进行回答，锻炼分析和表达能力。</li>
+</ul>
+<p>祝大家复习充分，考试成功！</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -924,14 +785,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./project1_factor.html" class="pagination-link" aria-label="项目1：因子投资策略构建">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">项目1：因子投资策略构建</span></span>
+      <a href="./project2_enhance.html" class="pagination-link" aria-label="项目2：因子投资策略的优化与提升">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">项目2：因子投资策略的优化与提升</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./review.html" class="pagination-link" aria-label="《量化投资》期末考试复习指南">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">《量化投资》期末考试复习指南</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
