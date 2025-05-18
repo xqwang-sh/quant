@@ -1,7 +1,7 @@
 ---
 title: "收益模型与组合优化"
 author: "汪小圈"
-date: 2025-05-13
+date: 2025-05-12
 format:
   beamer:
     theme: Copenhagen
@@ -545,6 +545,4 @@ $\max_{\omega} \underbrace{\left( \omega' \mu - \frac{\zeta}{2} \omega' \Sigma \
   - 各类约束条件和交易成本模型
   - **核心**：转化为风险可控、成本有效、满足现实约束的最优组合
 
-- **量化投资是不断迭代、持续优化的过程**
-- **目标**：构建能穿越市场周期、持续创造价值的投资策略
 
