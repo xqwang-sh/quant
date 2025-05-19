@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Return Models and Portfolio Optimization – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11_timing.html" rel="next">
+<link href="./lab03_ff3test.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_selecting.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Efficient Market Hypothesis (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project 1: Factor Investing Strategy Construction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project 2: Optimization and Enhancement of Factor Investing Strategies</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#part-1-return-prediction-modelsfinding-alpha" id="toc-part-1-return-prediction-modelsfinding-alpha" class="nav-link active" data-scroll-target="#part-1-return-prediction-modelsfinding-alpha"><span class="header-section-number">7.1</span> Part 1: Return Prediction Models—Finding Alpha</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">7.1.1</span> Introduction</a></li>
+  <li><a href="#return-models-obtaining-alpha" id="toc-return-models-obtaining-alpha" class="nav-link" data-scroll-target="#return-models-obtaining-alpha"><span class="header-section-number">7.1.2</span> Return Models: Obtaining “Alpha”</a></li>
+  </ul></li>
+  <li><a href="#part-2-risk-modelsusing-barra-as-an-example" id="toc-part-2-risk-modelsusing-barra-as-an-example" class="nav-link" data-scroll-target="#part-2-risk-modelsusing-barra-as-an-example"><span class="header-section-number">7.2</span> Part 2: Risk Models—Using Barra as an Example</a>
+  <ul class="collapse">
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">7.2.1</span> Introduction</a></li>
+  <li><a href="#barra-multi-factor-model-structure" id="toc-barra-multi-factor-model-structure" class="nav-link" data-scroll-target="#barra-multi-factor-model-structure"><span class="header-section-number">7.2.2</span> Barra Multi-Factor Model Structure</a></li>
+  <li><a href="#model-solution-and-pure-factor-portfolios" id="toc-model-solution-and-pure-factor-portfolios" class="nav-link" data-scroll-target="#model-solution-and-pure-factor-portfolios"><span class="header-section-number">7.2.3</span> Model Solution and Pure Factor Portfolios</a></li>
+  <li><a href="#solving-and-adjusting-the-covariance-matrix" id="toc-solving-and-adjusting-the-covariance-matrix" class="nav-link" data-scroll-target="#solving-and-adjusting-the-covariance-matrix"><span class="header-section-number">7.2.4</span> Solving and Adjusting the Covariance Matrix</a></li>
+  <li><a href="#application-of-risk-models" id="toc-application-of-risk-models" class="nav-link" data-scroll-target="#application-of-risk-models"><span class="header-section-number">7.2.5</span> Application of Risk Models</a></li>
+  </ul></li>
+  <li><a href="#part-3-portfolio-optimization-and-practical-considerations" id="toc-part-3-portfolio-optimization-and-practical-considerations" class="nav-link" data-scroll-target="#part-3-portfolio-optimization-and-practical-considerations"><span class="header-section-number">7.3</span> Part 3: Portfolio Optimization and Practical Considerations</a>
+  <ul class="collapse">
+  <li><a href="#transition" id="toc-transition" class="nav-link" data-scroll-target="#transition"><span class="header-section-number">7.3.1</span> Transition</a></li>
+  <li><a href="#misalignment-of-return-and-risk-models" id="toc-misalignment-of-return-and-risk-models" class="nav-link" data-scroll-target="#misalignment-of-return-and-risk-models"><span class="header-section-number">7.3.2</span> Misalignment of Return and Risk Models</a></li>
+  <li><a href="#common-objective-functions" id="toc-common-objective-functions" class="nav-link" data-scroll-target="#common-objective-functions"><span class="header-section-number">7.3.3</span> Common Objective Functions</a></li>
+  <li><a href="#comparison-and-equivalence-conditions-of-different-objective-functions" id="toc-comparison-and-equivalence-conditions-of-different-objective-functions" class="nav-link" data-scroll-target="#comparison-and-equivalence-conditions-of-different-objective-functions"><span class="header-section-number">7.3.4</span> Comparison and Equivalence Conditions of Different Objective Functions</a></li>
+  <li><a href="#common-constraints" id="toc-common-constraints" class="nav-link" data-scroll-target="#common-constraints"><span class="header-section-number">7.3.5</span> Common Constraints</a></li>
+  <li><a href="#transaction-cost-models" id="toc-transaction-cost-models" class="nav-link" data-scroll-target="#transaction-cost-models"><span class="header-section-number">7.3.6</span> Transaction Cost Models</a></li>
+  <li><a href="#backtesting-and-evaluation" id="toc-backtesting-and-evaluation" class="nav-link" data-scroll-target="#backtesting-and-evaluation"><span class="header-section-number">7.3.7</span> Backtesting and Evaluation</a></li>
+  </ul></li>
+  <li><a href="#conclusion-and-summary" id="toc-conclusion-and-summary" class="nav-link" data-scroll-target="#conclusion-and-summary"><span class="header-section-number">7.4</span> Conclusion and Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Course Objectives:</strong> This lecture aims to delve into two core components of quantitative investment strategy construction: how to build effective <strong>stock return prediction models</strong> to capture alpha, and how to apply <strong>portfolio optimization</strong> techniques to translate predictions into actual investment portfolios while effectively managing risk and costs. We will cover the entire process from factor mining, screening, and prediction to portfolio construction, constraint management, risk modeling, and backtesting evaluation.</p>
+<p><strong>Course Structure:</strong></p>
+<ul>
+<li><strong>Part 1: Return Prediction Models—Finding Alpha</strong>
+<ul>
+<li>Introduction and Basic Concepts</li>
+<li>Sources and Examples of Predictors</li>
+<li>Detailed Criteria for Screening Predictors</li>
+<li>Specific Processes and Methods for Return Prediction</li>
+</ul></li>
+<li><strong>Part 2: Risk Models—Using Barra as an Example</strong>
+<ul>
+<li>Basic Concepts of Risk Models</li>
+<li>Barra Multi-Factor Model Structure</li>
+<li>Model Solution and Pure Factor Portfolios</li>
+<li>Solving and Adjusting the Covariance Matrix</li>
+</ul></li>
+<li><strong>Part 3: Portfolio Optimization and Practical Considerations</strong>
+<ul>
+<li>The Problem of Misalignment between Return and Risk Models</li>
+<li>Common Portfolio Optimization Objective Functions</li>
+<li>Common Constraints in Optimization</li>
+<li>Consideration of Transaction Costs</li>
+<li>Key Points for Strategy Backtesting and Evaluation</li>
+</ul></li>
+<li>Conclusion and Summary</li>
+</ul>
+<section id="part-1-return-prediction-modelsfinding-alpha" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="part-1-return-prediction-modelsfinding-alpha"><span class="header-section-number">7.1</span> Part 1: Return Prediction Models—Finding Alpha</h2>
+<section id="introduction" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.1.1</span> Introduction</h3>
+<p>In the world of quantitative investing, we pursue systematic and disciplined outperformance against market benchmarks, i.e., Alpha. This journey usually begins with forecasting future asset returns. Why are complex models needed? Because the Efficient Market Hypothesis tells us that risk-free excess returns are difficult to sustain. We need to rely on rigorous data analysis and model building to uncover potential pricing misalignments or risk compensation opportunities in the market.</p>
+<p>However, merely having good predictions is not enough. How do we transform the predicted returns of hundreds or thousands of stocks into an actual, investable, risk-controlled portfolio? This is where portfolio optimization comes into play. It helps us make optimal trade-offs between expected returns, risk exposures, transaction costs, and various real-world constraints.</p>
+<p>This lecture will follow the logical chain of <strong>Prediction -&gt; Optimization</strong>, guiding you through these two critical steps.</p>
+</section>
+<section id="return-models-obtaining-alpha" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="return-models-obtaining-alpha"><span class="header-section-number">7.1.2</span> Return Models: Obtaining “Alpha”</h3>
+<section id="clarification-of-basic-terms" class="level4" data-number="7.1.2.1">
+<h4 data-number="7.1.2.1" class="anchored" data-anchor-id="clarification-of-basic-terms"><span class="header-section-number">7.1.2.1</span> Clarification of Basic Terms</h4>
+<p>Before diving into details, it’s essential to clarify a few core concepts whose confusion often leads to misunderstandings:</p>
+<ul>
+<li><strong>Return Predictors:</strong> These are the indicators, features, or signals we use to <strong>predict</strong> future returns of stocks (or other assets). Examples include Book-to-Market ratio, past 12-month momentum, analyst earnings forecast revisions, etc. <strong>These are the foundation for building our return models.</strong></li>
+<li><strong>Factors:</strong> In academic finance (especially asset pricing theory), “factors” usually refer to systematic sources of risk that explain the <strong>common variation</strong> in asset returns (e.g., market factor, size factor, value factor), or the <strong>portfolios</strong> constructed to capture these risk premia (e.g., SMB, HML portfolios in the Fama-French three-factor model).</li>
+<li><strong>Alpha (α):</strong> In the context of asset pricing models (like CAPM or multi-factor models), alpha refers to the portion of excess return that the model <strong>cannot explain</strong>. It is often considered a measure of an investment manager’s skill or a strategy’s effectiveness (pricing error).</li>
+</ul>
+<p><strong>Key Differences and Connections:</strong></p>
+<ul>
+<li>The <strong>predictors</strong> we seek may derive their effectiveness because they capture <strong>alpha</strong> (mispricing) not priced by mainstream risk <strong>factors</strong>, or because they themselves are measures of exposure to certain risk <strong>factors</strong> (risk compensation). For example, a low Book-to-Market ratio (predictor) might be effective because it represents exposure to the value <strong>factor</strong> (earning the value risk premium), or because it captures temporary market mispricing of value stocks (earning <strong>alpha</strong>).</li>
+<li>In industry, “alpha factors” often refer to what we call “predictors,” which differs from the academic definition. <strong>This lecture will primarily use “predictors” to refer to indicators used for forecasting returns, “factors” to refer to risk factors or factor portfolios, and “alpha” to refer to the residuals of pricing models or the target of excess returns.</strong> Clearly distinguishing these concepts helps us understand the sources of prediction and lays the groundwork for subsequent risk management and portfolio optimization.</li>
+</ul>
+</section>
+<section id="finding-predictors" class="level4" data-number="7.1.2.2">
+<h4 data-number="7.1.2.2" class="anchored" data-anchor-id="finding-predictors"><span class="header-section-number">7.1.2.2</span> Finding Predictors</h4>
+<p>The sources of predictors are diverse and can primarily be categorized as follows:</p>
+<ul>
+<li><strong>Discovering New Anomalies based on Traditional Price/Volume and Financial Data:</strong>
+<ul>
+<li>This is the most classic and commonly used area. Researchers analyze historical data to find patterns that can predict future returns.</li>
+<li><strong>Examples:</strong>
+<ul>
+<li><strong>Value:</strong> Low Price-to-Book (P/B), low Price-to-Earnings (P/E), low Price-to-Sales (P/S), high Dividend Yield. Logic: Buy undervalued companies.</li>
+<li><strong>Momentum:</strong> High returns over the past 6-12 months. Logic: Winners tend to keep winning (trend persistence).</li>
+<li><strong>Reversal:</strong> Low returns over the past 1 month (Short-term Reversal). Logic: Correction of short-term overreactions.</li>
+<li><strong>Quality:</strong> High Return on Equity (ROE), high Gross Profitability, low financial leverage, stable earnings growth. Logic: High-quality companies perform better in the long run.</li>
+<li><strong>Low Risk/Low Volatility:</strong> Low historical volatility, low Beta. Logic: “Low-risk anomaly,” low-risk stocks tend to have higher risk-adjusted returns.</li>
+<li>Others: Small market capitalization (Size, though controversial), high/low liquidity (depending on market conditions), changes in institutional holdings, analyst earnings revisions, etc.</li>
+</ul></li>
+</ul></li>
+<li><strong>Improving Existing Variables:</strong>
+<ul>
+<li>As markets evolve and research deepens, simple applications of existing variables may become less effective, requiring continuous improvement.</li>
+<li><strong>Examples:</strong>
+<ul>
+<li><strong>Value factor considering intangible assets:</strong> Traditional P/B may underestimate the value of companies in technology, pharmaceutical, etc., industries. Adjustments can be made by incorporating R&amp;D investment, brand value, etc., into Book Value.</li>
+<li><strong>Industry-adjusted factors:</strong> Some indicators are not comparable across industries (e.g., P/B for financial firms differs greatly from other sectors). Industry neutralization or calculating intra-industry relative values is needed.</li>
+<li><strong>Dynamically adjusted factors:</strong> The effectiveness of some factors may be cyclical (e.g., momentum may fail during sharp market reversals). Adjustments or switching based on market conditions may be necessary.</li>
+</ul></li>
+</ul></li>
+<li><strong>Using Alternative Data:</strong>
+<ul>
+<li>With technological advancements, non-traditional, less structured data sources have become new alpha mines.</li>
+<li><strong>Examples:</strong>
+<ul>
+<li><strong>Textual data:</strong> Using Natural Language Processing (NLP) to analyze news reports, social media posts, analyst conference call transcripts, company announcements to extract market sentiment, attention levels, management attitudes, etc.</li>
+<li><strong>Satellite imagery:</strong> Analyzing parking lot vehicle density to predict retail business performance, monitoring factory activity to judge industrial output, assessing port cargo throughput to determine trade activity, observing crop growth to predict yields.</li>
+<li><strong>Credit card/electronic payment transaction data:</strong> Analyzing consumer spending patterns, specific merchant sales flow to predict company sales and economic sentiment in advance.</li>
+<li><strong>Supply chain data:</strong> Tracking order flows and logistics information between companies to judge upstream/downstream demand changes and predict industry trends.</li>
+<li><strong>Web scraping data:</strong> Crawling e-commerce platform prices and sales volumes, job posting numbers on recruitment sites, app download counts and activity levels, etc.</li>
+<li><strong>Geolocation data:</strong> Analyzing human flow density via mobile phone signaling to predict foot traffic at malls, tourist attractions, etc.</li>
+<li><strong>ESG data:</strong> Environmental, Social, and Governance data used to assess a company’s sustainability and potential risks.</li>
+</ul></li>
+<li><strong>Advantages and Challenges:</strong> Alternative data is often <strong>timely</strong> and can provide <strong>unique perspectives</strong> beyond traditional data. However, it faces challenges such as <strong>difficulty in data cleaning, complex unstructured data processing, high acquisition costs, potential privacy and compliance risks, short historical data, and potentially low signal-to-noise ratios.</strong> Requires strong data processing and model-building capabilities.</li>
+</ul></li>
+</ul>
+</section>
+<section id="criteria-for-selecting-predictors" class="level4" data-number="7.1.2.3">
+<h4 data-number="7.1.2.3" class="anchored" data-anchor-id="criteria-for-selecting-predictors"><span class="header-section-number">7.1.2.3</span> Criteria for Selecting Predictors</h4>
+<p>Not all seemingly relevant variables can be good predictors. An ideal predictor should satisfy the following six core criteria:</p>
+<ol type="1">
+<li><strong>Intuitiveness:</strong>
+<ul>
+<li><strong>Requirement:</strong> The variable should have a reasonable economic or behavioral finance explanation for why it can predict future returns (is it risk compensation or mispricing?).</li>
+<li><strong>Importance:</strong> This is the first line of defense against <strong>Data Mining / Data Snooping</strong>. If a variable lacks logical support, even if its historical backtest performs well, it might be a spurious correlation discovered by chance and is likely to fail in the future.</li>
+<li><strong>Test:</strong> Conduct literature reviews, think about its economic meaning, and whether a convincing story can be built.</li>
+</ul></li>
+<li><strong>Persistence:</strong>
+<ul>
+<li><strong>Requirement:</strong> Empirical data must support the theoretical logic. The predictive power of the variable needs to be consistently present both in-sample and, especially, out-of-sample.</li>
+<li><strong>Test Methods:</strong>
+<ul>
+<li><strong>Information Coefficient (IC):</strong>
+<ul>
+<li>Calculation: For each period, calculate the <strong>cross-sectional correlation coefficient</strong> <span class="math inline">\(IC_t = corr(z_{it}, R_{it+1})\)</span> between the predictor <span class="math inline">\(z_{it}\)</span> (usually cross-sectional rank percentile or standardized value) and the next period’s return <span class="math inline">\(R_{it+1}\)</span>.</li>
+<li>Evaluation:
+<ul>
+<li><strong>Mean IC:</strong> <span class="math inline">\(\overline{IC} = \frac{1}{T} \sum_{t=1}^T IC_t\)</span>. Measures average predictive power. An absolute value greater than 2% (monthly) or 1% (daily) is often considered to have good potential, but there’s no absolute standard.</li>
+<li><strong>Std Dev of IC:</strong> <span class="math inline">\(\sigma_{IC}\)</span>. Measures the stability of predictive power.</li>
+<li><strong>Information Ratio (IR):</strong> <span class="math inline">\(IR = \frac{\overline{IC}}{\sigma_{IC}}\)</span>. Measures the <strong>Sharpe ratio</strong> of predictive power; higher is better, indicating more stable predictive ability. An IR &gt; 0.5 is generally considered good.</li>
+<li><strong>t-statistic of IC:</strong> <span class="math inline">\(t(IC) = \frac{\overline{IC}}{\sigma_{IC} / \sqrt{T}}\)</span>. Tests if the mean IC is significantly different from zero; an absolute value &gt; 2 is usually required.</li>
+</ul></li>
+<li><strong>Visualization:</strong> Plot the time series of IC values to observe stability. Plot a histogram of IC distribution. [A graph showing IC time series and distribution could be inserted here]</li>
+</ul></li>
+<li><strong>Portfolio Sort / Backtesting:</strong>
+<ul>
+<li>Steps:
+<ol type="1">
+<li>At the end of each period, sort all stocks based on the predictor <span class="math inline">\(z_{it}\)</span>.</li>
+<li>Divide stocks into N groups (e.g., 5 or 10, called Quintiles or Deciles).</li>
+<li>Construct a long-short portfolio: Go long the group with the best-expected performance (Top Quintile/Decile) and short the group with the worst-expected performance (Bottom Quintile/Decile). Usually equal-weighted or market-cap weighted.</li>
+<li>Calculate the return of this long-short portfolio in the next period.</li>
+<li>Repeat the above steps to get the net value curve of the long-short portfolio.</li>
+</ol></li>
+<li>Evaluation: Observe if the net value curve trends upward in the long term. Calculate annualized return, Sharpe ratio, max drawdown, etc. Test the t-statistic of the average return of the long-short portfolio. [A typical portfolio sort net value curve graph could be inserted here]</li>
+</ul></li>
+<li><strong>Alpha Decay:</strong> Pay attention to whether the predictive power diminishes over time. This could be because the factor becomes known and arbitraged away by the market, or market structure changes. Test methods include comparing IC or backtest performance in earlier versus later periods.</li>
+</ul></li>
+</ul></li>
+<li><strong>Information Increasement:</strong>
+<ul>
+<li><strong>Requirement:</strong> A newly discovered predictor should provide <strong>additional, independent</strong> predictive information relative to existing variables (especially known factors like size, value, momentum, etc.), rather than being a simple repetition of existing information.</li>
+<li><strong>Test Methods:</strong>
+<ul>
+<li><strong>Variable Correlation Analysis:</strong> Calculate the correlation coefficient between the new variable and existing variables (or other candidate variables). If the correlation is too high (e.g., absolute value &gt; 0.7), the incremental information is limited, and collinearity issues may exist.</li>
+<li><strong>Conditional Sort:</strong> First, group stocks based on a known factor (e.g., market cap), and then within each group, sort again based on the new variable and construct long-short portfolios. Observe if the new variable remains effective after controlling for the known factor.</li>
+<li><strong>Fama-MacBeth Regression:</strong> This is the most common method for testing incremental information.
+<ul>
+<li>Model: In each cross-sectional period <span class="math inline">\(t\)</span>, use the new variable <span class="math inline">\(z_{new, it}\)</span> and a set of control variables <span class="math inline">\(z_{control, kit}\)</span> (e.g., market Beta, market cap, book-to-market ratio, momentum, etc.) to simultaneously predict the next period’s return <span class="math inline">\(R_{it+1}\)</span>: [ R_{it+1} = <em>{0t} + </em>{new, t} z_{new, it} + <em>k </em>{k, t} z_{control, kit} + _{it+1} ]</li>
+<li>Test: Calculate the time-series average <span class="math inline">\(\bar{\gamma}_k\)</span> of each control variable’s coefficient and its t-statistic. The key is to see if the average coefficient of the new variable, <span class="math inline">\(\bar{\gamma}_{new}\)</span>, is statistically significantly different from zero (t-statistic absolute value &gt; 2). If significant, it means the new variable has independent predictive power after controlling for other factors.</li>
+</ul></li>
+<li><strong>Variable Orthogonalization:</strong> Regress the new variable against existing factors and take the residuals as a new variable orthogonal to the existing factors. Then test the predictive power of this residual term.</li>
+</ul></li>
+</ul></li>
+<li><strong>Robustness:</strong>
+<ul>
+<li><strong>Requirement:</strong> The effectiveness of the predictor should not be overly dependent on specific parameter settings, algorithm choices, sample periods, or market environments.</li>
+<li><strong>Test Methods:</strong>
+<ul>
+<li><strong>Parameter Sensitivity:</strong> Change the factor calculation method (e.g., momentum factor using the past 11 or 12 months? Value factor using P/B or P/E?), outlier treatment method (Winsorization percentage? MAD threshold?), data frequency (daily? weekly? monthly?), etc., and observe if the results remain significant.</li>
+<li><strong>Algorithm Sensitivity:</strong> If complex models are used (e.g., machine learning), try different algorithms or hyperparameter settings.</li>
+<li><strong>Sample Period Test:</strong> Divide the entire sample period into several sub-periods (e.g., by time, by bull/bear markets) and test if the factor’s performance is consistent across different sub-samples.</li>
+<li><strong>Different Market Test:</strong> If feasible, test if the factor is equally effective in different countries or regions (e.g., A-shares, Hong Kong stocks, US stocks).</li>
+<li><strong>Different Asset Class Test:</strong> Test if the factor can be generalized to other assets (e.g., bonds, commodities, currencies).</li>
+</ul></li>
+</ul></li>
+<li><strong>Investability:</strong>
+<ul>
+<li><strong>Requirement:</strong> The factor strategy must be implementable in reality at a reasonable cost and scale.</li>
+<li><strong>Considerations:</strong>
+<ul>
+<li><strong>Half-life of Information:</strong> How long does the factor signal persist from generation to decay? High-frequency factors (e.g., based on order book information) might decay in minutes or hours, requiring extremely fast trading systems. Low-frequency factors (e.g., value factors based on annual reports) might persist for months or even years.</li>
+<li><strong>Turnover:</strong> How frequently does a portfolio built on this factor need to rebalance its holdings? Turnover = (Value of Buys + Value of Sells) / 2 / Average Net Asset Value. High turnover implies high transaction costs.</li>
+<li><strong>Transaction Costs:</strong> Include explicit costs (commissions, stamp duties) and implicit costs (market impact costs, bid-ask spread costs). Market impact cost refers to the adverse price movement caused by large trades, related to trade size and market liquidity.</li>
+<li><strong>Liquidity:</strong> Is the factor concentrated in illiquid stocks? If so, as capital AUM grows, it may be difficult to buy/sell at desired prices, leading to actual returns lower than backtested returns.</li>
+<li><strong>Strategy Capacity:</strong> How much capital can the strategy accommodate? When managed capital exceeds a certain scale, transaction costs can rise significantly, or the factor’s effectiveness itself may decline due to market impact, thereby limiting the strategy’s scalability.</li>
+</ul></li>
+</ul></li>
+<li><strong>Pervasiveness:</strong>
+<ul>
+<li><strong>Requirement:</strong> The best factors often exhibit a degree of pervasiveness, meaning their effects are observable, to some extent, not only in the market or asset class where they were initially discovered but also in other markets, asset classes, and time periods.</li>
+<li><strong>Significance:</strong> This further strengthens our confidence in the factor’s logic and robustness, reducing the likelihood that it is an accidental result of data mining.</li>
+<li><strong>Examples:</strong> The value and size effects in Fama-French factors, and the momentum effect, have literature supporting their existence in different national stock markets and even other asset classes (like bonds, commodities), although their strength and form may vary.</li>
+</ul></li>
+</ol>
+<p><strong>Summary:</strong> A truly good predictor needs to pass the rigorous tests of these six criteria; it’s a systematic screening process.</p>
+</section>
+<section id="return-forecasting-process" class="level4" data-number="7.1.2.4">
+<h4 data-number="7.1.2.4" class="anchored" data-anchor-id="return-forecasting-process"><span class="header-section-number">7.1.2.4</span> Return Forecasting Process</h4>
+<p>Applying the screened, qualified predictors to actual forecasting typically follows these steps:</p>
+<ol type="1">
+<li><strong>Universe Selection:</strong>
+<ul>
+<li><strong>Initial Stock Pool:</strong> First, define a basic universe, such as all A-shares, CSI 300 constituents, CSI 500 constituents, specific industries (e.g., healthcare, technology), etc.</li>
+<li><strong>Refined Stock Pool (Exclusion List):</strong> On the basis of the initial pool, exclude stocks unsuitable for quantitative trading or those with excessive risk:
+<ul>
+<li><strong>Low Liquidity:</strong> E.g., stocks with very small average daily trading volume, long-term suspended stocks.</li>
+<li><strong>High Risk:</strong> ST, *ST stocks, stocks about to be delisted, companies with negative net assets.</li>
+<li><strong>Short Listing History:</strong> Newly listed stocks (usually highly volatile, with short historical data and unstable patterns).</li>
+<li>[Optional] <strong>Certain Negative Characteristics:</strong> E.g., extremely high turnover, extremely high volatility, extremely high valuation with poor profitability, recent major negative events (like financial fraud, regulatory penalties), etc.</li>
+<li><strong>Objective:</strong> Focus on a stock pool with good liquidity and fundamentals, and relatively standard behavior, to improve model stability and effectiveness.</li>
+</ul></li>
+</ul></li>
+<li><strong>Outlier Treatment for Predictors:</strong>
+<ul>
+<li><strong>Reason:</strong> Raw factor data may contain extreme values that can disproportionately affect subsequent standardization, scoring, or regression, and thus need to be handled.</li>
+<li><strong>Common Methods:</strong>
+<ul>
+<li><strong>Winsorization:</strong> Replace values exceeding specific percentiles (e.g., 1% and 99%) with the boundary values. Simple and direct, but may lose information.</li>
+<li><strong>Trimming:</strong> Directly remove values exceeding specific percentiles. Loses more information.</li>
+<li><strong>Standard Deviation Method:</strong> Treat values exceeding mean +/- N standard deviations (e.g., N=3) by winsorizing or trimming. Sensitive to the data distribution形态 and easily affected by extreme values themselves.</li>
+<li><strong>Median Absolute Deviation (MAD) Method:</strong>
+<ul>
+<li>Calculation: <span class="math inline">\(MAD = median(|X_i - median(X)|)\)</span>.</li>
+<li>Treatment: Replace <span class="math inline">\(X_i\)</span> with <span class="math inline">\(median(X) \pm N \times MAD / 0.6745\)</span> (the denominator approximates standard deviation under normality). N is typically 3 or 5.</li>
+<li>Advantage: Robust to outliers. <strong>MAD method is generally recommended.</strong></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>Return Forecasting:</strong>
+<ul>
+<li><strong>Non-parametric Forecasting:</strong>
+<ul>
+<li><strong>Conditional Stock Picking:</strong> Setting thresholds based on multiple indicators to select stocks. Simple and direct but may lead to unstable holdings and overfitting.</li>
+<li><strong>Ranking and Scoring:</strong>
+<ol type="1">
+<li>For each validated predictor <span class="math inline">\(k\)</span>, calculate its factor value <span class="math inline">\(z_{kit}\)</span>.</li>
+<li><strong>Factor Value Standardization:</strong> Typically, cross-sectional standardization is performed to make them comparable across different factors. <strong>Z-Score</strong> is common: <span class="math inline">\(Z_{Score, kit} = \frac{z_{kit} - mean_i(z_{kit})}{std_i(z_{kit})}\)</span> (note: mean and standard deviation are calculated for all stocks in each period).</li>
+<li><strong>Multi-Factor Composite Score:</strong> Combine multiple standardized factor scores into a composite score <span class="math inline">\(Z_{Score, it}\)</span>.
+<ul>
+<li><strong>Equal Weighting:</strong> <span class="math inline">\(Z_{Score, it} = \sum_{k} \frac{1}{K} Z_{Score, kit}\)</span>.</li>
+<li><strong>IC Weighting:</strong> <span class="math inline">\(w_k \propto \overline{IC}_k\)</span> or <span class="math inline">\(w_k \propto IR_k = \overline{IC}_k / \sigma_{IC_k}\)</span> or <span class="math inline">\(w_k \propto t(IC_k)\)</span>. Assign higher weights to factors with better and more stable historical performance.</li>
+<li><strong>Hierarchical Combination:</strong> First combine factors within the same broad category (e.g., value, momentum), then combine across different categories. Can reduce interference from inter-factor correlations.</li>
+</ul></li>
+<li><strong>Final Ranking:</strong> Rank stocks in the pool based on the composite score <span class="math inline">\(Z_{Score, it}\)</span>. Stocks with higher expected scores are predicted to have higher future returns. <strong>Advantages:</strong> Controllable number of selected stocks, relatively simple. <strong>Disadvantages:</strong> Does not fully utilize the quantitative relationship between factors and returns, weight setting is relatively subjective.</li>
+</ol></li>
+</ul></li>
+<li><strong>Parametric Forecasting (Linear Regression):</strong>
+<ul>
+<li>Objective: Establish a quantitative relationship between predictors <span class="math inline">\(z_{it-1}\)</span> and future returns <span class="math inline">\(R_{it}\)</span>.</li>
+<li><strong>Method 1: Prediction based on Historical Coefficients</strong>
+<ol type="1">
+<li>In each historical cross-sectional period <span class="math inline">\(t=1, ..., T\)</span>, run a cross-sectional regression: <span class="math inline">\(R_{it} = c_t + b_t z_{it-1} + \epsilon_{it}\)</span> (for multiple factors: <span class="math inline">\(R_{it} = c_t + \sum_k b_{kt} z_{k,it-1} + \epsilon_{it}\)</span>).</li>
+<li>Obtain time series of coefficients <span class="math inline">\(c_t, b_t\)</span> (or <span class="math inline">\(b_{kt}\)</span>).</li>
+<li>Calculate the mean of historical coefficients <span class="math inline">\(\bar{c}, \bar{b}\)</span> (or <span class="math inline">\(\bar{b}_k\)</span>).</li>
+<li>Use the latest factor values <span class="math inline">\(z_{iT}\)</span> (or <span class="math inline">\(z_{k,iT}\)</span>) to predict next period’s return: <span class="math inline">\(\hat{R}_{i,T+1} = \bar{c} + \bar{b} z_{iT}\)</span> (or <span class="math inline">\(\hat{R}_{i,T+1} = \bar{c} + \sum_k \bar{b}_k z_{k,iT}\)</span>).</li>
+</ol>
+<ul>
+<li>Advantages: Considers the time-varying nature of factor coefficients. Disadvantages: Requires sufficiently long historical data to calculate stable means.</li>
+</ul></li>
+<li><strong>Method 2: Prediction based on Panel Regression</strong>
+<ol type="1">
+<li>Pool all time-series and cross-sectional data for a panel regression (fixed effects or random effects model): <span class="math inline">\(R_{it} = c + b z_{it-1} + \alpha_i + \eta_t + \epsilon_{it}\)</span> (simplified here, <span class="math inline">\(\alpha_i\)</span> individual effect, <span class="math inline">\(\eta_t\)</span> time effect).</li>
+<li>Obtain estimated coefficients <span class="math inline">\(\hat{c}, \hat{b}\)</span>.</li>
+<li>Use the latest factor values <span class="math inline">\(z_{iT}\)</span> to predict next period’s (relative) return: <span class="math inline">\(\hat{R}_{i,T+1} = \hat{c} + \hat{b} z_{iT}\)</span>.</li>
+</ol>
+<ul>
+<li>Advantages: Utilizes all data, coefficient estimates may be more robust. Disadvantages: Assumes coefficients are constant over time.</li>
+</ul></li>
+<li><strong>Note:</strong> Regression methods need to address potential multicollinearity problems (if factors are highly correlated). Consider using stepwise regression for variable selection, or regularization methods (like Ridge regression, Lasso regression) to shrink coefficients and improve model stability.</li>
+<li><strong>Relationship with Active Return <span class="math inline">\(\alpha\)</span> (Grinold’s Fundamental Law of Active Management):</strong> The predicted excess return <span class="math inline">\(\hat{\alpha}_{it}\)</span> can be approximated as: [ <em>{it} </em>{} Z_{Score, it} ] where IC is the Information Coefficient, <span class="math inline">\(\sigma_{\alpha}\)</span> is the active return volatility, and Z-Score is the standardized factor score. This shows that the magnitude of predicted return depends on predictive skill (IC), active risk taken (<span class="math inline">\(\sigma_{\alpha}\)</span>), and current factor exposure intensity (Z-Score).</li>
+</ul></li>
+<li><strong>[Optional] Machine Learning Prediction:</strong>
+<ul>
+<li>For complex non-linear relationships and high-dimensional data interactions, machine learning models can be used, such as:
+<ul>
+<li><strong>Tree-based models:</strong> Random Forest, Gradient Boosting Decision Trees (GBDT, XGBoost, LightGBM). Can automatically handle non-linearity and interaction effects, robust to outliers.</li>
+<li><strong>Neural Networks:</strong> Deep learning models. Can capture more complex patterns.</li>
+</ul></li>
+<li><strong>Challenges:</strong> High model complexity, prone to overfitting, poor interpretability, high demand for data volume and computational resources. Requires very careful model selection, tuning, and validation.</li>
+</ul></li>
+</ul></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="part-2-risk-modelsusing-barra-as-an-example" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="part-2-risk-modelsusing-barra-as-an-example"><span class="header-section-number">7.2</span> Part 2: Risk Models—Using Barra as an Example</h2>
+<section id="introduction-1" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">7.2.1</span> Introduction</h3>
+<p>In quantitative investing, risk models are as important as return models; they are the two pillars of portfolio construction. If return models help us predict “which assets will yield higher returns,” then risk models help us understand “how much risk these assets might entail.” The core of a risk model is to achieve dimensionality reduction through a multi-factor model, facilitating the calculation of a stock’s covariance matrix, which then serves as the basis for portfolio risk control.</p>
+<p>The importance of risk models in quantitative investing is reflected in several aspects:</p>
+<ul>
+<li><strong>Risk Measurement:</strong> Quantifying the overall risk of a portfolio (e.g., volatility, VaR).</li>
+<li><strong>Risk Decomposition:</strong> Understanding the sources of risk (market risk, industry risk, style factor risk, etc.).</li>
+<li><strong>Risk Control:</strong> Limiting specific risk exposures during optimization.</li>
+<li><strong>Optimization Input:</strong> Providing a key input (covariance matrix) for portfolio optimization.</li>
+</ul>
+<p>This part will use the widely adopted Barra risk model as an example to introduce the basic principles, construction methods, and applications of risk models.</p>
+</section>
+<section id="barra-multi-factor-model-structure" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="barra-multi-factor-model-structure"><span class="header-section-number">7.2.2</span> Barra Multi-Factor Model Structure</h3>
+<p>Barra models are a series of risk models developed by MSCI (formerly Barra, Inc.), widely used globally for portfolio risk management. For the Chinese market, we use the CNE5 model (China Equity Model, 5th generation) as an illustration.</p>
+<section id="basic-structure" class="level4" data-number="7.2.2.1">
+<h4 data-number="7.2.2.1" class="anchored" data-anchor-id="basic-structure"><span class="header-section-number">7.2.2.1</span> Basic Structure</h4>
+<p>The Barra CNE5 model includes three types of factors:</p>
+<ol type="1">
+<li><strong>Country Factor:</strong> A single factor representing overall market risk.</li>
+<li><strong>Industry Factors:</strong> Multiple industry factors (e.g., P factors), representing the specific risks of different industries.</li>
+<li><strong>Style Factors:</strong> Multiple style factors (e.g., Q factors), including size, value, momentum, volatility, liquidity, etc.</li>
+</ol>
+<p>At time t, this multi-factor model can be expressed as:</p>
+<p><span class="math display">\[R_{it}^e = \beta_{i}^C \lambda_{Ct} + \sum_{p=1}^{P} \beta_{i}^{I_p} \lambda_{I_p,t} + \sum_{q=1}^{Q} \beta_{i}^{S_q} \lambda_{S_q,t} + u_{it}\]</span></p>
+<p>Where: * <span class="math inline">\(R_{it}^e\)</span> is the excess return of stock i at time t (relative to the risk-free rate). * <span class="math inline">\(\beta_{i}^C\)</span> is the exposure of stock i to the Country factor (typically 1 for all stocks). * <span class="math inline">\(\beta_{i}^{I_p}\)</span> is the exposure of stock i to industry factor <span class="math inline">\(I_p\)</span> (usually 0 or 1). * <span class="math inline">\(\beta_{i}^{S_q}\)</span> is the exposure of stock i to style factor <span class="math inline">\(S_q\)</span>. * <span class="math inline">\(\lambda_{Ct}\)</span>, <span class="math inline">\(\lambda_{I_p,t}\)</span>, <span class="math inline">\(\lambda_{S_q,t}\)</span> are the returns of the Country factor, industry factor <span class="math inline">\(I_p\)</span>, and style factor <span class="math inline">\(S_q\)</span> at time t, respectively. * <span class="math inline">\(u_{it}\)</span> is the specific return (the part unexplained by the model).</p>
+</section>
+<section id="factor-exposure-determination" class="level4" data-number="7.2.2.2">
+<h4 data-number="7.2.2.2" class="anchored" data-anchor-id="factor-exposure-determination"><span class="header-section-number">7.2.2.2</span> Factor Exposure Determination</h4>
+<p>A characteristic of Barra models is the method for determining style factor exposures:</p>
+<ol type="1">
+<li><p><strong>Direct Use of Company Characteristics:</strong> Unlike traditional time-series regression methods, Barra models directly use company characteristics as the raw values for factor exposures. For example, the logarithm of market capitalization is used as the exposure for the size factor, and the book-to-market ratio for the value factor.</p></li>
+<li><p><strong>Standardization:</strong> Raw exposure values are standardized, including:</p>
+<ul>
+<li><strong>Market-cap weighted demeaning:</strong> Ensures the market portfolio has zero exposure to any style factor.</li>
+<li><strong>Dividing by standard deviation:</strong> Makes exposures comparable across different factors.</li>
+</ul></li>
+<li><p><strong>Special Handling of Industry Factors:</strong> To avoid collinearity (the sum of all industry exposures equals the country factor exposure), Barra models impose a constraint on industry factor returns:</p></li>
+</ol>
+<p><span class="math display">\[s_{I_1}\lambda_{I_1,t} + s_{I_2}\lambda_{I_2,t} + \cdots + s_{I_P}\lambda_{I_P,t} = 0\]</span></p>
+<p>where <span class="math inline">\(s_{I_p}\)</span> is the market capitalization weight of industry <span class="math inline">\(I_p\)</span>.</p>
+</section>
+<section id="special-nature-of-the-country-factor" class="level4" data-number="7.2.2.3">
+<h4 data-number="7.2.2.3" class="anchored" data-anchor-id="special-nature-of-the-country-factor"><span class="header-section-number">7.2.2.3</span> Special Nature of the Country Factor</h4>
+<p>The Country factor plays a special role in the Barra model. It can be shown that the Country factor portfolio is approximately equal to the market-cap weighted market portfolio. This is because:</p>
+<ol type="1">
+<li>All stocks have an exposure of 1 to the Country factor.</li>
+<li>The weighted sum of industry factor returns is 0 (due to the constraint).</li>
+<li>The market-cap weighted sum of style factor exposures is 0 (due to standardization).</li>
+</ol>
+<p>Thus, the Country factor essentially acts as an intercept term, representing the overall systematic market risk.</p>
+</section>
+</section>
+<section id="model-solution-and-pure-factor-portfolios" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="model-solution-and-pure-factor-portfolios"><span class="header-section-number">7.2.3</span> Model Solution and Pure Factor Portfolios</h3>
+<section id="model-solution-process" class="level4" data-number="7.2.3.1">
+<h4 data-number="7.2.3.1" class="anchored" data-anchor-id="model-solution-process"><span class="header-section-number">7.2.3.1</span> Model Solution Process</h4>
+<p>The Barra model is solved by performing a cross-sectional regression at each time period t, using Weighted Least Squares (WLS) to estimate factor returns and specific returns. The steps are:</p>
+<ol type="1">
+<li>Construct the factor exposure matrix <span class="math inline">\(\beta\)</span> (N×K matrix, N stocks, K factors).</li>
+<li>Determine the regression weight matrix W (Barra assumes the variance of specific returns is inversely proportional to the square root of market cap).</li>
+<li>Consider the constraint for industry factors and construct the constraint matrix C.</li>
+<li>Use constrained WLS to solve for the weight matrix <span class="math inline">\(\Omega\)</span> of pure factor portfolios.</li>
+<li>Calculate factor returns and specific returns based on the weight matrix.</li>
+</ol>
+</section>
+<section id="pure-factor-portfolios" class="level4" data-number="7.2.3.2">
+<h4 data-number="7.2.3.2" class="anchored" data-anchor-id="pure-factor-portfolios"><span class="header-section-number">7.2.3.2</span> Pure Factor Portfolios</h4>
+<p>The weight matrix <span class="math inline">\(\Omega\)</span> obtained during the solution process, where each row represents a “pure factor portfolio,” has the following characteristics:</p>
+<ol type="1">
+<li><strong>Country Factor Pure Portfolio:</strong>
+<ul>
+<li>Approximately equals the market portfolio.</li>
+<li>Has an exposure of 1 to the Country factor.</li>
+<li>Has positive exposure to all industries.</li>
+<li>Has zero exposure to all style factors.</li>
+</ul></li>
+<li><strong>Industry Factor Pure Portfolio:</strong>
+<ul>
+<li>Is dollar-neutral (weights sum to 0).</li>
+<li>Is 100% long the specific industry and 100% short the Country factor portfolio.</li>
+<li>Reflects the industry’s excess return relative to the market portfolio.</li>
+<li>Has zero exposure to all style factors.</li>
+</ul></li>
+<li><strong>Style Factor Pure Portfolio:</strong>
+<ul>
+<li>Is dollar-neutral.</li>
+<li>Has an exposure of 1 to its specific style factor.</li>
+<li>Has zero exposure to all other factors (including industry and other style factors).</li>
+</ul></li>
+</ol>
+<p>These characteristics make pure factor portfolios ideal tools for understanding and analyzing factor risk.</p>
+</section>
+</section>
+<section id="solving-and-adjusting-the-covariance-matrix" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="solving-and-adjusting-the-covariance-matrix"><span class="header-section-number">7.2.4</span> Solving and Adjusting the Covariance Matrix</h3>
+<p>The core objective of a risk model is to estimate the stock covariance matrix <span class="math inline">\(\Sigma\)</span>. Based on the properties of factor models, the stock covariance matrix can be decomposed as:</p>
+<p><span class="math display">\[\Sigma = \beta \Sigma_{\lambda} \beta' + \Sigma_{\epsilon}\]</span></p>
+<p>where <span class="math inline">\(\Sigma_{\lambda}\)</span> is the factor covariance matrix, and <span class="math inline">\(\Sigma_{\epsilon}\)</span> is the covariance matrix of specific returns (a diagonal matrix).</p>
+<section id="challenges-in-covariance-matrix-estimation" class="level4" data-number="7.2.4.1">
+<h4 data-number="7.2.4.1" class="anchored" data-anchor-id="challenges-in-covariance-matrix-estimation"><span class="header-section-number">7.2.4.1</span> Challenges in Covariance Matrix Estimation</h4>
+<p>Estimating the covariance matrix directly from historical data faces the following challenges:</p>
+<ol type="1">
+<li><strong>High Noise:</strong> Historical sample covariance matrices contain substantial noise and are sensitive to parameters.</li>
+<li><strong>Non-Stationarity:</strong> Market structure and volatility are time-varying; historical relationships may not represent the future.</li>
+<li><strong>Curse of Dimensionality:</strong> When the number of stocks N is large, estimating and inverting the covariance matrix becomes computationally difficult.</li>
+</ol>
+<p>To address these issues, Barra models employ a series of statistical adjustment methods.</p>
+</section>
+<section id="eigenfactor-adjustment-method" class="level4" data-number="7.2.4.2">
+<h4 data-number="7.2.4.2" class="anchored" data-anchor-id="eigenfactor-adjustment-method"><span class="header-section-number">7.2.4.2</span> Eigenfactor Adjustment Method</h4>
+<p>The eigenfactor adjustment method is applied to the factor covariance matrix <span class="math inline">\(\Sigma_{\lambda}\)</span>. The main steps are:</p>
+<ol type="1">
+<li>Perform eigenvalue decomposition on the sample factor covariance matrix to obtain eigenvector and eigenvalue matrices.</li>
+<li>Use bootstrap simulations to calculate bias statistics for the eigenfactors.</li>
+<li>Adjust the eigenvalues based on these bias statistics.</li>
+<li>Reconstruct the factor covariance matrix using the adjusted eigenvalues.</li>
+</ol>
+<p>This method effectively eliminates biases in the ex-ante estimation of eigenfactor portfolio variances, making the ex-post bias statistic close to 1.0.</p>
+</section>
+<section id="bayesian-shrinkage-method" class="level4" data-number="7.2.4.3">
+<h4 data-number="7.2.4.3" class="anchored" data-anchor-id="bayesian-shrinkage-method"><span class="header-section-number">7.2.4.3</span> Bayesian Shrinkage Method</h4>
+<p>The Bayesian shrinkage method is primarily used to adjust the covariance matrix of specific returns <span class="math inline">\(\Sigma_{\epsilon}\)</span>. The basic idea is:</p>
+<ol type="1">
+<li>Group stocks by market capitalization and calculate the average specific volatility for each group as a prior.</li>
+<li>Combine the prior and sample volatility using Bayesian shrinkage to obtain a posterior estimate:</li>
+</ol>
+<p><span class="math display">\[\hat{\sigma}_i^{bs} = \eta_i \bar{\sigma}_g^i + (1-\eta_i)\hat{\sigma}_i\]</span></p>
+<p>where <span class="math inline">\(\eta_i\)</span> is the shrinkage coefficient, depending on the deviation of sample volatility from the prior.</p>
+<ol start="3" type="1">
+<li>Optimize the shrinkage coefficient to minimize a bias statistic.</li>
+</ol>
+<p>This method effectively improves the accuracy and stability of specific volatility estimates.</p>
+</section>
+</section>
+<section id="application-of-risk-models" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="application-of-risk-models"><span class="header-section-number">7.2.5</span> Application of Risk Models</h3>
+<p>Barra risk models have wide applications in quantitative investing:</p>
+<ol type="1">
+<li><strong>Risk Forecasting:</strong> Predicting portfolio volatility and Value at Risk (VaR).</li>
+<li><strong>Risk Decomposition:</strong> Decomposing portfolio risk into factor risk and specific risk.</li>
+<li><strong>Risk Attribution:</strong> Analyzing the sources of portfolio performance.</li>
+<li><strong>Portfolio Optimization:</strong> Providing the covariance matrix as a key input for optimization.</li>
+<li><strong>Risk Control:</strong> Monitoring and managing portfolio exposures to various factors.</li>
+</ol>
+<p>It’s important to note that risk models are not infallible. They are based on historical data and specific assumptions and may fail in extreme market conditions. Therefore, when using risk models, one should combine them with other risk management tools and methods and maintain a cautious approach.</p>
+</section>
+</section>
+<section id="part-3-portfolio-optimization-and-practical-considerations" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="part-3-portfolio-optimization-and-practical-considerations"><span class="header-section-number">7.3</span> Part 3: Portfolio Optimization and Practical Considerations</h2>
+<section id="transition" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="transition"><span class="header-section-number">7.3.1</span> Transition</h3>
+<p>In the previous two parts, we discussed how to build effective return prediction models and how to use risk models to estimate the covariance structure of assets. Now, we face the question: How do we utilize this predictive information and risk estimation, combined with real-world constraints, to construct an optimal investment portfolio? This is the core problem that <strong>Portfolio Optimization</strong> aims to solve.</p>
+</section>
+<section id="misalignment-of-return-and-risk-models" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="misalignment-of-return-and-risk-models"><span class="header-section-number">7.3.2</span> Misalignment of Return and Risk Models</h3>
+<p>A very important practical issue, often overlooked, is that <strong>the model you use for predicting returns (Alpha Model) and the model you use for measuring and controlling risk (Risk Model) may not be consistent, leading to model misalignment.</strong></p>
+<ul>
+<li><strong>Root of the Problem:</strong>
+<ul>
+<li>The Alpha model focuses on <strong>predictors</strong> <span class="math inline">\(z_{\alpha}\)</span> (or <span class="math inline">\(\beta_{\alpha}\)</span>, the exposure to predictors).</li>
+<li>The Risk model focuses on <strong>risk factors</strong> <span class="math inline">\(f_R\)</span> and their exposures <span class="math inline">\(\beta_R\)</span>.</li>
+<li>Misalignment occurs when the information represented by <span class="math inline">\(z_{\alpha}\)</span> cannot be fully explained by the factors <span class="math inline">\(f_R\)</span> in the risk model. For example, you might use a unique alternative data factor to predict returns, but your risk model (e.g., a standard Barra model) does not include this factor.</li>
+</ul></li>
+<li><strong>Impact:</strong>
+<ul>
+<li>We can decompose the expected return <span class="math inline">\(\mu\)</span> (from the Alpha model) into two parts:
+<ul>
+<li><span class="math inline">\(\mu_{\parallel}\)</span>: The part explainable by the risk model’s factor space.</li>
+<li><span class="math inline">\(\mu_{\perp}\)</span>: The part <strong>not</strong> explainable by the risk model’s factor space (i.e., <span class="math inline">\(\text{Cov}(\mu_{\perp}, f_R) = 0\)</span>). The risk of this part is seen as <strong>Idiosyncratic Risk</strong> by the risk model.</li>
+</ul></li>
+<li>A standard mean-variance optimizer, <span class="math inline">\(\max \omega' \mu - \frac{\zeta}{2} \omega' \Sigma \omega\)</span>, when assessing risk, will only consider the risk of <span class="math inline">\(\mu_{\perp}\)</span> to be <span class="math inline">\(\sigma_{\epsilon}^2\)</span> (specific risk), while the risk of <span class="math inline">\(\mu_{\parallel}\)</span> includes systematic factor risk (from the factor covariance part of <span class="math inline">\(\Sigma\)</span>) and specific risk.</li>
+<li>Because the optimizer <strong>underestimates the true (but uncaptured by the risk model) systematic risk of <span class="math inline">\(\mu_{\perp}\)</span></strong>, it will tend to <strong>over-allocate</strong> to this “pseudo-alpha,” as it appears to offer “low-risk” returns. This leads to the final portfolio’s actual risk characteristics not matching the optimization objective.</li>
+</ul></li>
+<li><strong>Simplified Numerical Example:</strong>
+<ul>
+<li>Assume two assets A and B, and one risk factor F. True return process: <span class="math inline">\(R_A = 0.5 F + \epsilon_A\)</span>, <span class="math inline">\(R_B = -0.5 F + \epsilon_B\)</span>. <span class="math inline">\(\sigma_F^2 = 1\)</span>, <span class="math inline">\(\sigma_{\epsilon_A}^2 = \sigma_{\epsilon_B}^2 = 1\)</span>. The risk model <span class="math inline">\(\Sigma\)</span> perfectly captures F.</li>
+<li>Your Alpha model predicts <span class="math inline">\(\mu_A = 1, \mu_B = 1\)</span>. This Alpha (<span class="math inline">\(\mu = [1, 1]'\)</span>) is orthogonal to risk factor F (whose exposures are <span class="math inline">\(\beta_F = [0.5, -0.5]'\)</span>), meaning <span class="math inline">\(\mu = \mu_{\perp}\)</span>.</li>
+<li>The unconstrained MVO solution is <span class="math inline">\(\omega \propto \Sigma^{-1} \mu\)</span>. Since <span class="math inline">\(\mu\)</span> is orthogonal to F, <span class="math inline">\(\Sigma^{-1} \mu\)</span> will be primarily determined by the inverse of specific risks, leading to high allocations to A and B.</li>
+<li>However, in reality, the source of <span class="math inline">\(\mu\)</span> might imply some systematic risk not captured by F. The optimizer makes overly aggressive allocations based on an incorrect risk assessment (believing the risk of <span class="math inline">\(\mu\)</span> is only specific risk).</li>
+</ul></li>
+<li><strong>Solutions:</strong>
+<ul>
+<li><strong>Adjust the Risk Model (Theoretically feasible, practically difficult):</strong> Incorporate the predictors from the Alpha model as risk factors into the Risk model. This might require building your own risk model, which is especially impractical when using third-party risk models.</li>
+<li><strong>Improve the Optimization Process (More common):</strong> Add an extra penalty term in the optimization objective function for this “unexplained alpha” <span class="math inline">\(\mu_{\perp}\)</span>.
+<ul>
+<li><span class="math inline">\(\max_{\omega} \omega' \mu - \frac{\zeta}{2} \omega' \Sigma \omega - \frac{\theta}{2} \omega' (\mu_{\perp} \mu_{\perp}') \omega\)</span></li>
+<li>This penalty term <span class="math inline">\(\frac{\theta}{2} \omega' (\mu_{\perp} \mu_{\perp}') \omega\)</span> essentially increases the penalty for risk in the direction of <span class="math inline">\(\mu_{\perp}\)</span>. <span class="math inline">\(\theta\)</span> is a penalty coefficient that needs to be set based on an estimate of the true risk of <span class="math inline">\(\mu_{\perp}\)</span>. <span class="math inline">\(\mu_{\perp}\)</span> can be obtained by regressing <span class="math inline">\(\mu\)</span> on the risk factor exposures <span class="math inline">\(\beta_R\)</span> and taking the residuals.</li>
+</ul></li>
+</ul></li>
+<li><strong>Current Practice:</strong> This issue requires attention in practice, especially when using in-house Alpha models and external generic Risk models. Ignoring model misalignment can lead to a strategy’s actual risk far exceeding expectations.</li>
+</ul>
+</section>
+<section id="common-objective-functions" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="common-objective-functions"><span class="header-section-number">7.3.3</span> Common Objective Functions</h3>
+<p>Given an expected return vector <span class="math inline">\(\mu\)</span> and a covariance matrix <span class="math inline">\(\Sigma\)</span>, the goal of portfolio optimization is to find the best balance between return and risk. Here are some common optimization objective functions:</p>
+<ol type="1">
+<li><strong>Mean-Variance Optimization (MVO):</strong> (Markowitz, 1952)
+<ul>
+<li><strong>Objective:</strong> Maximize expected return while penalizing portfolio variance (risk). [ _{} ’ - ’ ] where <span class="math inline">\(\omega\)</span> is the portfolio weight vector, and <span class="math inline">\(\zeta\)</span> is the <strong>Risk Aversion Parameter</strong>. The larger <span class="math inline">\(\zeta\)</span>, the more risk-averse the investor, and the optimization result will weigh risk more heavily (tending towards lower-risk portfolios).</li>
+<li><strong>Unconstrained Solution:</strong> <span class="math inline">\(\omega_{mvo} = (\zeta \Sigma)^{-1} \mu\)</span> (assuming <span class="math inline">\(\Sigma\)</span> is invertible).</li>
+<li><strong>Intuition:</strong> Among all portfolios with the same expected return, choose the one with the minimum variance; among all portfolios with the same variance, choose the one with the highest expected return. These optimal portfolios form the <strong>Efficient Frontier</strong>. [An efficient frontier graph could be inserted here]</li>
+<li><strong>Advantages:</strong> Solid theoretical foundation (based on investor utility maximization), cornerstone of modern portfolio theory. Clearly trades off risk and return.</li>
+<li><strong>Disadvantages/Challenges:</strong>
+<ul>
+<li><strong>Parameter Sensitivity:</strong> Optimization results are <strong>highly sensitive</strong> to input parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\Sigma\)</span>, especially <span class="math inline">\(\mu\)</span>. In practice, prediction errors for <span class="math inline">\(\mu\)</span> are large, and small changes in <span class="math inline">\(\mu\)</span> can lead to drastic changes in weights <span class="math inline">\(\omega\)</span>. This is known as the <strong>“Error Maximization”</strong> problem, where the optimization process may amplify estimation errors in <span class="math inline">\(\mu\)</span>.</li>
+<li><strong>Estimation Error:</strong> Both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\Sigma\)</span> need to be estimated from historical data or other models, and are subject to estimation error.</li>
+<li><strong>Extreme Weights:</strong> Without constraints or with weak constraints, it can produce very concentrated or extreme (very large or very small/negative) weights, which are impractical.</li>
+</ul></li>
+<li><strong>Improvements:</strong> To address parameter sensitivity, methods like <strong>Robust Optimization</strong>, <strong>Black-Litterman Model</strong> (combining market equilibrium expectations with subjective views), <strong>Resampling</strong>, and <strong>Risk Budgeting</strong> have been developed. For <span class="math inline">\(\Sigma\)</span> estimation, <strong>Shrinkage Estimators</strong> can improve robustness.</li>
+</ul></li>
+<li><strong>Minimum Variance:</strong>
+<ul>
+<li><strong>Objective:</strong> Find the portfolio with the lowest possible risk (variance), without considering expected returns <span class="math inline">\(\mu\)</span>. [ _{} ’ ] Usually with constraints, such as <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> (weights sum to 1, i.e., fully invested).</li>
+<li><strong>Optimal Solution (with <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> constraint):</strong> <span class="math inline">\(\omega_{mv} = \frac{\Sigma^{-1} \mathbf{1}}{\mathbf{1}' \Sigma^{-1} \mathbf{1}}\)</span>.</li>
+<li><strong>Advantages:</strong> <strong>Does not rely on expected returns <span class="math inline">\(\mu\)</span>, which are difficult to predict accurately</strong>, making the results relatively more robust.</li>
+<li><strong>Disadvantages:</strong> Completely ignores return objectives, potentially selecting a portfolio with very low expected returns.</li>
+<li><strong>Applicable Scenarios:</strong> When there is extremely low confidence in return forecasts, or when the investor’s primary goal is absolute risk minimization.</li>
+</ul></li>
+<li><strong>Maximum Diversification:</strong>
+<ul>
+<li><strong>Objective:</strong> Maximize the portfolio’s <strong>Diversification Ratio</strong>, which is the ratio of the weighted average volatility of the assets in the portfolio to the overall volatility of the portfolio. [ _{} ] where <span class="math inline">\(\sigma\)</span> is the vector of expected volatilities of individual assets (<span class="math inline">\(\sigma_i = \sqrt{\Sigma_{ii}}\)</span>). Usually also with a <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> constraint.</li>
+<li><strong>Optimal Solution (with <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> constraint):</strong> <span class="math inline">\(\omega_{md} \propto \Sigma^{-1} \sigma\)</span> (similar in form to MVO, just replacing <span class="math inline">\(\mu\)</span> with <span class="math inline">\(\sigma\)</span>).</li>
+<li><strong>Intuition:</strong> The goal is to make the portfolio’s risk (denominator) as small as possible relative to the (weighted) average risk of its constituent assets (numerator), i.e., to diversify risk through low correlations between assets.</li>
+<li><strong>Advantages:</strong> Focuses on the diversification of risk structure, and also does not directly depend on <span class="math inline">\(\mu\)</span> forecasts (but does depend on <span class="math inline">\(\sigma\)</span> and <span class="math inline">\(\Sigma\)</span>).</li>
+</ul></li>
+<li><strong>Risk Parity / Equal Risk Contribution (ERC):</strong>
+<ul>
+<li><strong>Objective:</strong> Construct a portfolio where <strong>each asset contributes equally to the total portfolio risk</strong>.</li>
+<li><strong>Risk Contribution:</strong> The Marginal Contribution to Risk (MCTR) of asset <span class="math inline">\(i\)</span> is <span class="math inline">\(\frac{\partial \sigma_p}{\partial \omega_i} = \frac{(\Sigma \omega)_i}{\sigma_p}\)</span>, and its total risk contribution is <span class="math inline">\(\omega_i \times \frac{\partial \sigma_p}{\partial \omega_i} = \frac{\omega_i (\Sigma \omega)_i}{\sigma_p}\)</span>, where <span class="math inline">\(\sigma_p = \sqrt{\omega' \Sigma \omega}\)</span> is the total portfolio volatility.</li>
+<li><strong>Optimization Problem:</strong> (One of several forms) Minimize the sum of squared differences between the risk contributions of any two assets: [ <em>{} </em>{i=1}^N _{j=1}^N ( _i ()_i - _j ()_j )^2 ] Usually with constraints <span class="math inline">\(\omega' \mathbf{1} = 1\)</span> and <span class="math inline">\(\omega \ge 0\)</span>.</li>
+<li><strong>Special Analytic Solution (under simplified conditions):</strong> If all pairwise correlations <span class="math inline">\(\rho_{ij}\)</span> are equal (i.e., <span class="math inline">\(\rho_{ij} = \rho\)</span> for <span class="math inline">\(i \neq j\)</span>), then the weights of the risk parity portfolio are approximately proportional to the <strong>inverse of their volatilities</strong>: <span class="math inline">\(\omega_{rp,i} \propto 1 / \sigma_i\)</span>. That is, assets with lower volatility receive higher weights.</li>
+<li><strong>Advantages:</strong>
+<ul>
+<li>Achieves a balanced allocation of risk across assets, avoiding excessive risk concentration in a few high-volatility assets.</li>
+<li>Also does not directly depend on <span class="math inline">\(\mu\)</span> forecasts.</li>
+<li>Very popular in multi-asset class allocation (stocks, bonds, commodities, etc.).</li>
+</ul></li>
+<li><strong>Solution:</strong> Typically requires numerical optimization algorithms (iterative solutions).</li>
+</ul></li>
+</ol>
+</section>
+<section id="comparison-and-equivalence-conditions-of-different-objective-functions" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="comparison-and-equivalence-conditions-of-different-objective-functions"><span class="header-section-number">7.3.4</span> Comparison and Equivalence Conditions of Different Objective Functions</h3>
+<p>These different optimization objective functions may seem distinct, but they are equivalent under certain conditions, which helps us understand their underlying assumptions:</p>
+<ul>
+<li><strong>MVO is the most generalized framework.</strong> The others can be seen as special cases of MVO under specific assumptions about expected returns <span class="math inline">\(\mu\)</span>:
+<ul>
+<li><strong>Minimum Variance</strong> is equivalent to MVO assuming <strong>all assets have the same expected excess return</strong> (<span class="math inline">\(\mu_i = \mu_j\)</span> for all i, j). The optimization objective then reduces to minimizing <span class="math inline">\(\omega' \Sigma \omega\)</span>.</li>
+<li><strong>Maximum Diversification</strong> is equivalent to MVO assuming <strong>all assets have the same expected Sharpe ratio</strong> (<span class="math inline">\(\mu_i / \sigma_i = \mu_j / \sigma_j\)</span> for all i, j). In this case, the MVO solution <span class="math inline">\(\omega \propto \Sigma^{-1} \mu\)</span> becomes <span class="math inline">\(\omega \propto \Sigma^{-1} \sigma\)</span> (because <span class="math inline">\(\mu \propto \sigma\)</span>), which is consistent with the maximum diversification solution.</li>
+<li><strong>Risk Parity</strong> is equivalent to MVO under stricter conditions: assuming <strong>all assets have equal Sharpe ratios</strong> AND <strong>all pairwise correlations are also equal</strong> (<span class="math inline">\(\rho_{ij} = \rho\)</span> for all <span class="math inline">\(i \neq j\)</span>).</li>
+<li><strong>Equal Weight</strong> is an even more special case of risk parity, requiring the assumption that <strong>all assets have equal Sharpe ratios, equal correlations, AND equal volatilities</strong> (<span class="math inline">\(\sigma_i = \sigma_j\)</span>).</li>
+</ul></li>
+<li><strong>Core Implication:</strong>
+<ul>
+<li>The optimization method you choose reflects <strong>how much confidence you have in your input parameters (especially expected returns <span class="math inline">\(\mu\)</span>)</strong>.</li>
+<li>If you are very confident in your <span class="math inline">\(\mu\)</span> predictions, MVO is theoretically optimal.</li>
+<li>If you have no confidence in your <span class="math inline">\(\mu\)</span> predictions, Minimum Variance or Risk Parity might be more robust choices.</li>
+<li>If you believe all assets offer similar risk-adjusted returns (Sharpe ratios), Maximum Diversification might be appropriate.</li>
+<li>If you lack confidence even in volatility and correlation estimates, or as a very naive starting point, Equal Weight is also an option (it implies the strongest symmetry assumptions).</li>
+<li><strong>In practice, one often needs to trade off between the theoretical optimality of MVO and the robustness of MinVar/MaxDiv/RP, or use improved MVO methods (like robust optimization).</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="common-constraints" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="common-constraints"><span class="header-section-number">7.3.5</span> Common Constraints</h3>
+<p>Theoretically optimal solutions often do not meet real-world investment limitations and risk control requirements. Therefore, various <strong>Constraints</strong> must be added during the optimization process.</p>
+<ol type="1">
+<li><strong>Budget Constraint:</strong>
+<ul>
+<li><strong>Full Investment:</strong> <span class="math inline">\(\sum_i \omega_i = \omega' \mathbf{1} = 1\)</span>. Indicates all capital is invested. This is the most common constraint.</li>
+<li><strong>Allow Cash:</strong> <span class="math inline">\(\sum_i \omega_i \le 1\)</span>.</li>
+<li><strong>Dollar Neutral:</strong> <span class="math inline">\(\sum_i \omega_i = 0\)</span>. Common in long-short strategies, where the total value of long positions equals the total value of short positions.</li>
+</ul></li>
+<li><strong>Short-Selling Constraint:</strong>
+<ul>
+<li><strong>No Short Selling:</strong> <span class="math inline">\(\omega_i \ge 0\)</span> for all i. Disallows negative weights. In the China A-share market, short selling via securities lending is subject to many restrictions.</li>
+<li><strong>Limited Short Selling:</strong> E.g., <span class="math inline">\(\omega_i \ge -L_{short}\)</span>.</li>
+<li><strong>Reasons:</strong> Regulatory restrictions, limited availability of shares to borrow, risk control (theoretically, losses from short selling are unlimited).</li>
+</ul></li>
+<li><strong>Position Limits:</strong>
+<ul>
+<li><strong>Individual Stock Level:</strong> <span class="math inline">\(L_i \le \omega_i \le U_i\)</span>. For example, a single stock’s weight should not exceed 5%.</li>
+<li><strong>Portfolio Level (Group):</strong> Limit the total weight of a specific set (e.g., industry, sector) <span class="math inline">\(L_p \le \sum_{i \in \text{Group } p} \omega_i \le U_p\)</span>. For example, a single industry’s weight should not exceed 20%.</li>
+<li><strong>Reasons:</strong> Diversification requirements (to avoid excessive risk concentration), liquidity considerations (large weights are difficult to build/liquidate quickly), compliance with fund mandates or regulatory requirements.</li>
+</ul></li>
+<li><strong>Turnover Constraint:</strong>
+<ul>
+<li><strong>Objective:</strong> Limit the extent of portfolio adjustments relative to the previous period’s portfolio <span class="math inline">\(\omega^-\)</span>, to control transaction costs.</li>
+<li><strong>Individual Stock Turnover:</strong> <span class="math inline">\(|\omega_i - \omega^-_i| \le \phi_i\)</span>.</li>
+<li><strong>Total Portfolio Turnover:</strong> <span class="math inline">\(\sum_i |\omega_i - \omega^-_i| \le \Phi\)</span> (one-way turnover).</li>
+<li><strong>Reasons:</strong> Transaction costs are a significant drag on returns and must be controlled. Excessively frequent trading might also be unnecessary noise trading.</li>
+</ul></li>
+<li><strong>Cardinality Constraint:</strong>
+<ul>
+<li><strong>Objective:</strong> Control the range of the number of stocks held in the portfolio.</li>
+<li><strong>Form:</strong> <span class="math inline">\(N_L \le \sum_i \delta_i \le N_U\)</span>, where <span class="math inline">\(\delta_i\)</span> is a 0/1 integer variable that is 1 if <span class="math inline">\(\omega_i \neq 0\)</span> and 0 otherwise. This also needs to be coordinated with upper/lower bounds on <span class="math inline">\(\omega_i\)</span>.</li>
+<li><strong>Reasons:</strong> Avoid overly diversified portfolios (difficult to manage and track) or overly concentrated ones. Some strategies aim to maintain a relatively concentrated portfolio.</li>
+<li><strong>Impact:</strong> Introducing integer variables <span class="math inline">\(\delta_i\)</span> transforms the optimization problem from a standard Quadratic Program (QP) or Linear Program (LP) into a <strong>Mixed Integer Program (MIP)</strong>, <strong>significantly increasing</strong> computational complexity.</li>
+</ul></li>
+<li><strong>Factor Exposure Constraint:</strong>
+<ul>
+<li><strong>Objective:</strong> Control the portfolio’s exposure to certain risk factors.</li>
+<li><strong>Absolute Exposure:</strong> <span class="math inline">\(L_k \le \sum_i \omega_i \beta_{ik} \le U_k\)</span>, where <span class="math inline">\(\beta_{ik}\)</span> is the exposure of stock <span class="math inline">\(i\)</span> to factor <span class="math inline">\(k\)</span> (e.g., size factor, value factor). For example, limiting the overall P/E range of the portfolio.</li>
+<li><strong>Active Exposure:</strong> <span class="math inline">\(L_k \le \sum_i (\omega_i - \omega_{Bi}) \beta_{ik} \le U_k\)</span>, where <span class="math inline">\(\omega_B\)</span> are the weights of a benchmark portfolio. Used to control the portfolio’s deviation from the benchmark in specific styles.</li>
+<li><strong>Style Neutral:</strong> Set the upper and lower bounds of active exposure to 0, i.e., <span class="math inline">\(\sum_i (\omega_i - \omega_{Bi}) \beta_{ik} = 0\)</span>. For example, constructing a portfolio neutral to size and value factors to strip out these common risk sources and focus on other alpha sources.</li>
+<li><strong>Industry Neutral:</strong> Constrain the total weight of each industry <span class="math inline">\(\sum_{i \in \text{Industry } j} \omega_i\)</span> to be equal to (or within a small range of) the benchmark’s weight in that industry <span class="math inline">\(\sum_{i \in \text{Industry } j} \omega_{Bi}\)</span>.</li>
+<li><strong>Reasons:</strong> Actively manage risk, ensure the portfolio’s risk-return characteristics meet expectations, avoid taking unintended risks (e.g., make it industry-neutral if one does not want to bet on industry rotation).</li>
+</ul></li>
+<li><strong>Tracking Error Constraint:</strong>
+<ul>
+<li><strong>Objective:</strong> Control the volatility (standard deviation) of the portfolio’s returns relative to a benchmark portfolio <span class="math inline">\(B\)</span>.</li>
+<li><strong>Form:</strong> <span class="math inline">\((\omega - \omega_B)' \Sigma (\omega - \omega_B) \le \sigma^2_{TE, max}\)</span>, where <span class="math inline">\(\sigma_{TE}\)</span> is the tracking error.</li>
+<li><strong>Reasons:</strong> Applicable to enhanced index funds or relative return strategies with a clear benchmark, ensuring the portfolio’s performance does not deviate excessively from the benchmark.</li>
+</ul></li>
+</ol>
+<p><strong>Impact of Constraints:</strong></p>
+<ul>
+<li><strong>Reduces Theoretical Optimal Solution:</strong> Adding constraints usually makes the optimization result perform worse on the objective function (e.g., lower Sharpe ratio) compared to the unconstrained optimum.</li>
+<li><strong>Increases Practical Feasibility:</strong> Constraints make the portfolio meet real-world requirements, making it easier to manage and execute.</li>
+<li><strong>Changes Portfolio Structure:</strong> Constraints directly affect the final weight allocation.</li>
+<li><strong>Computational Complexity:</strong> Linear constraints generally do not increase optimization difficulty (LP, QP remain standard problems). However, absolute value constraints (like turnover), quadratic constraints (like tracking error) add some complexity, while integer constraints (like cardinality) greatly increase computational difficulty.</li>
+<li><strong>Potential Infeasibility:</strong> Overly strict or conflicting constraints may lead to no feasible solution for the optimization problem.</li>
+</ul>
+</section>
+<section id="transaction-cost-models" class="level3" data-number="7.3.6">
+<h3 data-number="7.3.6" class="anchored" data-anchor-id="transaction-cost-models"><span class="header-section-number">7.3.6</span> Transaction Cost Models</h3>
+<p>Transaction costs are a non-negligible part of quantitative investing, directly eroding strategy returns. A smart approach is to <strong>incorporate expected transaction costs into the portfolio optimization phase</strong>, rather than estimating costs after optimization.</p>
+<ul>
+<li><p><strong>Adding Transaction Costs as a Penalty Term in the Objective Function:</strong> [ <em>{} </em>{} - _{} ] where <span class="math inline">\(TC(\omega, \omega^-)\)</span> is the total transaction cost incurred when adjusting from the current holdings <span class="math inline">\(\omega^-\)</span> to the target holdings <span class="math inline">\(\omega\)</span>, and <span class="math inline">\(\gamma_{TC}\)</span> is the aversion coefficient to transaction costs (or simply set <span class="math inline">\(\gamma_{TC}=1\)</span> to treat costs as a direct deduction from returns).</p></li>
+<li><p><strong>Components of Transaction Costs:</strong></p>
+<ul>
+<li><strong>Explicit Costs:</strong>
+<ul>
+<li><strong>Commission:</strong> Fees charged by brokers, usually calculated as a percentage of the transaction value.</li>
+<li><strong>Stamp Duty:</strong> Taxes levied by the government, typically only on sales (for A-shares).</li>
+<li><strong>Exchange fees, etc.</strong></li>
+<li>These costs are relatively fixed and known.</li>
+</ul></li>
+<li><strong>Implicit Costs:</strong>
+<ul>
+<li><strong>Bid-Ask Spread Cost:</strong> The ask price (buy) is usually higher than the bid price (sell); this difference is the cost a trader must pay. For illiquid stocks, the spread can be large. Cost is approximately Trade Value × (Spread / Mid-Price) / 2.</li>
+<li><strong>Market Impact Cost:</strong> The adverse effect of the trading activity itself on the market price. Large buy orders can push prices up; large sell orders can push prices down. This cost is difficult to estimate accurately beforehand and typically depends on <strong>trade size, trading speed, stock liquidity, market volatility</strong>, etc. <strong>Market impact cost is often the largest transaction cost component for institutional investors.</strong></li>
+<li><strong>Opportunity Cost:</strong> Cost incurred due to failure to execute a trade in a timely manner or due to breaking up trades, leading to missed price movements.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Modeling Transaction Costs:</strong> Simplified models are often used in optimization to approximate total transaction costs.</p>
+<ul>
+<li><strong>Linear Cost Function:</strong> [ TC() = _i c_i |_i - ^-_i| ] where <span class="math inline">\(c_i\)</span> represents the <strong>unit marginal cost</strong> of trading asset <span class="math inline">\(i\)</span> (can include estimates of commissions, taxes, spread costs, etc.). This model assumes the unit transaction cost is fixed, regardless of trade volume. Suitable for small trades or when primarily considering fixed percentage costs. The optimization problem usually remains a QP or LP (if the objective function is also linear).</li>
+<li><strong>Quadratic Cost Function (Considering Market Impact):</strong> [ TC() = _i c_i |_i - ^-_i| + _i d_i (_i - ^-_i)^2 ] This adds a <strong>term quadratic in trade volume</strong> to simulate <strong>market impact cost</strong>—the larger the trade volume (<span class="math inline">\(\Delta \omega_i = |\omega_i - \omega^-_i|\)</span>), the higher the unit impact cost (<span class="math inline">\(d_i \Delta \omega_i\)</span>), and the total impact cost grows faster. <span class="math inline">\(d_i\)</span> is an impact cost coefficient related to liquidity (the less liquid, the larger <span class="math inline">\(d_i\)</span>).
+<ul>
+<li><strong>Advantages:</strong> More realistically reflects the cost of large trades.</li>
+<li><strong>Impact:</strong> The objective function becomes non-linear (even if the original objective was linear), but if <span class="math inline">\(\Sigma\)</span> is positive definite and <span class="math inline">\(d_i \ge 0\)</span>, it’s usually still a convex optimization problem (QP) solvable by standard solvers.</li>
+</ul></li>
+<li><strong>More Complex Models:</strong> May also include piecewise linear functions, power functions, etc., to model impact costs more precisely.</li>
+</ul></li>
+<li><p><strong>Parameter Estimation:</strong> <span class="math inline">\(c_i\)</span> and <span class="math inline">\(d_i\)</span> need to be estimated based on historical transaction data, market microstructure information, or third-party models (e.g., TCA report analysis from brokers).</p></li>
+<li><p><strong>Key Role:</strong> Incorporating transaction costs into optimization allows the optimizer to <strong>automatically balance the costs of trading</strong> while pursuing expected returns and controlling risk. This leads to a portfolio that is more optimal in terms of <strong>net returns (after costs)</strong> and helps to <strong>smooth portfolio turnover</strong>.</p></li>
+</ul>
+</section>
+<section id="backtesting-and-evaluation" class="level3" data-number="7.3.7">
+<h3 data-number="7.3.7" class="anchored" data-anchor-id="backtesting-and-evaluation"><span class="header-section-number">7.3.7</span> Backtesting and Evaluation</h3>
+<p>After designing the return prediction model and portfolio optimization framework, <strong>one must not directly deploy it to live trading</strong>. It is imperative to evaluate the entire strategy’s performance through rigorous <strong>Backtesting</strong> and identify potential issues.</p>
+<ul>
+<li><strong>Importance of Backtesting:</strong>
+<ul>
+<li><strong>Performance Assessment:</strong> Test the strategy’s actual performance (return, risk, stability) in past market environments.</li>
+<li><strong>Model Validation:</strong> Verify the validity of model assumptions (are factors persistently effective? Does optimization achieve desired outcomes?).</li>
+<li><strong>Parameter Tuning:</strong> Adjust model parameters or rules based on backtest results (but beware of overfitting).</li>
+<li><strong>Risk Identification:</strong> Discover extreme risks the strategy might face under specific market conditions (e.g., large drawdowns).</li>
+<li><strong>Feasibility Test:</strong> Determine if the strategy remains profitable after considering real-world factors like transaction costs and liquidity.</li>
+</ul></li>
+<li><strong>Key Backtesting Metrics:</strong>
+<ul>
+<li><strong>Return Metrics:</strong> Annualized Return, Cumulative Return.</li>
+<li><strong>Risk Metrics:</strong> Annualized Volatility, Max Drawdown (measures the largest peak-to-trough decline a strategy might experience), Downside Deviation, Value at Risk (VaR), Conditional VaR (CVaR) / Expected Shortfall.</li>
+<li><strong>Risk-Adjusted Return Metrics:</strong> Sharpe Ratio ((Annualized Return - Risk-Free Rate) / Annualized Volatility), Sortino Ratio (uses downside deviation instead of total volatility), Information Ratio (IR, (Strategy Annualized Return - Benchmark Annualized Return) / Annualized Tracking Error, measures active management skill).</li>
+<li><strong>Trading Metrics:</strong> Annualized Turnover (measures trading frequency and potential costs), Average Holding Period.</li>
+</ul></li>
+<li><strong>Common Pitfalls in Backtesting (Must Be Avoided):</strong>
+<ul>
+<li><strong>Lookahead Bias:</strong> Using future information not yet available at a specific point in the backtest. Examples:
+<ul>
+<li>Using the closing price of day T for a trading decision executed at the open or intraday of day T (decisions for time T should use information from T-1 or earlier).</li>
+<li>Using financial data released after the decision date (e.g., using an annual report released at the end of January for a decision made at the beginning of January).</li>
+<li>Standardizing or estimating parameters using the full sample data and then applying it to different points in time within the sample (should use rolling data up to the current point in time).</li>
+</ul></li>
+<li><strong>Survivorship Bias:</strong> Backtesting only with data from stocks that currently exist in the market, ignoring those that existed historically but were later delisted or acquired. This will <strong>overestimate</strong> strategy performance because bad companies are excluded. <strong>Must use a database that includes delisted stocks for backtesting.</strong></li>
+<li><strong>Data Snooping / Overfitting Bias:</strong> Over-fitting historical data to find patterns that appear effective but are actually just noise. The strategy performs excellently in-sample but poorly out-of-sample (in future live trading). <strong>Solutions include:</strong>
+<ul>
+<li>Adhering to economic logic.</li>
+<li>Strictly differentiating between in-sample (IS) for model development and out-of-sample (OOS) for model validation.</li>
+<li>Performing Cross-Validation.</li>
+<li>Penalizing model complexity (e.g., regularization).</li>
+<li>Conducting sensitivity analysis and stress testing.</li>
+</ul></li>
+<li><strong>Inadequate Consideration of Transaction Costs and Impact:</strong> Backtests assume trades can be executed at theoretical prices, ignoring or underestimating commissions, taxes, spreads, and market impact, leading to overly optimistic results. <strong>Reasonable transaction cost models should be included in backtests.</strong></li>
+<li><strong>Ignoring Liquidity Constraints:</strong> Assuming unlimited ability to buy/sell any stock, whereas in reality, small-cap or illiquid stocks may not be able to absorb large amounts of capital.</li>
+</ul></li>
+<li><strong>Good Backtesting Practices:</strong>
+<ul>
+<li>Use high-quality, clean data that includes delisted stocks.</li>
+<li>Strictly simulate the actual trading process to avoid lookahead bias.</li>
+<li>Include reasonable assumptions for transaction costs and slippage.</li>
+<li>Conduct rigorous out-of-sample testing.</li>
+<li>Analyze not only average performance but also extreme events and risk exposures.</li>
+<li>Perform multi-dimensional attribution analysis to understand the sources of returns and risks.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="conclusion-and-summary" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="conclusion-and-summary"><span class="header-section-number">7.4</span> Conclusion and Summary</h2>
+<p>In this lecture, we delved into the two core pillars of quantitative investment strategy construction: <strong>return prediction models</strong> and <strong>portfolio optimization</strong>.</p>
+<ul>
+<li><strong>On Return Prediction:</strong> We discussed where to find predictors (traditional data, alternative data), how to screen them using strict criteria (intuitiveness, persistence, incremental information, robustness, investability, pervasiveness), and the processes and methods for converting these variables into concrete return forecasts (scoring methods, regression methods, etc.). <strong>The core is to find genuinely effective, robust alpha sources backed by logical support.</strong></li>
+<li><strong>On Portfolio Optimization:</strong> We introduced the key inputs required for optimization (expected returns <span class="math inline">\(\mu\)</span> and risk model <span class="math inline">\(\Sigma\)</span>), emphasizing the risk of <strong>model misalignment</strong> between them and how to address it. We compared different optimization objective functions (MVO, minimum variance, maximum diversification, risk parity), understanding their underlying assumptions and applicable scenarios. We also discussed in detail the <strong>various constraints</strong> that must be considered in practice (budget, short-selling, position limits, turnover, factor exposure, tracking error, etc.) and <strong>transaction cost models</strong>, integrating them into the optimization framework. <strong>The core is to translate predictions into an optimal investment portfolio that is risk-controlled, cost-effective, and meets real-world constraints.</strong></li>
+<li><strong>Practical Considerations:</strong> We supplemented this with the importance of risk models and emphasized the critical role of <strong>rigorous backtesting</strong> before strategy deployment, pointing out common pitfalls.</li>
+</ul>
+<p><strong>Quantitative investing is an iterative process of continuous improvement.</strong> From factor mining, model building, and portfolio optimization to performance attribution and risk monitoring, each step requires meticulous design and rigorous testing. With technological advancements (such as the deepening application of AI/ML), data enrichment (the emergence of more alternative data), and market evolution, this field is always full of challenges and opportunities.</p>
+<p><strong>The ultimate goal is to build investment strategies that can navigate market cycles and consistently create value through systematic, disciplined methods.</strong> Hopefully, this lecture has provided you with a solid framework for understanding and practicing quantitative investing.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./lab03_ff3test.html" class="pagination-link" aria-label="Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11_timing.html" class="pagination-link" aria-label="Factor Timing and Style Analysis">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

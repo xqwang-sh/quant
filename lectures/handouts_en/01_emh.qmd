@@ -1,0 +1,61 @@
+---
+title: "Efficient Market Hypothesis (EMH)"
+---
+
+## Key Topics in This Section
+
+1.  **What is the Efficient Market Hypothesis (EMH)?**
+2.  **The Three Levels of EMH**
+3.  **The Relationship between EMH and Quantitative Investing**
+
+## What is the Efficient Market Hypothesis (EMH)?
+
+The Efficient Market Hypothesis (EMH) is a core theory in finance which posits that **asset prices fully reflect all available information**. This means that in an efficient market:
+
+* **Prices react quickly**: Once new information emerges, prices adjust immediately to a new equilibrium level.
+* **Inability to consistently outperform the market**: Since prices already reflect all information, investors cannot consistently achieve excess returns (alpha) by analyzing information.
+* **Random walk**: Price changes are random and follow a random walk pattern; past price information cannot predict future prices.
+
+## The Three Levels of EMH
+
+EMH is typically divided into three levels, with increasing degrees of market efficiency:
+
+1.  **Weak-form Efficiency**:
+    * Prices fully reflect **historical price information**.
+    * Technical Analysis is ineffective because historical price patterns cannot predict future prices.
+    * Fundamental Analysis may be effective.
+
+2.  **Semi-strong-form Efficiency**:
+    * Prices fully reflect **all publicly available information**, including financial statements, news, economic data, etc.
+    * Both Technical Analysis and Fundamental Analysis based on public information are ineffective.
+    * Only insider information might yield excess returns (but this is illegal).
+
+3.  **Strong-form Efficiency**:
+    * Prices fully reflect **all information**, including public and insider information.
+    * No information can be used to achieve excess returns, including insider information.
+    * Strong-form efficiency rarely exists in reality.
+
+## The Relationship between EMH and Quantitative Investing
+
+EMH has a profound impact on Quantitative Investing, but it does not entirely negate the value of quantitative investment.
+
+### Challenges of EMH for Quantitative Investing
+
+* **Difficulty in obtaining Alpha**: EMH suggests that it is difficult to consistently beat the market. The core goal of quantitative investing is to find alpha (excess returns), which becomes very challenging in an efficient market.
+* **Risk of model failure**: If the market is efficient, models built on historical data may quickly become obsolete as the market absorbs and reflects the information these models exploit.
+* **Transaction costs**: Quantitative investing often involves high-frequency trading and a large volume of trades. In an efficient market, the returns from frequent trading might be offset by transaction costs.
+
+### Opportunities for Quantitative Investing in an Efficient Market Context
+
+* **Markets are not perfectly efficient**: Although EMH is an important theory, real-world markets are not completely efficient. Various market frictions and behavioral biases exist, providing opportunities for quantitative investing.
+* **Exploiting weak Alpha**: Quantitative investing can uncover weak, transient alpha opportunities in the market through sophisticated models and algorithms.
+* **Risk management**: Quantitative investing has advantages in risk management, allowing for more effective control of portfolio risk through modeling methods.
+* **Trading efficiency**: Quantitative trading systems can automate trades, improving trading efficiency and reducing human error.
+* **Alternative data**: Quantitative investing can leverage Alternative Data, such as social media data, satellite imagery data, etc., to find new information sources and investment opportunities.
+
+## Summary
+
+* The Efficient Market Hypothesis (EMH) is a crucial theory in finance that emphasizes the informational efficiency of market prices.
+* EMH is divided into three levels: weak-form, semi-strong-form, and strong-form.
+* EMH presents challenges for quantitative investing but also offers opportunities related to market inefficiencies, risk management, trading efficiency, and the use of alternative data.
+* Within the framework of EMH, quantitative investing must continuously explore new models and strategies to adapt to the ever-changing market environment.

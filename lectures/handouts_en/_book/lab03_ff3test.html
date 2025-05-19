@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3) – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10_selecting.html" rel="next">
+<link href="./03_ff3.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./lab03_ff3test.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Efficient Market Hypothesis (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project 1: Factor Investing Strategy Construction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project 2: Optimization and Enhancement of Factor Investing Strategies</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-description" id="toc-data-description" class="nav-link active" data-scroll-target="#data-description"><span class="header-section-number">6.1</span> Data Description</a>
+  <ul class="collapse">
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source"><span class="header-section-number">6.1.1</span> Data Source</a></li>
+  <li><a href="#sample-and-variable-selection" id="toc-sample-and-variable-selection" class="nav-link" data-scroll-target="#sample-and-variable-selection"><span class="header-section-number">6.1.2</span> Sample and Variable Selection</a></li>
+  <li><a href="#lab-steps-overview" id="toc-lab-steps-overview" class="nav-link" data-scroll-target="#lab-steps-overview"><span class="header-section-number">6.1.3</span> Lab Steps Overview</a></li>
+  </ul></li>
+  <li><a href="#content-of-this-experiment" id="toc-content-of-this-experiment" class="nav-link" data-scroll-target="#content-of-this-experiment"><span class="header-section-number">6.2</span> Content of This Experiment</a></li>
+  <li><a href="#background-china-specific-three-factor-model-ch-3" id="toc-background-china-specific-three-factor-model-ch-3" class="nav-link" data-scroll-target="#background-china-specific-three-factor-model-ch-3"><span class="header-section-number">6.3</span> Background: China-Specific Three-Factor Model (CH-3)</a></li>
+  <li><a href="#practice-building-and-backtesting-the-china-specific-three-factor-model" id="toc-practice-building-and-backtesting-the-china-specific-three-factor-model" class="nav-link" data-scroll-target="#practice-building-and-backtesting-the-china-specific-three-factor-model"><span class="header-section-number">6.4</span> Practice: Building and Backtesting the China-Specific Three-Factor Model</a>
+  <ul class="collapse">
+  <li><a href="#step-1-import-necessary-libraries" id="toc-step-1-import-necessary-libraries" class="nav-link" data-scroll-target="#step-1-import-necessary-libraries"><span class="header-section-number">6.4.1</span> Step 1: Import Necessary Libraries</a></li>
+  <li><a href="#step-2-read-data" id="toc-step-2-read-data" class="nav-link" data-scroll-target="#step-2-read-data"><span class="header-section-number">6.4.2</span> Step 2: Read Data</a></li>
+  <li><a href="#step-3-organize-data" id="toc-step-3-organize-data" class="nav-link" data-scroll-target="#step-3-organize-data"><span class="header-section-number">6.4.3</span> Step 3: Organize Data</a></li>
+  <li><a href="#step-4-financial-data-processing" id="toc-step-4-financial-data-processing" class="nav-link" data-scroll-target="#step-4-financial-data-processing"><span class="header-section-number">6.4.4</span> Step 4: Financial Data Processing</a></li>
+  <li><a href="#step-5-merge-datasets-and-construct-variables" id="toc-step-5-merge-datasets-and-construct-variables" class="nav-link" data-scroll-target="#step-5-merge-datasets-and-construct-variables"><span class="header-section-number">6.4.5</span> Step 5: Merge Datasets and Construct Variables</a></li>
+  <li><a href="#sort-and-group-by-size-value-and-roe" id="toc-sort-and-group-by-size-value-and-roe" class="nav-link" data-scroll-target="#sort-and-group-by-size-value-and-roe"><span class="header-section-number">6.4.6</span> Sort and Group by Size, Value, and ROE</a></li>
+  <li><a href="#step-7-calculate-weighted-average-stock-returns-and-pricing-factors" id="toc-step-7-calculate-weighted-average-stock-returns-and-pricing-factors" class="nav-link" data-scroll-target="#step-7-calculate-weighted-average-stock-returns-and-pricing-factors"><span class="header-section-number">6.4.7</span> Step 7: Calculate Weighted Average Stock Returns and Pricing Factors</a></li>
+  <li><a href="#step-8-descriptive-statistics-and-factor-correlation-analysis" id="toc-step-8-descriptive-statistics-and-factor-correlation-analysis" class="nav-link" data-scroll-target="#step-8-descriptive-statistics-and-factor-correlation-analysis"><span class="header-section-number">6.4.8</span> Step 8: Descriptive Statistics and Factor Correlation Analysis</a></li>
+  <li><a href="#step-9-roe-anomaly-analysis" id="toc-step-9-roe-anomaly-analysis" class="nav-link" data-scroll-target="#step-9-roe-anomaly-analysis"><span class="header-section-number">6.4.9</span> Step 9: ROE Anomaly Analysis</a></li>
+  <li><a href="#step-10-estimate-factor-models-using-newey-west-adjusted-standard-errors" id="toc-step-10-estimate-factor-models-using-newey-west-adjusted-standard-errors" class="nav-link" data-scroll-target="#step-10-estimate-factor-models-using-newey-west-adjusted-standard-errors"><span class="header-section-number">6.4.10</span> Step 10: Estimate Factor Models using Newey-West Adjusted Standard Errors</a></li>
+  <li><a href="#step-11-plotting-analysis" id="toc-step-11-plotting-analysis" class="nav-link" data-scroll-target="#step-11-plotting-analysis"><span class="header-section-number">6.4.11</span> ### Step 11: Plotting Analysis</a></li>
+  <li><a href="#step-12-summary-and-conclusion" id="toc-step-12-summary-and-conclusion" class="nav-link" data-scroll-target="#step-12-summary-and-conclusion"><span class="header-section-number">6.4.12</span> Step 12: Summary and Conclusion</a></li>
+  </ul></li>
+  <li><a href="#results-analysis-and-discussion" id="toc-results-analysis-and-discussion" class="nav-link" data-scroll-target="#results-analysis-and-discussion"><span class="header-section-number">6.5</span> Results Analysis and Discussion</a></li>
+  <li><a href="#lab-discussion-questions" id="toc-lab-discussion-questions" class="nav-link" data-scroll-target="#lab-discussion-questions"><span class="header-section-number">6.6</span> Lab Discussion Questions</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">6.7</span> References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="data-description" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="data-description"><span class="header-section-number">6.1</span> Data Description</h2>
+<section id="data-source" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="data-source"><span class="header-section-number">6.1.1</span> Data Source</h3>
+<p>The data used in this experiment is from CSMAR (GuoTaiAn) http://data.csmar.com/, primarily including:</p>
+<ul>
+<li><strong>Basic Information</strong>: Company Research Series -&gt; Listed Companies Basic Information -&gt; Listed Companies Basic Information Annual Table</li>
+<li><strong>Stock Market Information</strong>: Stock Market Series -&gt; Stock Market Trading -&gt; Individual Stock Trading Data -&gt; Monthly Individual Stock Return File</li>
+<li><strong>Risk-Free Rate</strong>: Stock Market Series -&gt; Stock Market Trading -&gt; Exchange Rates and Interest Rates -&gt; Risk-Free Rate File</li>
+<li><strong>Multi-Factors</strong>: Factor Research Series -&gt; Fama-French Factors -&gt; Five-Factor Model Indicators (Monthly)</li>
+<li><strong>Financial Data</strong>: Company Research Series -&gt; Financial Indicator Analysis -&gt; Disclosed Financial Indicators</li>
+</ul>
+</section>
+<section id="sample-and-variable-selection" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="sample-and-variable-selection"><span class="header-section-number">6.1.2</span> Sample and Variable Selection</h3>
+<ul>
+<li><strong>Time Period</strong>: May 2007 to February 2019</li>
+<li><strong>Sample Selection</strong>: Shanghai and Shenzhen A-share listed non-financial, non-utility companies</li>
+<li><strong>Main Variables</strong>:
+<ul>
+<li><strong>Basic Information</strong>: Stock Code, Industry Code, Listing Date</li>
+<li><strong>Stock Market Information</strong>: Monthly individual stock return considering cash dividend reinvestment, Monthly individual stock total market capitalization</li>
+<li><strong>Risk-Free Rate</strong>: Monthly risk-free rate</li>
+<li><strong>Five Factors</strong>: Market risk premium factor, size factor, book-to-market ratio factor (all total market cap weighted)</li>
+<li><strong>Financial Information</strong>: Net profit attributable to shareholders of listed companies after deducting non-recurring gains and losses, Weighted average return on equity (ROE)</li>
+</ul></li>
+</ul>
+</section>
+<section id="lab-steps-overview" class="level3" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="lab-steps-overview"><span class="header-section-number">6.1.3</span> Lab Steps Overview</h3>
+<ol type="1">
+<li>Import and organize data, ensuring consistency of variables, units, etc., across databases.</li>
+<li>Select A-share non-financial, non-utility listed companies.</li>
+<li>Merge listed company stock information and financial information, and retain listed companies in the largest 70% of market capitalization.</li>
+<li>Sort and group companies monthly based on market capitalization and value, calculate the market-cap weighted average return for each portfolio.</li>
+<li>Construct the China three factors and calculate their explanatory power in the Chinese market.</li>
+<li>Construct ROE anomaly, compare the explanatory power of CAPM, China three-factor model, and Fama-French three-factor model.</li>
+<li>Analyze results and draw conclusions.</li>
+</ol>
+</section>
+</section>
+<section id="content-of-this-experiment" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="content-of-this-experiment"><span class="header-section-number">6.2</span> Content of This Experiment</h2>
+<ol type="1">
+<li><strong>Data Preparation and Preprocessing</strong>: Learn how to acquire and process Chinese stock data.</li>
+<li><strong>Constructing the China-Specific Size Factor</strong>: Master the construction method for the China-specific size factor (SMB).</li>
+<li><strong>Constructing the China-Specific Value Factor</strong>: Master the construction method for the value factor based on earnings-to-price ratio (VMG).</li>
+<li><strong>Backtesting Factor Returns</strong>: Learn how to backtest factors and evaluate their performance.</li>
+<li><strong>Factor Effectiveness Analysis</strong>: Understand how to assess the effectiveness and statistical significance of factors.</li>
+</ol>
+</section>
+<section id="background-china-specific-three-factor-model-ch-3" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="background-china-specific-three-factor-model-ch-3"><span class="header-section-number">6.3</span> Background: China-Specific Three-Factor Model (CH-3)</h2>
+<p>According to the study “Size and Value in China” by Liu, Stambaugh, and Yuan (2019), the Chinese market has unique characteristics, and the traditional Fama-French three-factor model needs adjustment:</p>
+<ol type="1">
+<li><p><strong>Shell Value Effect</strong>: The smallest 30% of stocks in the Chinese market exhibit a significant shell value phenomenon, where their prices are influenced by the potential value of being used as shell companies for reverse mergers, rather than traditional risk factors.</p></li>
+<li><p><strong>Size Factor Adjustment</strong>: It is necessary to exclude the smallest 30% of market-cap stocks when constructing the SMB (Small Minus Big) factor to avoid the interference of shell value.</p></li>
+<li><p><strong>Value Factor Adjustment</strong>: The earnings-to-price ratio (E/P) performs better than the book-to-market ratio (B/M) in the Chinese market. Therefore, E/P is used to construct the VMG (Value Minus Growth) value factor.</p></li>
+<li><p><strong>Superior Explanatory Power</strong>: The adjusted CH-3 model significantly outperforms the traditional FF-3 model in explaining market anomalies in China.</p></li>
+</ol>
+<p>This lab will guide you step-by-step in constructing the China-specific three-factor model and verify its effectiveness by analyzing its explanatory power for the ROE anomaly. We will use real Chinese stock market data, starting from data preprocessing, through factor construction and backtesting, to final statistical analysis.</p>
+</section>
+<section id="practice-building-and-backtesting-the-china-specific-three-factor-model" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="practice-building-and-backtesting-the-china-specific-three-factor-model"><span class="header-section-number">6.4</span> Practice: Building and Backtesting the China-Specific Three-Factor Model</h2>
+<section id="step-1-import-necessary-libraries" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="step-1-import-necessary-libraries"><span class="header-section-number">6.4.1</span> Step 1: Import Necessary Libraries</h3>
+<p>First, we need to import the Python libraries required for this experiment. These libraries include pandas and numpy for data processing, matplotlib and seaborn for visualization, and statsmodels and scipy for statistical analysis.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import necessary libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pandas.tseries.offsets <span class="im">import</span> MonthEnd</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.regression.rolling <span class="im">import</span> RollingOLS</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.sandwich_covariance <span class="im">import</span> cov_hac</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set plotting style</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Set different fonts based on the operating system</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> platform</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get operating system type</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> platform.system()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Set matplotlib font</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> system <span class="op">==</span> <span class="st">'Windows'</span>:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'SimHei'</span>]  <span class="co"># Windows uses SimHei</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> system <span class="op">==</span> <span class="st">'Darwin'</span>:</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'Songti SC'</span>]  <span class="co"># Mac uses Songti SC</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    plt.rcParams[<span class="st">'font.sans-serif'</span>] <span class="op">=</span> [<span class="st">'WenQuanYi Zen Hei'</span>]  <span class="co"># Linux uses WenQuanYi Zen Hei</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Resolve the issue of negative signs not displaying correctly</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'axes.unicode_minus'</span>] <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-2-read-data" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="step-2-read-data"><span class="header-section-number">6.4.2</span> Step 2: Read Data</h3>
+<p>Next, we need to read the relevant data for the Chinese stock market. This data includes company basic information, financial indicators, trading data, risk-free rates, and market factor data. In practical applications, this data usually comes from professional financial databases like CSMAR or Wind.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic Information</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cominfo <span class="op">=</span> pd.read_excel(<span class="st">"data/basic_info/STK_LISTEDCOINFOANL.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                       names<span class="op">=</span>[<span class="st">"Symbol"</span>, <span class="st">"ShortName"</span>, <span class="st">"EndDate"</span>, <span class="st">"ListedCoID"</span>, <span class="st">"SecurityID"</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"IndustryName"</span>, <span class="st">"IndustryCode"</span>, <span class="st">"IndustryNameC"</span>, <span class="st">"IndustryCodeC"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"IndustryNameD"</span>, <span class="st">"IndustryCodeD"</span>, <span class="st">"RegisterAddress"</span>, <span class="st">"OfficeAddress"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Zipcode"</span>, <span class="st">"Secretary"</span>, <span class="st">"SecretaryTel"</span>, <span class="st">"SecretaryFax"</span>, <span class="st">"SecretaryEmail"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"SecurityConsultant"</span>, <span class="st">"SocialCreditCode"</span>, <span class="st">"Sigchange"</span>, <span class="st">"Lng"</span>, <span class="st">"Lat"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"ISIN"</span>, <span class="st">"FullName"</span>, <span class="st">"LegalRepresentative"</span>, <span class="st">"EstablishDate"</span>, <span class="st">"Crcd"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"RegisterCapital"</span>, <span class="st">"Website"</span>, <span class="st">"BusinessScope"</span>, <span class="st">"RegisterLongitude"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"RegisterLatitude"</span>, <span class="st">"EMAIL"</span>, <span class="st">"LISTINGDATE"</span>, <span class="st">"PROVINCECODE"</span>, <span class="st">"PROVINCE"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"CITYCODE"</span>, <span class="st">"CITY"</span>, <span class="st">"MAINBUSSINESS"</span>, <span class="st">"LISTINGSTATE"</span>])</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Financial Indicators (ROE)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> pd.read_excel(<span class="st">"data/ROE/FI_T2.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                      names<span class="op">=</span>[<span class="st">"Stkcd"</span>, <span class="st">"ShortName"</span>, <span class="st">"Accper"</span>, <span class="st">"nr"</span>, <span class="st">"npexnr"</span>, <span class="st">"ROE"</span>, <span class="st">"ROE_exnr"</span>],</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                      dtype<span class="op">=</span>{<span class="st">'Stkcd'</span>: <span class="bu">str</span>, <span class="st">'nr'</span>: <span class="bu">float</span>, <span class="st">'npexnr'</span>: <span class="bu">float</span>, <span class="st">'ROE'</span>: <span class="bu">float</span>, <span class="st">'ROE_exnr'</span>: <span class="bu">float</span>})</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Individual Stock Trading Data</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>trdmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/stk_monthly/TRD_Mnth.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                       names<span class="op">=</span>[<span class="st">"Stkcd"</span>, <span class="st">"Trdmnt"</span>, <span class="st">"Opndt"</span>, <span class="st">"Mopnprc"</span>, <span class="st">"Clsdt"</span>, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Mclsprc"</span>, <span class="st">"Mnshrtrd"</span>, <span class="st">"Mnvaltrd"</span>, <span class="st">"Msmvosd"</span>, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Msmvttl"</span>, <span class="st">"Ndaytrd"</span>, <span class="st">"Mretwd"</span>, <span class="st">"Mretnd"</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Markettype"</span>, <span class="st">"Capchgdt"</span>, <span class="st">"Ahshrtrd_M"</span>, <span class="st">"Ahvaltrd_M"</span>])</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Risk-Free Rate</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>nrrate <span class="op">=</span> pd.read_excel(<span class="st">"data/rf_monthly/TRD_Nrrate.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                      names<span class="op">=</span>[<span class="st">"Nrr1"</span>, <span class="st">"Clsdt"</span>, <span class="st">"Nrrmtdt"</span>])</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Five Factors</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> pd.read_excel(<span class="st">"data/five_factors/STK_MKT_FIVEFACMONTH.xlsx"</span>, skiprows<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                       names<span class="op">=</span>[<span class="st">"MarkettypeID"</span>, <span class="st">"TradingMonth"</span>, <span class="st">"Portfolios"</span>, </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"RiskPremium1"</span>, <span class="st">"RiskPremium2"</span>, <span class="st">"SMB1"</span>, <span class="st">"SMB2"</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"HML1"</span>, <span class="st">"HML2"</span>, <span class="st">"RMW1"</span>, <span class="st">"RMW2"</span>, <span class="st">"CMA1"</span>, <span class="st">"CMA2"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-3-organize-data" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="step-3-organize-data"><span class="header-section-number">6.4.3</span> Step 3: Organize Data</h3>
+<p>After reading the data, we need to organize and conduct a preliminary analysis of it. This includes industry classification, filtering out non-A-share and financial/utility companies, etc.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry Information</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>indinfo <span class="op">=</span> (cominfo.groupby([<span class="st">'IndustryName'</span>, <span class="st">'IndustryCode'</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           .size()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>           .reset_index()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>           .rename(columns<span class="op">=</span>{<span class="dv">0</span>: <span class="st">'count'</span>})</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>           .sort_values(<span class="st">'IndustryCode'</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># A-shares, non-financial, non-utility industries</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>comA <span class="op">=</span> cominfo.copy()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>comA[<span class="st">'EndDate'</span>] <span class="op">=</span> pd.to_datetime(comA[<span class="st">'EndDate'</span>])</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>comA[<span class="st">'year'</span>] <span class="op">=</span> comA[<span class="st">'EndDate'</span>].dt.year</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>comA[<span class="st">'LISTINGDATE'</span>] <span class="op">=</span> pd.to_datetime(comA[<span class="st">'LISTINGDATE'</span>])</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter criteria: post-listing data + non-financial non-utility + A-shares</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>comA <span class="op">=</span> comA[</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    (comA[<span class="st">'EndDate'</span>] <span class="op">&gt;=</span> comA[<span class="st">'LISTINGDATE'</span>]) <span class="op">&amp;</span> </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'IndustryCode'</span>].<span class="bu">str</span>.startswith(<span class="st">'J'</span>)) <span class="op">&amp;</span> </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'IndustryCode'</span>].<span class="bu">str</span>.startswith(<span class="st">'D'</span>)) <span class="op">&amp;</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    (<span class="op">~</span>comA[<span class="st">'Symbol'</span>].astype(<span class="bu">str</span>).<span class="bu">str</span>[:<span class="dv">3</span>].isin([<span class="st">'900'</span>, <span class="st">'200'</span>]))</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-4-financial-data-processing" class="level3" data-number="6.4.4">
+<h3 data-number="6.4.4" class="anchored" data-anchor-id="step-4-financial-data-processing"><span class="header-section-number">6.4.4</span> Step 4: Financial Data Processing</h3>
+<p>In this step, we process the financial data, including merging it with company information and filling missing values. Since financial data disclosure often has a lag, we need to ensure we use the latest available financial data. We also need to handle some special cases, such as:</p>
+<ul>
+<li>Forward-filling financial data to ensure the most recent valid data is used before new data is published.</li>
+<li>Converting trading data to the appropriate format and adjusting the return calculation method.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Financial Data Processing</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'Accper'</span>] <span class="op">=</span> pd.to_datetime(comfin[<span class="st">'Accper'</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'year'</span>] <span class="op">=</span> comfin[<span class="st">'Accper'</span>].dt.year</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'month'</span>] <span class="op">=</span> comfin[<span class="st">'Accper'</span>].dt.month</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge financial data with company basic information</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> pd.merge(comfin, comA, left_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year'</span>], </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                   right_on<span class="op">=</span>[<span class="st">'Symbol'</span>, <span class="st">'year'</span>], how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward fill financial data (simulating R's fill function)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>comfin <span class="op">=</span> comfin.sort_values([<span class="st">'Stkcd'</span>, <span class="st">'year'</span>, <span class="st">'month'</span>])</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'npexnr'</span>] <span class="op">=</span> comfin.groupby(<span class="st">'Stkcd'</span>)[<span class="st">'npexnr'</span>].fillna(method<span class="op">=</span><span class="st">'ffill'</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'ROE'</span>] <span class="op">=</span> comfin.groupby(<span class="st">'Stkcd'</span>)[<span class="st">'ROE'</span>].fillna(method<span class="op">=</span><span class="st">'ffill'</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>comfin[<span class="st">'Stkcd'</span>] <span class="op">=</span> pd.to_numeric(comfin[<span class="st">'Stkcd'</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Trading Data Processing</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'Trdmnt'</span>] <span class="op">=</span> pd.to_datetime(trdmnth[<span class="st">'Trdmnt'</span>])</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'ym'</span>] <span class="op">=</span> pd.to_datetime(trdmnth[<span class="st">'Trdmnt'</span>]).dt.to_period(<span class="st">'M'</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'year'</span>] <span class="op">=</span> trdmnth[<span class="st">'Trdmnt'</span>].dt.year</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'month'</span>] <span class="op">=</span> trdmnth[<span class="st">'Trdmnt'</span>].dt.month</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>trdmnth[<span class="st">'Mretwd'</span>] <span class="op">=</span> trdmnth[<span class="st">'Mretwd'</span>] <span class="op">*</span> <span class="dv">100</span>  <span class="co"># Convert to percentage</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Risk-Free Rate Processing</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'Clsdt'</span>] <span class="op">=</span> pd.to_datetime(nrrate[<span class="st">'Clsdt'</span>])</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'year'</span>] <span class="op">=</span> nrrate[<span class="st">'Clsdt'</span>].dt.year</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>nrrate[<span class="st">'month'</span>] <span class="op">=</span> nrrate[<span class="st">'Clsdt'</span>].dt.month</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> nrrate.groupby([<span class="st">'year'</span>, <span class="st">'month'</span>])[<span class="st">'Nrrmtdt'</span>].mean().reset_index()</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> rf.rename(columns<span class="op">=</span>{<span class="st">'Nrrmtdt'</span>: <span class="st">'rf'</span>})</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Factor Data Processing</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>facmnth <span class="op">=</span> facmnth[(facmnth[<span class="st">'MarkettypeID'</span>] <span class="op">==</span> <span class="st">'P9714'</span>) <span class="op">&amp;</span> (facmnth[<span class="st">'Portfolios'</span>] <span class="op">==</span> <span class="dv">1</span>)]</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>facmnth[<span class="st">'TradingMonth'</span>] <span class="op">=</span> pd.to_datetime(facmnth[<span class="st">'TradingMonth'</span>])</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>facmnth[<span class="st">'ym'</span>] <span class="op">=</span> facmnth[<span class="st">'TradingMonth'</span>].dt.to_period(<span class="st">'M'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to percentage</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>factor_cols <span class="op">=</span> [<span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>, <span class="st">'RMW2'</span>, <span class="st">'CMA2'</span>]</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>facmnth[factor_cols] <span class="op">=</span> facmnth[factor_cols] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-5-merge-datasets-and-construct-variables" class="level3" data-number="6.4.5">
+<h3 data-number="6.4.5" class="anchored" data-anchor-id="step-5-merge-datasets-and-construct-variables"><span class="header-section-number">6.4.5</span> Step 5: Merge Datasets and Construct Variables</h3>
+<p>In this step, we will merge the processed datasets and calculate key variables, such as market capitalization and earnings-to-price ratio (E/P). Specifically, to implement the core idea of the China-specific three-factor model, we filter for companies in the largest 70% of market capitalization to exclude small-cap stocks potentially affected by shell value.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply rules to trading data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trdmnth.copy()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust year based on month: use previous year for Jan-Apr, current year for other months</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'year1'</span>] <span class="op">=</span> np.where((trddata[<span class="st">'month'</span>] <span class="op">&gt;=</span> <span class="dv">1</span>) <span class="op">&amp;</span> (trddata[<span class="st">'month'</span>] <span class="op">&lt;=</span> <span class="dv">4</span>), </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                           trddata[<span class="st">'year'</span>] <span class="op">-</span> <span class="dv">1</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                           trddata[<span class="st">'year'</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust financial month based on trading month:</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># May-Aug correspond to March (Q1 report), Sep-Oct correspond to June (Q2 report), other months correspond to September (Q3 report)</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'month1'</span>] <span class="op">=</span> np.select(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    [(trddata[<span class="st">'month'</span>] <span class="op">&gt;=</span> <span class="dv">5</span>) <span class="op">&amp;</span> (trddata[<span class="st">'month'</span>] <span class="op">&lt;=</span> <span class="dv">8</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>     (trddata[<span class="st">'month'</span>] <span class="op">==</span> <span class="dv">9</span>) <span class="op">|</span> (trddata[<span class="st">'month'</span>] <span class="op">==</span> <span class="dv">10</span>)],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">3</span>, <span class="dv">6</span>],</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    default<span class="op">=</span><span class="dv">9</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># a. Merge financial data</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> pd.merge(trddata, comfin, </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                  left_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year1'</span>, <span class="st">'month1'</span>], </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                  right_on<span class="op">=</span>[<span class="st">'Stkcd'</span>, <span class="st">'year'</span>, <span class="st">'month'</span>], </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                  how<span class="op">=</span><span class="st">'inner'</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.drop(columns<span class="op">=</span>[<span class="st">'year_y'</span>, <span class="st">'month_y'</span>])</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.rename(columns<span class="op">=</span>{<span class="st">'year_x'</span>: <span class="st">'year'</span>, <span class="st">'month_x'</span>: <span class="st">'month'</span>})</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># b. Calculate total market cap and E/P ratio</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.sort_values([<span class="st">'Stkcd'</span>, <span class="st">'ym'</span>])</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'size'</span>] <span class="op">=</span> trddata.groupby(<span class="st">'Stkcd'</span>)[<span class="st">'Mclsprc'</span>].shift(<span class="dv">1</span>) <span class="op">*</span> (trddata[<span class="st">'Msmvttl'</span>] <span class="op">/</span> trddata[<span class="st">'Mclsprc'</span>])</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'EP'</span>] <span class="op">=</span> trddata[<span class="st">'npexnr'</span>] <span class="op">/</span> trddata[<span class="st">'size'</span>]</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># c. Filter companies in the largest 70% of market capitalization</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_by_size(group):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    size_threshold <span class="op">=</span> group[<span class="st">'size'</span>].quantile(<span class="fl">0.3</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> group[group[<span class="st">'size'</span>] <span class="op">&gt;=</span> size_threshold]</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata.groupby(<span class="st">'ym'</span>).<span class="bu">apply</span>(filter_by_size).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co"># d. Merge risk-free rate and calculate excess returns</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> pd.merge(trddata, rf, on<span class="op">=</span>[<span class="st">'year'</span>, <span class="st">'month'</span>], how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'exret'</span>] <span class="op">=</span> trddata[<span class="st">'Mretwd'</span>] <span class="op">-</span> trddata[<span class="st">'rf'</span>]</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># e. Filter time period</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>trddata[<span class="st">'ym_dt'</span>] <span class="op">=</span> trddata[<span class="st">'ym'</span>].dt.to_timestamp()</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>trddata <span class="op">=</span> trddata[(trddata[<span class="st">'ym_dt'</span>] <span class="op">&gt;=</span> pd.Timestamp(<span class="st">'2007-05-01'</span>)) <span class="op">&amp;</span> </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>                  (trddata[<span class="st">'ym_dt'</span>] <span class="op">&lt;=</span> pd.Timestamp(<span class="st">'2019-02-28'</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sort-and-group-by-size-value-and-roe" class="level3" data-number="6.4.6">
+<h3 data-number="6.4.6" class="anchored" data-anchor-id="sort-and-group-by-size-value-and-roe"><span class="header-section-number">6.4.6</span> Sort and Group by Size, Value, and ROE</h3>
+<p>Following the classic Fama-French methodology, we need to group stocks to construct factors. In this step, we will divide stocks into 2 groups based on market capitalization, 3 groups based on E/P, and additionally 10 groups based on ROE for subsequent anomaly analysis.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by market cap, E/P, ROE</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>trddata_grp <span class="op">=</span> trddata.copy()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Market cap grouping (2 groups)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_size'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'size'</span>].transform(</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: pd.qcut(x, <span class="dv">2</span>, labels<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>]).astype(<span class="bu">int</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># E/P value grouping (3 groups)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_value_group(x):</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x.notna().<span class="bu">any</span>():</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        low_val <span class="op">=</span> x.quantile(<span class="fl">0.3</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        high_val <span class="op">=</span> x.quantile(<span class="fl">0.7</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.select(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            [x <span class="op">&lt;=</span> low_val, x <span class="op">&lt;=</span> high_val],</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            default<span class="op">=</span><span class="dv">3</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.nan</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_value'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'EP'</span>].transform(get_value_group)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ROE grouping (10 groups), handling NaN values</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roe_group(x):</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x.notna().<span class="bu">any</span>():</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># First handle NaN values by replacing them with -1</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        x_filled <span class="op">=</span> x.fillna(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use qcut for grouping, treating -1 as a separate group</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> pd.qcut(x_filled, <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>), duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Set the group for -1 (original NaNs) to NaN</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> groups.where(x_filled <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>, np.nan)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> groups.astype(<span class="st">'Int64'</span>)  <span class="co"># Use nullable integer type</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.nan</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_ROE'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'ROE'</span>].transform(roe_group)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Market cap grouping (10 groups, for conditional sort)</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_size1'</span>] <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>)[<span class="st">'size'</span>].transform(</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: pd.qcut(x, <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>)).astype(<span class="bu">int</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Conditional ROE grouping within each market cap group, handling NaN values</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> roe_con_group(x):</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x.notna().<span class="bu">any</span>():</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># First handle NaN values by replacing them with -1</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        x_filled <span class="op">=</span> x.fillna(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Use qcut for grouping, treating -1 as a separate group</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> pd.qcut(x_filled, <span class="dv">10</span>, labels<span class="op">=</span><span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">11</span>), duplicates<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Set the group for -1 (original NaNs) to NaN</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>        groups <span class="op">=</span> groups.where(x_filled <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>, np.nan)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> groups.astype(<span class="st">'Int64'</span>)  <span class="co"># Use nullable integer type</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.nan</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>trddata_grp[<span class="st">'grp_ROE_con'</span>] <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size1'</span>])[<span class="st">'ROE'</span>].transform(roe_con_group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-7-calculate-weighted-average-stock-returns-and-pricing-factors" class="level3" data-number="6.4.7">
+<h3 data-number="6.4.7" class="anchored" data-anchor-id="step-7-calculate-weighted-average-stock-returns-and-pricing-factors"><span class="header-section-number">6.4.7</span> Step 7: Calculate Weighted Average Stock Returns and Pricing Factors</h3>
+<p>This step is crucial for constructing the factors. We first calculate the market excess return (MKT), then construct 2x3 sorted portfolios to calculate the size-based SMB factor and the value-based VMG factor.</p>
+<p>The CH-3 model uses a grouping method similar to the classic Fama-French model, but with some key adjustments: 1. We use the sample that has already excluded the smallest 30% of market-cap stocks for grouping. 2. Stocks are divided into two groups by market capitalization (Small and Big). 3. Stocks are divided into three groups by E/P ratio (30%-40%-30%). 4. This forms 6 portfolios: Small-cap/Low E/P (11), Small-cap/Medium E/P (12), Small-cap/High E/P (13), Big-cap/Low E/P (21), Big-cap/Medium E/P (22), Big-cap/High E/P (23).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate market excess return</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>factor1 <span class="op">=</span> trddata_grp.groupby(<span class="st">'ym'</span>).agg(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    MKT<span class="op">=</span>(<span class="st">'exret'</span>, <span class="kw">lambda</span> x: np.average(x, weights<span class="op">=</span>trddata_grp.loc[x.index, <span class="st">'size'</span>]))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate portfolio returns based on size and value sorts</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_portfolio_return(group):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.average(group[<span class="st">'Mretwd'</span>], weights<span class="op">=</span>group[<span class="st">'size'</span>])</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>factor2 <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_size'</span>, <span class="st">'grp_value'</span>]).<span class="bu">apply</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    calc_portfolio_return</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>).reset_index()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>factor2.columns <span class="op">=</span> [<span class="st">'ym'</span>, <span class="st">'grp_size'</span>, <span class="st">'grp_value'</span>, <span class="st">'vwret'</span>]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only portfolios without NaN</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>factor2 <span class="op">=</span> factor2[factor2[<span class="st">'grp_size'</span>].notna() <span class="op">&amp;</span> factor2[<span class="st">'grp_value'</span>].notna()]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create portfolio identifier and pivot table</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>factor2[<span class="st">'grp'</span>] <span class="op">=</span> factor2[<span class="st">'grp_size'</span>] <span class="op">*</span> <span class="dv">10</span> <span class="op">+</span> factor2[<span class="st">'grp_value'</span>]</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>factor2_pivot <span class="op">=</span> factor2.pivot(index<span class="op">=</span><span class="st">'ym'</span>, columns<span class="op">=</span><span class="st">'grp'</span>, values<span class="op">=</span><span class="st">'vwret'</span>).reset_index()</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate SMB and VMG factors</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>factor2_pivot[<span class="st">'SMB'</span>] <span class="op">=</span> (factor2_pivot[<span class="dv">11</span>] <span class="op">+</span> factor2_pivot[<span class="dv">12</span>] <span class="op">+</span> factor2_pivot[<span class="dv">13</span>]) <span class="op">/</span> <span class="dv">3</span> <span class="op">-</span> <span class="op">\</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                      (factor2_pivot[<span class="dv">21</span>] <span class="op">+</span> factor2_pivot[<span class="dv">22</span>] <span class="op">+</span> factor2_pivot[<span class="dv">23</span>]) <span class="op">/</span> <span class="dv">3</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>factor2_pivot[<span class="st">'VMG'</span>] <span class="op">=</span> (factor2_pivot[<span class="dv">13</span>] <span class="op">+</span> factor2_pivot[<span class="dv">23</span>]) <span class="op">/</span> <span class="dv">2</span> <span class="op">-</span> <span class="op">\</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                      (factor2_pivot[<span class="dv">11</span>] <span class="op">+</span> factor2_pivot[<span class="dv">21</span>]) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all factors</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor2_pivot.merge(factor1, on<span class="op">=</span><span class="st">'ym'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>factor <span class="op">=</span> factor.merge(facmnth[[<span class="st">'ym'</span>, <span class="st">'RiskPremium1'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>]], on<span class="op">=</span><span class="st">'ym'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-8-descriptive-statistics-and-factor-correlation-analysis" class="level3" data-number="6.4.8">
+<h3 data-number="6.4.8" class="anchored" data-anchor-id="step-8-descriptive-statistics-and-factor-correlation-analysis"><span class="header-section-number">6.4.8</span> Step 8: Descriptive Statistics and Factor Correlation Analysis</h3>
+<p>After constructing the three factors, we need to perform statistical analysis on them to understand their basic characteristics and interrelationships. These analyses can help us understand:</p>
+<ul>
+<li>The average return and volatility of each factor.</li>
+<li>The distribution characteristics of the factors (minimum, maximum, median, etc.).</li>
+<li>The correlation between factors, which is important for understanding factor independence in a multi-factor model.</li>
+</ul>
+<p>Typically, we hope to see that the correlations between factors are not too high, so that each factor captures different sources of risk in stock returns.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Descriptive statistics</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>factor_stats <span class="op">=</span> factor[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]].describe().T</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>factor_stats[<span class="st">'P0'</span>] <span class="op">=</span> factor_stats[<span class="st">'min'</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>factor_stats[<span class="st">'P25'</span>] <span class="op">=</span> factor[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]].quantile(<span class="fl">0.25</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>factor_stats[<span class="st">'Median'</span>] <span class="op">=</span> factor[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]].median()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>factor_stats[<span class="st">'P75'</span>] <span class="op">=</span> factor[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]].quantile(<span class="fl">0.75</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>factor_stats[<span class="st">'P100'</span>] <span class="op">=</span> factor_stats[<span class="st">'max'</span>]</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Factor Descriptive Statistics:"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(factor_stats[[<span class="st">'count'</span>, <span class="st">'mean'</span>, <span class="st">'std'</span>, <span class="st">'P0'</span>, <span class="st">'P25'</span>, <span class="st">'Median'</span>, <span class="st">'P75'</span>, <span class="st">'P100'</span>]])</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation coefficients</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>factor_corr <span class="op">=</span> factor[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]].corr()</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Factor Correlation Coefficients:"</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(factor_corr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-9-roe-anomaly-analysis" class="level3" data-number="6.4.9">
+<h3 data-number="6.4.9" class="anchored" data-anchor-id="step-9-roe-anomaly-analysis"><span class="header-section-number">6.4.9</span> Step 9: ROE Anomaly Analysis</h3>
+<p>To verify the effectiveness of the CH-3 model, we analyze its ability to explain the ROE anomaly. ROE (Return on Equity) is an important indicator of a company’s profitability, and stocks with high ROE often exhibit excess returns.</p>
+<p>We use two methods to construct ROE anomaly portfolios: 1. <strong>Unconditional Sort</strong>: Directly sort all stocks into deciles based on ROE and calculate the return difference between high ROE and low ROE portfolios. 2. <strong>Market-Cap Neutral Sort</strong>: Sort stocks into deciles based on ROE within each market capitalization decile to control for the size effect.</p>
+<p>Comparing these two methods can help us understand whether the ROE anomaly is influenced by the size effect.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ROE-based portfolio formation (unconditional sort)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_roe_portfolio(trddata_grp):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Unconditional sort</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    roe_port <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_ROE'</span>]).<span class="bu">apply</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lambda</span> x: pd.Series({</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">'vwret'</span>: np.average(x[<span class="st">'Mretwd'</span>], weights<span class="op">=</span>x[<span class="st">'size'</span>])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ).reset_index()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep only portfolios without NaN</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    roe_port <span class="op">=</span> roe_port[roe_port[<span class="st">'grp_ROE'</span>].notna()]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pivot to wide format</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    roe_port_wide <span class="op">=</span> roe_port.pivot(index<span class="op">=</span><span class="st">'ym'</span>, columns<span class="op">=</span><span class="st">'grp_ROE'</span>, values<span class="op">=</span><span class="st">'vwret'</span>).reset_index()</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate high-minus-low ROE portfolio return</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    roe_port_wide[<span class="st">'rmw'</span>] <span class="op">=</span> roe_port_wide[<span class="dv">10</span>] <span class="op">-</span> roe_port_wide[<span class="dv">1</span>]</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> roe_port_wide[[<span class="st">'ym'</span>, <span class="st">'rmw'</span>]]</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Market-cap neutral ROE portfolio formation (conditional sort)</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calc_size_neutral_roe(trddata_grp):</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Conditional sort (market-cap neutral)</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    sn_port <span class="op">=</span> trddata_grp.groupby([<span class="st">'ym'</span>, <span class="st">'grp_ROE_con'</span>]).<span class="bu">apply</span>(</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lambda</span> x: pd.Series({</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>            <span class="st">'vwret'</span>: np.average(x[<span class="st">'Mretwd'</span>], weights<span class="op">=</span>x[<span class="st">'size'</span>])</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    ).reset_index()</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep only portfolios without NaN</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    sn_port <span class="op">=</span> sn_port[sn_port[<span class="st">'grp_ROE_con'</span>].notna()]</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pivot to wide format</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    sn_port_wide <span class="op">=</span> sn_port.pivot(index<span class="op">=</span><span class="st">'ym'</span>, columns<span class="op">=</span><span class="st">'grp_ROE_con'</span>, values<span class="op">=</span><span class="st">'vwret'</span>).reset_index()</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate high-minus-low ROE portfolio return</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>    sn_port_wide[<span class="st">'rmw_sn'</span>] <span class="op">=</span> sn_port_wide[<span class="dv">10</span>] <span class="op">-</span> sn_port_wide[<span class="dv">1</span>]</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sn_port_wide[[<span class="st">'ym'</span>, <span class="st">'rmw_sn'</span>]]</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate ROE portfolios</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>factor3 <span class="op">=</span> calc_roe_portfolio(trddata_grp)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>factor4 <span class="op">=</span> calc_size_neutral_roe(trddata_grp)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge all factor data</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>factor_all <span class="op">=</span> factor.merge(factor3, on<span class="op">=</span><span class="st">'ym'</span>).merge(factor4, on<span class="op">=</span><span class="st">'ym'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-10-estimate-factor-models-using-newey-west-adjusted-standard-errors" class="level3" data-number="6.4.10">
+<h3 data-number="6.4.10" class="anchored" data-anchor-id="step-10-estimate-factor-models-using-newey-west-adjusted-standard-errors"><span class="header-section-number">6.4.10</span> Step 10: Estimate Factor Models using Newey-West Adjusted Standard Errors</h3>
+<p>Next, we use Newey-West adjusted standard errors for regression analysis to compare the ability of the CH-3 model, traditional CAPM, and FF-3 model in explaining the ROE anomaly.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate factor models using Newey-West adjusted standard errors</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nw_regression(y, X, lags<span class="op">=</span><span class="dv">4</span>):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Perform regression with Newey-West adjusted standard errors"""</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prepare data</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fit model</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> sm.OLS(y, X).fit()</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use Newey-West adjusted standard errors</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    cov <span class="op">=</span> cov_hac(model, nlags<span class="op">=</span>lags)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    model_nw <span class="op">=</span> model.get_robustcov_results(cov_type<span class="op">=</span><span class="st">'HAC'</span>, maxlags<span class="op">=</span>lags)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model_nw</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform factor model regressions</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Factor Model Analysis of ROE Anomaly:"</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Unconditional sort - CAPM</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>model1 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw'</span>], factor_all[[<span class="st">'MKT'</span>]])</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Unconditional Sort - CAPM Model:"</span>)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model1.summary().tables[<span class="dv">1</span>])</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Unconditional sort - Three-Factor Model (CH-3)</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>model2 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw'</span>], factor_all[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]])</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Unconditional Sort - CH-3 Model:"</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model2.summary().tables[<span class="dv">1</span>])</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Unconditional sort - Fama-French Three-Factor Model</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>model3 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw'</span>], factor_all[[<span class="st">'MKT'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>]])</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Unconditional Sort - Fama-French Three-Factor Model:"</span>)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model3.summary().tables[<span class="dv">1</span>])</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Conditional sort - CAPM</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>model4 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw_sn'</span>], factor_all[[<span class="st">'MKT'</span>]])</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Conditional Sort - CAPM Model:"</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model4.summary().tables[<span class="dv">1</span>])</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Conditional sort - Three-Factor Model (CH-3)</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>model5 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw_sn'</span>], factor_all[[<span class="st">'MKT'</span>, <span class="st">'SMB'</span>, <span class="st">'VMG'</span>]])</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Conditional Sort - CH-3 Model:"</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model5.summary().tables[<span class="dv">1</span>])</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Conditional sort - Fama-French Three-Factor Model</span></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>model6 <span class="op">=</span> nw_regression(factor_all[<span class="st">'rmw_sn'</span>], factor_all[[<span class="st">'MKT'</span>, <span class="st">'SMB2'</span>, <span class="st">'HML2'</span>]])</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Conditional Sort - Fama-French Three-Factor Model:"</span>)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model6.summary().tables[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-11-plotting-analysis" class="level3" data-number="6.4.11">
+<h3 data-number="6.4.11" class="anchored" data-anchor-id="step-11-plotting-analysis"><span class="header-section-number">6.4.11</span> ### Step 11: Plotting Analysis</h3>
+<p>To visually demonstrate factor performance, we plot the time series of the three factors and the ROE anomaly returns.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot factor return time series</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.plot(factor_all[<span class="st">'ym'</span>].dt.to_timestamp(), factor_all[<span class="st">'MKT'</span>], <span class="st">'b-'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Market Risk Premium (MKT)'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.plot(factor_all[<span class="st">'ym'</span>].dt.to_timestamp(), factor_all[<span class="st">'SMB'</span>], <span class="st">'g-'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Size Factor (SMB)'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>plt.plot(factor_all[<span class="st">'ym'</span>].dt.to_timestamp(), factor_all[<span class="st">'VMG'</span>], <span class="st">'r-'</span>)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Value Factor (VMG)'</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'three_factor_returns.png'</span>) <span class="co"># English filename</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROE anomaly returns</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.plot(factor_all[<span class="st">'ym'</span>].dt.to_timestamp(), factor_all[<span class="st">'rmw'</span>], <span class="st">'b-'</span>)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Unconditional Sort ROE Anomaly (High-Low)'</span>)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>plt.plot(factor_all[<span class="st">'ym'</span>].dt.to_timestamp(), factor_all[<span class="st">'rmw_sn'</span>], <span class="st">'g-'</span>)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Market-Cap Neutral ROE Anomaly (High-Low)'</span>)</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'ROE_anomaly_returns.png'</span>) <span class="co"># English filename</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.close()</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Save three-factor data</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>factor_all.to_csv(<span class="st">'China_three_factors_ROE_anomaly.csv'</span>, index<span class="op">=</span><span class="va">False</span>) <span class="co"># English filename</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Factor data saved to 'China_three_factors_ROE_anomaly.csv'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="step-12-summary-and-conclusion" class="level3" data-number="6.4.12">
+<h3 data-number="6.4.12" class="anchored" data-anchor-id="step-12-summary-and-conclusion"><span class="header-section-number">6.4.12</span> Step 12: Summary and Conclusion</h3>
+<p>In this lab, we have constructed the China-specific three-factor model and verified its effectiveness by analyzing its explanatory power for the ROE anomaly. We have also compared the performance of the CH-3 model with traditional CAPM and FF-3 model.</p>
+</section>
+</section>
+<section id="results-analysis-and-discussion" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="results-analysis-and-discussion"><span class="header-section-number">6.5</span> Results Analysis and Discussion</h2>
+<p>Through the above analysis, we can evaluate the effectiveness of the China-Specific Three-Factor Model (CH-3). From theoretical and empirical results, the CH-3 model has the following advantages over the traditional FF-3 model in the Chinese market:</p>
+<ol type="1">
+<li><p><strong>Size Factor Improvement</strong>: By excluding the smallest 30% of market-cap stocks, the impact of the shell value effect on the size factor is avoided, allowing the size factor to better reflect true risk premiums.</p></li>
+<li><p><strong>Value Factor Improvement</strong>: Using the earnings-to-price ratio (E/P) instead of the book-to-market ratio (B/M) to construct the value factor is more suitable for the characteristics of the Chinese market and improves the model’s explanatory power.</p></li>
+<li><p><strong>Explanatory Power for Anomalies</strong>: The regression results for the ROE anomaly show that the CH-3 model has strong explanatory power for the profitability anomaly in the Chinese market, especially after controlling for the size effect.</p></li>
+<li><p><strong>Robustness</strong>: The time series analysis of factor returns shows that the factors of the CH-3 model perform relatively stably in different market environments.</p></li>
+</ol>
+<p>These results corroborate the findings of Liu, Stambaugh, and Yuan (2019), namely that the Chinese stock market exhibits a unique shell value phenomenon, requiring adjustments to factor models to account for this characteristic. Additionally, selecting value indicators more suited to the Chinese market is key to improving model performance.</p>
+</section>
+<section id="lab-discussion-questions" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="lab-discussion-questions"><span class="header-section-number">6.6</span> Lab Discussion Questions</h2>
+<ol type="1">
+<li><p>Why is it necessary to exclude the smallest 30% of market-cap stocks in the Chinese market? What impact does this exclusion have on the performance of the size factor?</p></li>
+<li><p>Why is E/P more effective than B/M in the Chinese market? What characteristics of the Chinese stock market are related to this?</p></li>
+<li><p>When constructing the CH-3 model, how do you think the reverse merger mechanism in the Chinese market affects the pricing of small-cap stocks?</p></li>
+<li><p>Compare the differences between the CH-3 model and the traditional FF-3 model in explaining market anomalies in China. Which anomalies can be better explained by the CH-3 model?</p></li>
+<li><p>If changes in the policy environment lead to changes in the shell value of listed companies, what impact do you expect this to have on the effectiveness of the CH-3 model?</p></li>
+</ol>
+</section>
+<section id="references" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="references"><span class="header-section-number">6.7</span> References</h2>
+<ol type="1">
+<li><p>Liu, J., Stambaugh, R. F., &amp; Yuan, Y. (2019). Size and Value in China. <em>Journal of Financial Economics</em>, 134(1), 48-69.</p></li>
+<li><p>Fama, E. F., &amp; French, K. R. (1993). Common risk factors in the returns on stocks and bonds. <em>Journal of Financial Economics</em>, 33(1), 3-56.</p></li>
+<li><p>Hu, G. X., Chen, C., Shao, Y., &amp; Wang, J. (2019). Fama–French in China: size and value factors in Chinese stock returns. <em>International Review of Finance</em>, 19(1), 3-44.</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03_ff3.html" class="pagination-link" aria-label="Fama-French Three-Factor Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10_selecting.html" class="pagination-link" aria-label="Return Models and Portfolio Optimization">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

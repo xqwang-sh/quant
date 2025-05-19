@@ -1,0 +1,293 @@
+---
+title: "Fama-French Three-Factor Model"
+---
+
+## Key Topics in This Section
+
+1.  **Theoretical Foundations of Multi-Factor Models**: Understanding the evolution from the single-factor CAPM to multi-factor models.
+2.  **Construction of the Fama-French Three-Factor Model**: Mastering the construction methods for the size factor (SMB) and the value factor (HML).
+3.  **Economic Interpretation of the Three-Factor Model**: Understanding the economic meaning of each factor in the three-factor model.
+4.  **Empirical Testing of the Three-Factor Model**: Learning about the empirical test results of the three-factor model in the U.S. market.
+5.  **Variations of the Three-Factor Model in the Chinese Market**: Understanding the applicability and variant forms of the three-factor model in the Chinese market.
+
+## Theoretical Foundations of Multi-Factor Models
+
+### From CAPM to Multi-Factor Models
+
+While the CAPM, as a single-factor model, is structurally simple, it faces numerous challenges in empirical tests. The emergence of multi-factor models is a natural extension of the CAPM, aiming to address market anomalies and sources of risk premium that the single-factor model cannot explain.
+
+-   **Review of CAPM Limitations**:
+    -   Considers only market risk as a single type of systematic risk.
+    -   Fails to explain market anomalies such as the size effect and value effect.
+    -   Empirical tests often show Alpha to be significantly non-zero.
+
+-   **Basic Idea of Multi-Factor Models**:
+    -   **Diversified Sources of Risk**: Assumes that asset returns are influenced by multiple systematic risk factors, not just market risk.
+    -   **Expanded Sources of Risk Premium**: The risk premium demanded by investors comes from compensation for bearing multiple systematic risks.
+    -   **Better Explanatory Power**: Aims to improve the model's ability to explain cross-sectional differences in asset returns by introducing more risk factors.
+
+### General Form of Multi-Factor Models
+
+Multi-factor models typically adopt the following linear form:
+
+$$R_i - R_f = \alpha_i + \beta_{i,1}F_1 + \beta_{i,2}F_2 + ... + \beta_{i,K}F_K + \epsilon_i$$
+
+Where:
+- $R_i - R_f$: Excess return of asset $i$.
+- $\alpha_i$: Intercept term; theoretically should be zero if the model is accurate.
+- $\beta_{i,k}$: Sensitivity of asset $i$ to risk factor $k$.
+- $F_k$: Risk premium of the $k$-th risk factor.
+- $\epsilon_i$: Asset-specific unsystematic risk, i.e., the residual term.
+
+### Types of Multi-Factor Models
+
+-   **Economic Theory-Driven Multi-Factor Models**:
+    -   Risk factors derived from economic theory.
+    -   Examples: Ross's (1976) Arbitrage Pricing Theory (APT), Merton's (1973) Intertemporal Capital Asset Pricing Model (ICAPM).
+    -   Advantage: Solid theoretical foundation; Disadvantage: Difficult to determine specific risk factors.
+
+-   **Statistical Technique-Driven Multi-Factor Models**:
+    -   Use statistical methods like Principal Component Analysis (PCA) to extract common factors from data.
+    -   Example: Chen, Roll and Ross's (1986) macroeconomic factor model.
+    -   Advantage: High data fitting degree; Disadvantage: Factors may lack clear economic meaning.
+
+-   **Anomaly-Driven Multi-Factor Models**:
+    -   Factors constructed based on observed market anomalies.
+    -   Examples: Fama-French Three-Factor Model, Carhart Four-Factor Model.
+    -   Advantage: Directly addresses known market anomalies; Disadvantage: Potential risk of overfitting.
+
+## Construction of the Fama-French Three-Factor Model
+
+### Background of the Three-Factor Model's Introduction
+
+-   **Challenge of Market Anomalies**:
+    -   In the 1980s and 1990s, scholars discovered many market anomalies that CAPM could not explain.
+    -   The most significant were the **size effect** (small-cap stocks outperform large-cap stocks) and the **value effect** (high book-to-market ratio stocks outperform low book-to-market ratio stocks).
+
+-   **Contribution of Fama and French**:
+    -   In 1992, Eugene Fama and Kenneth French published the famous paper "The Cross-Section of Expected Stock Returns."
+    -   In 1993, they further published "Common risk factors in the returns on stocks and bonds," formally proposing the three-factor model.
+    -   They introduced size and value into asset pricing models, constructing the influential three-factor model.
+
+### Mathematical Expression of the Three-Factor Model
+
+The mathematical expression of the Fama-French Three-Factor Model is as follows:
+
+$$R_i - R_f = \alpha_i + \beta_i(R_m - R_f) + s_i \cdot SMB + h_i \cdot HML + \epsilon_i$$
+
+Where:
+- $R_i - R_f$: Excess return of asset $i$.
+- $R_m - R_f$: Excess return of the market portfolio (market factor).
+- $SMB$: Size factor (Small Minus Big), the return difference between small-cap stocks and large-cap stocks.
+- $HML$: Value factor (High Minus Low), the return difference between high book-to-market ratio stocks and low book-to-market ratio stocks.
+- $\beta_i$, $s_i$, $h_i$: Sensitivities of asset $i$ to the three factors, respectively.
+- $\alpha_i$: Intercept term, representing the unexplained excess return.
+- $\epsilon_i$: Residual term.
+
+### SMB Factor Construction Method
+
+SMB (Small Minus Big) is the factor measuring the size effect, representing the excess return of small-cap stocks relative to large-cap stocks.
+
+-   **Grouping Steps**:
+    1.  **Size Division**: All stocks are divided into two groups based on market capitalization:
+        -   Small-cap group (S): Stocks with market capitalization below the median.
+        -   Large-cap group (B): Stocks with market capitalization above the median.
+
+    2.  **Book-to-Market Ratio Division**: Stocks are divided into three groups based on their book-to-market ratio (B/M):
+        -   Low B/M group (L): Stocks in the lowest 30% of B/M ratios.
+        -   Medium B/M group (M): Stocks in the middle 40% of B/M ratios.
+        -   High B/M group (H): Stocks in the highest 30% of B/M ratios.
+
+    3.  **Formation of Six Portfolios**: The two classifications above are intersected to form six portfolios:
+        -   Small-cap/Low B/M (S/L)
+        -   Small-cap/Medium B/M (S/M)
+        -   Small-cap/High B/M (S/H)
+        -   Large-cap/Low B/M (B/L)
+        -   Large-cap/Medium B/M (B/M)
+        -   Large-cap/High B/M (B/H)
+
+-   **SMB Calculation Formula**:
+    $$SMB = \frac{1}{3}[(S/L - B/L) + (S/M - B/M) + (S/H - B/H)]$$
+
+    This is the average return of the small-cap portfolios minus the average return of the large-cap portfolios.
+
+### HML Factor Construction Method
+
+HML (High Minus Low) is the factor measuring the value effect, representing the excess return of high book-to-market ratio stocks relative to low book-to-market ratio stocks.
+
+-   **Using the Same Six Portfolios**:
+
+-   **HML Calculation Formula**:
+    $$HML = \frac{1}{2}[(S/H - S/L) + (B/H - B/L)]$$
+
+    This is the average return of the high B/M portfolios minus the average return of the low B/M portfolios.
+
+### Practical Considerations for Factor Construction
+
+-   **Rebalancing Frequency**: Portfolios are typically rebalanced annually or semi-annually.
+-   **Financial Data Lag**: Use book value data from the end of the previous fiscal year to ensure data availability.
+-   **Outlier Treatment**: Exclude stocks with negative book values and handle extreme values.
+-   **Market Capitalization Calculation**: Typically use free-float market capitalization rather than total market capitalization to reflect the actually tradable portion.
+
+## Economic Interpretation of the Three-Factor Model
+
+### Economic Interpretation of the Market Factor ($R_m - R_f$)
+
+-   **Inherited from CAPM**: The market factor represents overall market risk, identical to the market risk in the CAPM.
+-   **Compensation for Systematic Risk**: Measures the risk premium investors demand for bearing overall market risk.
+-   **Non-Diversifiability**: Represents systematic risk that cannot be eliminated through diversification.
+
+### Economic Interpretation of the Size Factor (SMB)
+
+Fama and French argue that the SMB factor represents the additional systematic risk borne by small-cap companies:
+
+-   **Economic Fragility Hypothesis**: Small-cap companies are more vulnerable to economic recessions and perform worse during difficult economic times.
+-   **Information Asymmetry Hypothesis**: Small-cap companies have lower information transparency, and investors bear higher information risk.
+-   **Liquidity Risk Hypothesis**: Small-cap stocks have poorer liquidity, and investors demand an additional liquidity premium.
+-   **Financial Distress Hypothesis**: Small-cap companies are more prone to financial distress and bankruptcy risk.
+
+### Economic Interpretation of the Value Factor (HML)
+
+The HML factor represents the additional systematic risk borne by high B/M companies:
+
+-   **Financial Distress Risk Hypothesis**: High B/M companies often have poorer financial health and face higher default risk.
+-   **Growth Opportunities Hypothesis**: High B/M companies typically lack growth opportunities and are more vulnerable during economic downturns.
+-   **Earnings Persistence Hypothesis**: The profitability of high B/M companies is often weaker or more volatile, with poorer persistence.
+-   **Investor Sentiment Hypothesis**: Investors tend to be overly optimistic about growth companies, leading to undervaluation of value companies.
+
+### Interpretation from a Behavioral Finance Perspective
+
+Behavioral finance offers explanations different from rational risk pricing:
+
+-   **Overreaction Hypothesis**: Investors overreact to companies' short-term performance, leading to undervaluation of value stocks and overvaluation of growth stocks.
+-   **Investor Sentiment**: Investors prefer growth stocks and are willing to pay an extra premium for growth expectations.
+-   **Lottery Preference**: Investors prefer small-cap growth stocks with lottery-like characteristics.
+-   **Attention Effect**: Large-cap companies receive more attention, and their pricing may be more efficient.
+
+## Empirical Testing of the Three-Factor Model
+
+### Classic Test Results in the U.S. Market
+
+Key findings from Fama and French's original papers:
+
+-   **Significantly Improved Explanatory Power**: Compared to CAPM, the three-factor model explains more of the cross-sectional variation in stock returns.
+-   **Capture of the Size Effect**: The model successfully explains the excess returns of small-cap stocks.
+-   **Capture of the Value Effect**: The model successfully explains the excess returns of high B/M stocks.
+-   **Strong Statistical Significance**: The risk premiums for the three factors are statistically significantly different from zero.
+-   **Time Stability**: Factor risk premiums exhibit relative stability across different periods.
+
+### Main Empirical Methods
+
+-   **Time-Series Regression**:
+    -   Perform time-series regression for individual assets or portfolios.
+    -   Test whether factor sensitivities ($\beta$, $s$, $h$) are significant and whether the intercept $\alpha$ approaches zero.
+
+-   **Cross-Sectional Regression**:
+    -   Use Fama-MacBeth regression to test if factor risk premiums are significant.
+    -   Test whether the three-factor model can explain the cross-sectional differences in asset returns.
+
+-   **Portfolio Analysis**:
+    -   Construct portfolios with different characteristics to test the explanatory power of the three-factor model.
+    -   Often uses size-value sorted portfolios (e.g., 25 portfolios) formed by independent sorting.
+
+### Findings from Subsequent Research
+
+-   **Robustness**: The three-factor model has shown good robustness across different markets and periods.
+-   **Scope of Applicability**: The model is not only applicable to the stock market but can also be extended to bonds and other asset classes.
+-   **Further Market Anomalies**: Research has identified anomalies that the three-factor model still cannot explain, such as the momentum effect and profitability effect.
+-   **Model Extensions**: Spurred the development of more complex models like the four-factor and five-factor models.
+
+## Variations of the Three-Factor Model in the Chinese Market
+
+### Characteristics of the Chinese Market and Applicability of the Three-Factor Model
+
+The Chinese stock market has unique characteristics that affect the applicability of the three-factor model:
+
+-   **Emerging Market Characteristics**: As an emerging market, China has relatively lower market efficiency and stronger speculative behavior.
+-   **Government Intervention**: Government policies have a significant impact on the market, creating unique sources of risk.
+-   **Investor Structure**: An investor structure dominated by retail investors leads to more pronounced behavioral biases.
+-   **Special Institutional Arrangements**: Such as the split-share structure reform and price limit mechanisms.
+-   **Market Segmentation between A-shares and H-shares**: Significant pricing differences for the same company in A-share and H-share markets reflect market segmentation effects.
+-   **Trading Restriction Factors**: Including short-selling restrictions and daily price limit systems, which affect factor performance.
+
+### Empirical Research on Size and Value Factors in the Chinese Market
+
+According to the study "Size and Value in China" by Liu, Stambaugh, and Yuan (2019), size and value factors in the Chinese market exhibit some unique characteristics requiring special treatment:
+
+-   **Shell Value Distortion in Small-Cap Stocks**:
+    -   The smallest 30% of stocks in the Chinese market have a significant shell value problem, where prices reflect the potential value of being used as a shell company for reverse mergers.
+    -   Reverse mergers provide a backdoor listing route for private enterprises, bypassing cumbersome IPO approval processes.
+    -   The returns of small-cap stocks are significantly affected by changes in shell value rather than traditional risk factors.
+
+-   **China-Specific Three-Factor Model (CH-3)**:
+    -   To address the characteristics of the Chinese market, a size factor (SMC) was constructed excluding the smallest 30% of market-cap stocks.
+    -   An earnings-to-price ratio (E/P) was used instead of book-to-market ratio (B/M) to construct the value factor (VMG), as it performs better in the Chinese market.
+    -   The CH-3 model (composed of the market factor, SMC, and VMG) significantly outperforms the traditional FF-3 model.
+
+-   **Superior Explanatory Power**:
+    -   The CH-3 model can explain 8 out of 10 common anomalies in the Chinese market.
+    -   In contrast, the traditional FF-3 model can only explain 3 anomalies.
+    -   Bayesian tests show that the CH-3 model is significantly superior to the FF-3 model in explaining factor performance.
+
+### Latest Findings from Empirical Tests in the Chinese Market
+
+Based on the research by Liu, Stambaugh, and Yuan (2019) and other empirical results from Chinese scholars, the advantages of the CH-3 model over the traditional model are evident in:
+
+-   **Performance of the Adjusted Size Factor**:
+    -   After excluding the smallest 30% of market-cap stocks, the size effect becomes more robust and predictable.
+    -   The risk premium of the adjusted size factor (SMC) is significant and stable.
+    -   The smallest market-cap group of stocks exhibits return patterns significantly different from other size groups, consistent with the shell value hypothesis.
+    -   The size effect in large and mid-cap stocks more accurately reflects true risk premiums.
+
+-   **Optimization of Value Factor Selection**:
+    -   E/P (inverse of price-to-earnings ratio) as a value metric performs significantly better than B/M in the Chinese market.
+    -   The value factor (VMG) better captures information about profitability and growth opportunities.
+    -   The adjusted value factor has a closer connection to the macroeconomy.
+    -   The value factor performs more robustly in samples that exclude very small-cap stocks.
+
+-   **Interrelationships Between Factors**:
+    -   The correlation between the adjusted size factor and value factor is lower, providing better diversification benefits.
+    -   The factor portfolios corresponding to the three factors in the CH-3 model exhibit lower correlations.
+    -   Unlike the U.S. market, small market capitalization and high value are not always positively correlated in the Chinese market.
+    -   Economic cycles and policy environments significantly impact factor correlations.
+
+-   **Anomaly Explanation Capability**:
+    -   The CH-3 model can explain most market anomalies in China, including:
+        -   Profitability anomaly
+        -   Volatility anomaly
+        -   Reversal effect
+        -   ...
+    -   The model's explanatory power is further enhanced in samples excluding the smallest 30% of market-cap stocks.
+    -   Bayesian analysis shows CH-3 outperforms FF-3 in various scenarios.
+
+### Special Considerations for Practical Application of the Three-Factor Model in the Chinese Market
+
+Based on the findings of Liu et al. (2019) and domestic empirical research, the following special factors need to be considered when applying the three-factor model in the Chinese market:
+
+-   **Adjustment in Size Factor Construction**:
+    -   The smallest 30% of stocks by market capitalization should be excluded to avoid interference from the shell value effect.
+    -   Use SMC (Excluding Small) instead of the traditional SMB to improve the risk explanation power of the size factor.
+    -   Consider using asymmetric partitioning for size grouping (e.g., 30%-70%), which may better suit the size distribution characteristics of the Chinese market.
+
+-   **Choice of Value Factor Indicator**:
+    -   E/P (inverse of P/E ratio) performs better than the traditional B/M in the Chinese market.
+    -   Construct a VMG (Value Minus Growth) value factor to replace the traditional HML.
+    -   Exclude companies with negative earnings or use composite value indicators to improve stability.
+
+-   **Consideration of Reverse Mergers and Institutional Factors**:
+    -   Pay attention to the dynamic impact of changes in the value of shell resources due to policy shifts.
+    -   Monitor abnormal return fluctuations of small-cap stocks, especially during periods of regulatory policy adjustments.
+    -   Consider incorporating changes in shell value as an additional risk factor in the model.
+
+-   **Data Quality and Frequency Selection**:
+    -   Address data quality issues in the Chinese market, especially the reliability of early data and financial reports.
+    -   Consider using quarterly rather than monthly frequency to construct more robust factors.
+    -   Test across multiple sample periods, paying attention to model performance differences before and after market institutional reforms.
+
+## Summary
+
+- The Fama-French Three-Factor Model significantly improved the explanation of cross-sectional differences in stock returns by introducing the size factor (SMB) and the value factor (HML).
+- Each factor in the three-factor model has its economic interpretation and can be seen as compensation for specific systematic risks.
+- In the Chinese market, the traditional three-factor model needs adjustments according to China's market characteristics. The CH-3 model proposed by Liu et al. (2019) (using SMC, a size factor excluding the smallest stocks, and VMG, a value factor based on E/P) significantly outperforms the traditional FF-3 model.
+- The shell value effect in the Chinese market is a key factor in the pricing of small-cap stocks and should be given special consideration when constructing factors and applying models.
+- The framework of multi-factor models has laid the foundation for the development of subsequent asset pricing models, and each market may require model adjustments based on its unique institutional environment and market characteristics.

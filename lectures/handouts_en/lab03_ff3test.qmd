@@ -1,0 +1,601 @@
+---
+title: "Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)"
+---
+
+## Data Description
+
+### Data Source
+
+The data used in this experiment is from CSMAR (GuoTaiAn) http://data.csmar.com/, primarily including:
+
+-   **Basic Information**: Company Research Series -> Listed Companies Basic Information -> Listed Companies Basic Information Annual Table
+-   **Stock Market Information**: Stock Market Series -> Stock Market Trading -> Individual Stock Trading Data -> Monthly Individual Stock Return File
+-   **Risk-Free Rate**: Stock Market Series -> Stock Market Trading -> Exchange Rates and Interest Rates -> Risk-Free Rate File
+-   **Multi-Factors**: Factor Research Series -> Fama-French Factors -> Five-Factor Model Indicators (Monthly)
+-   **Financial Data**: Company Research Series -> Financial Indicator Analysis -> Disclosed Financial Indicators
+
+### Sample and Variable Selection
+
+-   **Time Period**: May 2007 to February 2019
+-   **Sample Selection**: Shanghai and Shenzhen A-share listed non-financial, non-utility companies
+-   **Main Variables**:
+    -   **Basic Information**: Stock Code, Industry Code, Listing Date
+    -   **Stock Market Information**: Monthly individual stock return considering cash dividend reinvestment, Monthly individual stock total market capitalization
+    -   **Risk-Free Rate**: Monthly risk-free rate
+    -   **Five Factors**: Market risk premium factor, size factor, book-to-market ratio factor (all total market cap weighted)
+    -   **Financial Information**: Net profit attributable to shareholders of listed companies after deducting non-recurring gains and losses, Weighted average return on equity (ROE)
+
+### Lab Steps Overview
+
+1.  Import and organize data, ensuring consistency of variables, units, etc., across databases.
+2.  Select A-share non-financial, non-utility listed companies.
+3.  Merge listed company stock information and financial information, and retain listed companies in the largest 70% of market capitalization.
+4.  Sort and group companies monthly based on market capitalization and value, calculate the market-cap weighted average return for each portfolio.
+5.  Construct the China three factors and calculate their explanatory power in the Chinese market.
+6.  Construct ROE anomaly, compare the explanatory power of CAPM, China three-factor model, and Fama-French three-factor model.
+7.  Analyze results and draw conclusions.
+
+## Content of This Experiment
+
+1.  **Data Preparation and Preprocessing**: Learn how to acquire and process Chinese stock data.
+2.  **Constructing the China-Specific Size Factor**: Master the construction method for the China-specific size factor (SMB).
+3.  **Constructing the China-Specific Value Factor**: Master the construction method for the value factor based on earnings-to-price ratio (VMG).
+4.  **Backtesting Factor Returns**: Learn how to backtest factors and evaluate their performance.
+5.  **Factor Effectiveness Analysis**: Understand how to assess the effectiveness and statistical significance of factors.
+
+## Background: China-Specific Three-Factor Model (CH-3)
+
+According to the study "Size and Value in China" by Liu, Stambaugh, and Yuan (2019), the Chinese market has unique characteristics, and the traditional Fama-French three-factor model needs adjustment:
+
+1.  **Shell Value Effect**: The smallest 30% of stocks in the Chinese market exhibit a significant shell value phenomenon, where their prices are influenced by the potential value of being used as shell companies for reverse mergers, rather than traditional risk factors.
+
+2.  **Size Factor Adjustment**: It is necessary to exclude the smallest 30% of market-cap stocks when constructing the SMB (Small Minus Big) factor to avoid the interference of shell value.
+
+3.  **Value Factor Adjustment**: The earnings-to-price ratio (E/P) performs better than the book-to-market ratio (B/M) in the Chinese market. Therefore, E/P is used to construct the VMG (Value Minus Growth) value factor.
+
+4.  **Superior Explanatory Power**: The adjusted CH-3 model significantly outperforms the traditional FF-3 model in explaining market anomalies in China.
+
+This lab will guide you step-by-step in constructing the China-specific three-factor model and verify its effectiveness by analyzing its explanatory power for the ROE anomaly. We will use real Chinese stock market data, starting from data preprocessing, through factor construction and backtesting, to final statistical analysis.
+
+## Practice: Building and Backtesting the China-Specific Three-Factor Model
+
+### Step 1: Import Necessary Libraries
+
+First, we need to import the Python libraries required for this experiment. These libraries include pandas and numpy for data processing, matplotlib and seaborn for visualization, and statsmodels and scipy for statistical analysis.
+
+```python
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+from scipy import stats
+from pandas.tseries.offsets import MonthEnd
+import seaborn as sns
+from statsmodels.regression.rolling import RollingOLS
+from statsmodels.stats.sandwich_covariance import cov_hac
+
+# Set plotting style
+plt.style.use('ggplot')
+# Set different fonts based on the operating system
+import platform
+# Get operating system type
+system = platform.system()
+# Set matplotlib font
+if system == 'Windows':
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # Windows uses SimHei
+elif system == 'Darwin':
+    plt.rcParams['font.sans-serif'] = ['Songti SC']  # Mac uses Songti SC
+else:
+    plt.rcParams['font.sans-serif'] = ['WenQuanYi Zen Hei']  # Linux uses WenQuanYi Zen Hei
+# Resolve the issue of negative signs not displaying correctly
+plt.rcParams['axes.unicode_minus'] = False
+```
+
+### Step 2: Read Data
+
+Next, we need to read the relevant data for the Chinese stock market. This data includes company basic information, financial indicators, trading data, risk-free rates, and market factor data. In practical applications, this data usually comes from professional financial databases like CSMAR or Wind.
+
+```python
+# Basic Information
+cominfo = pd.read_excel("data/basic_info/STK_LISTEDCOINFOANL.xlsx", skiprows=3,
+                       names=["Symbol", "ShortName", "EndDate", "ListedCoID", "SecurityID", 
+                              "IndustryName", "IndustryCode", "IndustryNameC", "IndustryCodeC",
+                              "IndustryNameD", "IndustryCodeD", "RegisterAddress", "OfficeAddress",
+                              "Zipcode", "Secretary", "SecretaryTel", "SecretaryFax", "SecretaryEmail",
+                              "SecurityConsultant", "SocialCreditCode", "Sigchange", "Lng", "Lat",
+                              "ISIN", "FullName", "LegalRepresentative", "EstablishDate", "Crcd",
+                              "RegisterCapital", "Website", "BusinessScope", "RegisterLongitude",
+                              "RegisterLatitude", "EMAIL", "LISTINGDATE", "PROVINCECODE", "PROVINCE",
+                              "CITYCODE", "CITY", "MAINBUSSINESS", "LISTINGSTATE"])
+
+# Financial Indicators (ROE)
+comfin = pd.read_excel("data/ROE/FI_T2.xlsx", skiprows=3,
+                      names=["Stkcd", "ShortName", "Accper", "nr", "npexnr", "ROE", "ROE_exnr"],
+                      dtype={'Stkcd': str, 'nr': float, 'npexnr': float, 'ROE': float, 'ROE_exnr': float})
+
+# Individual Stock Trading Data
+trdmnth = pd.read_excel("data/stk_monthly/TRD_Mnth.xlsx", skiprows=3,
+                       names=["Stkcd", "Trdmnt", "Opndt", "Mopnprc", "Clsdt", 
+                              "Mclsprc", "Mnshrtrd", "Mnvaltrd", "Msmvosd", 
+                              "Msmvttl", "Ndaytrd", "Mretwd", "Mretnd", 
+                              "Markettype", "Capchgdt", "Ahshrtrd_M", "Ahvaltrd_M"])
+
+# Risk-Free Rate
+nrrate = pd.read_excel("data/rf_monthly/TRD_Nrrate.xlsx", skiprows=3,
+                      names=["Nrr1", "Clsdt", "Nrrmtdt"])
+
+# Five Factors
+facmnth = pd.read_excel("data/five_factors/STK_MKT_FIVEFACMONTH.xlsx", skiprows=3,
+                       names=["MarkettypeID", "TradingMonth", "Portfolios", 
+                              "RiskPremium1", "RiskPremium2", "SMB1", "SMB2",
+                              "HML1", "HML2", "RMW1", "RMW2", "CMA1", "CMA2"])
+
+```
+
+### Step 3: Organize Data
+
+After reading the data, we need to organize and conduct a preliminary analysis of it. This includes industry classification, filtering out non-A-share and financial/utility companies, etc.
+
+```python
+# Industry Information
+indinfo = (cominfo.groupby(['IndustryName', 'IndustryCode'])
+           .size()
+           .reset_index()
+           .rename(columns={0: 'count'})
+           .sort_values('IndustryCode'))
+
+# A-shares, non-financial, non-utility industries
+comA = cominfo.copy()
+comA['EndDate'] = pd.to_datetime(comA['EndDate'])
+comA['year'] = comA['EndDate'].dt.year
+comA['LISTINGDATE'] = pd.to_datetime(comA['LISTINGDATE'])
+
+# Filter criteria: post-listing data + non-financial non-utility + A-shares
+comA = comA[
+    (comA['EndDate'] >= comA['LISTINGDATE']) & 
+    (~comA['IndustryCode'].str.startswith('J')) & 
+    (~comA['IndustryCode'].str.startswith('D')) &
+    (~comA['Symbol'].astype(str).str[:3].isin(['900', '200']))
+]
+
+```
+
+### Step 4: Financial Data Processing
+
+In this step, we process the financial data, including merging it with company information and filling missing values. Since financial data disclosure often has a lag, we need to ensure we use the latest available financial data. We also need to handle some special cases, such as:
+
+- Forward-filling financial data to ensure the most recent valid data is used before new data is published.
+- Converting trading data to the appropriate format and adjusting the return calculation method.
+
+```python
+# Financial Data Processing
+comfin['Accper'] = pd.to_datetime(comfin['Accper'])
+comfin['year'] = comfin['Accper'].dt.year
+comfin['month'] = comfin['Accper'].dt.month
+
+# Merge financial data with company basic information
+comfin = pd.merge(comfin, comA, left_on=['Stkcd', 'year'], 
+                   right_on=['Symbol', 'year'], how='inner')
+
+# Forward fill financial data (simulating R's fill function)
+comfin = comfin.sort_values(['Stkcd', 'year', 'month'])
+comfin['npexnr'] = comfin.groupby('Stkcd')['npexnr'].fillna(method='ffill')
+comfin['ROE'] = comfin.groupby('Stkcd')['ROE'].fillna(method='ffill')
+comfin['Stkcd'] = pd.to_numeric(comfin['Stkcd'])
+
+# Trading Data Processing
+trdmnth['Trdmnt'] = pd.to_datetime(trdmnth['Trdmnt'])
+trdmnth['ym'] = pd.to_datetime(trdmnth['Trdmnt']).dt.to_period('M')
+trdmnth['year'] = trdmnth['Trdmnt'].dt.year
+trdmnth['month'] = trdmnth['Trdmnt'].dt.month
+trdmnth['Mretwd'] = trdmnth['Mretwd'] * 100  # Convert to percentage
+
+# Risk-Free Rate Processing
+nrrate['Clsdt'] = pd.to_datetime(nrrate['Clsdt'])
+nrrate['year'] = nrrate['Clsdt'].dt.year
+nrrate['month'] = nrrate['Clsdt'].dt.month
+rf = nrrate.groupby(['year', 'month'])['Nrrmtdt'].mean().reset_index()
+rf = rf.rename(columns={'Nrrmtdt': 'rf'})
+
+# Factor Data Processing
+facmnth = facmnth[(facmnth['MarkettypeID'] == 'P9714') & (facmnth['Portfolios'] == 1)]
+facmnth['TradingMonth'] = pd.to_datetime(facmnth['TradingMonth'])
+facmnth['ym'] = facmnth['TradingMonth'].dt.to_period('M')
+# Convert to percentage
+factor_cols = ['RiskPremium1', 'SMB2', 'HML2', 'RMW2', 'CMA2']
+facmnth[factor_cols] = facmnth[factor_cols] * 100
+
+```
+
+### Step 5: Merge Datasets and Construct Variables
+
+In this step, we will merge the processed datasets and calculate key variables, such as market capitalization and earnings-to-price ratio (E/P). Specifically, to implement the core idea of the China-specific three-factor model, we filter for companies in the largest 70% of market capitalization to exclude small-cap stocks potentially affected by shell value.
+
+```python
+# Apply rules to trading data
+trddata = trdmnth.copy()
+# Adjust year based on month: use previous year for Jan-Apr, current year for other months
+trddata['year1'] = np.where((trddata['month'] >= 1) & (trddata['month'] <= 4), 
+                           trddata['year'] - 1, 
+                           trddata['year'])
+# Adjust financial month based on trading month:
+# May-Aug correspond to March (Q1 report), Sep-Oct correspond to June (Q2 report), other months correspond to September (Q3 report)
+trddata['month1'] = np.select(
+    [(trddata['month'] >= 5) & (trddata['month'] <= 8),
+     (trddata['month'] == 9) | (trddata['month'] == 10)],
+    [3, 6],
+    default=9
+)
+
+# a. Merge financial data
+trddata = pd.merge(trddata, comfin, 
+                  left_on=['Stkcd', 'year1', 'month1'], 
+                  right_on=['Stkcd', 'year', 'month'], 
+                  how='inner')
+trddata = trddata.drop(columns=['year_y', 'month_y'])
+trddata = trddata.rename(columns={'year_x': 'year', 'month_x': 'month'})
+
+# b. Calculate total market cap and E/P ratio
+trddata = trddata.sort_values(['Stkcd', 'ym'])
+trddata['size'] = trddata.groupby('Stkcd')['Mclsprc'].shift(1) * (trddata['Msmvttl'] / trddata['Mclsprc'])
+trddata['EP'] = trddata['npexnr'] / trddata['size']
+
+# c. Filter companies in the largest 70% of market capitalization
+def filter_by_size(group):
+    size_threshold = group['size'].quantile(0.3)
+    return group[group['size'] >= size_threshold]
+
+trddata = trddata.groupby('ym').apply(filter_by_size).reset_index(drop=True)
+
+# d. Merge risk-free rate and calculate excess returns
+trddata = pd.merge(trddata, rf, on=['year', 'month'], how='left')
+trddata['exret'] = trddata['Mretwd'] - trddata['rf']
+
+# e. Filter time period
+trddata['ym_dt'] = trddata['ym'].dt.to_timestamp()
+trddata = trddata[(trddata['ym_dt'] >= pd.Timestamp('2007-05-01')) & 
+                  (trddata['ym_dt'] <= pd.Timestamp('2019-02-28'))]
+
+```
+
+### Sort and Group by Size, Value, and ROE
+
+Following the classic Fama-French methodology, we need to group stocks to construct factors. In this step, we will divide stocks into 2 groups based on market capitalization, 3 groups based on E/P, and additionally 10 groups based on ROE for subsequent anomaly analysis.
+
+```python
+
+# Group by market cap, E/P, ROE
+trddata_grp = trddata.copy()
+
+# Market cap grouping (2 groups)
+trddata_grp['grp_size'] = trddata_grp.groupby('ym')['size'].transform(
+    lambda x: pd.qcut(x, 2, labels=[1, 2]).astype(int)
+)
+
+# E/P value grouping (3 groups)
+def get_value_group(x):
+    if x.notna().any():
+        low_val = x.quantile(0.3)
+        high_val = x.quantile(0.7)
+        return np.select(
+            [x <= low_val, x <= high_val],
+            [1, 2],
+            default=3
+        )
+    return np.nan
+
+trddata_grp['grp_value'] = trddata_grp.groupby('ym')['EP'].transform(get_value_group)
+
+# ROE grouping (10 groups), handling NaN values
+def roe_group(x):
+    if x.notna().any():
+        # First handle NaN values by replacing them with -1
+        x_filled = x.fillna(-1)
+        # Use qcut for grouping, treating -1 as a separate group
+        groups = pd.qcut(x_filled, 10, labels=range(1, 11), duplicates='drop')
+        # Set the group for -1 (original NaNs) to NaN
+        groups = groups.where(x_filled != -1, np.nan)
+        return groups.astype('Int64')  # Use nullable integer type
+    return np.nan
+
+trddata_grp['grp_ROE'] = trddata_grp.groupby('ym')['ROE'].transform(roe_group)
+
+# Market cap grouping (10 groups, for conditional sort)
+trddata_grp['grp_size1'] = trddata_grp.groupby('ym')['size'].transform(
+    lambda x: pd.qcut(x, 10, labels=range(1, 11)).astype(int)
+)
+
+# Conditional ROE grouping within each market cap group, handling NaN values
+def roe_con_group(x):
+    if x.notna().any():
+        # First handle NaN values by replacing them with -1
+        x_filled = x.fillna(-1)
+        # Use qcut for grouping, treating -1 as a separate group
+        groups = pd.qcut(x_filled, 10, labels=range(1, 11), duplicates='drop')
+        # Set the group for -1 (original NaNs) to NaN
+        groups = groups.where(x_filled != -1, np.nan)
+        return groups.astype('Int64')  # Use nullable integer type
+    return np.nan
+
+trddata_grp['grp_ROE_con'] = trddata_grp.groupby(['ym', 'grp_size1'])['ROE'].transform(roe_con_group)
+
+```
+
+### Step 7: Calculate Weighted Average Stock Returns and Pricing Factors
+
+This step is crucial for constructing the factors. We first calculate the market excess return (MKT), then construct 2x3 sorted portfolios to calculate the size-based SMB factor and the value-based VMG factor.
+
+The CH-3 model uses a grouping method similar to the classic Fama-French model, but with some key adjustments:
+1.  We use the sample that has already excluded the smallest 30% of market-cap stocks for grouping.
+2.  Stocks are divided into two groups by market capitalization (Small and Big).
+3.  Stocks are divided into three groups by E/P ratio (30%-40%-30%).
+4.  This forms 6 portfolios: Small-cap/Low E/P (11), Small-cap/Medium E/P (12), Small-cap/High E/P (13), Big-cap/Low E/P (21), Big-cap/Medium E/P (22), Big-cap/High E/P (23).
+
+```python
+# Calculate market excess return
+factor1 = trddata_grp.groupby('ym').agg(
+    MKT=('exret', lambda x: np.average(x, weights=trddata_grp.loc[x.index, 'size']))
+).reset_index()
+
+# Calculate portfolio returns based on size and value sorts
+def calc_portfolio_return(group):
+    return np.average(group['Mretwd'], weights=group['size'])
+
+factor2 = trddata_grp.groupby(['ym', 'grp_size', 'grp_value']).apply(
+    calc_portfolio_return
+).reset_index()
+factor2.columns = ['ym', 'grp_size', 'grp_value', 'vwret']
+
+# Keep only portfolios without NaN
+factor2 = factor2[factor2['grp_size'].notna() & factor2['grp_value'].notna()]
+
+# Create portfolio identifier and pivot table
+factor2['grp'] = factor2['grp_size'] * 10 + factor2['grp_value']
+factor2_pivot = factor2.pivot(index='ym', columns='grp', values='vwret').reset_index()
+
+# Calculate SMB and VMG factors
+factor2_pivot['SMB'] = (factor2_pivot[11] + factor2_pivot[12] + factor2_pivot[13]) / 3 - \
+                      (factor2_pivot[21] + factor2_pivot[22] + factor2_pivot[23]) / 3
+factor2_pivot['VMG'] = (factor2_pivot[13] + factor2_pivot[23]) / 2 - \
+                      (factor2_pivot[11] + factor2_pivot[21]) / 2
+
+# Merge all factors
+factor = factor2_pivot.merge(factor1, on='ym')
+factor = factor.merge(facmnth[['ym', 'RiskPremium1', 'SMB2', 'HML2']], on='ym', how='left')
+
+```
+
+### Step 8: Descriptive Statistics and Factor Correlation Analysis
+After constructing the three factors, we need to perform statistical analysis on them to understand their basic characteristics and interrelationships. These analyses can help us understand:
+
+- The average return and volatility of each factor.
+- The distribution characteristics of the factors (minimum, maximum, median, etc.).
+- The correlation between factors, which is important for understanding factor independence in a multi-factor model.
+
+Typically, we hope to see that the correlations between factors are not too high, so that each factor captures different sources of risk in stock returns.
+
+```python
+
+# Descriptive statistics
+factor_stats = factor[['MKT', 'SMB', 'VMG']].describe().T
+factor_stats['P0'] = factor_stats['min']
+factor_stats['P25'] = factor[['MKT', 'SMB', 'VMG']].quantile(0.25)
+factor_stats['Median'] = factor[['MKT', 'SMB', 'VMG']].median()
+factor_stats['P75'] = factor[['MKT', 'SMB', 'VMG']].quantile(0.75)
+factor_stats['P100'] = factor_stats['max']
+print("Factor Descriptive Statistics:")
+print(factor_stats[['count', 'mean', 'std', 'P0', 'P25', 'Median', 'P75', 'P100']])
+
+# Correlation coefficients
+factor_corr = factor[['MKT', 'SMB', 'VMG']].corr()
+print("\nFactor Correlation Coefficients:")
+print(factor_corr)
+
+```
+
+### Step 9: ROE Anomaly Analysis
+
+To verify the effectiveness of the CH-3 model, we analyze its ability to explain the ROE anomaly. ROE (Return on Equity) is an important indicator of a company's profitability, and stocks with high ROE often exhibit excess returns.
+
+We use two methods to construct ROE anomaly portfolios:
+1.  **Unconditional Sort**: Directly sort all stocks into deciles based on ROE and calculate the return difference between high ROE and low ROE portfolios.
+2.  **Market-Cap Neutral Sort**: Sort stocks into deciles based on ROE within each market capitalization decile to control for the size effect.
+
+Comparing these two methods can help us understand whether the ROE anomaly is influenced by the size effect.
+
+```python
+# ROE-based portfolio formation (unconditional sort)
+def calc_roe_portfolio(trddata_grp):
+    # Unconditional sort
+    roe_port = trddata_grp.groupby(['ym', 'grp_ROE']).apply(
+        lambda x: pd.Series({
+            'vwret': np.average(x['Mretwd'], weights=x['size'])
+        })
+    ).reset_index()
+    
+    # Keep only portfolios without NaN
+    roe_port = roe_port[roe_port['grp_ROE'].notna()]
+    
+    # Pivot to wide format
+    roe_port_wide = roe_port.pivot(index='ym', columns='grp_ROE', values='vwret').reset_index()
+    
+    # Calculate high-minus-low ROE portfolio return
+    roe_port_wide['rmw'] = roe_port_wide[10] - roe_port_wide[1]
+    
+    return roe_port_wide[['ym', 'rmw']]
+
+# Market-cap neutral ROE portfolio formation (conditional sort)
+def calc_size_neutral_roe(trddata_grp):
+    # Conditional sort (market-cap neutral)
+    sn_port = trddata_grp.groupby(['ym', 'grp_ROE_con']).apply(
+        lambda x: pd.Series({
+            'vwret': np.average(x['Mretwd'], weights=x['size'])
+        })
+    ).reset_index()
+    
+    # Keep only portfolios without NaN
+    sn_port = sn_port[sn_port['grp_ROE_con'].notna()]
+    
+    # Pivot to wide format
+    sn_port_wide = sn_port.pivot(index='ym', columns='grp_ROE_con', values='vwret').reset_index()
+    
+    # Calculate high-minus-low ROE portfolio return
+    sn_port_wide['rmw_sn'] = sn_port_wide[10] - sn_port_wide[1]
+    
+    return sn_port_wide[['ym', 'rmw_sn']]
+
+# Calculate ROE portfolios
+factor3 = calc_roe_portfolio(trddata_grp)
+factor4 = calc_size_neutral_roe(trddata_grp)
+
+# Merge all factor data
+factor_all = factor.merge(factor3, on='ym').merge(factor4, on='ym')
+
+```
+
+### Step 10: Estimate Factor Models using Newey-West Adjusted Standard Errors
+
+Next, we use Newey-West adjusted standard errors for regression analysis to compare the ability of the CH-3 model, traditional CAPM, and FF-3 model in explaining the ROE anomaly.
+
+```python
+
+# Estimate factor models using Newey-West adjusted standard errors
+def nw_regression(y, X, lags=4):
+    """Perform regression with Newey-West adjusted standard errors"""
+    # Prepare data
+    X = sm.add_constant(X)
+    
+    # Fit model
+    model = sm.OLS(y, X).fit()
+    
+    # Use Newey-West adjusted standard errors
+    cov = cov_hac(model, nlags=lags)
+    model_nw = model.get_robustcov_results(cov_type='HAC', maxlags=lags)
+    
+    return model_nw
+
+# Perform factor model regressions
+print("\nFactor Model Analysis of ROE Anomaly:")
+
+# Unconditional sort - CAPM
+model1 = nw_regression(factor_all['rmw'], factor_all[['MKT']])
+print("\nUnconditional Sort - CAPM Model:")
+print(model1.summary().tables[1])
+
+# Unconditional sort - Three-Factor Model (CH-3)
+model2 = nw_regression(factor_all['rmw'], factor_all[['MKT', 'SMB', 'VMG']])
+print("\nUnconditional Sort - CH-3 Model:")
+print(model2.summary().tables[1])
+
+# Unconditional sort - Fama-French Three-Factor Model
+model3 = nw_regression(factor_all['rmw'], factor_all[['MKT', 'SMB2', 'HML2']])
+print("\nUnconditional Sort - Fama-French Three-Factor Model:")
+print(model3.summary().tables[1])
+
+# Conditional sort - CAPM
+model4 = nw_regression(factor_all['rmw_sn'], factor_all[['MKT']])
+print("\nConditional Sort - CAPM Model:")
+print(model4.summary().tables[1])
+
+# Conditional sort - Three-Factor Model (CH-3)
+model5 = nw_regression(factor_all['rmw_sn'], factor_all[['MKT', 'SMB', 'VMG']])
+print("\nConditional Sort - CH-3 Model:")
+print(model5.summary().tables[1])
+
+# Conditional sort - Fama-French Three-Factor Model
+model6 = nw_regression(factor_all['rmw_sn'], factor_all[['MKT', 'SMB2', 'HML2']])
+print("\nConditional Sort - Fama-French Three-Factor Model:")
+print(model6.summary().tables[1])
+
+```
+
+### ### Step 11: Plotting Analysis
+
+To visually demonstrate factor performance, we plot the time series of the three factors and the ROE anomaly returns.
+
+```python
+# Plot factor return time series
+plt.figure(figsize=(12, 8))
+
+plt.subplot(3, 1, 1)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['MKT'], 'b-')
+plt.title('Market Risk Premium (MKT)')
+plt.grid(True)
+
+plt.subplot(3, 1, 2)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['SMB'], 'g-')
+plt.title('Size Factor (SMB)')
+plt.grid(True)
+
+plt.subplot(3, 1, 3)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['VMG'], 'r-')
+plt.title('Value Factor (VMG)')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('three_factor_returns.png') # English filename
+plt.close()
+
+# Plot ROE anomaly returns
+plt.figure(figsize=(12, 6))
+
+plt.subplot(2, 1, 1)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['rmw'], 'b-')
+plt.title('Unconditional Sort ROE Anomaly (High-Low)')
+plt.grid(True)
+
+plt.subplot(2, 1, 2)
+plt.plot(factor_all['ym'].dt.to_timestamp(), factor_all['rmw_sn'], 'g-')
+plt.title('Market-Cap Neutral ROE Anomaly (High-Low)')
+plt.grid(True)
+
+plt.tight_layout()
+plt.savefig('ROE_anomaly_returns.png') # English filename
+plt.close()
+
+# Save three-factor data
+factor_all.to_csv('China_three_factors_ROE_anomaly.csv', index=False) # English filename
+print("\nFactor data saved to 'China_three_factors_ROE_anomaly.csv'")
+
+```
+
+### Step 12: Summary and Conclusion
+
+In this lab, we have constructed the China-specific three-factor model and verified its effectiveness by analyzing its explanatory power for the ROE anomaly. We have also compared the performance of the CH-3 model with traditional CAPM and FF-3 model.
+
+## Results Analysis and Discussion
+
+Through the above analysis, we can evaluate the effectiveness of the China-Specific Three-Factor Model (CH-3). From theoretical and empirical results, the CH-3 model has the following advantages over the traditional FF-3 model in the Chinese market:
+
+1.  **Size Factor Improvement**: By excluding the smallest 30% of market-cap stocks, the impact of the shell value effect on the size factor is avoided, allowing the size factor to better reflect true risk premiums.
+
+2.  **Value Factor Improvement**: Using the earnings-to-price ratio (E/P) instead of the book-to-market ratio (B/M) to construct the value factor is more suitable for the characteristics of the Chinese market and improves the model's explanatory power.
+
+3.  **Explanatory Power for Anomalies**: The regression results for the ROE anomaly show that the CH-3 model has strong explanatory power for the profitability anomaly in the Chinese market, especially after controlling for the size effect.
+
+4.  **Robustness**: The time series analysis of factor returns shows that the factors of the CH-3 model perform relatively stably in different market environments.
+
+These results corroborate the findings of Liu, Stambaugh, and Yuan (2019), namely that the Chinese stock market exhibits a unique shell value phenomenon, requiring adjustments to factor models to account for this characteristic. Additionally, selecting value indicators more suited to the Chinese market is key to improving model performance.
+
+## Lab Discussion Questions
+
+1.  Why is it necessary to exclude the smallest 30% of market-cap stocks in the Chinese market? What impact does this exclusion have on the performance of the size factor?
+
+2.  Why is E/P more effective than B/M in the Chinese market? What characteristics of the Chinese stock market are related to this?
+
+3.  When constructing the CH-3 model, how do you think the reverse merger mechanism in the Chinese market affects the pricing of small-cap stocks?
+
+4.  Compare the differences between the CH-3 model and the traditional FF-3 model in explaining market anomalies in China. Which anomalies can be better explained by the CH-3 model?
+
+5.  If changes in the policy environment lead to changes in the shell value of listed companies, what impact do you expect this to have on the effectiveness of the CH-3 model?
+
+## References
+
+1.  Liu, J., Stambaugh, R. F., & Yuan, Y. (2019). Size and Value in China. *Journal of Financial Economics*, 134(1), 48-69.
+
+2.  Fama, E. F., & French, K. R. (1993). Common risk factors in the returns on stocks and bonds. *Journal of Financial Economics*, 33(1), 3-56.
+
+3.  Hu, G. X., Chen, C., Shao, Y., & Wang, J. (2019). Fama–French in China: size and value factors in Chinese stock returns. *International Review of Finance*, 19(1), 3-44.
+
+

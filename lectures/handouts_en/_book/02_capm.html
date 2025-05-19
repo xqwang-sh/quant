@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Capital Asset Pricing Model (CAPM) – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./lab02_capmtest.html" rel="next">
+<link href="./01_emh.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_capm.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Efficient Market Hypothesis (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project 1: Factor Investing Strategy Construction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project 2: Optimization and Enhancement of Factor Investing Strategies</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#key-topics-in-this-section" id="toc-key-topics-in-this-section" class="nav-link active" data-scroll-target="#key-topics-in-this-section"><span class="header-section-number">3.1</span> Key Topics in This Section</a></li>
+  <li><a href="#theoretical-foundations-of-the-capm-model" id="toc-theoretical-foundations-of-the-capm-model" class="nav-link" data-scroll-target="#theoretical-foundations-of-the-capm-model"><span class="header-section-number">3.2</span> Theoretical Foundations of the CAPM Model</a>
+  <ul class="collapse">
+  <li><a href="#why-study-the-capm-model" id="toc-why-study-the-capm-model" class="nav-link" data-scroll-target="#why-study-the-capm-model"><span class="header-section-number">3.2.1</span> Why Study the CAPM Model?</a></li>
+  <li><a href="#core-assumptions-of-the-capm-model" id="toc-core-assumptions-of-the-capm-model" class="nav-link" data-scroll-target="#core-assumptions-of-the-capm-model"><span class="header-section-number">3.2.2</span> Core Assumptions of the CAPM Model</a></li>
+  <li><a href="#interpretation-of-core-assumptions" id="toc-interpretation-of-core-assumptions" class="nav-link" data-scroll-target="#interpretation-of-core-assumptions"><span class="header-section-number">3.2.3</span> Interpretation of Core Assumptions</a></li>
+  </ul></li>
+  <li><a href="#derivation-of-the-capm-model" id="toc-derivation-of-the-capm-model" class="nav-link" data-scroll-target="#derivation-of-the-capm-model"><span class="header-section-number">3.3</span> Derivation of the CAPM Model</a>
+  <ul class="collapse">
+  <li><a href="#review-of-portfolio-theory-mean-variance-analysis-framework" id="toc-review-of-portfolio-theory-mean-variance-analysis-framework" class="nav-link" data-scroll-target="#review-of-portfolio-theory-mean-variance-analysis-framework"><span class="header-section-number">3.3.1</span> Review of Portfolio Theory: Mean-Variance Analysis Framework</a></li>
+  <li><a href="#introducing-the-risk-free-asset-capital-market-line-cml" id="toc-introducing-the-risk-free-asset-capital-market-line-cml" class="nav-link" data-scroll-target="#introducing-the-risk-free-asset-capital-market-line-cml"><span class="header-section-number">3.3.2</span> Introducing the Risk-Free Asset: Capital Market Line (CML)</a></li>
+  <li><a href="#derivation-of-the-security-market-line-sml-the-core-of-the-capm-model" id="toc-derivation-of-the-security-market-line-sml-the-core-of-the-capm-model" class="nav-link" data-scroll-target="#derivation-of-the-security-market-line-sml-the-core-of-the-capm-model"><span class="header-section-number">3.3.3</span> Derivation of the Security Market Line (SML): The Core of the CAPM Model</a></li>
+  </ul></li>
+  <li><a href="#calculation-and-economic-interpretation-of-the-beta-coefficient" id="toc-calculation-and-economic-interpretation-of-the-beta-coefficient" class="nav-link" data-scroll-target="#calculation-and-economic-interpretation-of-the-beta-coefficient"><span class="header-section-number">3.4</span> Calculation and Economic Interpretation of the Beta Coefficient</a>
+  <ul class="collapse">
+  <li><a href="#methods-for-calculating-beta-coefficient" id="toc-methods-for-calculating-beta-coefficient" class="nav-link" data-scroll-target="#methods-for-calculating-beta-coefficient"><span class="header-section-number">3.4.1</span> Methods for Calculating Beta Coefficient</a></li>
+  <li><a href="#economic-interpretation-of-the-beta-coefficient" id="toc-economic-interpretation-of-the-beta-coefficient" class="nav-link" data-scroll-target="#economic-interpretation-of-the-beta-coefficient"><span class="header-section-number">3.4.2</span> Economic Interpretation of the Beta Coefficient</a></li>
+  </ul></li>
+  <li><a href="#empirical-testing-of-the-capm-model" id="toc-empirical-testing-of-the-capm-model" class="nav-link" data-scroll-target="#empirical-testing-of-the-capm-model"><span class="header-section-number">3.5</span> Empirical Testing of the CAPM Model</a>
+  <ul class="collapse">
+  <li><a href="#review-of-empirical-testing-methods" id="toc-review-of-empirical-testing-methods" class="nav-link" data-scroll-target="#review-of-empirical-testing-methods"><span class="header-section-number">3.5.1</span> Review of Empirical Testing Methods</a></li>
+  <li><a href="#capm-tests-in-the-chinese-market" id="toc-capm-tests-in-the-chinese-market" class="nav-link" data-scroll-target="#capm-tests-in-the-chinese-market"><span class="header-section-number">3.5.2</span> CAPM Tests in the Chinese Market</a></li>
+  <li><a href="#findings-from-empirical-research-on-capm-in-the-chinese-market" id="toc-findings-from-empirical-research-on-capm-in-the-chinese-market" class="nav-link" data-scroll-target="#findings-from-empirical-research-on-capm-in-the-chinese-market"><span class="header-section-number">3.5.3</span> Findings from Empirical Research on CAPM in the Chinese Market</a></li>
+  </ul></li>
+  <li><a href="#limitations-of-the-capm-model" id="toc-limitations-of-the-capm-model" class="nav-link" data-scroll-target="#limitations-of-the-capm-model"><span class="header-section-number">3.6</span> Limitations of the CAPM Model</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.7</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="key-topics-in-this-section" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="key-topics-in-this-section"><span class="header-section-number">3.1</span> Key Topics in This Section</h2>
+<ol type="1">
+<li><strong>Theoretical Foundations of the CAPM Model</strong>: Understanding the core assumptions and theoretical logic of the CAPM model.</li>
+<li><strong>Derivation of the CAPM Model</strong>: Mastering the derivation process from portfolio theory to the CAPM model.</li>
+<li><strong>Economic Interpretation of the CAPM Model</strong>: Understanding the economic meaning of the Beta coefficient and the concept of risk premium.</li>
+<li><strong>Empirical Testing of the CAPM Model</strong>: Learning common empirical testing methods for the CAPM model and understanding its test results in the Chinese market.</li>
+<li><strong>Practice: Using Python to Calculate Individual Stock Beta Values</strong>: Mastering the method of calculating Beta values using Python.</li>
+<li><strong>Limitations of the CAPM Model</strong>: Recognizing the limitations of the CAPM model in practical applications.</li>
+</ol>
+</section>
+<section id="theoretical-foundations-of-the-capm-model" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="theoretical-foundations-of-the-capm-model"><span class="header-section-number">3.2</span> Theoretical Foundations of the CAPM Model</h2>
+<section id="why-study-the-capm-model" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="why-study-the-capm-model"><span class="header-section-number">3.2.1</span> Why Study the CAPM Model?</h3>
+<ul>
+<li><strong>Cornerstone of Modern Financial Theory</strong>: The CAPM model is the starting point of modern financial theory. Understanding CAPM is a necessary foundation for learning more advanced models.</li>
+<li><strong>Risk and Return Pricing Model</strong>: The CAPM model provides a concise framework for understanding the relationship between risk and expected return, making it one of the core models for asset pricing.</li>
+<li><strong>Important Tool for Investment Decisions</strong>: The CAPM model can help investors assess the fair rate of return for assets, conduct portfolio management, and evaluate performance.</li>
+<li><strong>Widespread Academic Research and Practical Application</strong>: The CAPM model is extensively used in both academic research and investment practice, making it essential knowledge for finance professionals.</li>
+</ul>
+</section>
+<section id="core-assumptions-of-the-capm-model" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="core-assumptions-of-the-capm-model"><span class="header-section-number">3.2.2</span> Core Assumptions of the CAPM Model</h3>
+<p>The CAPM model is built upon a series of idealized assumptions. Understanding these assumptions is key to understanding the model’s applicability and limitations.</p>
+<ul>
+<li><strong>Investors are risk-averse and seek to maximize utility</strong>:
+<ul>
+<li>Given a certain level of return, investors prefer investments with lower risk; given a certain level of risk, investors prefer investments with higher returns.</li>
+<li>The goal of investors’ decision-making is to maximize their expected utility, not just expected return.</li>
+</ul></li>
+<li><strong>Markets are perfect</strong>:
+<ul>
+<li><strong>No transaction costs</strong>: There are no transaction fees, such as commissions or taxes, for buying or selling assets.</li>
+<li><strong>Symmetric information</strong>: All investors have free and timely access to all relevant information.</li>
+<li><strong>Perfect divisibility</strong>: Assets can be infinitely divided, and investors can buy or sell any quantity of an asset.</li>
+<li><strong>No short-selling restrictions</strong>: Investors can short-sell any asset without limitation.</li>
+</ul></li>
+<li><strong>A risk-free rate exists, and investors can borrow and lend unlimitedly at this rate</strong>:
+<ul>
+<li>A risk-free rate <span class="math inline">\(R_f\)</span> exists, at which investors can borrow or lend funds without limit.</li>
+<li>This implies that investors can freely adjust the risk level of their portfolios.</li>
+</ul></li>
+<li><strong>All investors have the same investment horizon</strong>:
+<ul>
+<li>All investors have the same investment horizon, e.g., one month, one year, etc.</li>
+<li>This simplifies model analysis, allowing us to focus on single-period investment decisions.</li>
+</ul></li>
+<li><strong>Asset returns are normally distributed</strong>:
+<ul>
+<li>The returns of all assets follow a normal distribution.</li>
+<li>The assumption of normality allows us to fully describe the distribution characteristics of returns using mean and variance, simplifying risk measurement.</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpretation-of-core-assumptions" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="interpretation-of-core-assumptions"><span class="header-section-number">3.2.3</span> Interpretation of Core Assumptions</h3>
+<ul>
+<li><strong>Idealized Assumptions vs.&nbsp;Reality</strong>: The assumptions of the CAPM model are rarely fully met in real markets; for example, transaction costs exist, and information is not perfectly symmetric.</li>
+<li><strong>Model Simplification and Trade-offs</strong>: These assumptions are simplifications of reality, aimed at constructing a concise and analyzable model. The model’s value lies in providing a basic framework for understanding asset pricing, not in perfectly predicting reality.</li>
+<li><strong>Extensions in Subsequent Models</strong>: Subsequent asset pricing models, such as the Fama-French Three-Factor Model and behavioral finance models, have been developed by relaxing some of the CAPM model’s assumptions.</li>
+</ul>
+</section>
+</section>
+<section id="derivation-of-the-capm-model" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="derivation-of-the-capm-model"><span class="header-section-number">3.3</span> Derivation of the CAPM Model</h2>
+<section id="review-of-portfolio-theory-mean-variance-analysis-framework" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="review-of-portfolio-theory-mean-variance-analysis-framework"><span class="header-section-number">3.3.1</span> Review of Portfolio Theory: Mean-Variance Analysis Framework</h3>
+<p>The derivation of the CAPM model is based on Markowitz’s portfolio theory. We first review the mean-variance analysis framework.</p>
+<ul>
+<li><strong>Expected Return</strong>:
+<ul>
+<li>The expected return of a portfolio is the weighted average of the expected returns of the assets in the portfolio: <span class="math inline">\(E(R_p) = \sum_{i=1}^n w_i E(R_i)\)</span> where <span class="math inline">\(w_i\)</span> is the weight of asset <span class="math inline">\(i\)</span> in the portfolio, and <span class="math inline">\(E(R_i)\)</span> is the expected return of asset <span class="math inline">\(i\)</span>.</li>
+</ul></li>
+<li><strong>Portfolio Variance</strong>:
+<ul>
+<li>The variance of a portfolio (measuring risk) depends not only on the variances of individual assets but also on the covariances between assets: <span class="math inline">\(\sigma_p^2 = \sum_{i=1}^n \sum_{j=1}^n w_i w_j \sigma_{ij}\)</span> where <span class="math inline">\(\sigma_{ij}\)</span> is the covariance between the returns of asset <span class="math inline">\(i\)</span> and asset <span class="math inline">\(j\)</span>.</li>
+</ul></li>
+<li><strong>Efficient Frontier</strong>:
+<ul>
+<li>In the mean-variance framework, rational investors will seek portfolios on the <strong>efficient frontier</strong>.</li>
+<li>The <strong>efficient frontier</strong> is the set of portfolios that offer the highest expected return for a given level of risk, or the lowest risk for a given level of expected return.</li>
+</ul></li>
+</ul>
+</section>
+<section id="introducing-the-risk-free-asset-capital-market-line-cml" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="introducing-the-risk-free-asset-capital-market-line-cml"><span class="header-section-number">3.3.2</span> Introducing the Risk-Free Asset: Capital Market Line (CML)</h3>
+<p>The CAPM model builds upon portfolio theory by introducing a risk-free asset and assuming that all investors hold the same efficient frontier.</p>
+<ul>
+<li><strong>Characteristics of the Risk-Free Asset</strong>:
+<ul>
+<li>Expected return: <span class="math inline">\(E(R_f) = R_f\)</span> (risk-free rate)</li>
+<li>Standard deviation: <span class="math inline">\(\sigma_f = 0\)</span> (risk-free)</li>
+<li>Covariance with any risky asset: <span class="math inline">\(\sigma_{if} = 0\)</span></li>
+</ul></li>
+<li><strong>Derivation of the Capital Market Line (CML)</strong>:
+<ul>
+<li>When a risk-free asset is introduced, investors can invest their funds in a linear combination of the risk-free asset and the <strong>market portfolio</strong> <span class="math inline">\(M\)</span>.</li>
+<li>The <strong>market portfolio</strong> <span class="math inline">\(M\)</span> is a portfolio of all risky assets, where the weight of each asset is proportional to its total market capitalization. (In the CAPM model, the market portfolio itself lies on the efficient frontier).</li>
+<li>The <strong>Capital Market Line (CML)</strong> describes how the efficient frontier changes from a curve to a straight line: <span class="math inline">\(E(R_p) = R_f + \frac{E(R_m) - R_f}{\sigma_m} \sigma_p\)</span> where <span class="math inline">\(E(R_m)\)</span> and <span class="math inline">\(\sigma_m\)</span> are the expected return and standard deviation of the market portfolio <span class="math inline">\(M\)</span>, respectively.</li>
+</ul></li>
+<li><strong>Economic Meaning of the CML</strong>:
+<ul>
+<li>The CML indicates that in an efficient market, investors can achieve the optimal risk-return combination for any level of risk by allocating funds between the risk-free asset and the market portfolio.</li>
+<li>The slope of the CML, <span class="math inline">\(\frac{E(R_m) - R_f}{\sigma_m}\)</span>, is called the <strong>price of risk for the market risk premium</strong>, representing the excess return achievable per unit of risk (standard deviation).</li>
+</ul></li>
+</ul>
+</section>
+<section id="derivation-of-the-security-market-line-sml-the-core-of-the-capm-model" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="derivation-of-the-security-market-line-sml-the-core-of-the-capm-model"><span class="header-section-number">3.3.3</span> Derivation of the Security Market Line (SML): The Core of the CAPM Model</h3>
+<p>The CML describes the pricing relationship for efficient portfolios, while the <strong>Security Market Line (SML)</strong> further defines the relationship between the expected return and risk for <strong>individual assets</strong>, which is the core of the CAPM model.</p>
+<ul>
+<li><strong>Systematic Risk and Unsystematic Risk</strong>:
+<ul>
+<li><strong>Total Risk</strong>: Can be measured by standard deviation <span class="math inline">\(\sigma_i\)</span>.</li>
+<li><strong>Systematic Risk</strong>: Also known as market risk or non-diversifiable risk, refers to common risk factors affecting all assets, such as macroeconomic factors, policy changes, etc.</li>
+<li><strong>Unsystematic Risk</strong>: Also known as specific risk or diversifiable risk, refers to risk factors affecting only individual assets, such as company management, industry competition, etc.</li>
+</ul></li>
+<li><strong>Beta Coefficient (<span class="math inline">\(\beta_i\)</span>): Measure of Systematic Risk</strong>:
+<ul>
+<li>In the CAPM model, the <strong>Beta coefficient</strong> (<span class="math inline">\(\beta_i\)</span>) is used to measure the systematic risk of asset <span class="math inline">\(i\)</span>.</li>
+<li><span class="math inline">\(\beta_i\)</span> is defined as the covariance of asset <span class="math inline">\(i\)</span>’s return with the market portfolio’s return, divided by the variance of the market portfolio’s return: <span class="math inline">\(\beta_i = \frac{Cov(R_i, R_m)}{Var(R_m)}\)</span></li>
+<li><span class="math inline">\(\beta_i\)</span> measures the sensitivity of asset <span class="math inline">\(i\)</span>’s return to changes in the market portfolio’s return.
+<ul>
+<li><span class="math inline">\(\beta_i &gt; 1\)</span>: Asset <span class="math inline">\(i\)</span> is more volatile than the market portfolio; higher systematic risk.</li>
+<li><span class="math inline">\(\beta_i = 1\)</span>: Asset <span class="math inline">\(i\)</span>’s volatility is synchronized with the market portfolio.</li>
+<li><span class="math inline">\(\beta_i &lt; 1\)</span>: Asset <span class="math inline">\(i\)</span> is less volatile than the market portfolio; lower systematic risk.</li>
+<li><span class="math inline">\(\beta_i &lt; 0\)</span>: Asset <span class="math inline">\(i\)</span> moves in the opposite direction to the market portfolio, potentially hedging market risk.</li>
+</ul></li>
+</ul></li>
+<li><strong>Formula of the Security Market Line (SML)</strong>:
+<ul>
+<li>The core formula of the CAPM model describes the linear relationship between an individual asset’s expected return and its Beta coefficient: <span class="math inline">\(E(R_i) = R_f + \beta_i[E(R_m) - R_f]\)</span></li>
+<li>Where:
+<ul>
+<li><span class="math inline">\(E(R_i)\)</span>: Expected return of asset <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(R_f\)</span>: Risk-free rate</li>
+<li><span class="math inline">\(\beta_i\)</span>: Beta coefficient of asset <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(E(R_m)\)</span>: Expected return of the market portfolio</li>
+<li><span class="math inline">\([E(R_m) - R_f]\)</span>: <strong>Market Risk Premium</strong>, the excess return investors demand for investing in the market portfolio relative to the risk-free asset.</li>
+</ul></li>
+</ul></li>
+<li><strong>Economic Meaning of the SML</strong>:
+<ul>
+<li>The SML indicates that, under the CAPM, <strong>only systematic risk is priced</strong>. Unsystematic risk can be eliminated through diversification, so investors do not require a risk premium for bearing unsystematic risk.</li>
+<li>An asset’s expected return is related only to its systematic risk (<span class="math inline">\(\beta_i\)</span>); the higher the <span class="math inline">\(\beta_i\)</span>, the higher the expected return.</li>
+<li>The SML provides a benchmark for asset pricing and can be used to assess whether an asset is overvalued or undervalued.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="calculation-and-economic-interpretation-of-the-beta-coefficient" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="calculation-and-economic-interpretation-of-the-beta-coefficient"><span class="header-section-number">3.4</span> Calculation and Economic Interpretation of the Beta Coefficient</h2>
+<section id="methods-for-calculating-beta-coefficient" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="methods-for-calculating-beta-coefficient"><span class="header-section-number">3.4.1</span> Methods for Calculating Beta Coefficient</h3>
+<ul>
+<li><strong>Definition Method</strong>:
+<ul>
+<li>Directly calculate using the definition formula for Beta: <span class="math inline">\(\beta_i = \frac{Cov(R_i, R_m)}{Var(R_m)}\)</span></li>
+<li>This requires calculating the return series for asset <span class="math inline">\(i\)</span> and the market portfolio <span class="math inline">\(m\)</span>, then computing their covariance and the variance of the market return.</li>
+</ul></li>
+<li><strong>Regression Method</strong>:
+<ul>
+<li>A more common method is to estimate the Beta coefficient using a regression model.</li>
+<li><strong>Market Model</strong>: <span class="math inline">\(R_{i,t} = \alpha_i + \beta_i R_{m,t} + \epsilon_{i,t}\)</span> Where <span class="math inline">\(R_{i,t}\)</span> and <span class="math inline">\(R_{m,t}\)</span> are the returns of asset <span class="math inline">\(i\)</span> and the market portfolio in period <span class="math inline">\(t\)</span>, respectively, and <span class="math inline">\(\epsilon_{i,t}\)</span> is the error term. By regressing the market model, an estimate of <span class="math inline">\(\beta_i\)</span> can be obtained.</li>
+<li><strong>Excess Return Form</strong>: To better align with the CAPM’s structure, regression can also be performed using excess returns: <span class="math inline">\(R_{i,t} - R_{f,t} = \alpha_i + \beta_i(R_{m,t} - R_{f,t}) + \epsilon_{i,t}\)</span> Where <span class="math inline">\(R_{f,t}\)</span> is the risk-free rate in period <span class="math inline">\(t\)</span>, and <span class="math inline">\(R_{i,t} - R_{f,t}\)</span> and <span class="math inline">\(R_{m,t} - R_{f,t}\)</span> are the excess returns of asset <span class="math inline">\(i\)</span> and the market portfolio, respectively. In this form, the regressed <span class="math inline">\(\alpha_i\)</span> can be interpreted as <strong>Jensen’s alpha</strong>, measuring the asset’s abnormal return. If the CAPM holds perfectly, <span class="math inline">\(\alpha_i\)</span> should be zero.</li>
+</ul></li>
+</ul>
+</section>
+<section id="economic-interpretation-of-the-beta-coefficient" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="economic-interpretation-of-the-beta-coefficient"><span class="header-section-number">3.4.2</span> Economic Interpretation of the Beta Coefficient</h3>
+<ul>
+<li><strong>Meaning of Beta Values</strong>:
+<ul>
+<li><span class="math inline">\(\beta_i\)</span> reflects the sensitivity of asset <span class="math inline">\(i\)</span> to overall market risk and is a key indicator of systematic risk.</li>
+<li>Stocks with different Beta values have different risk characteristics:
+<ul>
+<li><strong>High Beta Stocks</strong> (<span class="math inline">\(\beta_i &gt; 1\)</span>):
+<ul>
+<li>Their returns fluctuate more than the market average; they tend to rise more when the market goes up and fall more when the market goes down.</li>
+<li>Higher risk, but also potentially higher returns.</li>
+<li>Examples: technology stocks, growth stocks.</li>
+</ul></li>
+<li><strong>Market-Synchronized Stocks</strong> (<span class="math inline">\(\beta_i = 1\)</span>):
+<ul>
+<li>Their return volatility is consistent with the market average.</li>
+<li>Risk-return characteristics are similar to the market portfolio.</li>
+<li>Example: index funds.</li>
+</ul></li>
+<li><strong>Low Beta Stocks</strong> (<span class="math inline">\(\beta_i &lt; 1\)</span>):
+<ul>
+<li>Their returns fluctuate less than the market average; they tend to rise less when the market goes up and fall less when the market goes down.</li>
+<li>Lower risk, and returns are relatively stable.</li>
+<li>Examples: utility stocks, consumer staples stocks.</li>
+</ul></li>
+<li><strong>Negative Beta Stocks</strong> (<span class="math inline">\(\beta_i &lt; 0\)</span>):
+<ul>
+<li>Their returns move in the opposite direction to the market. They may fall when the market rises and rise when the market falls.</li>
+<li>Can serve as hedging instruments in a portfolio to reduce overall risk.</li>
+<li>Example: gold and other safe-haven assets (during certain specific periods).</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>Beta and Risk Premium</strong>:
+<ul>
+<li>The CAPM suggests that investors receive a risk premium for bearing systematic risk. The higher the Beta coefficient, the higher the required risk premium.</li>
+<li>The market risk premium <span class="math inline">\([E(R_m) - R_f]\)</span> is common to all assets, while <span class="math inline">\(\beta_i\)</span> represents the amount of systematic risk borne by an individual asset.</li>
+<li>Investors can adjust the risk and return profile of their portfolios by selecting assets with different Beta values.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="empirical-testing-of-the-capm-model" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="empirical-testing-of-the-capm-model"><span class="header-section-number">3.5</span> Empirical Testing of the CAPM Model</h2>
+<section id="review-of-empirical-testing-methods" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="review-of-empirical-testing-methods"><span class="header-section-number">3.5.1</span> Review of Empirical Testing Methods</h3>
+<p>Common empirical testing methods for the CAPM model are as follows:</p>
+<ol type="1">
+<li><strong>Cross-Sectional Regression (or Two-Pass Regression)</strong>
+<ul>
+<li>Tests whether the average stock returns are linearly related to their Beta coefficients, whether <span class="math inline">\(\gamma_{0,t}\)</span> is close to the risk-free rate, and whether <span class="math inline">\(\gamma_{1,t}\)</span> is equal to the market risk premium and significantly positive.</li>
+<li>Steps:
+<ol type="1">
+<li><strong>First Pass - Time-Series Regression to Estimate Beta</strong>: For each asset, use a fixed time window (e.g., the past 60 months) to perform a time-series regression to estimate a single Beta value <span class="math inline">\(\hat{\beta}_i\)</span>. Formula: <span class="math inline">\(R_{i,t} - R_{f,t} = \alpha_i + \beta_i (R_{m,t} - R_{f,t}) + \epsilon_{i,t}\)</span></li>
+<li><strong>Second Pass - Cross-Sectional Regression</strong>: At each time point t, use the returns of all assets and the Betas estimated in the first pass to perform a cross-sectional regression. Formula: <span class="math inline">\(R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \hat{\beta}_i + \eta_{i,t}\)</span></li>
+</ol></li>
+</ul></li>
+<li><strong>Fama-MacBeth Regression</strong>
+<ul>
+<li>An improved cross-sectional regression method that addresses Beta estimation errors and provides more robust estimates of risk premiums.</li>
+<li>Steps:
+<ol type="1">
+<li><strong>First Step - Rolling Window Beta Estimation</strong>: For each asset, use a rolling time window to estimate Beta values <span class="math inline">\(\hat{\beta}_{i,t-1}\)</span>, obtaining a time series of Betas.</li>
+<li><strong>Second Step - Period-by-Period Cross-Sectional Regression</strong>: At each time point t, use current period returns and the previous period’s estimated Betas for cross-sectional regression. Formula: <span class="math inline">\(R_{i,t} = \gamma_{0,t} + \gamma_{1,t} \hat{\beta}_{i,t-1} + \eta_{i,t}\)</span></li>
+<li><strong>Third Step - Calculate Average Risk Premiums</strong>: Calculate the time-series average of the cross-sectional regression coefficients. Formulas: <span class="math inline">\(\bar{\gamma}_0 = \frac{1}{T} \sum_{t=1}^T \gamma_{0,t}\)</span> and <span class="math inline">\(\bar{\gamma}_1 = \frac{1}{T} \sum_{t=1}^T \gamma_{1,t}\)</span></li>
+<li><strong>Fourth Step - Test Significance</strong>: Use the t-statistics of the time-series averages to test the significance of <span class="math inline">\(\bar{\gamma}_0\)</span> and <span class="math inline">\(\bar{\gamma}_1\)</span>.</li>
+</ol></li>
+</ul></li>
+<li><strong>Portfolio Grouping Method</strong>
+<ul>
+<li>To address the issue of large estimation errors in individual stock Betas, researchers often use the portfolio grouping method for empirical tests.</li>
+<li>Steps:
+<ol type="1">
+<li><strong>First Step - Estimate Individual Stock Betas</strong>: Estimate Beta values for each stock.</li>
+<li><strong>Second Step - Group by Beta Size</strong>: Group stocks into multiple portfolios (usually 10 or 20) based on their Beta values.</li>
+<li><strong>Third Step - Calculate Portfolio Characteristics</strong>: Calculate the average Beta and average return for each portfolio.</li>
+<li><strong>Fourth Step - Portfolio-Level Regression</strong>: Perform a cross-sectional regression using the average Betas and average returns of the portfolios. Formula: <span class="math inline">\(\overline{R}_{p} = \gamma_0 + \gamma_1\overline{\beta}_p + \eta_p\)</span></li>
+</ol></li>
+<li>This method was first proposed by Black, Jensen, and Scholes (1972) and can significantly reduce the impact of Beta estimation errors on test results.</li>
+</ul></li>
+</ol>
+</section>
+<section id="capm-tests-in-the-chinese-market" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="capm-tests-in-the-chinese-market"><span class="header-section-number">3.5.2</span> CAPM Tests in the Chinese Market</h3>
+<p>Drawing from the reference book “Factor Investing: Methods and Practice,” we can infer the test results and characteristics of the CAPM model in the Chinese market:</p>
+<ul>
+<li><strong>Market Factor Remains Important</strong>: Even in the Chinese A-share market, the market factor is still an important factor in explaining asset returns, and the CAPM model is applicable to some extent.</li>
+<li><strong>Pricing Errors May Be Larger</strong>: Due to the emerging market characteristics of China, relatively lower efficiency, and more market frictions, the CAPM model may exhibit larger pricing errors (<span class="math inline">\(\alpha_i\)</span> significantly different from zero).</li>
+<li><strong>Need to Consider Other Factors</strong>: The single-factor CAPM model may not be sufficient to fully explain asset pricing phenomena in the Chinese market. It may be necessary to consider other risk factors, such as size, value, and profitability, to build multi-factor models.</li>
+<li><strong>Choice of Testing Methods</strong>: More robust methods like Fama-MacBeth regression may be more suitable for the Chinese market to handle Beta estimation errors and market noise.</li>
+</ul>
+</section>
+<section id="findings-from-empirical-research-on-capm-in-the-chinese-market" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="findings-from-empirical-research-on-capm-in-the-chinese-market"><span class="header-section-number">3.5.3</span> Findings from Empirical Research on CAPM in the Chinese Market</h3>
+<ul>
+<li><strong>CAPM Has Some Explanatory Power in the Chinese Market, but Less Than in Mature Markets</strong>: Market risk is an important factor affecting the returns of Chinese A-shares, but the explanatory power of the CAPM model is relatively limited.</li>
+<li><strong>Market Anomalies Are More Pronounced in the Chinese Market</strong>: Market anomalies such as the size effect, value effect, and momentum effect may be more significant in the Chinese market, and the CAPM model struggles to explain these phenomena.</li>
+<li><strong>Multi-Factor Models Are More Applicable in the Chinese Market</strong>: To more accurately describe asset pricing in the Chinese market, it is necessary to construct multi-factor models that incorporate more risk factors.</li>
+<li><strong>Market Efficiency Needs Improvement</strong>: The efficiency of the Chinese A-share market is relatively low. Market frictions and investor behavioral biases may lead to deviations in CAPM pricing.</li>
+</ul>
+</section>
+</section>
+<section id="limitations-of-the-capm-model" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="limitations-of-the-capm-model"><span class="header-section-number">3.6</span> Limitations of the CAPM Model</h2>
+<p>Although the CAPM model is a cornerstone of asset pricing theory, it has many limitations in practical application. Understanding these limitations helps us use the model more reasonably and recognize the necessity for the development of subsequent models.</p>
+<ul>
+<li><strong>Limitations of a Single-Factor Model</strong>:
+<ul>
+<li><strong>Considers Only Market Risk</strong>: The CAPM model only considers the market portfolio as the single systematic risk factor. However, in reality, multiple risk factors may affect asset returns, such as:
+<ul>
+<li><strong>Size Risk</strong>: Small-cap companies may face greater operational and liquidity risks.</li>
+<li><strong>Value Risk</strong>: Value companies (high book-to-market ratio) may face risks of declining profitability.</li>
+<li><strong>Profitability Risk</strong>: Companies with weaker profitability may face operational difficulties.</li>
+</ul></li>
+<li><strong>Cannot Explain All Return Differences</strong>: Empirical studies show that the CAPM model cannot fully explain the return differences between various assets, leading to <strong>pricing errors</strong> (<span class="math inline">\(\alpha_i \neq 0\)</span>).</li>
+</ul></li>
+<li><strong>Overly Strong Assumptions about Market Efficiency</strong>:
+<ul>
+<li><strong>Markets Are Not Perfect</strong>: Real markets have transaction costs, information asymmetry, short-selling restrictions, etc. These market frictions affect the validity of the CAPM model.</li>
+<li><strong>Investor Behavioral Biases</strong>: The CAPM model assumes investors are perfectly rational. However, behavioral finance research shows that investors exhibit various irrational behavioral biases, such as overconfidence and herding effects, which also cause market pricing to deviate from CAPM predictions.</li>
+</ul></li>
+<li><strong>Challenges in Empirical Testing</strong>:
+<ul>
+<li><strong>Market Portfolio Difficult to Define</strong>: The market portfolio in CAPM theory includes all assets, which is difficult to define and obtain accurately in practice. Stock indices (like the CSI 300 or S&amp;P 500) are often used as proxies, potentially leading to biased test results.</li>
+<li><strong>Model Assumptions Difficult to Verify</strong>: Many CAPM assumptions (such as investor homogeneity, normal distribution of returns) are difficult to verify directly. The model’s validity can only be tested indirectly.</li>
+<li><strong>Influence of Data and Methods</strong>: Empirical test results can be affected by data frequency, time windows, testing methods, etc. Different studies may reach different conclusions.</li>
+</ul></li>
+<li><strong>Inability to Explain Market Anomalies</strong>:
+<ul>
+<li><strong>Market Anomalies</strong>: Refer to persistent excess return phenomena that the CAPM model cannot explain.</li>
+<li>Common market anomalies include:
+<ul>
+<li><strong>Size Effect</strong>: Small-cap stocks tend to have average returns significantly higher than predicted by the CAPM.</li>
+<li><strong>Value Effect</strong>: Value stocks (high book-to-market ratio) tend to have average returns significantly higher than predicted by the CAPM.</li>
+<li><strong>Momentum Effect</strong>: Stocks with high returns over a past period tend to continue to have high returns in the near future.</li>
+</ul></li>
+<li>The existence of market anomalies indicates that the CAPM model’s description of real markets is incomplete, requiring the introduction of more risk factors or consideration of behavioral finance factors to explain these phenomena.</li>
+</ul></li>
+</ul>
+</section>
+<section id="summary" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.7</span> Summary</h2>
+<ul>
+<li>The CAPM model is an important cornerstone of asset pricing theory, providing a benchmark framework for asset pricing.</li>
+<li>The CAPM model assumes that investors are rational, markets are efficient, and asset prices fully reflect all available information.</li>
+<li>The CAPM model has numerous limitations in practical application. Understanding these limitations helps us use the model more reasonably and recognize the necessity for the development of subsequent models.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01_emh.html" class="pagination-link" aria-label="Efficient Market Hypothesis (EMH)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Efficient Market Hypothesis (EMH)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./lab02_capmtest.html" class="pagination-link" aria-label="Capital Asset Pricing Model (CAPM) Empirical Test">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

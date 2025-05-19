@@ -1,0 +1,212 @@
+---
+title: "Project 2: Optimization and Enhancement of Factor Investing Strategies"
+---
+
+# Project Background
+
+Building upon the preliminary factor investing strategy constructed in Project 1, this project will further explore how to enhance the strategy's risk-adjusted returns through advanced portfolio optimization methods, factor timing techniques, and risk management measures. In practice, the success of a factor investing strategy depends not only on the effectiveness of the chosen factors but also highly on the accuracy of the return model, the methods of portfolio construction, and the rigor of risk control.
+
+Quantitative investment practice shows that even when using the same factors, different portfolio construction methods can lead to significantly different investment outcomes. Furthermore, the volatility and cyclicality exhibited by factor returns in time series provide the possibility for dynamically adjusting factor weights (factor timing). Comprehensive risk attribution analysis helps to better understand the sources of strategy risk, further optimizing investment decisions.
+
+In this project, you will have the opportunity to comprehensively optimize the factor investing strategy from Project 1, exploring how to improve its risk-adjusted returns while maintaining strategy robustness.
+
+# Project Objectives
+
+The main objective of this project is to significantly enhance the risk-adjusted returns of the factor strategy constructed in Project 1 by optimizing the return prediction model, portfolio construction methods, and risk management techniques. Specific objectives include:
+
+1.  **Return Model Optimization**: Improve the predictive power of the original factors for returns, and construct a more accurate return prediction model.
+2.  **Portfolio Optimization**: Design and implement efficient portfolio construction methods, balancing return expectations with risk control.
+3.  **Factor Timing Research**: Explore the feasibility of factor timing, seeking effective methods for dynamic adjustment of factor weights.
+4.  **Risk Attribution Analysis**: Deeply analyze the sources of strategy risk and optimize the risk management plan.
+5.  **Strategy Evaluation**: Comprehensively evaluate the performance of the optimized strategy, comparing it with the original strategy and market benchmarks.
+
+# Suggested Optimization Directions (Choose at least two)
+
+## Direction One: Return Model Construction and Optimization
+
+Based on the factors from Project 1, construct a more effective return prediction model:
+
+1.  **Predictor Variable Processing**:
+    * Outlier treatment (e.g., winsorization, median absolute deviation method).
+    * Cross-sectional standardization (Z-Score).
+    * Hierarchical combination (first combine within dimensions, then between dimensions).
+
+2.  **Exploration of Prediction Methods**:
+    * Non-parametric prediction (e.g., conditional stock picking, ranking and scoring method).
+    * Parametric prediction (e.g., cross-sectional regression, panel regression).
+    * Weighting methods (e.g., IC-weighted, equal-weighted).
+
+3.  **Prediction Model Evaluation**:
+    * Measure predictive power using IC/IR.
+    * Assess the decay speed (half-life) of predictive signals.
+    * Analyze prediction stability under different market conditions.
+
+## Direction Two: Portfolio Optimization Methods
+
+Based on return prediction results, explore different portfolio construction methods:
+
+1.  **Choice of Objective Function**:
+    * Mean-Variance Optimization.
+    * Minimum Variance.
+    * Maximum Diversification.
+    * Risk Parity.
+
+2.  **Design of Constraints**:
+    * Short-selling constraints and leverage constraints.
+    * Individual stock/industry concentration constraints.
+    * Factor exposure constraints.
+    * Turnover constraints.
+
+3.  **Transaction Cost Modeling**:
+    * Linear cost function.
+    * Quadratic cost function (considering market impact costs).
+    * Methods for incorporating transaction costs in optimization.
+
+## Direction Three: Factor Timing Strategies
+
+Explore timing strategies for dynamically adjusting factor weights:
+
+1.  **Factor timing based on factor valuation**:
+    * Calculate factor valuation indicators (e.g., value spread).
+    * Adjust factor weights based on historical quantiles.
+    * Evaluate the effectiveness of valuation signals.
+
+2.  **Factor timing based on factor momentum**:
+    * Calculate short-term/medium-term factor return momentum.
+    * Construct factor momentum timing rules.
+    * Analyze the stability of factor momentum.
+
+3.  **Factor timing based on market environment**:
+    * Identify different market environments (e.g., bull/bear markets, high/low volatility environments).
+    * Analyze the performance patterns of different factors in various market environments.
+    * Design factor allocation methods based on market conditions.
+
+## Direction Four: Risk Attribution and Management
+
+Deeply analyze strategy risk and optimize the risk management plan:
+
+1.  **Risk Decomposition and Attribution**:
+    * Decompose strategy risk into systematic risk and idiosyncratic risk.
+    * Analyze risk sources using the three elements of risk attribution (exposure × volatility × correlation).
+    * Assess the contribution of different factors to total risk.
+
+2.  **Stress Testing**:
+    * Design stress tests under historical and hypothetical scenarios.
+    * Analyze strategy performance in extreme market environments.
+    * Adjust risk control parameters based on stress test results.
+
+3.  **Tail Risk Management**:
+    * Monitor changes in risk appetite and surges in market correlation.
+    * Design hedging mechanisms to cope with extreme market volatility.
+    * Evaluate the costs and benefits of hedging strategies.
+
+# Suggested Project Steps
+
+1.  **Basic Analysis and Direction Selection** (1 week)
+    * Evaluate the strengths and weaknesses of the strategy from Project 1.
+    * Choose at least two optimization directions.
+    * Design an optimization plan.
+
+2.  **Model Construction and Implementation** (3 weeks)
+    * Implement return prediction model optimization.
+    * Design portfolio optimization methods.
+    * Construct a timing strategy or risk management framework.
+
+3.  **Strategy Backtesting and Analysis** (2 weeks)
+    * Conduct full-sample backtesting.
+    * Analyze performance in different market environments.
+    * Compare strategy performance differences before and after optimization.
+
+4.  **Risk Assessment and Fine-tuning** (1 week)
+    * Perform risk attribution analysis.
+    * Identify potential risk points of the strategy.
+    * Fine-tune strategy parameters to balance risk and return.
+
+# Submission Requirements
+
+1.  **Project Report** (within 30 pages; the report must include these seven sections, but the content within each section can be adjusted appropriately)
+    * Project Abstract (not exceeding 300 words)
+    * Part One: Theoretical Basis for Predictor Variable Selection
+        * Elaborate on the economic or financial principles of the selected factors.
+        * Review relevant literature on the theoretical explanations and empirical evidence of factor effectiveness.
+        * Explain the interrelationships between factors and the logic of their combination.
+    * Part Two: Data Sources and Preprocessing
+        * Detail the data sources, time span, and frequency.
+        * Describe the data cleaning process (e.g., outlier treatment, missing value treatment).
+        * Elaborate on the specific calculation methods for factor construction.
+        * Present basic statistical characteristics of the data.
+    * Part Three: Return Analysis of the Factor Strategy
+        * Analyze the return characteristics of the original strategy (annualized return, volatility, maximum drawdown, etc.).
+        * Evaluate the predictive power of the factors (IC value analysis, decay speed, etc.).
+        * Decompose strategy risk sources (systematic risk and idiosyncratic risk).
+        * Identify existing problems with the strategy and propose optimization ideas.
+    * Part Four: Specific Methods for Strategy Optimization
+        * Detail the methodology for the chosen optimization directions.
+        * Explain the implementation details of the optimization algorithms and parameter selection.
+        * Describe key decisions made during the optimization process and their rationale.
+        * Explain how to balance model complexity and overfitting risk.
+    * Part Five: Return Analysis of the Optimized Strategy
+        * Comprehensively evaluate the performance metrics of the optimized strategy.
+        * Conduct a comparative analysis with the original strategy (excess returns, risk-adjusted returns, etc.).
+        * Perform sub-period analysis to verify the robustness of the strategy in different market environments.
+        * Present the attribution analysis results for the strategy.
+    * Part Six: Conclusions and Future Improvement Directions
+        * Summarize optimization achievements and main findings.
+        * Analyze potential limitations of the strategy.
+        * Propose specific directions and methods for further improvement.
+        * Discuss the practical application prospects of the strategy.
+    * Part Seven: References
+        * List all cited literature according to academic standards.
+        * Include academic papers, professional books, and other material sources.
+        * Ensure the citation format is consistent and complete.
+
+    * Formatting Requirements (Please strictly follow these specifications when writing the project report):
+        1.  **Cover Page (First page)**:
+            * Include project title, project abstract (not exceeding 300 words), list of group members, student IDs, submission date, etc., centered.
+        2.  **Table of Contents (Second page)**:
+            * Automatically generated table of contents, listing chapter titles and page numbers.
+        3.  **Main Body (Starting from the third page)**:
+            * Main text uses **Chinese font Song Ti, size 'Wuhao' (五号)**, 1.5 line spacing.
+            * Chapter titles use **Hei Ti font (黑体)**; first-level headings are size 'Sihao' (四号), second-level headings are size 'Xiao Sihao' (小四), third-level headings are size 'Wuhao' (五号), bolded.
+            * Margins: Top, bottom, left, and right all 2.5 cm.
+            * Page numbers start from the first page of the main body (i.e., page 3), centered.
+            * First line of paragraphs in the main body indented by 2 characters.
+        4.  **Requirements for Figures and Tables**:
+            * Figures and tables should be centered. Figure captions below figures, table titles above tables, both using Song Ti font size 'Wuhao' (五号), numbered systematically (e.g., "Figure 1-1 XXX", "Table 2-1 XXX").
+            * Figures and tables should be clear and aesthetically pleasing; vector format recommended, resolution no less than 300dpi.
+            * Each figure and table must have a brief description and be referenced in the main text (e.g., "see Figure 2-1").
+            * Content of figures and tables should be closely related to the analysis in the main text; avoid piling up irrelevant figures/tables.
+        5.  **Layout and Formatting Consistency**:
+            * Consistent formatting throughout the document: font, font size, line spacing, heading levels, numbering, etc.
+            * Consistent reference format; APA or Harvard style, or other mainstream academic formats, are recommended.
+            * Total report length (including cover, table of contents, main body, references, appendices, etc.) should **not exceed 30 pages**.
+            * Neat layout, clear logic; avoid typos, grammatical errors, and messy formatting.
+        6.  **Other Instructions**:
+            * It is recommended to use professional typesetting tools like Word or LaTeX to complete the report.
+            * If there are appendices (e.g., code snippets, supplementary data), list them separately at the end of the report and indicate them in the table of contents.
+
+2.  **Class Presentation** (10 minutes)
+    * Clearly present the optimization ideas and main innovations.
+    * Show a comparison of strategy performance before and after optimization.
+    * Explain key decisions made during the optimization process.
+
+3.  **Code and Data**
+    * Complete, runnable code (Python or R).
+    * Necessary configuration files and dependency instructions.
+    * Detailed README file explaining the code structure and how to run it.
+
+4.  **Submission Method and Deadline**:
+    * Submit the project report, code, and data (ZIP format) via the Xuexitong platform.
+    * Simultaneously submit presentation slides (PPT or PDF format).
+    * Deadline: 23:59 on June 8, 2025.
+
+## Grading Criteria
+
+Project grades will be based on the following aspects:
+
+-   **Optimization Rationale** (20%): Reasonableness of the choice of optimization directions and design ideas.
+-   **Implementation Quality** (20%): Accuracy and efficiency of code implementation.
+-   **Empirical Results** (20%): Degree of improvement of the optimized strategy compared to the original strategy.
+-   **Report Quality** (20%): Completeness, logical coherence, and academic rigor of the report.
+-   **Risk Control** (10%): Understanding and ability to control strategy risks.
+-   **Presentation Quality** (10%): Clarity and professionalism of the presentation.

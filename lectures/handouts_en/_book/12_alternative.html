@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Outlook for Factor Investing: Alternative Data and Machine Learning – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./project1_factor.html" rel="next">
+<link href="./11_timing.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12_alternative.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Efficient Market Hypothesis (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project 1: Factor Investing Strategy Construction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project 2: Optimization and Enhancement of Factor Investing Strategies</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#foreword" id="toc-foreword" class="nav-link active" data-scroll-target="#foreword"><span class="header-section-number">9.1</span> Foreword</a></li>
+  <li><a href="#alternative-data-and-factor-investing" id="toc-alternative-data-and-factor-investing" class="nav-link" data-scroll-target="#alternative-data-and-factor-investing"><span class="header-section-number">9.2</span> Alternative Data and Factor Investing</a>
+  <ul class="collapse">
+  <li><a href="#overview-of-alternative-data" id="toc-overview-of-alternative-data" class="nav-link" data-scroll-target="#overview-of-alternative-data"><span class="header-section-number">9.2.1</span> Overview of Alternative Data</a></li>
+  <li><a href="#application-process-of-alternative-data-in-factor-investing" id="toc-application-process-of-alternative-data-in-factor-investing" class="nav-link" data-scroll-target="#application-process-of-alternative-data-in-factor-investing"><span class="header-section-number">9.2.2</span> Application Process of Alternative Data in Factor Investing</a></li>
+  <li><a href="#challenges-and-solution-strategies-for-alternative-data-application" id="toc-challenges-and-solution-strategies-for-alternative-data-application" class="nav-link" data-scroll-target="#challenges-and-solution-strategies-for-alternative-data-application"><span class="header-section-number">9.2.3</span> Challenges and Solution Strategies for Alternative Data Application</a></li>
+  <li><a href="#prospects-for-alternative-data-application" id="toc-prospects-for-alternative-data-application" class="nav-link" data-scroll-target="#prospects-for-alternative-data-application"><span class="header-section-number">9.2.4</span> Prospects for Alternative Data Application</a></li>
+  </ul></li>
+  <li><a href="#application-of-machine-learning-in-factor-investing" id="toc-application-of-machine-learning-in-factor-investing" class="nav-link" data-scroll-target="#application-of-machine-learning-in-factor-investing"><span class="header-section-number">9.3</span> Application of Machine Learning in Factor Investing</a>
+  <ul class="collapse">
+  <li><a href="#machine-learning-applications-in-asset-pricing" id="toc-machine-learning-applications-in-asset-pricing" class="nav-link" data-scroll-target="#machine-learning-applications-in-asset-pricing"><span class="header-section-number">9.3.1</span> Machine Learning Applications in Asset Pricing</a></li>
+  <li><a href="#special-applications-of-machine-learning-in-factor-research" id="toc-special-applications-of-machine-learning-in-factor-research" class="nav-link" data-scroll-target="#special-applications-of-machine-learning-in-factor-research"><span class="header-section-number">9.3.2</span> Special Applications of Machine Learning in Factor Research</a></li>
+  <li><a href="#special-applications-of-natural-language-processing-in-factor-investing" id="toc-special-applications-of-natural-language-processing-in-factor-investing" class="nav-link" data-scroll-target="#special-applications-of-natural-language-processing-in-factor-investing"><span class="header-section-number">9.3.3</span> Special Applications of Natural Language Processing in Factor Investing</a></li>
+  <li><a href="#practical-challenges-of-machine-learning-in-factor-investing" id="toc-practical-challenges-of-machine-learning-in-factor-investing" class="nav-link" data-scroll-target="#practical-challenges-of-machine-learning-in-factor-investing"><span class="header-section-number">9.3.4</span> Practical Challenges of Machine Learning in Factor Investing</a></li>
+  <li><a href="#future-development-of-machine-learning-in-factor-investing" id="toc-future-development-of-machine-learning-in-factor-investing" class="nav-link" data-scroll-target="#future-development-of-machine-learning-in-factor-investing"><span class="header-section-number">9.3.5</span> Future Development of Machine Learning in Factor Investing</a></li>
+  </ul></li>
+  <li><a href="#future-integration-outlook-for-factor-investing" id="toc-future-integration-outlook-for-factor-investing" class="nav-link" data-scroll-target="#future-integration-outlook-for-factor-investing"><span class="header-section-number">9.4</span> Future Integration Outlook for Factor Investing</a>
+  <ul class="collapse">
+  <li><a href="#synergistic-effects-of-alternative-data-and-machine-learning" id="toc-synergistic-effects-of-alternative-data-and-machine-learning" class="nav-link" data-scroll-target="#synergistic-effects-of-alternative-data-and-machine-learning"><span class="header-section-number">9.4.1</span> Synergistic Effects of Alternative Data and Machine Learning</a></li>
+  <li><a href="#future-landscape-of-factor-investing" id="toc-future-landscape-of-factor-investing" class="nav-link" data-scroll-target="#future-landscape-of-factor-investing"><span class="header-section-number">9.4.2</span> Future Landscape of Factor Investing</a></li>
+  <li><a href="#practical-path-recommendations" id="toc-practical-path-recommendations" class="nav-link" data-scroll-target="#practical-path-recommendations"><span class="header-section-number">9.4.3</span> Practical Path Recommendations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="foreword" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="foreword"><span class="header-section-number">9.1</span> Foreword</h2>
+<p>As financial markets continuously evolve, factor investing faces new opportunities and challenges. This lecture will look ahead at the future trends in factor investing, focusing on two frontier areas: the application of alternative data and the practice of machine learning techniques in factor investing. These two fields are profoundly changing the methodology and practical paths of traditional factor investing, providing investors with new sources of excess returns.</p>
+</section>
+<section id="alternative-data-and-factor-investing" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="alternative-data-and-factor-investing"><span class="header-section-number">9.2</span> Alternative Data and Factor Investing</h2>
+<section id="overview-of-alternative-data" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="overview-of-alternative-data"><span class="header-section-number">9.2.1</span> Overview of Alternative Data</h3>
+<ul>
+<li><strong>Motivation:</strong> Traditional price/volume and financial data factors are becoming increasingly crowded, leading to diminishing returns. There’s a quest for new, underexploited data sources to capture excess returns.</li>
+<li><strong>Definition:</strong> Non-traditional data sources relative to traditional ones, often unstructured or semi-structured data.</li>
+<li><strong>Common Types and Typical Cases:</strong>
+<ul>
+<li><strong>Web Scraping Data:</strong>
+<ul>
+<li><strong>Job Posting Data:</strong> Recruitment information from platforms like LinkedIn and Indeed can reflect companies’ expansion plans and strategic priorities.</li>
+<li><strong>Company Review Data:</strong> Employee reviews on Glassdoor can predict company culture, management quality, and future performance.</li>
+<li><strong>Product Review and Ranking:</strong> Product ratings on platforms like Amazon and App Store can predict sales trends.</li>
+<li><strong>Online Promotion Monitoring:</strong> Promotion frequency and discount intensity on e-commerce platforms can predict changes in retailers’ profit margins.</li>
+<li><strong>Case Study:</strong> Research on LinkedIn job posting data shows that growth in job postings is positively correlated with future corporate revenue growth and stock price performance.</li>
+</ul></li>
+<li><strong>Sentiment Data:</strong>
+<ul>
+<li><strong>Social Media Sentiment:</strong> Text sentiment analysis from social media like Twitter and Weibo can predict short-term market trends.</li>
+<li><strong>News Sentiment Analysis:</strong> Financial news sentiment can act as a risk factor, predicting asset volatility.</li>
+<li><strong>Meeting Transcripts/Earnings Call Transcripts:</strong> Analyzing management tone and word choice can predict performance trends.</li>
+<li><strong>Case Study:</strong> RavenPack built sentiment indicators by analyzing news data and found a significant correlation between sentiment factors and stock returns.</li>
+</ul></li>
+<li><strong>Satellite/Geospatial Data:</strong>
+<ul>
+<li><strong>Retailer Parking Lot Monitoring:</strong> Estimating sales by counting vehicles in mall/supermarket parking lots via satellite imagery.</li>
+<li><strong>Oil Storage Facility Monitoring:</strong> Estimating inventory changes by monitoring the floating roof height of crude oil storage tanks via satellite.</li>
+<li><strong>Crop Growth Monitoring:</strong> Analyzing crop conditions via satellite imagery to predict yield changes and futures price trends.</li>
+<li><strong>Shipment Tracking:</strong> AIS data monitoring global cargo ship movements to predict changes in commodity supply and demand.</li>
+<li><strong>Case Study:</strong> RS Metrics predicted Walmart’s quarterly sales by analyzing satellite images of its parking lots, with accuracy significantly higher than analyst expectations.</li>
+</ul></li>
+<li><strong>Consumer Data:</strong>
+<ul>
+<li><strong>Credit Card Transaction Data:</strong> Transaction data from Visa, Mastercard, etc., can predict changes in corporate revenue in advance.</li>
+<li><strong>Loyalty Program Data:</strong> Retailer member purchase behavior can predict changes in consumption trends.</li>
+<li><strong>Electronic Receipt Data:</strong> Aggregation of email receipts, for example, can track changes in online consumption habits.</li>
+<li><strong>Case Study:</strong> Research on Starbucks showed that credit card transaction data could predict its quarterly sales performance 2-3 weeks in advance.</li>
+</ul></li>
+<li><strong>IoT and Sensor Data:</strong>
+<ul>
+<li><strong>Mobile Phone Location Data:</strong> Analyzing foot traffic can predict retailer and restaurant performance.</li>
+<li><strong>Industrial Sensor Data:</strong> Monitoring equipment usage rates can predict manufacturing sector sentiment.</li>
+<li><strong>Smart Home Device Data:</strong> Data from smart thermostats like Nest can predict energy consumption.</li>
+<li><strong>Case Study:</strong> Thasos created a retail foot traffic index using anonymized mobile phone location data, successfully predicting the quarterly performance of several retailers.</li>
+</ul></li>
+<li><strong>ESG Data:</strong>
+<ul>
+<li><strong>Company Carbon Emission Data:</strong> Monitoring carbon emission trends to predict regulatory risks.</li>
+<li><strong>Supply Chain Monitoring:</strong> Identifying ESG risks in supply chains can predict brand reputation risks.</li>
+<li><strong>Board Diversity Data:</strong> Analyzing the relationship between changes in governance structure and corporate performance.</li>
+<li><strong>Case Study:</strong> MSCI ESG data research shows that companies with good ESG practices perform better on a long-term risk-adjusted return basis.</li>
+</ul></li>
+<li><strong>Alternative Financial Data:</strong>
+<ul>
+<li><strong>Web Search Volume:</strong> Google Trends data to predict changes in consumer interest.</li>
+<li><strong>Crowdfunding Platform Data:</strong> Data from platforms like Kickstarter can assess the prospects of innovative products.</li>
+<li><strong>Online Loan Application Data:</strong> Analyzing regional loan demand changes to predict macroeconomic trends.</li>
+<li><strong>Case Study:</strong> By analyzing the relationship between Google search volume and car sales, automakers’ sales can be predicted several weeks in advance.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="application-process-of-alternative-data-in-factor-investing" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="application-process-of-alternative-data-in-factor-investing"><span class="header-section-number">9.2.2</span> Application Process of Alternative Data in Factor Investing</h3>
+<ol type="1">
+<li><strong>Data Acquisition and Cleaning:</strong>
+<ul>
+<li>Establish data collection channels (direct collection or third-party purchase).</li>
+<li>Handle missing values, outliers, and standardize formats.</li>
+<li>Automate data updates.</li>
+</ul></li>
+<li><strong>Signal Extraction and Factor Construction:</strong>
+<ul>
+<li>Apply statistical techniques to extract effective signals from raw data.</li>
+<li>Transform signals into quantifiable investment factors.</li>
+<li>Control factor noise and improve the signal-to-noise ratio.</li>
+</ul></li>
+<li><strong>Factor Testing and Evaluation:</strong>
+<ul>
+<li>Conduct historical backtesting to analyze predictive power.</li>
+<li>Test the incremental contribution of the factor relative to traditional factors.</li>
+<li>Assess factor stability and decay speed.</li>
+</ul></li>
+<li><strong>Portfolio Integration:</strong>
+<ul>
+<li>Integrate new factors into existing multi-factor models.</li>
+<li>Determine optimal weights or risk budgets.</li>
+<li>Monitor factor performance and dynamically adjust.</li>
+</ul></li>
+</ol>
+</section>
+<section id="challenges-and-solution-strategies-for-alternative-data-application" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="challenges-and-solution-strategies-for-alternative-data-application"><span class="header-section-number">9.2.3</span> Challenges and Solution Strategies for Alternative Data Application</h3>
+<ul>
+<li><strong>Main Challenges:</strong>
+<ol type="1">
+<li><strong>Technology and Data Must Match:</strong> Processing complex/unstructured data requires advanced techniques like NLP, computer vision, deep learning, etc.; high-dimensional data can lead to the curse of dimensionality and overfitting risks; attention must be paid to multiple hypothesis testing issues.
+<ul>
+<li><strong>Case Study:</strong> Traditional analytical techniques struggle with satellite image data; specialized computer vision models are needed to extract effective parking lot vehicle counts from raw images.</li>
+</ul></li>
+<li><strong>Domain Knowledge is Required:</strong> Understanding the context of data generation, business processes, and financial implications is key; otherwise, value cannot be effectively mined. Relying on third-party processed data may result in a loss of uniqueness and timeliness.
+<ul>
+<li><strong>Case Study:</strong> Relying solely on statistical correlations when analyzing social media data can lead to misjudgments; industry knowledge is needed to understand if a brand mention is a positive review or a negative complaint.</li>
+</ul></li>
+<li><strong>Data Bias:</strong> Vigilance is needed against biases in the data collection process (e.g., selection bias, survivorship bias, geographical bias) to ensure the data represents the overall population.
+<ul>
+<li><strong>Case Study:</strong> Glassdoor employee reviews might overrepresent dissatisfied employees; credit card data might be skewed towards the consumption behavior of middle-to-high-income groups.</li>
+</ul></li>
+<li><strong>Short Historical Sample Data:</strong> Most alternative data has a short history (often &lt;5 years), exacerbating overfitting risks and making long-term robustness testing difficult.
+<ul>
+<li><strong>Case Study:</strong> Social media sentiment data typically only has a few years of history, making it impossible to validate its performance across different market cycles.</li>
+</ul></li>
+<li><strong>Testing Incremental Contribution:</strong> It’s necessary to verify whether alternative data factors can provide <strong>incremental</strong> information and returns beyond traditional factors, avoiding the “old wine in a new bottle” scenario.
+<ul>
+<li><strong>Case Study:</strong> Some consumer data might only provide signals similar to publicly available retail sales data, offering no substantial incremental value.</li>
+</ul></li>
+</ol></li>
+<li><strong>Effective Utilization Strategies:</strong>
+<ol type="1">
+<li><strong>Start with Business Hypotheses:</strong> First, establish reasonable business hypotheses, then find corresponding data for validation to avoid blind data mining.</li>
+<li><strong>Value Chain Perspective:</strong> Think about potential alternative data monitoring points from the perspective of a company’s entire value chain.</li>
+<li><strong>Combined Use:</strong> Signals from a single data source can be weak; combining multiple data sources can improve the signal-to-noise ratio.</li>
+<li><strong>Prioritize Timeliness:</strong> Give priority to alternative data that can offer timeliness unachievable by traditional data.</li>
+<li><strong>Build a Data Moat:</strong> Establish proprietary data sources or analytical methods that are difficult to replicate.</li>
+</ol></li>
+</ul>
+</section>
+<section id="prospects-for-alternative-data-application" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="prospects-for-alternative-data-application"><span class="header-section-number">9.2.4</span> Prospects for Alternative Data Application</h3>
+<p>The potential is enormous, but challenges must be objectively recognized, and use should be cautious, combining professional knowledge with scientific methods. As data acquisition costs decrease and processing technologies advance, alternative data is likely to become an important source of future excess returns for institutional investors. Leading hedge funds and asset management firms have already established dedicated alternative data teams, and this trend is expected to continue expanding to a broader range of investment institutions.</p>
+</section>
+</section>
+<section id="application-of-machine-learning-in-factor-investing" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="application-of-machine-learning-in-factor-investing"><span class="header-section-number">9.3</span> Application of Machine Learning in Factor Investing</h2>
+<section id="machine-learning-applications-in-asset-pricing" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="machine-learning-applications-in-asset-pricing"><span class="header-section-number">9.3.1</span> Machine Learning Applications in Asset Pricing</h3>
+<ul>
+<li><strong>Limitations of Traditional Methods:</strong>
+<ul>
+<li>Linear model assumptions struggle to capture non-linear relationships in asset pricing.</li>
+<li>Pre-specified factor models may omit important information or include irrelevant variables.</li>
+<li>Difficulty in handling complex interaction effects among a large number of features.</li>
+<li>Sensitivity to parameter stability, prone to overfitting in-sample data.</li>
+</ul></li>
+<li><strong>Advantages of Machine Learning Methods:</strong>
+<ul>
+<li>Can capture non-linear relationships and interaction effects in data.</li>
+<li>High model flexibility and adaptability.</li>
+<li>Powerful feature selection capabilities, able to handle high-dimensional data.</li>
+<li>Ensemble methods can reduce the overfitting risk of single models.</li>
+</ul></li>
+<li><strong>Main Findings from “Empirical Asset Pricing via Machine Learning” (Gu, Kelly, and Xiu, 2020):</strong>
+<ul>
+<li>Machine learning methods (especially neural networks and random forests) significantly outperform traditional linear models in predicting stock returns.</li>
+<li>Non-linear methods can capture predictive signals that traditional factor models cannot identify.</li>
+<li>Machine learning prediction performance is particularly strong during economic recessions and periods of high market volatility.</li>
+<li>Machine learning methods can discover important interaction effects between traditional factors.</li>
+<li>Predictive power primarily comes from non-linear feature relationships, not just an increase in the number of features.</li>
+</ul></li>
+<li><strong>Application of Common Machine Learning Methods in Asset Pricing:</strong>
+<ol type="1">
+<li><strong>Tree Model Series:</strong>
+<ul>
+<li><strong>Decision Tree:</strong> Divides data based on conditional rules, intuitive and easy to interpret, but the predictive power of a single tree is limited.</li>
+<li><strong>Random Forest:</strong> Ensembles multiple randomly generated decision trees, improving stability and generalization ability.</li>
+<li><strong>Gradient Boosting Trees (GBDT/XGBoost):</strong> Sequentially builds trees to correct residuals, powerful predictive performance.</li>
+<li><strong>Application Case:</strong> Two Sigma uses boosting tree models to predict stock returns, combining multi-source data to build quantitative strategies.</li>
+</ul></li>
+<li><strong>Deep Learning Methods:</strong>
+<ul>
+<li><strong>Multilayer Perceptron (MLP):</strong> Can capture highly non-linear relationships, suitable for modeling complex feature interactions.</li>
+<li><strong>Convolutional Neural Network (CNN):</strong> Suitable for processing local patterns in time-series data and image-like data.</li>
+<li><strong>Recurrent Neural Network (RNN/LSTM):</strong> Processes time-series data, capturing long-term dependencies.</li>
+<li><strong>Application Case:</strong> WorldQuant uses deep learning models to extract trading signals from alternative data.</li>
+</ul></li>
+<li><strong>Ensemble and Hybrid Methods:</strong>
+<ul>
+<li><strong>Stacking:</strong> Combines the prediction results of multiple machine learning models to reduce single-model risk.</li>
+<li><strong>Blending:</strong> Combines models with different parameter settings to improve stability.</li>
+<li><strong>Application Case:</strong> AQR Capital employs hybrid strategies combining machine learning and traditional factor models.</li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="special-applications-of-machine-learning-in-factor-research" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="special-applications-of-machine-learning-in-factor-research"><span class="header-section-number">9.3.2</span> Special Applications of Machine Learning in Factor Research</h3>
+<ul>
+<li><strong>Factor Discovery and Construction:</strong>
+<ul>
+<li><strong>Feature Importance Ranking:</strong> Use methods like Random Forest or XGBoost to evaluate the predictive value of a large number of potential features.</li>
+<li><strong>Automated Feature Combination:</strong> Discover effective feature interaction combinations through neural networks, genetic algorithms, etc.</li>
+<li><strong>Case Study:</strong> Man AHL uses machine learning to screen and combine factors from thousands of raw signals to build stable predictive models.</li>
+</ul></li>
+<li><strong>Factor Optimization and Combination:</strong>
+<ul>
+<li><strong>Non-linear Portfolio Optimization:</strong> Moving beyond the traditional mean-variance framework to consider higher moments and tail risks.</li>
+<li><strong>Dynamic Weight Allocation:</strong> Use reinforcement learning to adaptively adjust factor weights based on market conditions.</li>
+<li><strong>Case Study:</strong> D.E. Shaw employs machine learning to dynamically adjust factor model parameters to adapt to different market environments.</li>
+</ul></li>
+<li><strong>Dimensionality Reduction Techniques in Factor Analysis:</strong>
+<ul>
+<li><strong>Principal Component Analysis (PCA):</strong> Extracts major sources of variation in factor data, reducing redundancy.</li>
+<li><strong>t-SNE and UMAP:</strong> Non-linear dimensionality reduction techniques that better preserve the high-dimensional structure of data.</li>
+<li><strong>Autoencoders:</strong> Deep learning dimensionality reduction methods capable of capturing complex non-linear relationships.</li>
+<li><strong>Case Studies:</strong>
+<ul>
+<li><strong>Factor Purification:</strong> Extracting orthogonal signals from traditional factors via PCA to reduce collinearity.</li>
+<li><strong>Factor Clustering:</strong> Using clustering algorithms to identify groups of similar factors, avoiding redundant exposures.</li>
+<li><strong>Market Regime Identification:</strong> Using dimensionality reduction techniques to map high-dimensional market data to a 2D space for intuitive identification of market environments.</li>
+<li><strong>Style Rotation Detection:</strong> Monitoring dynamic changes in investment styles through dimensionality reduction techniques.</li>
+</ul></li>
+</ul></li>
+<li><strong>Anomaly Detection and Risk Management:</strong>
+<ul>
+<li><strong>Unsupervised Learning for Detecting Abnormal Market States:</strong> Identifying potential market anomalies or risk events.</li>
+<li><strong>Deep Generative Models for Scenario Analysis:</strong> Using GANs or VAEs to generate stress test scenarios.</li>
+<li><strong>Case Study:</strong> Detecting anomalies in factor performance using the Isolation Forest algorithm to make timely portfolio adjustments.</li>
+</ul></li>
+</ul>
+</section>
+<section id="special-applications-of-natural-language-processing-in-factor-investing" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="special-applications-of-natural-language-processing-in-factor-investing"><span class="header-section-number">9.3.3</span> Special Applications of Natural Language Processing in Factor Investing</h3>
+<ul>
+<li><strong>Factorization of Textual Data:</strong>
+<ul>
+<li><strong>Sentiment Analysis:</strong> Extracting sentiment factors from news, social media, and company announcements.</li>
+<li><strong>Topic Modeling:</strong> Using LDA, etc., to extract latent topic structures from text as factor signals.</li>
+<li><strong>Semantic Change Tracking:</strong> Monitoring how the semantics of keywords change over time to predict shifts in market trends.</li>
+<li><strong>Case Study:</strong> Bloomberg uses NLP to analyze earnings call transcripts, constructing factors based on the credibility of management statements.</li>
+</ul></li>
+<li><strong>Innovative Applications of Large Language Models (LLMs):</strong>
+<ul>
+<li><strong>Event Extraction and Classification:</strong> Using LLMs to extract investment-related events from unstructured data.</li>
+<li><strong>Business Insight Generation:</strong> Analyzing company disclosure documents to extract signals of strategic changes.</li>
+<li><strong>Automated Factor Hypothesis Generation:</strong> Utilizing LLMs to generate new factor hypotheses for testing.</li>
+<li><strong>Case Study:</strong> Using GPT-like models to analyze Management Discussion and Analysis (MD&amp;A) sections to generate deeper insights than simple sentiment analysis.</li>
+</ul></li>
+</ul>
+</section>
+<section id="practical-challenges-of-machine-learning-in-factor-investing" class="level3" data-number="9.3.4">
+<h3 data-number="9.3.4" class="anchored" data-anchor-id="practical-challenges-of-machine-learning-in-factor-investing"><span class="header-section-number">9.3.4</span> Practical Challenges of Machine Learning in Factor Investing</h3>
+<ul>
+<li><strong>Data Challenges:</strong>
+<ul>
+<li><strong>Decline in Out-of-Sample Performance:</strong> Machine learning models often perform significantly worse out-of-sample than in-sample.</li>
+<li><strong>Low Signal-to-Noise Ratio in Financial Data:</strong> Compared to other fields, financial data has weaker signals and greater noise.</li>
+<li><strong>Non-stationarity:</strong> Changes in market structure cause the data generation process to evolve continuously.</li>
+<li><strong>Sparse Events:</strong> Limited data on rare events (like crises) makes effective learning difficult.</li>
+</ul></li>
+<li><strong>Methodological Challenges:</strong>
+<ul>
+<li><strong>Overfitting Risk:</strong> Complex models are prone to capturing noise rather than signals in the data.</li>
+<li><strong>Model Interpretability:</strong> Complex models are often difficult to interpret, hindering trust in investment decisions.</li>
+<li><strong>Computational Resource Requirements:</strong> Training and deploying complex models require substantial computational resources.</li>
+<li><strong>Hyperparameter Sensitivity:</strong> Model performance is highly sensitive to hyperparameter choices.</li>
+</ul></li>
+<li><strong>Solution Strategies:</strong>
+<ol type="1">
+<li><strong>Robustness by Design:</strong>
+<ul>
+<li>Strict out-of-sample testing and time-series cross-validation.</li>
+<li>Regularization techniques (L1/L2 regularization, Dropout, etc.) to reduce overfitting.</li>
+<li>Ensemble methods to improve model stability.</li>
+<li>Consider model uncertainty by constructing confidence intervals.</li>
+</ul></li>
+<li><strong>Enhancing Interpretability:</strong>
+<ul>
+<li>SHAP values to explain prediction contributions.</li>
+<li>Partial Dependence Plots (PDP) to show feature influence.</li>
+<li>Using Local Interpretable Model-agnostic Explanations (LIME) to provide intuitive explanations.</li>
+<li><strong>Case Study:</strong> Venn XL by Two Sigma provides transparency for machine learning investment decisions through attribution analysis.</li>
+</ul></li>
+<li><strong>Integrating Domain Knowledge:</strong>
+<ul>
+<li>Use financial theory to guide feature engineering and model design.</li>
+<li>Set reasonable prior constraints to limit the model’s search space.</li>
+<li>Validate model output based on economic intuition.</li>
+<li><strong>Case Study:</strong> AQR’s machine learning methods often retain the classic factor framework, only enhancing upon it.</li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="future-development-of-machine-learning-in-factor-investing" class="level3" data-number="9.3.5">
+<h3 data-number="9.3.5" class="anchored" data-anchor-id="future-development-of-machine-learning-in-factor-investing"><span class="header-section-number">9.3.5</span> Future Development of Machine Learning in Factor Investing</h3>
+<ul>
+<li><strong>Methodological Innovation:</strong>
+<ul>
+<li><strong>Causal Machine Learning:</strong> Shifting from correlation to causal inference to build more robust predictive models.</li>
+<li><strong>Reinforcement Learning:</strong> Treating investment as a sequential decision problem, optimizing long-term strategies rather than single-period predictions.</li>
+<li><strong>Transfer Learning:</strong> Transferring knowledge from other domains or markets to the target investment problem.</li>
+<li><strong>Federated Learning:</strong> Enabling collaborative modeling among multiple parties while preserving data privacy.</li>
+</ul></li>
+<li><strong>Application Expansion:</strong>
+<ul>
+<li><strong>Private Markets:</strong> Extending machine learning methods from public markets to private equity, private debt, etc.</li>
+<li><strong>Multi-Asset Strategies:</strong> Integrating machine learning signals and risk management across asset classes.</li>
+<li><strong>Sustainable Investing:</strong> Machine learning-assisted ESG factor construction and impact assessment.</li>
+<li><strong>Personalized Investment Solutions:</strong> Machine learning factor portfolios tailored for different investors.</li>
+</ul></li>
+<li><strong>Industry Trends:</strong>
+<ul>
+<li><strong>Human-Machine Collaboration:</strong> Developing decision-making models that involve human-machine collaboration rather than complete replacement of humans.</li>
+<li><strong>Infrastructure Investment:</strong> Institutions continuing to invest in data science infrastructure and talent development.</li>
+<li><strong>Regulatory Focus:</strong> Increased regulatory attention on algorithmic trading, model risk, and fairness.</li>
+<li><strong>Open Source Ecosystem:</strong> Open source tools and research driving the democratization of machine learning in factor investing.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="future-integration-outlook-for-factor-investing" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="future-integration-outlook-for-factor-investing"><span class="header-section-number">9.4</span> Future Integration Outlook for Factor Investing</h2>
+<section id="synergistic-effects-of-alternative-data-and-machine-learning" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="synergistic-effects-of-alternative-data-and-machine-learning"><span class="header-section-number">9.4.1</span> Synergistic Effects of Alternative Data and Machine Learning</h3>
+<ul>
+<li><strong>Complementary Advantages:</strong>
+<ul>
+<li>Alternative data provides new information sources; machine learning provides processing capabilities.</li>
+<li>Machine learning can extract effective signals from unstructured alternative data.</li>
+<li>Large-scale data processing requires the support of machine learning methods.</li>
+<li><strong>Case Study:</strong> Using deep learning to analyze satellite image data to automatically extract crop yield prediction indicators.</li>
+</ul></li>
+<li><strong>Collaborative Application Strategies:</strong>
+<ul>
+<li><strong>Layered Processing Architecture:</strong> Using different machine learning algorithms to process different types of alternative data.</li>
+<li><strong>Multi-Source Data Fusion:</strong> Integrating traditional and alternative data sources to build a more comprehensive market view.</li>
+<li><strong>Dynamic Data Weighting:</strong> Adjusting reliance on different data sources based on market conditions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="future-landscape-of-factor-investing" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="future-landscape-of-factor-investing"><span class="header-section-number">9.4.2</span> Future Landscape of Factor Investing</h3>
+<ul>
+<li><strong>Market Effects:</strong>
+<ul>
+<li><strong>Accelerated Factor Crowding:</strong> The proliferation of advanced data and technology may accelerate the decay of factor returns.</li>
+<li><strong>Shortened Half-life of New Factors:</strong> Newly discovered factors will be arbitraged away more quickly.</li>
+<li><strong>Divergence of Traditional and Emerging Factors:</strong> Traditional factors may become sources of risk premia, while tradable excess returns primarily come from emerging data and methods.</li>
+</ul></li>
+<li><strong>Institutional Positioning:</strong>
+<ul>
+<li><strong>Advantage of Technology-Driven Institutions Widens:</strong> Institutions leading in technological infrastructure investment will see their advantages amplified.</li>
+<li><strong>Niche for Specialized Small Boutiques:</strong> Boutique firms focusing on specific areas or markets will still have room to survive.</li>
+<li><strong>Transformation of Traditional Asset Managers:</strong> Traditional institutions will acquire technological capabilities through cooperation or M&amp;A.</li>
+</ul></li>
+<li><strong>Talent and Organization:</strong>
+<ul>
+<li><strong>Demand for Hybrid Talent:</strong> Increased value for talent possessing a combination of finance, data science, and domain expertise.</li>
+<li><strong>Organizational Structure Transformation:</strong> Shift from traditional research teams to interdisciplinary project groups.</li>
+<li><strong>Technological Ethics and Responsibility:</strong> Increased focus on algorithmic fairness, transparency, and accountability.</li>
+</ul></li>
+</ul>
+</section>
+<section id="practical-path-recommendations" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="practical-path-recommendations"><span class="header-section-number">9.4.3</span> Practical Path Recommendations</h3>
+<ul>
+<li><strong>Strategies for Institutional Investors:</strong>
+<ul>
+<li><strong>Start Small:</strong> Begin by solving small problems with clear value, gradually expanding the scope of application.</li>
+<li><strong>Adopt MVP Methodology:</strong> Rapidly iterate experiments to validate value hypotheses early on.</li>
+<li><strong>Combine with Traditional Strengths:</strong> Integrate new technologies with existing institutional advantages, rather than completely overhauling.</li>
+<li><strong>Establish a Data Strategy:</strong> Systematically plan the management and utilization path for data assets.</li>
+<li><strong>Cultivate a Learning Culture:</strong> Encourage continuous learning and technological experimentation.</li>
+</ul></li>
+<li><strong>Considerations for Individual Investors:</strong>
+<ul>
+<li><strong>Re-evaluate Cognitive Advantages:</strong> Rethink the advantages and disadvantages of individual investors in the information age.</li>
+<li><strong>Utilize Public Resources:</strong> Effectively use open-source tools and public data resources.</li>
+<li><strong>Prioritize Simple Strategies:</strong> Avoid complex models; focus on simple yet effective strategies.</li>
+<li><strong>Focus on a Long-Term Perspective:</strong> Competing with institutions in short-term trading is difficult; focus on long-term investment advantages.</li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./11_timing.html" class="pagination-link" aria-label="Factor Timing and Style Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./project1_factor.html" class="pagination-link" aria-label="Project 1: Factor Investing Strategy Construction">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project 1: Factor Investing Strategy Construction</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

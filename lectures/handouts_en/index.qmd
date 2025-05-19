@@ -1,0 +1,35 @@
+---
+title: "Preface"
+---
+
+These lecture notes will systematically introduce the fundamental concepts, theoretical frameworks, common strategies, and practical applications of quantitative investment.
+
+**Introduction:**
+
+Quantitative investment is an investment approach that utilizes quantitative methods such as mathematics, statistics, and computer science to analyze and predict financial markets, aiming to achieve investment objectives. Quantitative investment is a research area of broad interest in both academia and industry. In academia, research on quantitative investment theory primarily focuses on asset pricing theory, portfolio theory, and risk management theory. In industry, quantitative investment mainly concentrates on areas like quantitative stock selection, quantitative timing, quantitative hedging, and algorithmic trading. Due to limited course time, these lecture notes will primarily introduce quantitative investment methods based on empirical asset pricing theory, with a stronger emphasis on quantitative stock selection in the explanation of practical cases.
+
+**Course Content (Theory):**
+
+1.  [Efficient Market Hypothesis (EMH)](01_emh.qmd)
+2.  [Capital Asset Pricing Model (CAPM)](02_capm.qmd)
+3.  [Three-Factor Model](03_ff3.qmd)
+4.  [Predictor Selection and Portfolio Optimization](10_selecting.qmd)
+5.  [Factor Timing and Style Analysis](11_timing.qmd)
+6.  [Alternative Data and Machine Learning](12_alternative.qmd)
+
+**Course Content (Practice):**
+
+1.  [Empirical Test of CAPM](lab02_capmtest.qmd)
+2.  [Empirical Test of the Three-Factor Model](lab03_ff3test.qmd)
+
+**Course Projects:**
+
+1.  [Traditional Multi-Factor Investing](project1_factor.qmd)
+2.  [Optimization and Enhancement of Factor Investing Strategies](project2_enhance.qmd)
+
+**Usage Instructions:**
+
+* These lecture notes were created using Quarto and can be easily generated in multiple formats such as HTML, PDF, and ePub.
+* Click on the navigation bar on the left to browse through different chapters.
+
+We hope these lecture notes will help you better learn and understand quantitative investment!

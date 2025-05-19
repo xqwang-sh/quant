@@ -1,0 +1,90 @@
+---
+title: "Project 1: Factor Investing Strategy Construction"
+---
+
+# Project Background
+
+Factor investing is one of the core methods in modern quantitative investing. Its theoretical foundation can be traced back to the Fama-French three-factor model. This model extended the traditional Capital Asset Pricing Model (CAPM) by introducing the size factor (SMB) and the value factor (HML) to better explain the cross-sectional differences in stock returns. As research has deepened, scholars have discovered various other characteristic factors that can generate excess returns, such as momentum, quality, and low volatility factors.
+
+Traditional factor investing strategies are typically based on financial indicators, market data, or other observable company characteristics to construct portfolios that capture the risk premia associated with specific factors. Successful factor investing requires a deep understanding of the economic rationale behind factors, their statistical properties, and the constraints in practical application.
+
+In this project, you will have the opportunity to apply your theoretical knowledge of quantitative finance to design and implement your own factor investing strategy, and to evaluate its effectiveness through rigorous statistical tests and backtesting.
+
+# Project Objectives
+
+The main objective of this project is for you to design and implement an investment strategy based on a specific factor that can generate significant excess returns over the expectations of the Chinese version of the three-factor model. Specific objectives include:
+
+1.  **Factor Design**: Based on financial data, market data, or alternative data, design a factor with a sound economic rationale.
+2.  **Factor Testing**: Validate the effectiveness of the factor through methods such as cross-sectional regression or portfolio sort tests.
+3.  **Portfolio Construction**: Construct long-short portfolios or long-only enhanced portfolios based on factor values.
+4.  **Performance Evaluation**: Assess the risk-adjusted return of the portfolio, especially its alpha contribution relative to the Chinese version of the three-factor model.
+5.  **Robustness Checks**: Conduct out-of-sample tests, sub-sample tests, or other robustness checks to verify the persistence of the factor effect.
+
+# Data Requirements
+
+You can obtain the following data from the CSMAR or WIND databases for your analysis:
+
+1.  **Stock Price Data**: Use historical price data for Chinese A-shares.
+2.  **Financial Data**: Quarterly or annual financial statement data.
+3.  **Macroeconomic Data**: If necessary, relevant macroeconomic indicators can be incorporated.
+
+# Suggested Project Steps (For Reference Only)
+
+To successfully complete this project, it is recommended that you follow these steps:
+
+1.  **Literature Review** (1 week)
+    * Read classic literature related to factor investing.
+    * Understand the economic principles and empirical performance of common factors.
+    * Look for research inspiration and potential points of innovation.
+
+2.  **Factor Design and Preliminary Testing** (2 weeks)
+    * Define the logic for factor construction.
+    * Implement data acquisition and preprocessing.
+    * Calculate the factor and conduct preliminary validity tests.
+
+3.  **Portfolio Construction and Backtesting** (2 weeks)
+    * Design rules for portfolio construction.
+    * Implement a backtesting framework.
+    * Calculate performance metrics and risk characteristics.
+
+4.  **Results Analysis and Conclusion** (1 week)
+    * Analyze the empirical results.
+    * Conduct necessary robustness checks.
+    * Summarize findings and conclusions.
+
+# Submission Requirements
+
+1.  **Code and Data**
+    * Complete, runnable code (Python or R).
+    * Necessary data processing scripts.
+    * A detailed README file explaining the code structure and how to run it.
+
+2.  **Presentation Slides**
+    * PPT for project presentation (not exceeding 15 pages).
+    * Clearly present the core content and main findings of the project.
+    * Presentation time: During class on April 28, 2025.
+
+3.  **Submission Method and Deadline**:
+    * Submit all files via the Xuexitong platform.
+    * Package the project code into a single ZIP file.
+    * Submission deadline: 23:59 on May 11, 2025.
+
+## Grading Criteria
+
+Project grades will be based on the following aspects:
+
+-   **Innovativeness** (20%): Originality and innovativeness of the factor design.
+-   **Methodology** (25%): Correctness and rigor of the methods applied.
+-   **Empirical Results** (25%): Strategy performance and its statistical significance.
+-   **Depth of Analysis** (20%): Depth of explanation and analysis of the results.
+-   **Presentation Quality** (10%): Clarity and professionalism of the presentation.
+
+# References
+
+## Recommended Literature
+[1] Hou, K., Xue, C., and Zhang, L. (2020). Replicating anomalies. *Review of Financial Studies*, 33(5), 2019-2133.
+[2] Liu, J., Stambaugh, R. F., and Yuan, Y. (2019). Size and Value in China. *Journal of Financial Economics*, 134(1), 48-69.
+
+## Online Resources
+[1] [Kenneth French's Data Library](http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html)
+[2] [AQR Capital Management Research](https://www.aqr.com/Insights/Research-Archive)

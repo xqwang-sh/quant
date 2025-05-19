@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Fama-French Three-Factor Model – 量化投资课程讲义</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./lab03_ff3test.html" rel="next">
+<link href="./lab02_capmtest.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4140c5528bad55d065fb0dfc8d36ff91.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_ff3.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">量化投资课程讲义</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_emh.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Efficient Market Hypothesis (EMH)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_capm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab02_capmtest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_ff3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lab03_ff3test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_selecting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Return Models and Portfolio Optimization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11_timing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Factor Timing and Style Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_alternative.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Outlook for Factor Investing: Alternative Data and Machine Learning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project1_factor.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Project 1: Factor Investing Strategy Construction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project2_enhance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Project 2: Optimization and Enhancement of Factor Investing Strategies</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#key-topics-in-this-section" id="toc-key-topics-in-this-section" class="nav-link active" data-scroll-target="#key-topics-in-this-section"><span class="header-section-number">5.1</span> Key Topics in This Section</a></li>
+  <li><a href="#theoretical-foundations-of-multi-factor-models" id="toc-theoretical-foundations-of-multi-factor-models" class="nav-link" data-scroll-target="#theoretical-foundations-of-multi-factor-models"><span class="header-section-number">5.2</span> Theoretical Foundations of Multi-Factor Models</a>
+  <ul class="collapse">
+  <li><a href="#from-capm-to-multi-factor-models" id="toc-from-capm-to-multi-factor-models" class="nav-link" data-scroll-target="#from-capm-to-multi-factor-models"><span class="header-section-number">5.2.1</span> From CAPM to Multi-Factor Models</a></li>
+  <li><a href="#general-form-of-multi-factor-models" id="toc-general-form-of-multi-factor-models" class="nav-link" data-scroll-target="#general-form-of-multi-factor-models"><span class="header-section-number">5.2.2</span> General Form of Multi-Factor Models</a></li>
+  <li><a href="#types-of-multi-factor-models" id="toc-types-of-multi-factor-models" class="nav-link" data-scroll-target="#types-of-multi-factor-models"><span class="header-section-number">5.2.3</span> Types of Multi-Factor Models</a></li>
+  </ul></li>
+  <li><a href="#construction-of-the-fama-french-three-factor-model" id="toc-construction-of-the-fama-french-three-factor-model" class="nav-link" data-scroll-target="#construction-of-the-fama-french-three-factor-model"><span class="header-section-number">5.3</span> Construction of the Fama-French Three-Factor Model</a>
+  <ul class="collapse">
+  <li><a href="#background-of-the-three-factor-models-introduction" id="toc-background-of-the-three-factor-models-introduction" class="nav-link" data-scroll-target="#background-of-the-three-factor-models-introduction"><span class="header-section-number">5.3.1</span> Background of the Three-Factor Model’s Introduction</a></li>
+  <li><a href="#mathematical-expression-of-the-three-factor-model" id="toc-mathematical-expression-of-the-three-factor-model" class="nav-link" data-scroll-target="#mathematical-expression-of-the-three-factor-model"><span class="header-section-number">5.3.2</span> Mathematical Expression of the Three-Factor Model</a></li>
+  <li><a href="#smb-factor-construction-method" id="toc-smb-factor-construction-method" class="nav-link" data-scroll-target="#smb-factor-construction-method"><span class="header-section-number">5.3.3</span> SMB Factor Construction Method</a></li>
+  <li><a href="#hml-factor-construction-method" id="toc-hml-factor-construction-method" class="nav-link" data-scroll-target="#hml-factor-construction-method"><span class="header-section-number">5.3.4</span> HML Factor Construction Method</a></li>
+  <li><a href="#practical-considerations-for-factor-construction" id="toc-practical-considerations-for-factor-construction" class="nav-link" data-scroll-target="#practical-considerations-for-factor-construction"><span class="header-section-number">5.3.5</span> Practical Considerations for Factor Construction</a></li>
+  </ul></li>
+  <li><a href="#economic-interpretation-of-the-three-factor-model" id="toc-economic-interpretation-of-the-three-factor-model" class="nav-link" data-scroll-target="#economic-interpretation-of-the-three-factor-model"><span class="header-section-number">5.4</span> Economic Interpretation of the Three-Factor Model</a>
+  <ul class="collapse">
+  <li><a href="#economic-interpretation-of-the-market-factor-r_m---r_f" id="toc-economic-interpretation-of-the-market-factor-r_m---r_f" class="nav-link" data-scroll-target="#economic-interpretation-of-the-market-factor-r_m---r_f"><span class="header-section-number">5.4.1</span> Economic Interpretation of the Market Factor (<span class="math inline">\(R_m - R_f\)</span>)</a></li>
+  <li><a href="#economic-interpretation-of-the-size-factor-smb" id="toc-economic-interpretation-of-the-size-factor-smb" class="nav-link" data-scroll-target="#economic-interpretation-of-the-size-factor-smb"><span class="header-section-number">5.4.2</span> Economic Interpretation of the Size Factor (SMB)</a></li>
+  <li><a href="#economic-interpretation-of-the-value-factor-hml" id="toc-economic-interpretation-of-the-value-factor-hml" class="nav-link" data-scroll-target="#economic-interpretation-of-the-value-factor-hml"><span class="header-section-number">5.4.3</span> Economic Interpretation of the Value Factor (HML)</a></li>
+  <li><a href="#interpretation-from-a-behavioral-finance-perspective" id="toc-interpretation-from-a-behavioral-finance-perspective" class="nav-link" data-scroll-target="#interpretation-from-a-behavioral-finance-perspective"><span class="header-section-number">5.4.4</span> Interpretation from a Behavioral Finance Perspective</a></li>
+  </ul></li>
+  <li><a href="#empirical-testing-of-the-three-factor-model" id="toc-empirical-testing-of-the-three-factor-model" class="nav-link" data-scroll-target="#empirical-testing-of-the-three-factor-model"><span class="header-section-number">5.5</span> Empirical Testing of the Three-Factor Model</a>
+  <ul class="collapse">
+  <li><a href="#classic-test-results-in-the-u.s.-market" id="toc-classic-test-results-in-the-u.s.-market" class="nav-link" data-scroll-target="#classic-test-results-in-the-u.s.-market"><span class="header-section-number">5.5.1</span> Classic Test Results in the U.S. Market</a></li>
+  <li><a href="#main-empirical-methods" id="toc-main-empirical-methods" class="nav-link" data-scroll-target="#main-empirical-methods"><span class="header-section-number">5.5.2</span> Main Empirical Methods</a></li>
+  <li><a href="#findings-from-subsequent-research" id="toc-findings-from-subsequent-research" class="nav-link" data-scroll-target="#findings-from-subsequent-research"><span class="header-section-number">5.5.3</span> Findings from Subsequent Research</a></li>
+  </ul></li>
+  <li><a href="#variations-of-the-three-factor-model-in-the-chinese-market" id="toc-variations-of-the-three-factor-model-in-the-chinese-market" class="nav-link" data-scroll-target="#variations-of-the-three-factor-model-in-the-chinese-market"><span class="header-section-number">5.6</span> Variations of the Three-Factor Model in the Chinese Market</a>
+  <ul class="collapse">
+  <li><a href="#characteristics-of-the-chinese-market-and-applicability-of-the-three-factor-model" id="toc-characteristics-of-the-chinese-market-and-applicability-of-the-three-factor-model" class="nav-link" data-scroll-target="#characteristics-of-the-chinese-market-and-applicability-of-the-three-factor-model"><span class="header-section-number">5.6.1</span> Characteristics of the Chinese Market and Applicability of the Three-Factor Model</a></li>
+  <li><a href="#empirical-research-on-size-and-value-factors-in-the-chinese-market" id="toc-empirical-research-on-size-and-value-factors-in-the-chinese-market" class="nav-link" data-scroll-target="#empirical-research-on-size-and-value-factors-in-the-chinese-market"><span class="header-section-number">5.6.2</span> Empirical Research on Size and Value Factors in the Chinese Market</a></li>
+  <li><a href="#latest-findings-from-empirical-tests-in-the-chinese-market" id="toc-latest-findings-from-empirical-tests-in-the-chinese-market" class="nav-link" data-scroll-target="#latest-findings-from-empirical-tests-in-the-chinese-market"><span class="header-section-number">5.6.3</span> Latest Findings from Empirical Tests in the Chinese Market</a></li>
+  <li><a href="#special-considerations-for-practical-application-of-the-three-factor-model-in-the-chinese-market" id="toc-special-considerations-for-practical-application-of-the-three-factor-model-in-the-chinese-market" class="nav-link" data-scroll-target="#special-considerations-for-practical-application-of-the-three-factor-model-in-the-chinese-market"><span class="header-section-number">5.6.4</span> Special Considerations for Practical Application of the Three-Factor Model in the Chinese Market</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.7</span> Summary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Fama-French Three-Factor Model</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="key-topics-in-this-section" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="key-topics-in-this-section"><span class="header-section-number">5.1</span> Key Topics in This Section</h2>
+<ol type="1">
+<li><strong>Theoretical Foundations of Multi-Factor Models</strong>: Understanding the evolution from the single-factor CAPM to multi-factor models.</li>
+<li><strong>Construction of the Fama-French Three-Factor Model</strong>: Mastering the construction methods for the size factor (SMB) and the value factor (HML).</li>
+<li><strong>Economic Interpretation of the Three-Factor Model</strong>: Understanding the economic meaning of each factor in the three-factor model.</li>
+<li><strong>Empirical Testing of the Three-Factor Model</strong>: Learning about the empirical test results of the three-factor model in the U.S. market.</li>
+<li><strong>Variations of the Three-Factor Model in the Chinese Market</strong>: Understanding the applicability and variant forms of the three-factor model in the Chinese market.</li>
+</ol>
+</section>
+<section id="theoretical-foundations-of-multi-factor-models" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="theoretical-foundations-of-multi-factor-models"><span class="header-section-number">5.2</span> Theoretical Foundations of Multi-Factor Models</h2>
+<section id="from-capm-to-multi-factor-models" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="from-capm-to-multi-factor-models"><span class="header-section-number">5.2.1</span> From CAPM to Multi-Factor Models</h3>
+<p>While the CAPM, as a single-factor model, is structurally simple, it faces numerous challenges in empirical tests. The emergence of multi-factor models is a natural extension of the CAPM, aiming to address market anomalies and sources of risk premium that the single-factor model cannot explain.</p>
+<ul>
+<li><strong>Review of CAPM Limitations</strong>:
+<ul>
+<li>Considers only market risk as a single type of systematic risk.</li>
+<li>Fails to explain market anomalies such as the size effect and value effect.</li>
+<li>Empirical tests often show Alpha to be significantly non-zero.</li>
+</ul></li>
+<li><strong>Basic Idea of Multi-Factor Models</strong>:
+<ul>
+<li><strong>Diversified Sources of Risk</strong>: Assumes that asset returns are influenced by multiple systematic risk factors, not just market risk.</li>
+<li><strong>Expanded Sources of Risk Premium</strong>: The risk premium demanded by investors comes from compensation for bearing multiple systematic risks.</li>
+<li><strong>Better Explanatory Power</strong>: Aims to improve the model’s ability to explain cross-sectional differences in asset returns by introducing more risk factors.</li>
+</ul></li>
+</ul>
+</section>
+<section id="general-form-of-multi-factor-models" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="general-form-of-multi-factor-models"><span class="header-section-number">5.2.2</span> General Form of Multi-Factor Models</h3>
+<p>Multi-factor models typically adopt the following linear form:</p>
+<p><span class="math display">\[R_i - R_f = \alpha_i + \beta_{i,1}F_1 + \beta_{i,2}F_2 + ... + \beta_{i,K}F_K + \epsilon_i\]</span></p>
+<p>Where: - <span class="math inline">\(R_i - R_f\)</span>: Excess return of asset <span class="math inline">\(i\)</span>. - <span class="math inline">\(\alpha_i\)</span>: Intercept term; theoretically should be zero if the model is accurate. - <span class="math inline">\(\beta_{i,k}\)</span>: Sensitivity of asset <span class="math inline">\(i\)</span> to risk factor <span class="math inline">\(k\)</span>. - <span class="math inline">\(F_k\)</span>: Risk premium of the <span class="math inline">\(k\)</span>-th risk factor. - <span class="math inline">\(\epsilon_i\)</span>: Asset-specific unsystematic risk, i.e., the residual term.</p>
+</section>
+<section id="types-of-multi-factor-models" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="types-of-multi-factor-models"><span class="header-section-number">5.2.3</span> Types of Multi-Factor Models</h3>
+<ul>
+<li><strong>Economic Theory-Driven Multi-Factor Models</strong>:
+<ul>
+<li>Risk factors derived from economic theory.</li>
+<li>Examples: Ross’s (1976) Arbitrage Pricing Theory (APT), Merton’s (1973) Intertemporal Capital Asset Pricing Model (ICAPM).</li>
+<li>Advantage: Solid theoretical foundation; Disadvantage: Difficult to determine specific risk factors.</li>
+</ul></li>
+<li><strong>Statistical Technique-Driven Multi-Factor Models</strong>:
+<ul>
+<li>Use statistical methods like Principal Component Analysis (PCA) to extract common factors from data.</li>
+<li>Example: Chen, Roll and Ross’s (1986) macroeconomic factor model.</li>
+<li>Advantage: High data fitting degree; Disadvantage: Factors may lack clear economic meaning.</li>
+</ul></li>
+<li><strong>Anomaly-Driven Multi-Factor Models</strong>:
+<ul>
+<li>Factors constructed based on observed market anomalies.</li>
+<li>Examples: Fama-French Three-Factor Model, Carhart Four-Factor Model.</li>
+<li>Advantage: Directly addresses known market anomalies; Disadvantage: Potential risk of overfitting.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="construction-of-the-fama-french-three-factor-model" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="construction-of-the-fama-french-three-factor-model"><span class="header-section-number">5.3</span> Construction of the Fama-French Three-Factor Model</h2>
+<section id="background-of-the-three-factor-models-introduction" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="background-of-the-three-factor-models-introduction"><span class="header-section-number">5.3.1</span> Background of the Three-Factor Model’s Introduction</h3>
+<ul>
+<li><strong>Challenge of Market Anomalies</strong>:
+<ul>
+<li>In the 1980s and 1990s, scholars discovered many market anomalies that CAPM could not explain.</li>
+<li>The most significant were the <strong>size effect</strong> (small-cap stocks outperform large-cap stocks) and the <strong>value effect</strong> (high book-to-market ratio stocks outperform low book-to-market ratio stocks).</li>
+</ul></li>
+<li><strong>Contribution of Fama and French</strong>:
+<ul>
+<li>In 1992, Eugene Fama and Kenneth French published the famous paper “The Cross-Section of Expected Stock Returns.”</li>
+<li>In 1993, they further published “Common risk factors in the returns on stocks and bonds,” formally proposing the three-factor model.</li>
+<li>They introduced size and value into asset pricing models, constructing the influential three-factor model.</li>
+</ul></li>
+</ul>
+</section>
+<section id="mathematical-expression-of-the-three-factor-model" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="mathematical-expression-of-the-three-factor-model"><span class="header-section-number">5.3.2</span> Mathematical Expression of the Three-Factor Model</h3>
+<p>The mathematical expression of the Fama-French Three-Factor Model is as follows:</p>
+<p><span class="math display">\[R_i - R_f = \alpha_i + \beta_i(R_m - R_f) + s_i \cdot SMB + h_i \cdot HML + \epsilon_i\]</span></p>
+<p>Where: - <span class="math inline">\(R_i - R_f\)</span>: Excess return of asset <span class="math inline">\(i\)</span>. - <span class="math inline">\(R_m - R_f\)</span>: Excess return of the market portfolio (market factor). - <span class="math inline">\(SMB\)</span>: Size factor (Small Minus Big), the return difference between small-cap stocks and large-cap stocks. - <span class="math inline">\(HML\)</span>: Value factor (High Minus Low), the return difference between high book-to-market ratio stocks and low book-to-market ratio stocks. - <span class="math inline">\(\beta_i\)</span>, <span class="math inline">\(s_i\)</span>, <span class="math inline">\(h_i\)</span>: Sensitivities of asset <span class="math inline">\(i\)</span> to the three factors, respectively. - <span class="math inline">\(\alpha_i\)</span>: Intercept term, representing the unexplained excess return. - <span class="math inline">\(\epsilon_i\)</span>: Residual term.</p>
+</section>
+<section id="smb-factor-construction-method" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="smb-factor-construction-method"><span class="header-section-number">5.3.3</span> SMB Factor Construction Method</h3>
+<p>SMB (Small Minus Big) is the factor measuring the size effect, representing the excess return of small-cap stocks relative to large-cap stocks.</p>
+<ul>
+<li><p><strong>Grouping Steps</strong>:</p>
+<ol type="1">
+<li><strong>Size Division</strong>: All stocks are divided into two groups based on market capitalization:
+<ul>
+<li>Small-cap group (S): Stocks with market capitalization below the median.</li>
+<li>Large-cap group (B): Stocks with market capitalization above the median.</li>
+</ul></li>
+<li><strong>Book-to-Market Ratio Division</strong>: Stocks are divided into three groups based on their book-to-market ratio (B/M):
+<ul>
+<li>Low B/M group (L): Stocks in the lowest 30% of B/M ratios.</li>
+<li>Medium B/M group (M): Stocks in the middle 40% of B/M ratios.</li>
+<li>High B/M group (H): Stocks in the highest 30% of B/M ratios.</li>
+</ul></li>
+<li><strong>Formation of Six Portfolios</strong>: The two classifications above are intersected to form six portfolios:
+<ul>
+<li>Small-cap/Low B/M (S/L)</li>
+<li>Small-cap/Medium B/M (S/M)</li>
+<li>Small-cap/High B/M (S/H)</li>
+<li>Large-cap/Low B/M (B/L)</li>
+<li>Large-cap/Medium B/M (B/M)</li>
+<li>Large-cap/High B/M (B/H)</li>
+</ul></li>
+</ol></li>
+<li><p><strong>SMB Calculation Formula</strong>: <span class="math display">\[SMB = \frac{1}{3}[(S/L - B/L) + (S/M - B/M) + (S/H - B/H)]\]</span></p>
+<p>This is the average return of the small-cap portfolios minus the average return of the large-cap portfolios.</p></li>
+</ul>
+</section>
+<section id="hml-factor-construction-method" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="hml-factor-construction-method"><span class="header-section-number">5.3.4</span> HML Factor Construction Method</h3>
+<p>HML (High Minus Low) is the factor measuring the value effect, representing the excess return of high book-to-market ratio stocks relative to low book-to-market ratio stocks.</p>
+<ul>
+<li><p><strong>Using the Same Six Portfolios</strong>:</p></li>
+<li><p><strong>HML Calculation Formula</strong>: <span class="math display">\[HML = \frac{1}{2}[(S/H - S/L) + (B/H - B/L)]\]</span></p>
+<p>This is the average return of the high B/M portfolios minus the average return of the low B/M portfolios.</p></li>
+</ul>
+</section>
+<section id="practical-considerations-for-factor-construction" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="practical-considerations-for-factor-construction"><span class="header-section-number">5.3.5</span> Practical Considerations for Factor Construction</h3>
+<ul>
+<li><strong>Rebalancing Frequency</strong>: Portfolios are typically rebalanced annually or semi-annually.</li>
+<li><strong>Financial Data Lag</strong>: Use book value data from the end of the previous fiscal year to ensure data availability.</li>
+<li><strong>Outlier Treatment</strong>: Exclude stocks with negative book values and handle extreme values.</li>
+<li><strong>Market Capitalization Calculation</strong>: Typically use free-float market capitalization rather than total market capitalization to reflect the actually tradable portion.</li>
+</ul>
+</section>
+</section>
+<section id="economic-interpretation-of-the-three-factor-model" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="economic-interpretation-of-the-three-factor-model"><span class="header-section-number">5.4</span> Economic Interpretation of the Three-Factor Model</h2>
+<section id="economic-interpretation-of-the-market-factor-r_m---r_f" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="economic-interpretation-of-the-market-factor-r_m---r_f"><span class="header-section-number">5.4.1</span> Economic Interpretation of the Market Factor (<span class="math inline">\(R_m - R_f\)</span>)</h3>
+<ul>
+<li><strong>Inherited from CAPM</strong>: The market factor represents overall market risk, identical to the market risk in the CAPM.</li>
+<li><strong>Compensation for Systematic Risk</strong>: Measures the risk premium investors demand for bearing overall market risk.</li>
+<li><strong>Non-Diversifiability</strong>: Represents systematic risk that cannot be eliminated through diversification.</li>
+</ul>
+</section>
+<section id="economic-interpretation-of-the-size-factor-smb" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="economic-interpretation-of-the-size-factor-smb"><span class="header-section-number">5.4.2</span> Economic Interpretation of the Size Factor (SMB)</h3>
+<p>Fama and French argue that the SMB factor represents the additional systematic risk borne by small-cap companies:</p>
+<ul>
+<li><strong>Economic Fragility Hypothesis</strong>: Small-cap companies are more vulnerable to economic recessions and perform worse during difficult economic times.</li>
+<li><strong>Information Asymmetry Hypothesis</strong>: Small-cap companies have lower information transparency, and investors bear higher information risk.</li>
+<li><strong>Liquidity Risk Hypothesis</strong>: Small-cap stocks have poorer liquidity, and investors demand an additional liquidity premium.</li>
+<li><strong>Financial Distress Hypothesis</strong>: Small-cap companies are more prone to financial distress and bankruptcy risk.</li>
+</ul>
+</section>
+<section id="economic-interpretation-of-the-value-factor-hml" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="economic-interpretation-of-the-value-factor-hml"><span class="header-section-number">5.4.3</span> Economic Interpretation of the Value Factor (HML)</h3>
+<p>The HML factor represents the additional systematic risk borne by high B/M companies:</p>
+<ul>
+<li><strong>Financial Distress Risk Hypothesis</strong>: High B/M companies often have poorer financial health and face higher default risk.</li>
+<li><strong>Growth Opportunities Hypothesis</strong>: High B/M companies typically lack growth opportunities and are more vulnerable during economic downturns.</li>
+<li><strong>Earnings Persistence Hypothesis</strong>: The profitability of high B/M companies is often weaker or more volatile, with poorer persistence.</li>
+<li><strong>Investor Sentiment Hypothesis</strong>: Investors tend to be overly optimistic about growth companies, leading to undervaluation of value companies.</li>
+</ul>
+</section>
+<section id="interpretation-from-a-behavioral-finance-perspective" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="interpretation-from-a-behavioral-finance-perspective"><span class="header-section-number">5.4.4</span> Interpretation from a Behavioral Finance Perspective</h3>
+<p>Behavioral finance offers explanations different from rational risk pricing:</p>
+<ul>
+<li><strong>Overreaction Hypothesis</strong>: Investors overreact to companies’ short-term performance, leading to undervaluation of value stocks and overvaluation of growth stocks.</li>
+<li><strong>Investor Sentiment</strong>: Investors prefer growth stocks and are willing to pay an extra premium for growth expectations.</li>
+<li><strong>Lottery Preference</strong>: Investors prefer small-cap growth stocks with lottery-like characteristics.</li>
+<li><strong>Attention Effect</strong>: Large-cap companies receive more attention, and their pricing may be more efficient.</li>
+</ul>
+</section>
+</section>
+<section id="empirical-testing-of-the-three-factor-model" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="empirical-testing-of-the-three-factor-model"><span class="header-section-number">5.5</span> Empirical Testing of the Three-Factor Model</h2>
+<section id="classic-test-results-in-the-u.s.-market" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="classic-test-results-in-the-u.s.-market"><span class="header-section-number">5.5.1</span> Classic Test Results in the U.S. Market</h3>
+<p>Key findings from Fama and French’s original papers:</p>
+<ul>
+<li><strong>Significantly Improved Explanatory Power</strong>: Compared to CAPM, the three-factor model explains more of the cross-sectional variation in stock returns.</li>
+<li><strong>Capture of the Size Effect</strong>: The model successfully explains the excess returns of small-cap stocks.</li>
+<li><strong>Capture of the Value Effect</strong>: The model successfully explains the excess returns of high B/M stocks.</li>
+<li><strong>Strong Statistical Significance</strong>: The risk premiums for the three factors are statistically significantly different from zero.</li>
+<li><strong>Time Stability</strong>: Factor risk premiums exhibit relative stability across different periods.</li>
+</ul>
+</section>
+<section id="main-empirical-methods" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="main-empirical-methods"><span class="header-section-number">5.5.2</span> Main Empirical Methods</h3>
+<ul>
+<li><strong>Time-Series Regression</strong>:
+<ul>
+<li>Perform time-series regression for individual assets or portfolios.</li>
+<li>Test whether factor sensitivities (<span class="math inline">\(\beta\)</span>, <span class="math inline">\(s\)</span>, <span class="math inline">\(h\)</span>) are significant and whether the intercept <span class="math inline">\(\alpha\)</span> approaches zero.</li>
+</ul></li>
+<li><strong>Cross-Sectional Regression</strong>:
+<ul>
+<li>Use Fama-MacBeth regression to test if factor risk premiums are significant.</li>
+<li>Test whether the three-factor model can explain the cross-sectional differences in asset returns.</li>
+</ul></li>
+<li><strong>Portfolio Analysis</strong>:
+<ul>
+<li>Construct portfolios with different characteristics to test the explanatory power of the three-factor model.</li>
+<li>Often uses size-value sorted portfolios (e.g., 25 portfolios) formed by independent sorting.</li>
+</ul></li>
+</ul>
+</section>
+<section id="findings-from-subsequent-research" class="level3" data-number="5.5.3">
+<h3 data-number="5.5.3" class="anchored" data-anchor-id="findings-from-subsequent-research"><span class="header-section-number">5.5.3</span> Findings from Subsequent Research</h3>
+<ul>
+<li><strong>Robustness</strong>: The three-factor model has shown good robustness across different markets and periods.</li>
+<li><strong>Scope of Applicability</strong>: The model is not only applicable to the stock market but can also be extended to bonds and other asset classes.</li>
+<li><strong>Further Market Anomalies</strong>: Research has identified anomalies that the three-factor model still cannot explain, such as the momentum effect and profitability effect.</li>
+<li><strong>Model Extensions</strong>: Spurred the development of more complex models like the four-factor and five-factor models.</li>
+</ul>
+</section>
+</section>
+<section id="variations-of-the-three-factor-model-in-the-chinese-market" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="variations-of-the-three-factor-model-in-the-chinese-market"><span class="header-section-number">5.6</span> Variations of the Three-Factor Model in the Chinese Market</h2>
+<section id="characteristics-of-the-chinese-market-and-applicability-of-the-three-factor-model" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="characteristics-of-the-chinese-market-and-applicability-of-the-three-factor-model"><span class="header-section-number">5.6.1</span> Characteristics of the Chinese Market and Applicability of the Three-Factor Model</h3>
+<p>The Chinese stock market has unique characteristics that affect the applicability of the three-factor model:</p>
+<ul>
+<li><strong>Emerging Market Characteristics</strong>: As an emerging market, China has relatively lower market efficiency and stronger speculative behavior.</li>
+<li><strong>Government Intervention</strong>: Government policies have a significant impact on the market, creating unique sources of risk.</li>
+<li><strong>Investor Structure</strong>: An investor structure dominated by retail investors leads to more pronounced behavioral biases.</li>
+<li><strong>Special Institutional Arrangements</strong>: Such as the split-share structure reform and price limit mechanisms.</li>
+<li><strong>Market Segmentation between A-shares and H-shares</strong>: Significant pricing differences for the same company in A-share and H-share markets reflect market segmentation effects.</li>
+<li><strong>Trading Restriction Factors</strong>: Including short-selling restrictions and daily price limit systems, which affect factor performance.</li>
+</ul>
+</section>
+<section id="empirical-research-on-size-and-value-factors-in-the-chinese-market" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="empirical-research-on-size-and-value-factors-in-the-chinese-market"><span class="header-section-number">5.6.2</span> Empirical Research on Size and Value Factors in the Chinese Market</h3>
+<p>According to the study “Size and Value in China” by Liu, Stambaugh, and Yuan (2019), size and value factors in the Chinese market exhibit some unique characteristics requiring special treatment:</p>
+<ul>
+<li><strong>Shell Value Distortion in Small-Cap Stocks</strong>:
+<ul>
+<li>The smallest 30% of stocks in the Chinese market have a significant shell value problem, where prices reflect the potential value of being used as a shell company for reverse mergers.</li>
+<li>Reverse mergers provide a backdoor listing route for private enterprises, bypassing cumbersome IPO approval processes.</li>
+<li>The returns of small-cap stocks are significantly affected by changes in shell value rather than traditional risk factors.</li>
+</ul></li>
+<li><strong>China-Specific Three-Factor Model (CH-3)</strong>:
+<ul>
+<li>To address the characteristics of the Chinese market, a size factor (SMC) was constructed excluding the smallest 30% of market-cap stocks.</li>
+<li>An earnings-to-price ratio (E/P) was used instead of book-to-market ratio (B/M) to construct the value factor (VMG), as it performs better in the Chinese market.</li>
+<li>The CH-3 model (composed of the market factor, SMC, and VMG) significantly outperforms the traditional FF-3 model.</li>
+</ul></li>
+<li><strong>Superior Explanatory Power</strong>:
+<ul>
+<li>The CH-3 model can explain 8 out of 10 common anomalies in the Chinese market.</li>
+<li>In contrast, the traditional FF-3 model can only explain 3 anomalies.</li>
+<li>Bayesian tests show that the CH-3 model is significantly superior to the FF-3 model in explaining factor performance.</li>
+</ul></li>
+</ul>
+</section>
+<section id="latest-findings-from-empirical-tests-in-the-chinese-market" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="latest-findings-from-empirical-tests-in-the-chinese-market"><span class="header-section-number">5.6.3</span> Latest Findings from Empirical Tests in the Chinese Market</h3>
+<p>Based on the research by Liu, Stambaugh, and Yuan (2019) and other empirical results from Chinese scholars, the advantages of the CH-3 model over the traditional model are evident in:</p>
+<ul>
+<li><strong>Performance of the Adjusted Size Factor</strong>:
+<ul>
+<li>After excluding the smallest 30% of market-cap stocks, the size effect becomes more robust and predictable.</li>
+<li>The risk premium of the adjusted size factor (SMC) is significant and stable.</li>
+<li>The smallest market-cap group of stocks exhibits return patterns significantly different from other size groups, consistent with the shell value hypothesis.</li>
+<li>The size effect in large and mid-cap stocks more accurately reflects true risk premiums.</li>
+</ul></li>
+<li><strong>Optimization of Value Factor Selection</strong>:
+<ul>
+<li>E/P (inverse of price-to-earnings ratio) as a value metric performs significantly better than B/M in the Chinese market.</li>
+<li>The value factor (VMG) better captures information about profitability and growth opportunities.</li>
+<li>The adjusted value factor has a closer connection to the macroeconomy.</li>
+<li>The value factor performs more robustly in samples that exclude very small-cap stocks.</li>
+</ul></li>
+<li><strong>Interrelationships Between Factors</strong>:
+<ul>
+<li>The correlation between the adjusted size factor and value factor is lower, providing better diversification benefits.</li>
+<li>The factor portfolios corresponding to the three factors in the CH-3 model exhibit lower correlations.</li>
+<li>Unlike the U.S. market, small market capitalization and high value are not always positively correlated in the Chinese market.</li>
+<li>Economic cycles and policy environments significantly impact factor correlations.</li>
+</ul></li>
+<li><strong>Anomaly Explanation Capability</strong>:
+<ul>
+<li>The CH-3 model can explain most market anomalies in China, including:
+<ul>
+<li>Profitability anomaly</li>
+<li>Volatility anomaly</li>
+<li>Reversal effect</li>
+<li>…</li>
+</ul></li>
+<li>The model’s explanatory power is further enhanced in samples excluding the smallest 30% of market-cap stocks.</li>
+<li>Bayesian analysis shows CH-3 outperforms FF-3 in various scenarios.</li>
+</ul></li>
+</ul>
+</section>
+<section id="special-considerations-for-practical-application-of-the-three-factor-model-in-the-chinese-market" class="level3" data-number="5.6.4">
+<h3 data-number="5.6.4" class="anchored" data-anchor-id="special-considerations-for-practical-application-of-the-three-factor-model-in-the-chinese-market"><span class="header-section-number">5.6.4</span> Special Considerations for Practical Application of the Three-Factor Model in the Chinese Market</h3>
+<p>Based on the findings of Liu et al.&nbsp;(2019) and domestic empirical research, the following special factors need to be considered when applying the three-factor model in the Chinese market:</p>
+<ul>
+<li><strong>Adjustment in Size Factor Construction</strong>:
+<ul>
+<li>The smallest 30% of stocks by market capitalization should be excluded to avoid interference from the shell value effect.</li>
+<li>Use SMC (Excluding Small) instead of the traditional SMB to improve the risk explanation power of the size factor.</li>
+<li>Consider using asymmetric partitioning for size grouping (e.g., 30%-70%), which may better suit the size distribution characteristics of the Chinese market.</li>
+</ul></li>
+<li><strong>Choice of Value Factor Indicator</strong>:
+<ul>
+<li>E/P (inverse of P/E ratio) performs better than the traditional B/M in the Chinese market.</li>
+<li>Construct a VMG (Value Minus Growth) value factor to replace the traditional HML.</li>
+<li>Exclude companies with negative earnings or use composite value indicators to improve stability.</li>
+</ul></li>
+<li><strong>Consideration of Reverse Mergers and Institutional Factors</strong>:
+<ul>
+<li>Pay attention to the dynamic impact of changes in the value of shell resources due to policy shifts.</li>
+<li>Monitor abnormal return fluctuations of small-cap stocks, especially during periods of regulatory policy adjustments.</li>
+<li>Consider incorporating changes in shell value as an additional risk factor in the model.</li>
+</ul></li>
+<li><strong>Data Quality and Frequency Selection</strong>:
+<ul>
+<li>Address data quality issues in the Chinese market, especially the reliability of early data and financial reports.</li>
+<li>Consider using quarterly rather than monthly frequency to construct more robust factors.</li>
+<li>Test across multiple sample periods, paying attention to model performance differences before and after market institutional reforms.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="summary" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.7</span> Summary</h2>
+<ul>
+<li>The Fama-French Three-Factor Model significantly improved the explanation of cross-sectional differences in stock returns by introducing the size factor (SMB) and the value factor (HML).</li>
+<li>Each factor in the three-factor model has its economic interpretation and can be seen as compensation for specific systematic risks.</li>
+<li>In the Chinese market, the traditional three-factor model needs adjustments according to China’s market characteristics. The CH-3 model proposed by Liu et al.&nbsp;(2019) (using SMC, a size factor excluding the smallest stocks, and VMG, a value factor based on E/P) significantly outperforms the traditional FF-3 model.</li>
+<li>The shell value effect in the Chinese market is a key factor in the pricing of small-cap stocks and should be given special consideration when constructing factors and applying models.</li>
+<li>The framework of multi-factor models has laid the foundation for the development of subsequent asset pricing models, and each market may require model adjustments based on its unique institutional environment and market characteristics.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./lab02_capmtest.html" class="pagination-link" aria-label="Capital Asset Pricing Model (CAPM) Empirical Test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Capital Asset Pricing Model (CAPM) Empirical Test</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./lab03_ff3test.html" class="pagination-link" aria-label="Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Practice: Building and Backtesting the China-Specific Three-Factor Model (CH-3)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
